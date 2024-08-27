@@ -15,67 +15,31 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-    <style>
-        /* Additional CSS for card view */
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            padding: 20px;
-        }
-        .card {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: calc(33.333% - 16px);
-            padding: 16px;
-            box-sizing: border-box;
-        }
-        .card-title {
-            font-size: 18px;
-            margin: 0 0 8px;
-        }
-        .card-description {
-            font-size: 14px;
-            color: #666;
-        }
-        @media (max-width: 768px) {
-            .card {
-                width: calc(50% - 16px);
-            }
-        }
-        @media (max-width: 480px) {
-            .card {
-                width: 100%;
-            }
-        }
-    </style>
+    <link href="css/style.css" rel="stylesheet" />
 </head>
 <body id="page-top">
-    <!-- Masthead -->
+    <!-- Masthead-->
     <header class="masthead bg-primary text-white text-center">
         <div class="container d-flex align-items-center flex-column">
             <nav>
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#" id="news-link">News</a></li>
+                    <li><a href="#news">News</a></li>
                     <li><a href="#">Notices</a></li>
                 </ul>
             </nav>
-            <!-- Masthead Avatar Image -->
-            <img class="masthead-avatar mb-5" src="brp.jpg" alt="..." />
-            <!-- Masthead Heading -->
+            <!-- Masthead Avatar Image-->
+            <img class="masthead-avatar mb-5" src="assets/img/avatars.svg" alt="..." />
+            <!-- Masthead Heading-->
             <h1 class="masthead-heading text-uppercase mb-0">Krishna Niraula</h1>
-            <!-- Masthead Subheading -->
+            <!-- Masthead Subheading-->
             <p class="masthead-subheading font-weight-light mb-0">Construction Field</p>
         </div>
     </header>
 
     <!-- News Section -->
-    <section id="news-section" style="display:none;">
-        <div class="card-container"></div>
+    <section id="news-container" class="container mt-5">
+        <!-- News articles will be dynamically inserted here -->
     </section>
 
     <!-- Footer -->
@@ -83,9 +47,9 @@
         <div class="container">
             <nav>
                 <ul>
-                   <li><a href="https://www.youtube.com/channel/UCPbDP8eqd_jk322NNMvYZ0g/featured"><i class="fab fa-youtube"></i></a></li> 
-                   <li><a href="https://www.facebook.com/0kisn"><i class="fab fa-facebook-f"></i></a></li>
-                   <li><a href="https://500px.com/p/0kisn"><i class="fab fa-500PX"></i></a></li> 
+                    <li><a href="https://www.youtube.com/channel/UCPbDP8eqd_jk322NNMvYZ0g/featured"><i class="fab fa-youtube"></i></a></li> 
+                    <li><a href="https://www.facebook.com/0kisn"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://500px.com/p/0kisn"><i class="fab fa-500PX"></i></a></li> 
                 </ul>
             </nav> 
             <p>© 2021 Krishna Niraula</p>
@@ -95,72 +59,7 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <script src="js/script.js"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    <!-- JavaScript to Fetch and Display RSS Feeds -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const rssUrls = [
-                'https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491',
-                'https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019',
-                'https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885',
-                'https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893'
-            ];
-
-            const excludedWords = ['महोत्सव', 'उत्सव', 'प्रतियोगिता', 'प्रदर्शनी'];
-            const corsProxy = 'https://cors-anywhere.herokuapp.com/'; // Use a CORS proxy for testing
-
-            document.getElementById('news-link').addEventListener('click', function(event) {
-                event.preventDefault();
-                fetchNews();
-            });
-
-            function fetchNews() {
-                const cardContainer = document.querySelector('.card-container');
-                cardContainer.innerHTML = '';
-                document.getElementById('news-section').style.display = 'block';
-
-                rssUrls.forEach(url => {
-                    fetch(corsProxy + url)
-                        .then(response => response.text())
-                        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
-                        .then(data => {
-                            const items = data.querySelectorAll('item');
-                            items.forEach(item => {
-                                const title = item.querySelector('title').textContent;
-                                const description = item.querySelector('description').textContent;
-
-                                // Exclude items containing certain Nepali words
-                                if (excludedWords.some(word => title.includes(word) || description.includes(word))) {
-                                    return;
-                                }
-
-                                // Create card element
-                                const card = document.createElement('div');
-                                card.classList.add('card');
-
-                                const cardContent = document.createElement('div');
-                                cardContent.classList.add('card-content');
-
-                                const cardTitle = document.createElement('h3');
-                                cardTitle.classList.add('card-title');
-                                cardTitle.textContent = title;
-
-                                const cardDescription = document.createElement('p');
-                                cardDescription.classList.add('card-description');
-                                cardDescription.textContent = description.substring(0, 300) + '...'; // Limit to 5 lines or 300 characters
-
-                                cardContent.appendChild(cardTitle);
-                                cardContent.appendChild(cardDescription);
-                                card.appendChild(cardContent);
-
-                                cardContainer.appendChild(card);
-                            });
-                        })
-                        .catch(error => console.error('Error fetching RSS feed:', error));
-                });
-            }
-        });
-    </script>
 </body>
 </html>
