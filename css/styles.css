@@ -72,6 +72,46 @@ nav ul li a:hover {
     font-weight: bold;
 }
 
+/* Card Container Styles */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: white;
+    border-top: 1px solid #ddd;
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+    overflow: hidden;
+    text-align: left;
+}
+
+.card-content {
+    padding: 1rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.card-description {
+    font-size: 1rem;
+    color: #555;
+    max-height: 6rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     /* Adjust navigation for mobile */
@@ -103,10 +143,16 @@ nav ul li a:hover {
     .footer nav ul li {
         margin: 5px 0;
     }
+
+    /* Adjust card container for mobile */
+    .card-container {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 @media (min-width: 769px) {
-    /* Styles specifically for larger screens, if needed */
+    /* Styles specifically for larger screens */
     .masthead-avatar {
         width: 200px;
         height: 200px;
