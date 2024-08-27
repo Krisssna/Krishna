@@ -1,5 +1,5 @@
 function fetchNews(url) {
-    const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const proxyUrl = 'http://server8.kproxy.com/';
     fetch(proxyUrl + url)
         .then(response => response.text())
         .then(data => {
