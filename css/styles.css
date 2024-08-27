@@ -3,6 +3,8 @@ body {
     background-color: white;
     color: black;
     font-family: 'Montserrat', 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 /* Navigation Styles */
@@ -68,4 +70,45 @@ nav ul li a:hover {
     margin-top: 10px;
     color: black;
     font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    /* Adjust navigation for mobile */
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    /* Adjust masthead padding for mobile */
+    .masthead {
+        padding: 30px 0;
+    }
+
+    /* Reduce avatar size on mobile */
+    .masthead-avatar {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Adjust footer navigation for mobile */
+    .footer nav ul {
+        flex-direction: column;
+    }
+
+    .footer nav ul li {
+        margin: 5px 0;
+    }
+}
+
+@media (min-width: 769px) {
+    /* Styles specifically for larger screens, if needed */
+    .masthead-avatar {
+        width: 200px;
+        height: 200px;
+    }
 }
