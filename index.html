@@ -26,7 +26,7 @@
                 <nav>
                     <ul>
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">News</a></li>
+                        <li><a href="#" id="news-link">News</a></li>
                         <li><a href="#">Notices</a></li>
                     </ul>
                 </nav>
@@ -39,7 +39,8 @@
             </div>
         </header>
 
-        </footer class="footer bg-dark text-white text-center">
+        <!-- Footer-->
+        <footer class="footer bg-dark text-white text-center">
             <div class="container">
                 <nav>
                     <ul>
@@ -50,12 +51,22 @@
                 </nav> 
                 <p>© 2021 Krishna Niraula</p>
             </div>
-    </footer>
-        
+        </footer>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+        <!-- JavaScript to handle News link -->
+        <script>
+            document.getElementById('news-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                const query = 'ठेक्का OR आयोजना OR निर्माण OR सिलबन्दी OR बोलपत्र -महोत्सव -उत्सव -प्रतियोगिता -प्रदर्शनी';
+                const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}&hl=ne`;
+                window.location.href = googleSearchUrl;
+            });
+        </script>
     </body>
 </html>
