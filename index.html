@@ -70,7 +70,7 @@
     </header>
 
     <!-- News Section -->
-    <section id="news-section" class="container">
+    <section id="news-section" class="container" style="display: none;">
         <h2 class="text-center mb-4">Latest News</h2>
         <div id="news-container" class="card-container">
             <!-- News cards will be injected here -->
@@ -108,8 +108,11 @@
             ];
             const excludeWords = ['महोत्सव', 'उत्सव', 'प्रतियोगिता', 'प्रदर्शनी'];
             const container = document.getElementById('news-container');
+            const newsSection = document.getElementById('news-section');
+            const newsLink = document.getElementById('news-link');
 
             async function fetchAndProcessFeeds() {
+                container.innerHTML = ''; // Clear previous news
                 for (const url of feedUrls) {
                     try {
                         const response = await fetch(url);
@@ -151,7 +154,11 @@
                 }
             }
 
-            fetchAndProcessFeeds();
+            newsLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                newsSection.style.display = 'block'; // Show the news section
+                fetchAndProcessFeeds(); // Fetch and display news
+            });
         });
     </script>
 </body>
