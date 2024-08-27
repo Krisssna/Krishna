@@ -6,55 +6,50 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Krishna Niraula Official Website</title>
-    <!-- Favicon -->
+    <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
-    <!-- Custom CSS for cards -->
     <style>
-        body {
-            background-color: #f8f9fa; /* Light gray background for the entire page */
-        }
-        .masthead {
-            background-color: white; /* Ensure the masthead background is white */
-            padding-bottom: 1rem;
-        }
+        /* Additional CSS for card view */
         .card-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
-            padding: 1rem;
-            background-color: white; /* White background for the news section */
-            border-top: 1px solid #ddd; /* Optional border to separate news from top bar */
+            gap: 16px;
+            padding: 20px;
         }
         .card {
-            background-color: white;
+            background: white;
             border: 1px solid #ddd;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 300px;
-            overflow: hidden;
-            text-align: left;
-        }
-        .card-content {
-            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: calc(33.333% - 16px);
+            padding: 16px;
+            box-sizing: border-box;
         }
         .card-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            font-weight: bold;
+            font-size: 18px;
+            margin: 0 0 8px;
         }
         .card-description {
-            font-size: 1rem;
-            color: #555;
-            max-height: 6rem; /* Approx 5 lines */
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.2rem; /* Line height to control the number of lines */
+            font-size: 14px;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .card {
+                width: calc(50% - 16px);
+            }
+        }
+        @media (max-width: 480px) {
+            .card {
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -79,10 +74,8 @@
     </header>
 
     <!-- News Section -->
-    <section id="news-section" style="display: none;">
-        <div id="news-container" class="card-container">
-            <!-- News cards will be injected here -->
-        </div>
+    <section id="news-section" style="display:none;">
+        <div class="card-container"></div>
     </section>
 
     <!-- Footer -->
@@ -99,74 +92,74 @@
         </div>
     </footer>
 
-    <!-- Bootstrap core JS -->
+    <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS -->
+    <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-
-    <!-- JavaScript to handle News feed -->
+    <!-- JavaScript to Fetch and Display RSS Feeds -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const feedUrls = [
+        document.addEventListener("DOMContentLoaded", function() {
+            const rssUrls = [
                 'https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491',
                 'https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019',
                 'https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885',
                 'https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893'
             ];
-            const excludeWords = ['महोत्सव', 'उत्सव', 'प्रतियोगिता', 'प्रदर्शनी'];
-            const container = document.getElementById('news-container');
-            const newsSection = document.getElementById('news-section');
-            const newsLink = document.getElementById('news-link');
 
-            async function fetchAndProcessFeeds() {
-                container.innerHTML = ''; // Clear previous news
-                for (const url of feedUrls) {
-                    try {
-                        const response = await fetch(url);
-                        const text = await response.text();
-                        const data = new window.DOMParser().parseFromString(text, "text/xml");
-                        const items = data.querySelectorAll("item");
-                        items.forEach(item => {
-                            const title = item.querySelector("title").textContent;
-                            const description = item.querySelector("description").textContent;
-                            const link = item.querySelector("link").textContent;
+            const excludedWords = ['महोत्सव', 'उत्सव', 'प्रतियोगिता', 'प्रदर्शनी'];
+            const corsProxy = 'https://cors-anywhere.herokuapp.com/'; // Use a CORS proxy for testing
 
-                            // Exclude items containing certain words
-                            if (!excludeWords.some(word => title.includes(word) || description.includes(word))) {
+            document.getElementById('news-link').addEventListener('click', function(event) {
+                event.preventDefault();
+                fetchNews();
+            });
+
+            function fetchNews() {
+                const cardContainer = document.querySelector('.card-container');
+                cardContainer.innerHTML = '';
+                document.getElementById('news-section').style.display = 'block';
+
+                rssUrls.forEach(url => {
+                    fetch(corsProxy + url)
+                        .then(response => response.text())
+                        .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+                        .then(data => {
+                            const items = data.querySelectorAll('item');
+                            items.forEach(item => {
+                                const title = item.querySelector('title').textContent;
+                                const description = item.querySelector('description').textContent;
+
+                                // Exclude items containing certain Nepali words
+                                if (excludedWords.some(word => title.includes(word) || description.includes(word))) {
+                                    return;
+                                }
+
+                                // Create card element
                                 const card = document.createElement('div');
                                 card.classList.add('card');
 
-                                // Truncate description to fit 5 lines
-                                const maxLength = 1000; // Adjust as necessary to ensure 5 lines
-                                const truncatedDescription = description.length > maxLength
-                                    ? description.slice(0, maxLength) + '...'
-                                    : description;
+                                const cardContent = document.createElement('div');
+                                cardContent.classList.add('card-content');
 
-                                const cardContent = `
-                                    <a href="${link}" target="_blank">
-                                        <div class="card-content">
-                                            <h3 class="card-title">${title}</h3>
-                                            <p class="card-description">${truncatedDescription}</p>
-                                        </div>
-                                    </a>
-                                `;
+                                const cardTitle = document.createElement('h3');
+                                cardTitle.classList.add('card-title');
+                                cardTitle.textContent = title;
 
-                                card.innerHTML = cardContent;
-                                container.appendChild(card);
-                            }
-                        });
-                    } catch (error) {
-                        console.error('Error fetching RSS feed:', error);
-                    }
-                }
+                                const cardDescription = document.createElement('p');
+                                cardDescription.classList.add('card-description');
+                                cardDescription.textContent = description.substring(0, 300) + '...'; // Limit to 5 lines or 300 characters
+
+                                cardContent.appendChild(cardTitle);
+                                cardContent.appendChild(cardDescription);
+                                card.appendChild(cardContent);
+
+                                cardContainer.appendChild(card);
+                            });
+                        })
+                        .catch(error => console.error('Error fetching RSS feed:', error));
+                });
             }
-
-            newsLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                newsSection.style.display = 'block'; // Show the news section
-                fetchAndProcessFeeds(); // Fetch and display news
-            });
         });
     </script>
 </body>
