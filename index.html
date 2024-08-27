@@ -15,11 +15,20 @@
     <link href="css/styles.css" rel="stylesheet" />
     <!-- Custom CSS for cards -->
     <style>
+        body {
+            background-color: #f8f9fa; /* Light gray background for the entire page */
+        }
+        .masthead {
+            background-color: white; /* Ensure the masthead background is white */
+            padding-bottom: 1rem;
+        }
         .card-container {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
             padding: 1rem;
+            background-color: white; /* White background for the news section */
+            border-top: 1px solid #ddd; /* Optional border to separate news from top bar */
         }
         .card {
             background-color: white;
@@ -70,8 +79,7 @@
     </header>
 
     <!-- News Section -->
-    <section id="news-section" class="container" style="display: none;">
-        <h2 class="text-center mb-4">Latest News</h2>
+    <section id="news-section" style="display: none;">
         <div id="news-container" class="card-container">
             <!-- News cards will be injected here -->
         </div>
