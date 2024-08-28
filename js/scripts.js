@@ -51,7 +51,7 @@ function displayNotices() {
         const noticeDiv = document.createElement('div');
         noticeDiv.className = 'notice-card';
         noticeDiv.innerHTML = `
-            <h3>${notice.title}</h3>
+            <h3>${title}</h3>
             <p>${notice.content}</p>
         `;
         noticesContainer.appendChild(noticeDiv);
@@ -62,10 +62,10 @@ document.querySelector('nav ul li a[href="#news"]').addEventListener('click', fu
     // Show the "News" section and hide the "Notices" section
     document.getElementById('news-container').style.display = 'block';
     document.getElementById('notices-container').style.display = 'none';
-    fetchNews('https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491');
-    fetchNews('https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019');
-    fetchNews('https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885');
-    fetchNews('https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893');
+   // fetchNews('https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491');
+   // fetchNews('https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019');
+   // fetchNews('https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885');
+   // fetchNews('https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893');
 });
 
 document.querySelector('nav ul li a[href="#notices"]').addEventListener('click', function() {
