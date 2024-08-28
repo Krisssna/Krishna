@@ -1,5 +1,5 @@
 function fetchNews(url) {
-    const proxyUrl = 'http://server8.kproxy.com/';
+    const proxyUrl = 'https://server8.kproxy.com/';
     fetch(proxyUrl + url)
         .then(response => response.text())
         .then(data => {
