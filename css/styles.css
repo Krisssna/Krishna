@@ -44,25 +44,6 @@ nav ul li a:hover {
     border-radius: 50%;
 }
 
-/* Top Row Styles */
-.top-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.top-section {
-    width: 48%;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 5px;
-}
-
-.top-section h2 {
-    margin-top: 0;
-}
-
 /* Footer Styles */
 .footer {
     background-color: white;
@@ -91,68 +72,51 @@ nav ul li a:hover {
     font-weight: bold;
 }
 
-/* New styles for the link grid */
+/* Updated footer link grid */
 .footer .link-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
-    align-items: center;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(2, auto); /* 2 rows */
+    grid-gap: 10px; /* Spacing between items */
+    justify-items: center; /* Center items horizontally */
 }
 
-.footer .link-grid li {
-    list-style: none;
-    text-align: center;
-}
-
+/* Ensure responsiveness */
 @media (max-width: 768px) {
-    /* Adjust navigation for mobile */
-    nav ul {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    nav ul li {
-        margin: 10px 0;
-    }
-
-    /* Adjust masthead padding for mobile */
-    .masthead {
-        padding: 30px 0;
-    }
-
-    /* Reduce avatar size on mobile */
-    .masthead-avatar {
-        width: 100px;
-        height: 100px;
-    }
-
-    /* Adjust footer navigation for mobile */
-    .footer nav ul {
-        flex-direction: column;
-    }
-
-    .footer nav ul li {
-        margin: 5px 0;
-    }
-
-    /* Adjust link grid for mobile */
     .footer .link-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Adjust top row for mobile */
-    .top-row {
-        flex-direction: column;
-    }
-
-    .top-section {
-        width: 100%;
-        margin-bottom: 20px;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+        grid-template-rows: repeat(3, auto); /* 3 rows */
     }
 }
 
+/* News Card Styles */
+.news-card {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.news-card h3 {
+    margin-top: 0;
+}
+
+.news-card p {
+    margin: 0;
+}
+
+/* Notice Card Styles */
+.notice-card {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+/* Masthead adjustments */
 @media (min-width: 769px) {
-    /* Styles specifically for larger screens, if needed */
     .masthead-avatar {
         width: 200px;
         height: 200px;
