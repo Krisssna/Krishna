@@ -70,7 +70,7 @@ document.querySelector('nav ul li a[href="#news"]').addEventListener('click', fu
 
 document.querySelector('nav ul li a[href="#notices"]').addEventListener('click', function() {
     // Show the "Notices" section and hide the "News" section
-    document.getElementById('notices-container').style.display = 'block';
-    document.getElementById('news-container').style.display = 'none';
-    displayNotices();
+    //document.getElementById('notices-container').style.display = 'block';
+    //document.getElementById('news-container').style.display = 'none';
+    //displayNotices();
 });
