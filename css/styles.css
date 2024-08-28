@@ -146,3 +146,9 @@ nav ul li a:hover {
 .news-card p {
     margin: 0;
 }
+
+/* ... existing styles ... */
+
+/* New styles for the notice container */
+#notices-container {
+    display: none; /* Initially hide the notices section */
