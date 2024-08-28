@@ -33,13 +33,13 @@ function fetchNews(url) {
     .catch(error => console.error('Error fetching news:', error));
 }
 
-document.querySelector('nav ul li a[href="#news"]').addEventListener('click', function() {
-  const feedLinks = [
-    'https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491',
-    'https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019',
-    'https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885',
-    'https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893'
+// document.querySelector('nav ul li a[href="#news"]').addEventListener('click', function() {
+  // const feedLinks = [
+  //  'https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491',
+  //  'https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019',
+  //  'https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885',
+  //  'https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893'
   ];
 
-  feedLinks.forEach(fetchNews);
+  //feedLinks.forEach(fetchNews);
 });
