@@ -1,12 +1,22 @@
 function fetchNews(url) {
   fetch(url)
-    .then(response => response.text())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch news: ${response.status} ${response.statusText}`);
+      }
+      return response.text();
+    })
     .then(data => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const items = xmlDoc.getElementsByTagName('item');
 
       newsContainer.innerHTML = ''; // Clear previous news
+
+      if (items.length === 0) {
+        console.warn('No news items found in the feed');
+        return;
+      }
 
       for (let i = 0; i < items.length; i++) {
         const title = items[i].getElementsByTagName('title')[0].textContent;
