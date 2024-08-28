@@ -72,7 +72,19 @@ nav ul li a:hover {
     font-weight: bold;
 }
 
-/* Responsive Design */
+/* New styles for the link grid */
+.footer .link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create 3 columns */
+    grid-gap: 10px; /* Add spacing between columns and rows */
+    align-items: center; /* Center items vertically */
+}
+
+.footer .link-grid li {
+    list-style: none;
+    text-align: center;
+}
+
 @media (max-width: 768px) {
     /* Adjust navigation for mobile */
     nav ul {
@@ -102,6 +114,11 @@ nav ul li a:hover {
 
     .footer nav ul li {
         margin: 5px 0;
+    }
+
+    /* Adjust link grid for mobile */
+    .footer .link-grid {
+        grid-template-columns: 1fr; /* One column for smaller screens */
     }
 }
 
