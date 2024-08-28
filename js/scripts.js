@@ -1,8 +1,5 @@
 function fetchNews(url) {
-  // const proxyUrl = 'https://server8.kproxy.com/'; 
-  const httpsUrl = url.replace('http://', 'https://'); // Replace http with https
-
-  fetch(Url)
+  fetch(url)
     .then(response => response.text())
     .then(data => {
       const parser = new DOMParser();
@@ -32,8 +29,13 @@ function fetchNews(url) {
 }
 
 document.querySelector('nav ul li a[href="#news"]').addEventListener('click', function() {
-  fetchNews('https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491');
-  fetchNews('https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019');
-  fetchNews('https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885');
-  fetchNews('https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893');
+  const url1 = 'https://www.google.com/alerts/feeds/17248606588752154671/17646417480729972491';
+  const url2 = 'https://www.google.com/alerts/feeds/06313983183609550648/13722836873792678019';
+  const url3 = 'https://www.google.com/alerts/feeds/17248606588752154671/15089319890734284885';
+  const url4 = 'https://www.google.com/alerts/feeds/06313983183609550648/16120492411931428893';
+
+  fetchNews(url1);
+  fetchNews(url2);
+  fetchNews(url3);
+  fetchNews(url4);
 });
