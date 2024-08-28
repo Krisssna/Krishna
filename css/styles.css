@@ -44,6 +44,25 @@ nav ul li a:hover {
     border-radius: 50%;
 }
 
+/* Top Row Styles */
+.top-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.top-section {
+    width: 48%;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.top-section h2 {
+    margin-top: 0;
+}
+
 /* Footer Styles */
 .footer {
     background-color: white;
@@ -75,9 +94,9 @@ nav ul li a:hover {
 /* New styles for the link grid */
 .footer .link-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Create 3 columns */
-    grid-gap: 10px; /* Add spacing between columns and rows */
-    align-items: center; /* Center items vertically */
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    align-items: center;
 }
 
 .footer .link-grid li {
@@ -118,7 +137,17 @@ nav ul li a:hover {
 
     /* Adjust link grid for mobile */
     .footer .link-grid {
-        grid-template-columns: 1fr; /* One column for smaller screens */
+        grid-template-columns: 1fr;
+    }
+
+    /* Adjust top row for mobile */
+    .top-row {
+        flex-direction: column;
+    }
+
+    .top-section {
+        width: 100%;
+        margin-bottom: 20px;
     }
 }
 
@@ -129,26 +158,3 @@ nav ul li a:hover {
         height: 200px;
     }
 }
-
-/* News Card Styles */
-.news-card {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.news-card h3 {
-    margin-top: 0;
-}
-
-.news-card p {
-    margin: 0;
-}
-
-/* ... existing styles ... */
-
-/* New styles for the notice container */
-#notices-container {
-    display: none; /* Initially hide the notices section */
