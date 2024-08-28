@@ -1,81 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Krishna Niraula Official Website</title>
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet"
-        type="text/css" />
-    <link href="css/styles.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krishna Niraula</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#notices">Notices</a></li>
+        </ul>
+    </nav>
 
-<body id="page-top">
-    <header class="masthead bg-primary text-white text-center">
-        <div class="container d-flex align-items-center flex-column">
-            <nav>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#news">News</a></li>
-                    <li><a href="#notices">Notices</a></li>
-                </ul>
-            </nav>
-            <div class="top-row">
-                <section id="news-container" class="top-section">
-                    <h2>News</h2>
-                    <div id="news-items"></div>
-                </section>
-
-                <section id="notices-container" class="top-section">
-                    <h2>Notices</h2>
-                    <div id="notice-items"></div>
-                </section>
-            </div>
-            <img class="masthead-avatar mb-5" src="assets/img/avataaars.svg" alt="Avatar" />
-            <h1 class="masthead-heading text-uppercase mb-0">Krishna Niraula</h1>
-            <p class="masthead-subheading font-weight-light mb-0">Construction Field</p>
-        </div>
+    <!-- Masthead (Updated: Removed extra News and Notices text) -->
+    <header class="masthead">
+        <img src="avatar.png" alt="Avatar" class="masthead-avatar">
+        <h1>Krishna Niraula</h1>
+        <p>Construction Field</p>
     </header>
 
-    <section id="home" class="container mt-5">
-        <h2>Welcome!</h2>
-        <p>This is the home section of my website.</p>
+    <!-- Main Content -->
+    <section id="news">
+        <div class="news-card">
+            <h3>News Title</h3>
+            <p>This is a short description of the news.</p>
+        </div>
     </section>
 
-    <footer class="footer bg-dark text-white text-center">
-        <div class="container">
-            <nav>
-                <ul>
-                    <li><a href="https://www.youtube.com/channel/UCPbDP8eqd_jk322NNMvYZ0g/featured"><i
-                                class="fab fa-youtube"></i></a></li>
-                    <li><a href="https://www.facebook.com/0kisn"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="https://500px.com/p/0kisn"><i class="fab fa-500px"></i></a></li>
-                </ul>
-            </nav>
-            <p>© 2021 Krishna Niraula</p>
-            <div class="link-grid">
-                <h2>Helpful Links</h2>
-                <ul>
-                    <li><a href="https://ppmo.gov.np/">PPMO</a></li>
-                    <li><a href="https://www.ocr.gov.np/">OCR</a></li>
-                    <li><a href="https://ird.gov.np/">IRD</a></li>
-                    <li><a href="https://www.nrb.org.np/">NRB</a></li>
-                    <li><a href="https://noc.org.np/diesel">Diesel Rate</a></li>
-                    <li><a href="https://www.dor.gov.np/home">DOR</a></li>
-                </ul>
-            </div>
+    <section id="notices">
+        <div class="notice-card">
+            <h3>Notice Title</h3>
+            <p>This is a short description of the notice.</p>
         </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <nav>
+            <ul class="link-grid">
+                <li><a href="https://www.ppmo.gov.np/">PPMO</a></li>
+                <li><a href="https://www.ocr.gov.np/">OCR</a></li>
+                <li><a href="https://www.ird.gov.np/">IRD</a></li>
+                <li><a href="https://www.nrb.org.np/">NRB</a></li>
+                <li><a href="https://noc.org.np/diesel">Diesel Rate</a></li>
+                <li><a href="https://www.dor.gov.np/home">DOR</a></li>
+            </ul>
+        </nav>
+        <p>© 2021 Krishna Niraula</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
