@@ -1,6 +1,6 @@
 function fetchNews(url) {
   // const proxyUrl = 'https://server8.kproxy.com/'; 
- // const httpsUrl = url.replace('http://', 'https://'); // Replace http with https
+  const httpsUrl = url.replace('http://', 'https://'); // Replace http with https
 
   fetch(Url)
     .then(response => response.text())
