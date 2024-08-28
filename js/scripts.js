@@ -21,8 +21,8 @@ function fetchNews(url) {
                 const description = items[i].getElementsByTagName('description')[0].textContent;
 
                 // Exclude certain words in Nepali
-                const excludedWords = ['महोत्सब', 'उत्सव', 'प्रतियोगिता', 'प्रदर्शनी'];
-                if (!excludedWords.some(word => title.includes(word) || description.includes(word))) {
+              //  const excludedWords = ['महोत्सब', 'उत्सव', 'प्रतियोगिता', 'प्रदर्शनी'];
+               // if (!excludedWords.some(word => title.includes(word) || description.includes(word))) {
                     const card = document.createElement('div');
                     card.className = 'news-card';
                     card.innerHTML = `
