@@ -6,10 +6,18 @@ document.addEventListener("DOMContentLoaded", function () {
         event.preventDefault();
 
         fetch(proxyUrl)
-            .then(response => response.text())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok (status ${response.status})`);
+                }
+                return response.text();
+            })
             .then(data => {
                 document.getElementById('news').innerHTML = data;
             })
-            .catch(error => console.error('Error fetching the news:', error));
+            .catch(error => {
+                console.error('Error fetching the news:', error);
+                document.getElementById('news').innerHTML = 'Error fetching news. Please try again later.';
+            });
     });
 });
