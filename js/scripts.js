@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const newsLink = document.querySelector('nav ul li a[href="news"]');
-    const proxyUrl = "https://script.google.com/macros/s/AKfycbzy6mqElWH4GOFQARZ92RNwb5tG69vQKtT0z-_FEwI9sbObTfS8GCXZpMoOJFi-O6V00A/exec";
+    const newsLink = document.querySelector('nav ul li a[href="#news"]');
+    const proxyUrl = "https://script.google.com/macros/s/AKfycbyp8jBa0QCCaBNc0GPDYjtlQIejSFulQUJWJ140KP1KefY8rJYbSoc4x060V6X5Fmhekw/exec";
 
     newsLink.addEventListener('click', function (event) {
         event.preventDefault();
@@ -13,7 +13,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.text();
             })
             .then(data => {
-                document.getElementById('news').innerHTML = data;
+                // Parse the XML data
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data, "text/xml");
+
+                // Extract and clean the relevant news entries
+                let newsContent = "";
+                const entries = xmlDoc.getElementsByTagName("entry");
+
+                for (let i = 0; i < entries.length; i++) {
+                    const title = entries[i].getElementsByTagName("title")[0].textContent;
+                    const link = entries[i].getElementsByTagName("link")[0].getAttribute("href");
+
+                    // Construct a clean list of news items
+                    newsContent += `<p><a href="${link}" target="_blank">${title}</a></p>`;
+                }
+
+                // Inject the clean news content into the #news section
+                document.getElementById('news').innerHTML = newsContent;
             })
             .catch(error => {
                 console.error('Error fetching the news:', error);
