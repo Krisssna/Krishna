@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const newsLink = document.querySelector('nav ul li a[href="#news"]');
+    const newsLink = document.querySelector('nav ul li a[href="news"]'); // Updated selector
     const proxyUrl = "https://script.google.com/macros/s/AKfycbyp8jBa0QCCaBNc0GPDYjtlQIejSFulQUJWJ140KP1KefY8rJYbSoc4x060V6X5Fmhekw/exec";
 
     newsLink.addEventListener('click', function (event) {
