@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const proxyUrl = "https://script.google.com/macros/s/AKfycbyp8jBa0QCCaBNc0GPDYjtlQIejSFulQUJWJ140KP1KefY8rJYbSoc4x060V6X5Fmhekw/exec";
+    const proxyUrl = " https://google.com";
+
+//https://script.google.com/macros/s/AKfycbyp8jBa0QCCaBNc0GPDYjtlQIejSFulQUJWJ140KP1KefY8rJYbSoc4x060V6X5Fmhekw/exec
 
     // Fetch and display news content when the page loads
     fetch(proxyUrl)
