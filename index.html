@@ -16,19 +16,16 @@
         </ul>
     </nav>
 
-    <!-- Masthead (Updated: Removed extra News and Notices text) -->
     <header class="masthead">
         <img src="assets/img/avataaars.svg" alt="Avatar" class="masthead-avatar">
         <h1>Krishna Niraula</h1>
         <p>Personal Space</p>
     </header>
 
-    <!-- Main Content -->
     <main>
         <p></p>
     </main>
 
-    <!-- Footer -->
     <footer class="footer">
         <nav>
             <ul class="link-grid">
@@ -40,19 +37,20 @@
                 <li><a href="https://www.dor.gov.np/home">DOR</a></li>
             </ul>
         </nav>
-        <p>© 2021 Krishna Niraula</p>
+        <p>© 2024 Krishna Niraula</p>
     </footer>
- <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker
-    .register("/service-worker.js")
-    .then(function(registration) {
-      console.log("Service Worker registered with scope:", registration.scope);
-    })
-    .catch(function(error) {
-      console.error("Service Worker registration failed:", error);
-    });
-}
- </script>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function(registration) {
+                console.log("Service Worker registered with scope:", registration.scope);
+            })
+            .catch(function(error) {
+                console.error("Service Worker registration failed:", error);
+            });
+        }
+    </script>
 </body>
 </html>
