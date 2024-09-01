@@ -45,15 +45,18 @@
             </div>
 
             <div class="home__social">
-                <a href="https://krisssna.github.io/RSS-Feed-Reader/feed.html#construction-news" class="home__social-icon" data-type="construction-news"><i class='bx bx-building-house'></i>
+                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#construction-news" data-type="construction-news"><i class='bx bx-building-house'></i>
                 <span style="margin-left: 6px;">Construction News</span></a>
-                <a href="https://krisssna.github.io/RSS-Feed-Reader/feed.html#share-market" class="home__social-icon" data-type="share-market"><i class='bx bx-trending-up'></i>
+                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#share-market" data-type="share-market"><i class='bx bx-trending-up'></i>
                 <span style="margin-left: 6px;">Share Market</span></a>
-                <a href="https://krisssna.github.io/RSS-Feed-Reader/feed.html#nepali-news" class="home__social-icon" data-type="nepali-news"><i class='bx bx-current-location' ></i>
+                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#nepali-news" data-type="nepali-news"><i class='bx bx-current-location' ></i>
                 <span style="margin-left: 6px;">Nepali News</span></a>
             </div>
 
-            <iframe name="content-frame" style="width: 100%; height: 500px; border: none;"></iframe>
+            <div class="news-box" style="display:none;">
+                <iframe id="news-content" style="width:100%; height:100%; border:none;"></iframe>
+                <button id="back-button" class="button">Back</button>
+            </div>
         </section>
 
         <!--===== ABOUT =====-->
@@ -191,30 +194,48 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Create the news box element
             const newsBox = document.createElement('div');
-            newsBox.classList.add('news-box');
+            newsBox.className = 'news-box';
+            newsBox.style.position = 'fixed';
+            newsBox.style.top = '0';
+            newsBox.style.left = '0';
+            newsBox.style.width = '100%';
+            newsBox.style.height = '100%';
+            newsBox.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            newsBox.style.color = '#fff';
+            newsBox.style.zIndex = '1000';
             newsBox.style.display = 'none'; // Initially hidden
+            newsBox.style.overflow = 'auto'; // Allows scrolling if needed
+
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '90%';
+            iframe.style.border = 'none';
+            newsBox.appendChild(iframe);
+
+            const backButton = document.createElement('button');
+            backButton.id = 'back-button';
+            backButton.className = 'button';
+            backButton.textContent = 'Back';
+            newsBox.appendChild(backButton);
+
             document.body.appendChild(newsBox);
 
-            // Function to handle news link clicks
             function handleNewsLinkClick(event) {
                 event.preventDefault();
-                const type = this.dataset.type;
-                // Load content based on the link clicked
-                document.querySelector('.news-box').innerHTML = `<iframe src="https://krisssna.github.io/RSS-Feed-Reader/feed.html#${type}" style="width:100%; height:100%; border:none;"></iframe>`;
-                document.querySelector('.news-box').style.display = 'block'; // Show news box
+                const url = this.dataset.url;
+                iframe.src = url;
+                newsBox.style.display = 'block'; // Show news box
                 document.querySelector('main').style.display = 'none'; // Hide main content
+                window.open(url, '_blank'); // Open actual news article in a new tab
             }
 
-            // Add click event listeners to news links
             document.querySelectorAll('.home__social-icon').forEach(link => {
                 link.addEventListener('click', handleNewsLinkClick);
             });
 
-            // Handle back button
-            document.querySelector('.news-box').addEventListener('click', function() {
-                this.style.display = 'none'; // Hide news box
+            backButton.addEventListener('click', function() {
+                newsBox.style.display = 'none'; // Hide news box
                 document.querySelector('main').style.display = 'block'; // Show main content
             });
         });
