@@ -214,10 +214,13 @@
                 event.preventDefault();
                 const url = this.dataset.url;
 
-                // Open the actual news article in a new tab
-                window.open(url, '_blank');
+                // Load the news page inside the iframe
+                iframe.src = url;
 
-                // Load a placeholder or message in the iframe
+                // Open the actual news article in a new tab
+                window.open(url, '_blank', 'noopener');
+
+                // Load a placeholder or message in the iframe (can be delete)
                 iframe.src = ''; // Clear iframe content
                 iframe.contentDocument.body.innerHTML = '<p>Loading preview...</p>';
 
