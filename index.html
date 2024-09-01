@@ -3,22 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="assets/css/styles.css">
-
-    <!-- =====BOX ICONS===== -->
     <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
-
     <title>Krishna's Space</title>
+    <style>
+        .news-box {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            z-index: 1000;
+            display: none; /* Initially hidden */
+            overflow: auto; /* Allows scrolling if needed */
+        }
+        .news-box iframe {
+            width: 100%;
+            height: 90%;
+            border: none;
+        }
+        .news-box button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <!--===== HEADER =====-->
     <header class="l-header">
         <nav class="nav bd-grid">
             <div>
                 <a href="#" class="nav__logo">Krishna</a>
             </div>
-
             <div class="nav__menu" id="nav-menu">
                 <ul class="nav__list">
                     <li class="nav__item"><a href="#home" class="nav__link active">Home</a></li>
@@ -28,7 +50,6 @@
                     <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
                 </ul>
             </div>
-
             <div class="nav__toggle" id="nav-toggle">
                 <i class='bx bx-menu'></i>
             </div>
@@ -36,28 +57,22 @@
     </header>
 
     <main class="l-main">
-        <!--===== HOME =====-->
         <section class="home bd-grid" id="home">
             <div class="home__data">
                 <h1 class="home__title">Hi,<br>This page is<span class="home__title-color">UNDER CONSTRUCTION</span><br>Testing Testing Testing</h1>
-
                 <a href="#" class="button">News are here</a>
             </div>
-
             <div class="home__social">
-                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#construction-news" data-type="construction-news"><i class='bx bx-building-house'></i>
-                <span style="margin-left: 6px;">Construction News</span></a>
-                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#share-market" data-type="share-market"><i class='bx bx-trending-up'></i>
-                <span style="margin-left: 6px;">Share Market</span></a>
-                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#nepali-news" data-type="nepali-news"><i class='bx bx-current-location' ></i>
-                <span style="margin-left: 6px;">Nepali News</span></a>
+                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#construction-news" data-type="construction-news"><i class='bx bx-building-house'></i><span style="margin-left: 6px;">Construction News</span></a>
+                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#share-market" data-type="share-market"><i class='bx bx-trending-up'></i><span style="margin-left: 6px;">Share Market</span></a>
+                <a href="#" class="home__social-icon" data-url="https://krisssna.github.io/RSS-Feed-Reader/feed.html#nepali-news" data-type="nepali-news"><i class='bx bx-current-location'></i><span style="margin-left: 6px;">Nepali News</span></a>
             </div>
-
-            <div class="news-box" style="display:none;">
-                <iframe id="news-content" style="width:100%; height:100%; border:none;"></iframe>
-                <button id="back-button" class="button">Back</button>
+            <div class="news-box">
+                <iframe id="news-content"></iframe>
+                <button id="back-button">Back</button>
             </div>
         </section>
+      
 
         <!--===== ABOUT =====-->
         <section class="about section" id="about">
@@ -176,7 +191,7 @@
     </main>
 
     <!--===== FOOTER =====-->
-    <footer class="footer">
+     <footer class="footer">
         <p class="footer__title">Krishna</p>
         <div class="footer__social">
             <a href="https://www.facebook.com/0kisn/" class="footer__icon"><i class='bx bxl-facebook'></i></a>
@@ -186,48 +201,29 @@
         <p class="footer__copy">&#169; made with Bedimcode. All rights reserved</p>
     </footer>
 
-    <!--===== SCROLL REVEAL =====-->
     <script src="https://unpkg.com/scrollreveal"></script>
-
-    <!--===== MAIN JS =====-->
     <script src="assets/js/main.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const newsBox = document.createElement('div');
-            newsBox.className = 'news-box';
-            newsBox.style.position = 'fixed';
-            newsBox.style.top = '0';
-            newsBox.style.left = '0';
-            newsBox.style.width = '100%';
-            newsBox.style.height = '100%';
-            newsBox.style.backgroundColor = 'rgba(0,0,0,0.8)';
-            newsBox.style.color = '#fff';
-            newsBox.style.zIndex = '1000';
-            newsBox.style.display = 'none'; // Initially hidden
-            newsBox.style.overflow = 'auto'; // Allows scrolling if needed
-
-            const iframe = document.createElement('iframe');
-            iframe.style.width = '100%';
-            iframe.style.height = '90%';
-            iframe.style.border = 'none';
-            newsBox.appendChild(iframe);
-
-            const backButton = document.createElement('button');
-            backButton.id = 'back-button';
-            backButton.className = 'button';
-            backButton.textContent = 'Back';
-            newsBox.appendChild(backButton);
-
-            document.body.appendChild(newsBox);
+            const newsBox = document.querySelector('.news-box');
+            const iframe = document.querySelector('#news-content');
+            const backButton = document.querySelector('#back-button');
 
             function handleNewsLinkClick(event) {
                 event.preventDefault();
                 const url = this.dataset.url;
-                iframe.src = url;
-                newsBox.style.display = 'block'; // Show news box
+
+                // Open the actual news article in a new tab
+                window.open(url, '_blank');
+
+                // Load a placeholder or message in the iframe
+                iframe.src = ''; // Clear iframe content
+                iframe.contentDocument.body.innerHTML = '<p>Loading preview...</p>';
+
+                // Show the news box
+                newsBox.style.display = 'block';
                 document.querySelector('main').style.display = 'none'; // Hide main content
-                window.open(url, '_blank'); // Open actual news article in a new tab
             }
 
             document.querySelectorAll('.home__social-icon').forEach(link => {
