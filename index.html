@@ -46,15 +46,24 @@
 
                 <div class="home__social">
                     <a href="https://krisssna.github.io/RSS-Feed-Reader/feed.html#construction-news" class="home__social-icon" target="content-frame"><i class='bx bx-building-house'></i></a>
-                    <span style="margin-left: 8px;">Construction News</span>
+                    <span style="margin-left: 3px;">Construction News</span>
                     <a href="https://krisssna.github.io/RSS-Feed-Reader/feed.html#share-market" class="home__social-icon" target="content-frame"><i class='bx bx-trending-up'></i></a>
-                    <span style="margin-left: 8px;">Share Market</span>
+                    <span style="margin-left: 3px;">Share Market</span>
                     <a href="https://krisssna.github.io/RSS-Feed-Reader/feed.html#nepali-news" class="home__social-icon" target="content-frame"><i class='bx bx-current-location' ></i></a>
-                    <span style="margin-left: 8px;">Nepali News</span>
+                    <span style="margin-left: 3px;">Nepali News</span>
                 </div>
 
                 <iframe name="content-frame" style="width: 100%; height: 500px; border: none;"></iframe>
+                
+                <script>
+                    document.getElementById('content-frame').addEventListener('load', function() {
+                        const links = iframeDocument.querySelectorAll('a');
 
+                        links.forEach(link => {
+                            link.setAttribute('target, '_blank');
+                        });
+                    })
+                 </script>
                 <div class="home__img">
                     <svg class="home__blob" viewBox="0 0 479 467" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <mask id="mask0" mask-type="alpha">
