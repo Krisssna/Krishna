@@ -220,6 +220,55 @@ img {
   color: var(--second-color);
 }
 
+/* Ensure the news box is fullscreen and hidden by default */
+.news-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    display: none; /* Hidden by default */
+    overflow: auto; /* Allow scrolling if content overflows */
+}
+
+/* Style the iframe inside the news box */
+.news-box iframe {
+    width: 100%;
+    height: calc(100% - 40px); /* Adjust height to fit inside news box */
+    border: none;
+}
+
+/* Style the header of the news box */
+.news-box-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    z-index: 1001;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header title */
+.news-box-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+/* Header link */
+.news-box-header a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
 .home__social-icon:hover {
   color: var(--first-color);
 }
