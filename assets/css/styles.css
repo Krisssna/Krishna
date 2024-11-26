@@ -390,22 +390,49 @@ img {
 }
 
 /* ===== WORK =====*/
+/* Styling for Playlist Columns */
+.playlist-column {
+    flex: 1;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.playlist-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #333;
+}
+
+/* Scrollable Playlist Container */
+.playlist-scroll {
+    width: 100%;
+    height: 315px; /* Height for 3 thumbnails */
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.playlist-scroll iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Grid Layout */
 .work__container {
-  row-gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.work__img {
-  box-shadow: 0px 4px 25px rgba(14, 36, 49, 0.15);
-  border-radius: .5rem;
-  overflow: hidden;
-}
-
-.work__img img {
-  transition: 1s;
-}
-
-.work__img img:hover {
-  transform: scale(1.1);
+@media (max-width: 768px) {
+    .work__container {
+        flex-direction: column;
+    }
 }
 
 /* ===== CONTACT =====*/
