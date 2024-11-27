@@ -389,6 +389,66 @@ img {
   border-radius: .5rem;
 }
 
+/* ===== WORK ===== */
+.work {
+    &__container {
+        row-gap: 2rem;
+        overflow-y: scroll; /* Add scroll functionality */
+        max-height: 70vh; /* Limit height for scrollable area */
+    }
+
+    .playlist {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 1rem;
+        box-shadow: 0px 4px 25px rgba(14, 36, 49, 0.15);
+        border-radius: 0.5rem;
+        background-color: #fff;
+    }
+
+    .playlist__title {
+        margin-bottom: 1rem;
+        color: var(--first-color);
+        font-weight: var(--font-semi);
+        font-size: var(--h2-font-size);
+    }
+
+    .playlist__iframe {
+        width: 100%;
+        max-width: 560px;
+        height: 315px;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .playlist__button {
+        margin-top: 1rem;
+        background-color: var(--second-color);
+        color: #fff;
+        padding: 0.5rem 1rem;
+        font-weight: var(--font-semi);
+        border-radius: 0.25rem;
+        transition: 0.3s;
+    }
+
+    .playlist__button:hover {
+        background-color: var(--first-color);
+    }
+}
+
+/* Scrollbar customization (optional) */
+.work__container::-webkit-scrollbar {
+    width: 10px;
+}
+
+.work__container::-webkit-scrollbar-thumb {
+    background-color: var(--first-color);
+    border-radius: 5px;
+}
+
+
 /* ===== WORK =====*/
 /*.work__container {
   row-gap: 2rem;
