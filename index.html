@@ -160,30 +160,32 @@
             </section>
 
             <!--===== WORK =====-->
-            <section class="work section" id="work">
-                <h2 class="section-title">Work</h2>
+           <!--===== WORK =====-->
+<section class="work section" id="work">
+    <h2 class="section-title">Work</h2>
 
-                <div class="work__container bd-grid">
-                    <a href="" class="work__img">
-                        <img src="assets/img/work1.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work2.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work3.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work4.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work5.jpg" alt="">
-                    </a>
-                    <a href="" class="work__img">
-                        <img src="assets/img/work6.jpg" alt="">
-                    </a>
-                </div>
-            </section>
+    <div class="work__container bd-grid">
+        <!-- Playlist 1 -->
+        <div class="playlist">
+            <h3 class="playlist__title">Playlist 1</h3>
+            <iframe class="playlist__iframe" src="https://www.youtube.com/playlist?list=PLELAQjFzxU_4GG2BboKcbmknmN3IiqRiu" frameborder="0" allowfullscreen></iframe>
+            <button class="button playlist__button" onclick="loadMoreVideos('playlist1')">More Videos</button>
+        </div>
+        <!-- Playlist 2 -->
+        <div class="playlist">
+            <h3 class="playlist__title">Playlist 2</h3>
+            <iframe class="playlist__iframe" src="https://www.youtube.com/playlist?list=PLELAQjFzxU_4KIqHW9KzB58p-fCeZii8s" frameborder="0" allowfullscreen></iframe>
+            <button class="button playlist__button" onclick="loadMoreVideos('playlist2')">More Videos</button>
+        </div>
+        <!-- Playlist 3 -->
+        <div class="playlist">
+            <h3 class="playlist__title">Playlist 3</h3>
+            <iframe class="playlist__iframe" src="https://www.youtube.com/playlist?list=PLELAQjFzxU_5AqHyf_WGHxki_8J0aH8D0" frameborder="0" allowfullscreen></iframe>
+            <button class="button playlist__button" onclick="loadMoreVideos('playlist3')">More Videos</button>
+        </div>
+    </div>
+</section>
+
 
             <!--===== CONTACT =====-->
             <section class="contact section" id="contact">
