@@ -40,9 +40,17 @@ $(document).ready(function(){
     $('li.smooth-menu a:not([href^="http"])').bind("click", function(event) {
         event.preventDefault();
         var anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: $(anchor.attr('href')).offset().top - 0
-        }, 1200,'easeInOutExpo');
+        var target = $(anchor.attr('href')); // Check if target exists
+        if(target.length) { // If target exists, do smooth scroll
+            $('html, body').stop().animate({
+                scrollTop: target.offset().top - 0
+            }, 1200,'easeInOutExpo');
+        } else {
+            // If the target doesn't exist, log it - this might be an external link or link error
+            console.log("Link target not found in DOM, likely an external link or error in href.");
+            // Uncomment the below line if you want to stop navigation for non-existent internal links
+            // event.preventDefault();
+        }
     });
 
     // Allow external links to open normally
