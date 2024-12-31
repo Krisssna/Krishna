@@ -440,66 +440,39 @@
 
 		<script src="assets/js/jquery.js"></script>
         
-        <!--modernizr.min.js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-		
-		<!--bootstrap.min.js-->
-        <script src="assets/js/bootstrap.min.js"></script>
-		
-		<!-- bootsnav js -->
-		<script src="assets/js/bootsnav.js"></script>
-		
-		<!-- jquery.sticky.js -->
-		<script src="assets/js/jquery.sticky.js"></script>
-		
-		<!-- for progress bar start-->
-
-		<!-- progressbar js -->
-		<script src="assets/js/progressbar.js"></script>
-
-		<!-- appear js -->
-		<script src="assets/js/jquery.appear.js"></script>
-
-		<!-- for progress bar end -->
-
-		<!--owl.carousel.js-->
-        <script src="assets/js/owl.carousel.min.js"></script>
-
-
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-		
+<!--modernizr.min.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
         
-        <!--Custom JS-->
-        <script src="assets/js/custom.js"></script>
+<!--bootstrap.min.js-->
+<script src="assets/js/bootstrap.min.js"></script>
+        
+<!-- bootsnav js -->
+<script src="assets/js/bootsnav.js"></script>
+        
+<!-- jquery.sticky.js -->
+<script src="assets/js/jquery.sticky.js"></script>
+        
+<!-- for progress bar start-->
 
+<!-- progressbar js -->
+<script src="assets/js/progressbar.js"></script>
 
-	<script>
-        $(document).ready(function() {
-            // Hide all app sections initially
-            $('#Apps section').hide();
+<!-- appear js -->
+<script src="assets/js/jquery.appear.js"></script>
 
-            // Show the Apps section when clicking on 'Apps'
-            $('.smooth-menu a[href="#Apps"]').on('click', function(e) {
-                e.preventDefault();
-                $('#Apps').show();
-            });
+<!-- for progress bar end -->
 
-            // Show specific app details when clicking on app name
-            $('.smooth-menu a[href^="#"]').on('click', function(e) {
-                e.preventDefault();
-                var target = $(this).attr('href');
-                $('#Apps section').hide();
-                $(target).show();
-            });
+<!--owl.carousel.js-->
+<script src="assets/js/owl.carousel.min.js"></script>
 
-            // Optional: Hide the Apps section when clicking elsewhere
-            $(document).on('click', function(e) {
-                if (!$(e.target).closest('.smooth-menu').length) {
-                    $('#Apps').hide();
-                }
-            });
-        });
-    </script>	
+<!-- jQuery easing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        
+<!--Custom JS-->
+<script src="assets/js/custom.js"></script>
+
+<!-- New dropdown functionality -->
+<script src="assets/js/dropdown.js"></script>
 		
     </body>
 	
