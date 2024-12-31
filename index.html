@@ -96,7 +96,7 @@
 
 <!-- Apps Section -->
 <section id="Apps" style="display:none;">
-    <section id="abc">
+    <section id="abc" style="display: none;">
         <h2>Caputok</h2>
         <h3>Subheading 1</h3>
         <h3>Subheading 2</h3>
@@ -108,7 +108,7 @@
 	<a href="assets/apps/caputok/terms_of_use.html" target="_blank">Terms of Use</a>
     </section>
 
-	<section id="abc">
+	<section id="abc" style="display: none;">
  	<h2>ABC</h2>
             <h3>Subheading 1</h3>
             <h3>Subheading 2</h3>
@@ -119,8 +119,6 @@
             <a href="assets/Apps/ABC/privacy_policy.html" target="_blank">Privacy Policy</a>
             <a href="assets/Apps/ABC/terms_of_use.html" target="_blank">Terms of Use</a>
         </section>
-
-		
 </section>
 		
 		<!--welcome-hero start -->
@@ -483,7 +481,36 @@
         
         <!--Custom JS-->
         <script src="assets/js/custom.js"></script>
-        
+
+
+	<script>
+        $(document).ready(function() {
+            // Hide all app sections initially
+            $('#Apps section').hide();
+
+            // Show the Apps section when clicking on 'Apps'
+            $('.smooth-menu a[href="#Apps"]').on('click', function(e) {
+                e.preventDefault();
+                $('#Apps').show();
+            });
+
+            // Show specific app details when clicking on app name
+            $('.smooth-menu a[href^="#"]').on('click', function(e) {
+                e.preventDefault();
+                var target = $(this).attr('href');
+                $('#Apps section').hide();
+                $(target).show();
+            });
+
+            // Optional: Hide the Apps section when clicking elsewhere
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.smooth-menu').length) {
+                    $('#Apps').hide();
+                }
+            });
+        });
+    </script>	
+		
     </body>
 	
 </html>
