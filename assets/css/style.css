@@ -179,7 +179,65 @@ nav.navbar.bootsnav .navbar-toggle {
 }
 nav.navbar.bootsnav .navbar-toggle i{color: #d92cf9;}
 /*.navbar-toggle */
+/* Basic dropdown styling */
+.smooth-menu {
+    position: relative;
+    display: inline-block;
+}
 
+.smooth-menu > ul {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    padding: 0;
+    margin: 0;
+}
+
+.smooth-menu:hover > ul {
+    display: block;
+}
+
+.smooth-menu > ul li {
+    list-style-type: none;
+}
+
+.smooth-menu > ul li a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.smooth-menu > ul li a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Theme adaptation */
+body {
+    background-color: #f0f0f0; /* Light theme */
+    color: #333;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #333;
+        color: #f0f0f0;
+    }
+    .smooth-menu > ul {
+        background-color: #444;
+    }
+    .smooth-menu > ul li a {
+        color: #f0f0f0;
+    }
+    .smooth-menu > ul li a:hover {
+        background-color: #666;
+    }
+}
 
 
 /*-------------------------------------
