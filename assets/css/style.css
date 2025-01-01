@@ -177,24 +177,7 @@ nav.navbar.bootsnav .navbar-toggle i{color: #d92cf9;}
     display: block;
 }
 
-/* Style for nested dropdowns */
-.sub-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1001; /* Higher than main dropdown */
-    margin-left: 100%; /* Position to the right of parent */
-    top: 0;
-    left: 0;
-}
-
-.smooth-menu .dropdown-content li:hover .sub-dropdown-content {
-    display: block;
-}
-
-/* Ensure dropdowns appear on top of each other */
+/* Style for sub-headings */
 .smooth-menu .dropdown-content li {
     position: relative;
 }
@@ -210,13 +193,23 @@ nav.navbar.bootsnav .navbar-toggle i{color: #d92cf9;}
     background-color: #f1f1f1;
 }
 
-.smooth-menu .dropdown-content li .sub-dropdown-content li a {
-    padding: 10px 15px;
-    display: block;
+/* Style for sub-headings */
+.sub-headings {
+    margin-top: 5px; /* Small space above the sub-headings */
 }
 
-.smooth-menu .dropdown-content li .sub-dropdown-content li a:hover {
-    background-color: #f1f1f1;
+.subheading-link {
+    display: block; /* Makes each link a block element for stacking */
+    margin: 0;
+    font-size: 14px; /* Adjust as needed */
+    color: #333; /* Text color */
+    text-decoration: none; /* Remove underline */
+    padding: 5px 10px; /* Padding for better touch targets and visual separation */
+}
+
+.subheading-link:hover {
+    text-decoration: underline; /* Underline on hover for better UX */
+    background-color: #f1f1f1; /* Light background on hover */
 }
 
 /* Theme adaptation */
@@ -241,13 +234,10 @@ body {
     .smooth-menu .dropdown-content > li > a:hover {
         background-color: #666;
     }
-    .smooth-menu .dropdown-content li .sub-dropdown-content {
-        background-color: #555;
-    }
-    .smooth-menu .dropdown-content li .sub-dropdown-content li a {
+    .subheading-link {
         color: #f0f0f0;
     }
-    .smooth-menu .dropdown-content li .sub-dropdown-content li a:hover {
+    .subheading-link:hover {
         background-color: #777;
     }
 }
