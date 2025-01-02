@@ -1,0 +1,212 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+.nav-left {
+    font-size: 24px;
+}
+
+.nav-right {
+    position: relative;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#menu {
+    list-style: none;
+    display: none;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 220px;
+}
+
+#menu li {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+#menu li:hover {
+    background-color: #444;
+}
+
+.dropdown-content {
+    display: none;
+    position: relative;
+    background-color: #2e2d2d;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    position: right;
+}
+
+.dropdown-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content a {
+    color: #faf5f5;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #bdb5b5;
+}
+
+/* Main Section */
+main {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.intro {
+    flex: 1 1 100%;
+    padding-right: 20px;
+}
+
+.intro img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Gallery Styles */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.photo {
+    flex: 0 0 auto;
+    width: 150px; /* Fixed width for the photo */
+    display: flex;
+    flex-direction: column; /* Ensure the image and description stack vertically */
+    align-items: center;
+    text-align: center;
+}
+
+.photo img {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Ensures a 1:1 aspect ratio */
+    object-fit: cover; /* Crop the image to fit the container */
+    border-radius: 8px; /* Optional: Rounded corners */
+    background-color: #f3f3f3; /* Optional: Background color */
+}
+
+.photo p {
+    font-size: 14px;
+    color: #333;
+    margin-top: 8px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (min-width: 769px) {
+    .gallery {
+        flex-wrap: wrap;
+        flex-direction: row;
+        overflow-x: auto; /* Horizontal scroll for desktop */
+        max-width: 100%;
+    }
+
+    .photo {
+        margin: 10px; /* Adds space between items */
+    }
+}
+
+@media (max-width: 768px) {
+    .gallery {
+        flex-direction: row; /* Ensure horizontal layout for mobile */
+        flex-wrap: wrap; /* Allow items to wrap */
+        overflow-y: scroll; /* Enable vertical scrolling */
+        height: 100vh; /* Full screen height */
+    }
+
+    .photo {
+        width: calc(50% - 10px); /* Two columns in mobile */
+        margin: 5px 0;
+    }
+
+    /* Limit the total visible items to two rows */
+    .gallery {
+        max-height: calc(3 * 150px + 2 * 20px); /* 3 rows of 150px photos, with gap of 20px */
+    }
+}
+
+@media (max-width: 480px) {
+    .photo {
+        width: calc(100% - 20px); /* Single column for smaller screens */
+        margin: 10px auto; /* Center align for single-column layout */
+    }
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+.footer-links a {
+    color: white;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+/* Progress Bars */
+.skills .progress {
+    background-color: #ddd;
+    border-radius: 20px;
+    height: 20px;
+    overflow: hidden;
+    margin: 10px 0;
+    position: relative;
+}
+
+.skills .progress-bar {
+    background-color: #4caf50;
+    height: 100%;
+    width: 0; /* Default to 0% and animate later */
+    transition: width 1s ease-in-out; /* Smooth animation */
+}
+
+.skills h3 {
+    font-size: 14px;
+    color: #333;
+    margin: 5px 0 0;
+    text-align: right;
+}
