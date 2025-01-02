@@ -193,7 +193,7 @@ footer {
     border-radius: 0 20px;
     height: 20px;
     overflow: hidden;
-    margin: 10px 0;
+    margin: 10px 10px;
     position: relative;
 }
 
@@ -207,7 +207,7 @@ footer {
 .skills h3 {
     font-size: 14px;
     color: #333;
-    margin: 0 10px ;
+    margin: 5px 0 ;
     text-align: right;
 }
 
