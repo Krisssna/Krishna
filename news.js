@@ -1,9 +1,10 @@
-// Define two API URLs for rss2json and feed2json
-let rss2jsonAPI = "https://api.rss2json.com/v1/api.json?rss_url=";
-let feed2jsonAPI = "https://www.toptal.com/developers/feed2json/convert?url=";
-let thisAPI=" https://api.rss-json.com/v1/?rss_url=";
-let thisoneAPI= " https://rss-to-json-serverless-api.vercel.app/api?feed_url=" ;
-let oneAPI =" https://rss-parser-server.vercel.app/api?url=" ;
+// Define API URLs for different RSS-to-JSON services
+const apis = [
+    "https://api.rss2json.com/v1/api.json?rss_url=",
+    "https://api.rss-json.com/v1/?rss_url=",
+    "https://rss-to-json-serverless-api.vercel.app/api?feed_url=",
+    "https://rss-parser-server.vercel.app/api?url="
+];
 
 // Define a mapping of RSS feed URLs for each category
 const feedURLs = {
@@ -28,10 +29,7 @@ if (userFeedURLs.length === 0) {
 }
 
 // Variables to manage API fallback
-let rss2jsonLimitReached = false;
-let currentAPI = rss2jsonAPI;
-
-// Array to hold all fetched items
+let currentAPIIndex = 0;
 let allItems = [];
 
 // Function to extract domain from URL
@@ -46,8 +44,14 @@ function getDomainFromUrl(url) {
 }
 
 // Function to fetch news from the current API
-function fetchNews(feedUrl) {
-    let apiUrl = currentAPI + encodeURIComponent(feedUrl);
+function fetchNews(feedUrl, retryCount = 0) {
+    // Cap the number of retries to prevent infinite loops
+    if (retryCount >= apis.length) {
+        console.error("All APIs failed for URL:", feedUrl);
+        return;
+    }
+
+    let apiUrl = apis[currentAPIIndex] + encodeURIComponent(feedUrl);
 
     fetch(apiUrl)
         .then(response => {
@@ -57,28 +61,28 @@ function fetchNews(feedUrl) {
             return response.json();
         })
         .then(data => {
-            // Handle data from either API (rss2json or feed2json)
-            let items = data.items || data.feed.items; // feed2json uses 'feed.items'
-            allItems = allItems.concat(items.map(item => ({
+            // Handle data from different APIs
+            let items = data.items || data.feed.items || data.articles || [];
+
+            // Normalize data structure for consistency
+            let normalizedItems = items.map(item => ({
                 title: item.title,
-                link: item.link || item.url, // rss2json uses 'link', feed2json uses 'url'
+                link: item.link || item.url,
                 description: item.content_html || item.description || item.summary || 'No description available',
-                pubDate: item.pubDate || item.date_published,
-            })));
+                pubDate: item.pubDate || item.date_published || item.published_at
+            }));
+
+            allItems = allItems.concat(normalizedItems);
+
             // Check if all URLs have been processed
             if (allItems.length >= userFeedURLs.length) {
                 displayFeedItems();
             }
         })
         .catch(error => {
-            console.error("Error fetching from " + currentAPI, error);
-            if (!rss2jsonLimitReached && currentAPI === rss2jsonAPI) {
-                console.log("rss2json API limit reached. Switching to feed2json.");
-                rss2jsonLimitReached = true;
-                currentAPI = feed2jsonAPI;
-                // Retry fetching using feed2json for all URLs
-                userFeedURLs.forEach(feedUrl => fetchNews(feedUrl));
-            }
+            console.error("Error fetching from " + apis[currentAPIIndex], error);
+            currentAPIIndex = (currentAPIIndex + 1) % apis.length; // Move to next API
+            fetchNews(feedUrl, retryCount + 1); // Retry with the next API
         });
 }
 
