@@ -190,7 +190,7 @@ footer {
 /* Progress Bars */
 .skills .progress {
     background-color: #ddd;
-    border-radius: 20px;
+    border-radius: 0 20px;
     height: 20px;
     overflow: hidden;
     margin: 10px 0;
