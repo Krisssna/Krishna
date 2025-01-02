@@ -22,7 +22,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             padding: 15px;
-            max-height: calc(100vh - 150px); /* Adjust for your layout */
+            max-height: calc(100vh - 200px); /* Adjust for your layout */
             overflow-y: auto;
         }
         .feed-item {
@@ -44,32 +44,55 @@
         .feed-description {
             font-size: 14px;
             color: #555;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* number of lines to show */
+            -webkit-box-orient: vertical;
         }
         .feed-date {
             font-size: 12px;
             color: #777;
+        }
+        .disclaimer {
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
 <nav>
-    <!-- You might want to include your navigation here or link back to the main page -->
-    <a href="/index.html">Back to Home</a>
+    <a href="../index.html">Back to Home</a>
 </nav>
 
 <div class="rss-feed-container">
-    <h2>News</h2>
+    <p class="disclaimer">All news are automatically collected from the web. I am not responsible for any content on this page. For disputes, please contact the original creators.</p>
     <div class="rss-feed" id="rss-feed-content">
         <!-- RSS feed content will be dynamically inserted here -->
     </div>
+    <div id="error-message" class="error-message" style="display: none;"></div>
 </div>
 
 <script>
     function fetchRSS() {
         const feedURL = 'https://www.google.com/alerts/feeds/06313983183609550648/16533116384737951623';
-        fetch(feedURL)
-            .then(response => response.text())
+        
+        // A simple workaround for CORS is to use a CORS proxy service
+        const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+        
+        fetch(corsProxy + feedURL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
             .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
             .then(data => {
                 const items = data.querySelectorAll("item");
@@ -84,10 +107,13 @@
                     `;
                 });
                 document.getElementById('rss-feed-content').innerHTML = html;
+                document.getElementById('error-message').style.display = 'none';
             })
             .catch(error => {
                 console.error("Error fetching the RSS feed:", error);
-                document.getElementById('rss-feed-content').innerHTML = '<p>Error loading feed.</p>';
+                document.getElementById('rss-feed-content').innerHTML = '';
+                document.getElementById('error-message').innerHTML = 'Error loading news. Please try again later.';
+                document.getElementById('error-message').style.display = 'block';
             });
     }
 
