@@ -1,6 +1,9 @@
 // Define two API URLs for rss2json and feed2json
 let rss2jsonAPI = "https://api.rss2json.com/v1/api.json?rss_url=";
 let feed2jsonAPI = "https://www.toptal.com/developers/feed2json/convert?url=";
+let thisAPI=" https://api.rss-json.com/v1/?rss_url=";
+let thisoneAPI= " https://rss-to-json-serverless-api.vercel.app/api?feed_url=" ;
+let oneAPI =" https://rss-parser-server.vercel.app/api?url=" ;
 
 // Define a mapping of RSS feed URLs for each category
 const feedURLs = {
