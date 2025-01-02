@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - Krishna's Space</title>
+    <link rel="shortcut icon" type="image/icon" href="../assets/logo/favicon.png"/>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .rss-feed-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .rss-feed {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            max-height: calc(100vh - 150px); /* Adjust for your layout */
+            overflow-y: auto;
+        }
+        .feed-item {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .feed-title {
+            font-size: 18px;
+            color: #333;
+        }
+        .feed-title a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .feed-title a:hover {
+            text-decoration: underline;
+        }
+        .feed-description {
+            font-size: 14px;
+            color: #555;
+        }
+        .feed-date {
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <!-- You might want to include your navigation here or link back to the main page -->
+    <a href="/index.html">Back to Home</a>
+</nav>
+
+<div class="rss-feed-container">
+    <h2>News</h2>
+    <div class="rss-feed" id="rss-feed-content">
+        <!-- RSS feed content will be dynamically inserted here -->
+    </div>
+</div>
+
+<script>
+    function fetchRSS() {
+        const feedURL = 'https://www.google.com/alerts/feeds/06313983183609550648/16533116384737951623';
+        fetch(feedURL)
+            .then(response => response.text())
+            .then(str => new window.DOMParser().parseFromString(str, "text/xml"))
+            .then(data => {
+                const items = data.querySelectorAll("item");
+                let html = '';
+                items.forEach(el => {
+                    html += `
+                        <div class="feed-item">
+                            <h3 class="feed-title"><a href="${el.querySelector("link").textContent}" target="_blank">${el.querySelector("title").textContent}</a></h3>
+                            <p class="feed-description">${el.querySelector("description").textContent}</p>
+                            <p class="feed-date">${new Date(el.querySelector("pubDate").textContent).toLocaleString()}</p>
+                        </div>
+                    `;
+                });
+                document.getElementById('rss-feed-content').innerHTML = html;
+            })
+            .catch(error => {
+                console.error("Error fetching the RSS feed:", error);
+                document.getElementById('rss-feed-content').innerHTML = '<p>Error loading feed.</p>';
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", fetchRSS);
+</script>
+
+</body>
+</html>
