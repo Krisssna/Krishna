@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishna's Space</title>
-<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
+    <link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -32,23 +32,19 @@
                                 <li><a href="#">Terms of Use</a></li>
                             </ul>
                         </li>
-                        
                     </ul>
                 </li>
                 <li>Contact</li>
-		  
                 <li>About</li>
             </ul>
         </div>
     </nav>
     <main>
-    <div class="intro">
-        <img src="assets/images/welcome-banner.jpeg" alt="Main Photo">
-        <p>Welcome to Krishna's website. Here you will find various resources and information.</p>
-    </div>
-   
-    </div>
-	    
+        <div class="intro">
+            <img src="assets/images/welcome-banner.jpeg" alt="Main Photo">
+            <p>Welcome to Krishna's website. Here you will find various resources and information.</p>
+        </div>
+        
         <!-- Search Boxes -->
         <div class="search-box-container" id="searchBoxContainer">
             <h2>Search News</h2>
@@ -61,7 +57,14 @@
                 <button onclick="performSearch('searchBox2')">Search</button>
             </div>
         </div>
-</main>
+        
+        <!-- Results Container -->
+        <div id="news-results"></div>
+        
+        <!-- Hidden Field for News IDs -->
+        <input type="hidden" id="hidden-news-ids">
+    </main>
+  
 
 <section id="skills" class="skills">
 				<div class="skill-content">
@@ -184,8 +187,7 @@
 				</div><!-- /.skill-content-->
 </section>
 	
-
-    <footer>
+  <footer>
         <div class="footer-links">
             <a href="#">Useful Links</a>
             <a href="#">Social Media Links</a>
