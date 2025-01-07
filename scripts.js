@@ -27,3 +27,18 @@ document.addEventListener("DOMContentLoaded", function () {
         bar.style.width = value + "%"; // Set the width based on aria-valuenow
     });
 });
+
+        function showSearchBoxes() {
+            const container = document.getElementById('searchBoxContainer');
+            container.style.display = container.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function performSearch(id) {
+            const query = document.getElementById(id).value;
+            if (query) {
+                alert(`Searching for: ${query}`);
+                // Add your search functionality here
+            } else {
+                alert('Please enter a search query.');
+            }
+        }
