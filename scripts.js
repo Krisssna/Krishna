@@ -34,11 +34,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         function performSearch(id) {
-            const query = document.getElementById(id).value;
-            if (query) {
-                alert(`Searching for: ${query}`);
+            const query1 = document.getElementById('searchBox1').value;
+            const query2 = document.getElementById('searchBox2').value;
+            if (!query1 && query2) {
+                alert("Please enter a query in at least one search box.");
+        return;
                 // Add your search functionality here
-            } else {
-                alert('Please enter a search query.');
-            }
+            }   const searchURL1 = `https://cse.google.com/cse?cx=${searchId}&q=${encodeURIComponent(query)}&gsc.q=${encodeURIComponent(query)}&gsc.sort=date`;
+    const searchURL2 = `https://cse.google.com/cse?cx=${search1Id}&q=${encodeURIComponent(query)}&gsc.q=${encodeURIComponent(query)}&gsc.sort=date`;
+
+    // Open search results in new tabs
+    if (query1) window.open(searchURL1, '_blank');
+    if (query2) window.open(searchURL2, '_blank');
         }
