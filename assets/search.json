@@ -1,1 +1,13 @@
+[
+    {
+        "id": "1",
+        "label": "Surveying",
+        "query": "latest surveying techniques"
+    },
+    {
+        "id": "2",
+        "label": "Civil Engineering",
+        "query": "civil engineering projects"
+    }
+]
 
