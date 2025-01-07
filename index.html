@@ -4,8 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Krishna's Space</title>
-<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
+    <link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Styling for search box container */
+        .search-box-container {
+            display: none; /* Initially hidden */
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .search-box-container input {
+            width: calc(100% - 10px);
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .search-box-container button {
+            padding: 10px 15px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search-box-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -13,7 +49,7 @@
         <div class="nav-right">
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <ul id="menu">
-                <li>Market Data</li>
+                <li onclick="showSearchBoxes()">News on Demand</li>
                 <li class="dropdown">Apps
                     <ul class="dropdown-content">
                         <li class="dropdown">Caputok
@@ -32,11 +68,10 @@
                                 <li><a href="#">Terms of Use</a></li>
                             </ul>
                         </li>
-                        
                     </ul>
                 </li>
                 <li>Contact</li>
-		    <li><a href="news.html" target="_blank">News</a></li>
+		        <li><a href="news.html" target="_blank">News</a></li>
                 <li>About</li>
             </ul>
         </div>
@@ -186,8 +221,20 @@
 						</div><!-- /.row -->
 					</div>	<!-- /.container -->		
 				</div><!-- /.skill-content-->
+</section>
 
-
+  <div class="search-box-container" id="searchBoxContainer">
+            <h2>Search News</h2>
+            <div>
+                <input type="text" id="searchBox1" placeholder="Search for the first ID...">
+                <button onclick="performSearch('searchBox1')">Search</button>
+            </div>
+            <div>
+                <input type="text" id="searchBox2" placeholder="Search for the second ID...">
+                <button onclick="performSearch('searchBox2')">Search</button>
+            </div>
+        </div>
+   
     <footer>
         <div class="footer-links">
             <a href="#">Useful Links</a>
@@ -197,6 +244,26 @@
         </div>
         <p>© 2025 Krishna. All rights reserved.</p>
     </footer>
-    <script src="scripts.js"></script>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function showSearchBoxes() {
+            const container = document.getElementById('searchBoxContainer');
+            container.style.display = container.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function performSearch(id) {
+            const query = document.getElementById(id).value;
+            if (query) {
+                alert(`Searching for: ${query}`);
+                // Add your search functionality here
+            } else {
+                alert('Please enter a search query.');
+            }
+        }
+    </script>
 </body>
 </html>
