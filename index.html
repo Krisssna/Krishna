@@ -13,7 +13,7 @@
         <div class="nav-right">
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <ul id="menu">
-                <li>Market Data</li>
+                <li> onclick="showSearchBoxes()">News on Demand</li>
                 <li class="dropdown">Apps
                     <ul class="dropdown-content">
                         <li class="dropdown">Caputok
@@ -65,6 +65,19 @@
         </div>
       
     </div>
+	    
+        <!-- Search Boxes -->
+        <div class="search-box-container" id="searchBoxContainer">
+            <h2>Search News</h2>
+            <div>
+                <input type="text" id="searchBox1" placeholder="Search for the first ID...">
+                <button onclick="performSearch('searchBox1')">Search</button>
+            </div>
+            <div>
+                <input type="text" id="searchBox2" placeholder="Search for the second ID...">
+                <button onclick="performSearch('searchBox2')">Search</button>
+            </div>
+        </div>
 </main>
 
 <section id="skills" class="skills">
@@ -187,16 +200,7 @@
 					</div>	<!-- /.container -->		
 				</div><!-- /.skill-content-->
 </section>
-	<section>
-
-    <h1>Search Page</h1>
-    <form id="searchForm">
-        <input type="text" id="searchQuery" placeholder="Enter your query here" />
-        <button type="submit">Search</button>
-    </form>
-    <div id="results"></div>
-		
-	</section>
+	
 
     <footer>
         <div class="footer-links">
