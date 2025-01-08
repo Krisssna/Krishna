@@ -13,7 +13,7 @@
         <div class="nav-right">
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <ul id="menu">
-                <li><a href="news.html" onclick="openNewsPage()">Personalized News</a></li>
+                <li><a href="#" onclick="openNewsPage(); return false;">Personalized News</a></li>
                 <li class="dropdown">Apps
                     <ul class="dropdown-content">
                         <li class="dropdown">Caputok
@@ -187,16 +187,33 @@
     </footer>
     <script src="scripts.js"></script>
     <script>
-        function openNewsPage() {
-            // Create a new div to serve as our 'page'
-            const newsPage = document.createElement('div');
-            newsPage.id = 'news-page';
-            newsPage.innerHTML = '<iframe id="news-frame" src="news.html" width="100%" height="100%" style="border:none;"></iframe>';
+        async function openNewsPage() {
+        try {
+            // Clone the heading element
+            const heading = document.getElementById('main-heading').cloneNode(true);
             
-            // Replace the content of the main content area with our new 'page'
-            document.getElementById('content').innerHTML = '';
-            document.getElementById('content').appendChild(newsPage);
+            // Fetch the content of news.html
+            const response = await fetch('personalizednews/index.html');
+            let html = await response.text();
+
+            // Create a temporary DOM to manipulate the fetched content
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Insert the cloned heading at the beginning of the body
+            doc.body.insertBefore(heading, doc.body.firstChild);
+
+            // Open a new window or tab
+            const newWindow = window.open('', '_blank');
+
+            // Write the modified content to the new window
+            newWindow.document.write(doc.documentElement.outerHTML);
+            newWindow.document.close(); // Close the document for writing
+
+        } catch (error) {
+            console.error('Failed to load or process news.html:', error);
         }
+    }
     </script>
 </body>
 </html>
