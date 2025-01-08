@@ -158,4 +158,7 @@ footer {
     width: 100%;
     min-height: calc(100vh - 100px); /* Assuming header and footer are less than 100px combined */
     box-sizing: border-box;
+    background: none;
+    padding: 0;
+    margin: 0;
 }
