@@ -39,7 +39,7 @@
             </ul>
         </div>
     </nav>
-	  <main>
+	  <main id="content">
         		<!--<div class="intro">
        			 <img src="assets/images/welcome-banner.jpeg" alt="Main Photo">
             			<p>Welcome to Krishna's website. Here you will find various resources and information.</p>
@@ -48,11 +48,9 @@
    <div id="content">
         <!-- This will be replaced by the news page when clicked -->
 
-	    <div id ="content">
-	    </div>
+	  
    
 	 
-	  </main>
 	
   
 
@@ -176,6 +174,7 @@
 					</div>	<!-- /.container -->		
 				</div><!-- /.skill-content-->
 </section>
+	  </main>
 	
  <footer>
         <div class="footer-links">
@@ -189,32 +188,27 @@
     <script src="scripts.js"></script>
     <script>
         async function openNewsPage() {
-        try {
-            // Clone the heading element
-            const heading = document.getElementById('main-heading').cloneNode(true);
-            
-            // Fetch the content of news.html
-            const response = await fetch('newsondemand/index.html');
-            let html = await response.text();
+            try {
+                // Clear all content inside <main> except for header and footer
+                document.getElementById('content').innerHTML = '';
 
-            // Create a temporary DOM to manipulate the fetched content
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
+                // Fetch the content of news.html
+                const response = await fetch('newsondemand/index.html');
+                let html = await response.text();
 
-            // Insert the cloned heading at the beginning of the body
-            doc.body.insertBefore(heading, doc.body.firstChild);
+                // Parse the fetched HTML to extract the body content
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Insert the content from news.html into the main content area
+                document.getElementById('content').innerHTML = doc.body.innerHTML;
 
-            // Open a new window or tab
-            const newWindow = window.open('', '_blank');
-
-            // Write the modified content to the new window
-            newWindow.document.write(doc.documentElement.outerHTML);
-            newWindow.document.close(); // Close the document for writing
-
-        } catch (error) {
-            console.error('Failed to load or process news.html:', error);
+            } catch (error) {
+                console.error('Failed to load or process news.html:', error);
+                // Optionally, display an error message to the user
+                document.getElementById('content').innerHTML = '<p>Error loading personalized news. Please try again.</p>';
+            }
         }
-    }
     </script>
 </body>
 </html>
