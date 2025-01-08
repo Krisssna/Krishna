@@ -1,9 +1,9 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    margin: 0 10px;
+    margin: 0;
     padding: 0;
-    width: 99%;
+    width: 100%;
 }
 
 nav {
@@ -85,13 +85,13 @@ nav {
 
 /* Main Section */
 main {
-    display: flex;
-    flex-wrap: wrap;
+    width: 100%; /* Full width */
     padding: 20px;
+    box-sizing: border-box; /* Include padding in the width */
 }
 
 .intro {
-    flex: 1 1 100%;
+    width: 100%; /* Full width for intro */
     padding-right: 20px;
 }
 
@@ -99,8 +99,6 @@ main {
     max-width: 100%;
     height: auto;
 }
-
-/* Gallery Styles */
 
 /* Search Box Styles */
 
@@ -112,6 +110,7 @@ footer {
     color: white;
     text-align: center;
     padding: 10px;
+    width: 100%;
 }
 
 .footer-links a {
@@ -121,13 +120,18 @@ footer {
 }
 
 /* Progress Bars */
+.skills {
+    width: 100%; /* Ensure the skills section takes full width */
+}
+
 .skills .progress {
     background-color: #ddd;
     border-radius: 0 20px;
     height: 20px;
     overflow: hidden;
-    margin: 10px 10px;
+    margin: 10px 0; /* Remove side margins */
     position: relative;
+    width: 100%; /* Full width for the progress bar container */
 }
 
 .skills .progress-bar {
@@ -140,11 +144,18 @@ footer {
 .skills h3 {
     font-size: 14px;
     color: #333;
-    margin: 5px 0 ;
+    margin: 5px 0;
     text-align: right;
 }
 
 .skills .progressText {
-margin: 0 10px;
-text-align: right;
+    margin: 0;
+    text-align: left; /* Changed to left to align with full width design */
+}
+
+/* Ensure the news page takes full width and length */
+#content {
+    width: 100%;
+    min-height: calc(100vh - 100px); /* Assuming header and footer are less than 100px combined */
+    box-sizing: border-box;
 }
