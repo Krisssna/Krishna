@@ -13,7 +13,7 @@
         <div class="nav-right">
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <ul id="menu">
-                <li><a class="news-link" href="https://searchworker.niraula300.workers.dev/#gsc.tab=0" onclick="openNewsPage(); return false;">Personalized News</a></li>
+                <li><a class="news-link" href="#" onclick="openNewsPage(); return false;">Personalized News</a></li>
                 <li class="dropdown">Apps
                     <ul class="dropdown-content">
                         <li class="dropdown">Caputok
@@ -193,7 +193,7 @@
                 document.getElementById('content').innerHTML = '';
 
                 // Fetch the content of news.html
-                const response = await fetch('newsondemand/index.html');
+                const response = await fetch(<a href="https://searchworker.niraula300.workers.dev/#gsc.tab=0"></a>);
                 let html = await response.text();
 
                 // Parse the fetched HTML to extract the body content
