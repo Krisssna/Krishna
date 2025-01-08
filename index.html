@@ -13,7 +13,7 @@
         <div class="nav-right">
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <ul id="menu">
-                <li>Loading ...</li>
+                <li><a href="#" onclick="openNewsPage()">Personalized News</a></li>
                 <li class="dropdown">Apps
                     <ul class="dropdown-content">
                         <li class="dropdown">Caputok
@@ -39,31 +39,9 @@
             </ul>
         </div>
     </nav>
-    <main>
-        <div class="intro">
-            <img src="assets/images/welcome-banner.jpeg" alt="Main Photo">
-            <p>Welcome to Krishna's website. Here you will find various resources and information.</p>
-        </div>
-        
-        <!-- Search Boxes -->
-        <div class="search-box-container" id="searchBoxContainer">
-            <h2>Search News</h2>
-            <div>
-                <input type="text" id="searchBox1" placeholder="Search From Source 1">
-                <button onclick="performSearch('searchBox1')">Search</button>
-            </div>
-            <div>
-                <input type="text" id="searchBox2" placeholder="Search From Source 2">
-                <button onclick="performSearch('searchBox2')">Search</button>
-            </div>
-        </div>
-        
-        <!-- Results Container -->
-        <div id="news-results"></div>
-        
-        <!-- Hidden Field for News IDs -->
-        <input type="hidden" id="hidden-news-ids">
-    </main>
+   <div id="content">
+        <!-- This will be replaced by the news page when clicked -->
+    </div>
   
 
 <section id="skills" class="skills">
@@ -187,7 +165,7 @@
 				</div><!-- /.skill-content-->
 </section>
 	
-  <footer>
+ <footer>
         <div class="footer-links">
             <a href="#">Useful Links</a>
             <a href="#">Social Media Links</a>
@@ -197,5 +175,17 @@
         <p>© 2025 Krishna. All rights reserved.</p>
     </footer>
     <script src="scripts.js"></script>
+    <script>
+        function openNewsPage() {
+            // Create a new div to serve as our 'page'
+            const newsPage = document.createElement('div');
+            newsPage.id = 'news-page';
+            newsPage.innerHTML = '<iframe id="news-frame" src="news.html" width="100%" height="600" style="border:none;"></iframe>';
+            
+            // Replace the content of the main content area with our new 'page'
+            document.getElementById('content').innerHTML = '';
+            document.getElementById('content').appendChild(newsPage);
+        }
+    </script>
 </body>
 </html>
