@@ -1,23 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!-- Head content -->
-</head>
-<body>
-    <div>
-        <iframe id="search-iframe" src="https://searchworker.niraula300.workers.dev/#gsc.tab=0" width="100%" height="100%"></iframe>
-    </div>
-    <script>
-    document.getElementById('search-iframe').onload = function() {
+<div id="search-results"></div>
+
+<script>
+    async function loadSearchResults() {
         try {
-            this.contentWindow.document.querySelectorAll('a').forEach(a => {
+            const response = await fetch('https://searchworker.niraula300.workers.dev/?q=your-search-query');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const html = await response.text();
+            
+            // Create a temporary DOM to parse the HTML
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Assuming the worker returns a body with results inside a div or similar
+            document.getElementById('search-results').innerHTML = doc.body.innerHTML;
+
+            // Add attributes to links if necessary
+            document.querySelectorAll('#search-results a').forEach(a => {
                 a.setAttribute('target', '_blank');
                 a.setAttribute('rel', 'noopener noreferrer');
             });
         } catch (error) {
-            console.error('Cannot modify links in the iframe due to cross-origin policy:', error);
+            console.error('Error loading search results:', error);
+            document.getElementById('search-results').innerText = 'Failed to load search results.';
         }
-    };
-    </script>
-</body>
-</html>
+    }
+    
+    // Call this function when needed, e.g., on page load or when a search is initiated
+    loadSearchResults();
+</script>
