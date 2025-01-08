@@ -48,6 +48,16 @@ nav {
 #menu li:hover {
     background-color: #444;
 }
+#menu .news-link {
+    color: white; /* Text color to white */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Optional: Ensure the color stays white on hover if you want */
+#menu .news-link:hover {
+    color: white; /* Keep white on hover */
+    text-decoration: none; /* Ensure no underline on hover */
+}
 
 .dropdown-content {
     display: none;
