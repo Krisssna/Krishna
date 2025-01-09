@@ -13,15 +13,15 @@
         <div class="nav-right">
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <ul id="menu">
-                <li><a class="news-link" href="https://cse.google.com/cse?cx=51feb554fb38a47a0" onclick="openNewsPage(); return false;">Personalized News</a></li>
+                <li><a class="news-link" href="#" onclick="openNewsPage(); return false;">Personalized News</a></li>
                 <li class="dropdown">Apps
                     <ul class="dropdown-content">
                         <li class="dropdown">Caputok
                             <ul class="dropdown-content">
                                 <li><a href="https://youtube.com/shorts/C1l8K9q8dog?feature=share">Play Store</a></li>
                                 <li><a href="#">App Store</a></li>
-                                <li><a href="ssets/apps/caputok/privacy_policy">Privacy Policy</a></li>
-                                <li><a href="ssets/apps/caputok/terms_of_use">Terms of Use</a></li>
+                                <li><a href="assets/apps/caputok/privacy_policy.html">Privacy Policy</a></li>
+                                <li><a href="assets/apps/caputok/terms_of_use.html">Terms of Use</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">App2
@@ -186,13 +186,29 @@
         <p>© 2025 Krishna. All rights reserved.</p>
     </footer>
     <script src="scripts.js"></script>
-   <script>
-        function openNewsPage() {
-            // Hide the default content and show the news iframe
-            document.getElementById('default-content').style.display = 'none';
-            document.getElementById('news-container').style.display = 'block';
+    <script>
+        async function openNewsPage() {
+            try {
+                // Clear all content inside <main> except for header and footer
+                document.getElementById('content').innerHTML = '';
+
+                // Fetch the content of news.html
+                const response = await fetch('newsondemand/index.html');
+                let html = await response.text();
+
+                // Parse the fetched HTML to extract the body content
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Insert the content from news.html into the main content area
+                document.getElementById('content').innerHTML = doc.body.innerHTML;
+
+            } catch (error) {
+                console.error('Failed to load or process news.html:', error);
+                // Optionally, display an error message to the user
+                document.getElementById('content').innerHTML = '<p>Error loading personalized news. Please try again.</p>';
+            }
         }
-    </script>
     </script>
 </body>
 </html>
