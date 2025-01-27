@@ -93,7 +93,6 @@ nav {
     background-color: #bdb5b5;
 }
 
-/* Main Section */
 main {
     width: 100%; /* Full width */
     padding: 20px;
@@ -101,13 +100,41 @@ main {
 }
 
 .intro {
-    width: 100%; /* Full width for intro */
-    padding-right: 20px;
+    display: flex; /* Flexbox for side-by-side layout */
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    align-items: center; /* Vertically align image and text */
+    justify-content: space-between; /* Space between image and text */
+    gap: 20px; /* Add space between image and paragraph */
 }
 
 .intro img {
-    max-width: 100%;
+    max-width: 100%; /* Make image responsive */
     height: auto;
+    flex: 1 1 40%; /* Allow image to take 40% of the space */
+    min-width: 300px; /* Minimum size for smaller screens */
+}
+
+.intro p {
+    flex: 1 1 50%; /* Allow paragraph to take 50% of the space */
+    margin: 0;
+    text-align: justify; /* Optional: For a clean look */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .intro {
+        flex-direction: column; /* Stack image and paragraph vertically */
+        text-align: center; /* Optional: Center-align for better appearance */
+    }
+
+    .intro img {
+        max-width: 100%;
+        margin-bottom: 20px; /* Add spacing between image and text */
+    }
+
+    .intro p {
+        text-align: center; /* Optional: Center-align text */
+    }
 }
 
 /* Search Box Styles */
