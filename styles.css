@@ -148,11 +148,36 @@ footer {
     width: 100%;
 }
 
-.footer-links a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
+.footer-links {
+    display: flex; /* Arrange links horizontally */
+    justify-content: center; /* Center links in the footer */
+    gap: 20px; /* Space between icons/links */
+    padding: 20px 0; /* Add padding for spacing */
+    background-color: #f8f9fa; /* Light background for the footer */
 }
+
+.footer-links a {
+    color: #6c757d; /* Neutral gray color for icons and links */
+    text-decoration: none;
+    font-size: 16px; /* Adjust text size */
+    display: inline-flex;
+    align-items: center; /* Align icon and text vertically */
+    gap: 8px; /* Space between icon and text */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.footer-links a:hover {
+    color: #0a84d6; /* Highlight color for X */
+}
+
+.footer-links a.linkedin:hover {
+    color: #0077b5; /* Highlight color for LinkedIn */
+}
+
+.footer-links i {
+    font-size: 18px; /* Icon size */
+}
+
 
 /* Progress Bars */
 .skills {
