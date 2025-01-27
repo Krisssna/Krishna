@@ -139,37 +139,66 @@ main {
 
 /* Search Box Styles */
 
-/* Footer */
-
-
-.footer-links {
-    display: flex; /* Arrange links horizontally */
-    justify-content: center; /* Center links in the footer */
-    gap: 20px; /* Space between icons/links */
-    padding: 20px 0; /* Add padding for spacing */
-    background-color: #f8f9fa; /* Light background for the footer */
+/* Footer General Styles */
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    color: #6c757d;
+    font-family: Arial, sans-serif;
 }
 
-.footer-links a {
-    color: #6c757d; /* Neutral gray color for icons and links */
+.footer-container {
+    display: flex;
+    flex-wrap: wrap; /* Makes it responsive */
+    justify-content: space-around; /* Distribute columns evenly */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column {
+    flex: 1 1 250px; /* Flexible width, minimum 250px */
+    margin: 10px;
+}
+
+.footer-column h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #343a40; /* Darker gray for headings */
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 8px;
+}
+
+.footer-column ul li a {
+    color: #6c757d;
     text-decoration: none;
-    font-size: 16px; /* Adjust text size */
-    display: inline-flex;
-    align-items: center; /* Align icon and text vertically */
-    gap: 8px; /* Space between icon and text */
-    transition: color 0.3s ease; /* Smooth color transition */
+    transition: color 0.3s ease;
 }
 
-.footer-links a:hover {
-    color: #0a84d6; /* Highlight color for X */
+.footer-column ul li a:hover {
+    color: #007bff; /* Blue on hover */
 }
 
-.footer-links a.linkedin:hover {
-    color: #0077b5; /* Highlight color for LinkedIn */
+/* Social Media Icon Styles */
+.footer-column ul li a i {
+    margin-right: 8px;
+    font-size: 16px;
 }
 
-.footer-links i {
-    font-size: 18px; /* Icon size */
+/* Copyright Section */
+.footer-copyright {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    border-top: 1px solid #e9ecef;
+    padding-top: 10px;
+    color: #6c757d;
 }
 
 
