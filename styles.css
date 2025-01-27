@@ -167,8 +167,9 @@ footer {
 }
 
 .footer-column ul {
-    list-style: none;
-    padding: 0;
+    list-style: none; /* Removes the bullets */
+    padding: 0; /* Removes any default padding */
+    margin: 0; /* Removes any default margin */
 }
 
 .footer-column ul li {
