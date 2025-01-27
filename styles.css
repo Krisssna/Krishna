@@ -140,12 +140,7 @@ main {
 /* Search Box Styles */
 
 /* Footer */
-footer {
-    
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-}
+
 
 .footer-links {
     display: flex; /* Arrange links horizontally */
