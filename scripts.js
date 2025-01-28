@@ -29,4 +29,24 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-
+document.addEventListener('DOMContentLoaded', function() {
+    // Find the menu contact link
+    var contactLink = document.querySelector('nav a[href="#contact"]');
+    
+    if (contactLink) {
+        contactLink.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevent the default action of the link if it's a hash link
+            
+            // Get the element you want to scroll to
+            var target = document.getElementById('contact-email');
+            
+            if (target) {
+                // Scroll to the target
+                target.scrollIntoView({
+                    behavior: 'smooth', // Smooth scrolling
+                    block: 'start' // Align with the top of the viewport
+                });
+            }
+        });
+    }
+});
