@@ -58,7 +58,8 @@ nav {
     color: white; /* Keep white on hover */
     text-decoration: none; /* Ensure no underline on hover */
 }
-.no-underline {
+#menu li:nth-child(3) a, /* Assuming Contact is the third list item */
+#menu li:nth-child(4) a { /* Assuming About is the fourth list item */
     text-decoration: none;
 }
 
