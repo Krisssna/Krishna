@@ -246,7 +246,9 @@ footer {
 
 .ad-container {
     width: 100%;
-    hight: 200px;
+    hight: 300px;
+    padding: 0;
+    margin: 0;
 }
 /* Ensure the news page takes full width and length */
 #content {
