@@ -58,6 +58,9 @@ nav {
     color: white; /* Keep white on hover */
     text-decoration: none; /* Ensure no underline on hover */
 }
+.no-underline {
+    text-decoration: none;
+}
 
 .dropdown-content {
     display: none;
