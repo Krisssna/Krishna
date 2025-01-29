@@ -244,6 +244,10 @@ footer {
     text-align: left; /* Changed to left to align with full width design */
 }
 
+.ad-container {
+    width: 100%;
+    hight: 200px;
+}
 /* Ensure the news page takes full width and length */
 #content {
     width: 100%;
