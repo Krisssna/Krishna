@@ -312,13 +312,6 @@ footer {
     max-width: 100%;
 }
 
-@media (min-width: 768px) {  /* Adjust based on your breakpoint */
-    .skills-col {
-        width: 50%;
-        flex: 0 0 50%;  /* Flex grow, shrink and basis */
-        max-width: 50%;
-    }
-}
 
 .ad-container {
     width: 100%;
