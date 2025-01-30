@@ -33,6 +33,8 @@
     </div>
 
     <script>
+        let isSearchReady = false;
+
         function updateSearchEngine() {
             // Remove existing search box if any
             document.getElementById('searchBox').innerHTML = '';
@@ -43,21 +45,27 @@
             script.src = `https://cse.google.com/cse.js?cx=${cx}`;
             script.async = true;
             
+            // Callback when script is loaded
+            script.onload = function() {
+                // Add the gcse-search div where the search box will be rendered
+                const searchDiv = document.createElement('div');
+                searchDiv.className = 'gcse-search';
+                document.getElementById('searchBox').appendChild(searchDiv);
+                
+                // We know the Google CSE is now loaded, so we can set up our search
+                isSearchReady = true;
+                document.getElementById('searchButton').onclick = performSearch;
+            };
+            
             // Append the new script to the searchBox div
             document.getElementById('searchBox').appendChild(script);
-            
-            // Add the gcse-search div where the search box will be rendered
-            const searchDiv = document.createElement('div');
-            searchDiv.className = 'gcse-search';
-            document.getElementById('searchBox').appendChild(searchDiv);
-            
-            // Ensure everything is loaded before you can interact with the search box
-            google.setOnLoadCallback(function() {
-                document.getElementById('searchButton').onclick = performSearch;
-            });
         }
 
         function performSearch() {
+            if (!isSearchReady) {
+                console.error("Search engine not yet loaded.");
+                return;
+            }
             const searchTerm = document.getElementById('searchInput').value;
             if (searchTerm) {
                 const input = document.querySelector('.gsc-input');
