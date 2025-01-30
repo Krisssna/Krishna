@@ -144,6 +144,84 @@ main {
     }
 }
 
+/* Portfolio Section Styles */
+.portfolio {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.portfolio-content .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.portfolio-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.portfolio-image {
+    flex: 1;
+    text-align: center;
+}
+
+.portfolio-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.portfolio-description {
+    flex: 1;
+    padding: 20px;
+}
+
+.portfolio-description ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.portfolio-description ul li {
+    margin: 5px 0;
+}
+
+.portfolio-description ul li a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.portfolio-description ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .portfolio-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    .portfolio-description {
+        padding: 10px;
+    }
+}
+
+
 /* Search Box Styles */
 
 /* Footer General Styles */
