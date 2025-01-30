@@ -295,6 +295,7 @@ footer {
     margin: 10px 0; /* Remove side margins */
     position: relative;
     width: 100%; /* Full width for the progress bar container */
+    padding: 10px;
 }
 
 .skills .progress-bar {
