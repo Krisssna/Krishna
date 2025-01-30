@@ -3,111 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Search Engine</title>
+    <title>Google Programmable Search</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        .search-container {
             margin: 20px;
+            text-align: center;
         }
-        #search-engine-select {
-            margin-bottom: 10px;
-            padding: 5px;
-            font-size: 16px;
-        }
-        #search-box {
-            margin-bottom: 20px;
-        }
-        #search-query {
+        #searchEngineSelect {
             padding: 10px;
-            font-size: 16px;
-            width: 300px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .gcse-search {
-            margin-top: 20px;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Multi-Search Engine</h1>
-
-    <!-- Dropdown to Select Search Engine ID -->
-    <label for="search-engine-select">Select Search Engine:</label>
-    <select id="search-engine-select">
-        <option value="searchID1">Search Engine 1</option>
-        <option value="searchID2">Search Engine 2</option>
-        <option value="searchID3">Search Engine 3</option>
-        <option value="searchID4">Search Engine 4</option>
-        <option value="searchID5">Search Engine 5</option>
-    </select>
-
-    <!-- Search Box -->
-    <div id="search-box">
-        <input type="text" id="search-query" placeholder="Enter your search query">
-        <button onclick="performSearch()">Search</button>
+    <div class="search-container">
+        <select id="searchEngineSelect" onchange="updateSearchEngine()">
+            <option value="searchID1">Search Engine 1</option>
+            <option value="searchID2">Search Engine 2</option>
+            <option value="searchID3">Search Engine 3</option>
+            <option value="searchID4">Search Engine 4</option>
+            <option value="searchID5">Search Engine 5</option>
+        </select>
+        <div id="searchBox"></div>
     </div>
 
-    <!-- Search Results Container -->
-    <div class="gcse-search"></div>
-
     <script>
-        // Function to load the Google PSE script dynamically
-        function loadSearchEngine(cx) {
-            // Remove existing script if any
-            const oldScript = document.querySelector('script[src*="cse.google.com"]');
-            if (oldScript) {
-                oldScript.remove();
-            }
-
-            // Remove existing search results if any
-            const oldResults = document.querySelector('.gcse-search');
-            if (oldResults) {
-                oldResults.innerHTML = '';
-            }
-
-            // Load the new Google PSE script
-            const script = document.createElement('script');
-            script.src = `https://cse.google.com/cse.js?cx=${cx}`;
-            script.async = true;
-            document.head.appendChild(script);
+        function updateSearchEngine() {
+            const cx = document.getElementById('searchEngineSelect').value;
+            document.getElementById('searchBox').innerHTML = `<script async src="https://cse.google.com/cse.js?cx=${cx}"></script><div class="gcse-search"></div>`;
         }
-
-        // Function to perform the search
-        function performSearch() {
-            const searchQuery = document.getElementById('search-query').value;
-            const searchEngineId = document.getElementById('search-engine-select').value;
-
-            // Load the selected search engine
-            loadSearchEngine(searchEngineId);
-
-            // Trigger the search (Google PSE script handles this)
-            setTimeout(() => {
-                const searchBox = document.querySelector('.gsc-input input');
-                if (searchBox) {
-                    searchBox.value = searchQuery;
-                    const searchButton = document.querySelector('.gsc-search-button');
-                    if (searchButton) {
-                        searchButton.click();
-                    }
-                }
-            }, 500); // Wait for the Google PSE script to load
-        }
-
-        // Event listener for dropdown change
-        document.getElementById('search-engine-select').addEventListener('change', (event) => {
-            const selectedCx = event.target.value;
-            loadSearchEngine(selectedCx);
-        });
-
-        // Load the default search engine on page load
-        window.onload = () => {
-            const defaultCx = document.getElementById('search-engine-select').value;
-            loadSearchEngine(defaultCx);
-        };
+        // Initialize with the first option selected
+        updateSearchEngine();
     </script>
 </body>
 </html>
