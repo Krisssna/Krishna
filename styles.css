@@ -144,7 +144,79 @@ main {
     }
 }
 
-/* Search Box Styles */
+.portfolio {
+    width: 100%;
+    padding: 50px 0;
+    background-color: #f9f9f9;
+}
+
+.portfolio-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.portfolio-item {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+
+.portfolio-image, .portfolio-description {
+    flex: 1;
+    padding: 20px;
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.portfolio-description {
+    text-align: left;
+}
+
+.portfolio-description ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.portfolio-description ul li {
+    margin: 5px 0;
+}
+
+.portfolio-description ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .portfolio-item {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 767px) {
+    .portfolio-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .portfolio-description {
+        text-align: center;
+    }
+}
+
 
 /* Footer General Styles */
 footer {
