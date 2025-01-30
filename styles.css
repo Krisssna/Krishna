@@ -144,6 +144,9 @@ main {
     }
 }
 
+
+
+
 .portfolio {
     width: 100%;
     padding: 50px 0;
@@ -166,11 +169,12 @@ main {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: space-between;
 }
 
 .portfolio-image, .portfolio-description {
-    flex: 1;
+    flex: 0 0 48%;
     padding: 20px;
 }
 
@@ -197,6 +201,32 @@ main {
 .portfolio-description ul li a {
     color: #007bff;
     text-decoration: none;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .portfolio-item {
+        flex-direction: column; /* Stacks image and description vertically on smaller screens */
+        align-items: center;
+    }
+
+    .portfolio-image, .portfolio-description {
+        flex: 0 0 100%; /* Both sections take full width on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .portfolio {
+        padding: 30px 0; /* Reduced padding for smaller screens */
+    }
+
+    .portfolio-content {
+        max-width: 100%; /* Ensure the content uses full screen width */
+    }
+
+    .portfolio-description ul li {
+        margin: 8px 0; /* Increase space between items on small screens */
+    }
 }
 
 
