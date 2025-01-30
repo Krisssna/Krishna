@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="search-container">
-        <select id="searchEngineSelect" onchange="updateSearchEngine()">
+        <select id="searchEngineSelect">
             <option value="searchID1">Search Engine 1</option>
             <option value="searchID2">Search Engine 2</option>
             <option value="searchID3">Search Engine 3</option>
@@ -28,7 +28,7 @@
             <option value="searchID5">Search Engine 5</option>
         </select>
         <input type="text" id="searchInput" placeholder="Enter search term">
-        <button onclick="performSearch()">Search</button>
+        <button id="searchButton">Search</button>
         <div id="searchBox"></div>
     </div>
 
@@ -50,14 +50,28 @@
             const searchDiv = document.createElement('div');
             searchDiv.className = 'gcse-search';
             document.getElementById('searchBox').appendChild(searchDiv);
+            
+            // Ensure everything is loaded before you can interact with the search box
+            google.setOnLoadCallback(function() {
+                document.getElementById('searchButton').onclick = performSearch;
+            });
         }
 
         function performSearch() {
             const searchTerm = document.getElementById('searchInput').value;
             if (searchTerm) {
-                // Assuming Google's CSE respects the input field value for search
-                document.querySelector('.gsc-input').value = searchTerm;
-                document.querySelector('.gsc-search-button').click(); // Trigger the search
+                const input = document.querySelector('.gsc-input');
+                if (input) {
+                    input.value = searchTerm;
+                    const searchButton = document.querySelector('.gsc-search-button');
+                    if (searchButton) {
+                        searchButton.click(); // Trigger the search
+                    } else {
+                        console.error("Search button not found");
+                    }
+                } else {
+                    console.error("Search input not found");
+                }
             }
         }
         
