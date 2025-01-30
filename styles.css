@@ -200,7 +200,15 @@ main {
 }
 
 
+/* Specific styles for portfolio columns */
+.portfolio-col {
+    /* Custom styles for portfolio layout if needed */
+}
 
+/* Specific styles for skills columns */
+.skills-col {
+      width: 100%;
+}
 
 
 /* Footer General Styles */
