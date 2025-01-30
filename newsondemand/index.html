@@ -9,9 +9,12 @@
             margin: 20px;
             text-align: center;
         }
-        #searchEngineSelect {
+        #searchEngineSelect, #searchInput {
             padding: 10px;
             margin-right: 10px;
+        }
+        .search-container button {
+            padding: 10px;
         }
     </style>
 </head>
@@ -24,14 +27,40 @@
             <option value="searchID4">Search Engine 4</option>
             <option value="searchID5">Search Engine 5</option>
         </select>
+        <input type="text" id="searchInput" placeholder="Enter search term">
+        <button onclick="performSearch()">Search</button>
         <div id="searchBox"></div>
     </div>
 
     <script>
         function updateSearchEngine() {
+            // Remove existing search box if any
+            document.getElementById('searchBox').innerHTML = '';
+            
             const cx = document.getElementById('searchEngineSelect').value;
-            document.getElementById('searchBox').innerHTML = `<script async src="https://cse.google.com/cse.js?cx=${cx}"></script><div class="gcse-search"></div>`;
+            // Create a script element for the new search engine
+            const script = document.createElement('script');
+            script.src = `https://cse.google.com/cse.js?cx=${cx}`;
+            script.async = true;
+            
+            // Append the new script to the searchBox div
+            document.getElementById('searchBox').appendChild(script);
+            
+            // Add the gcse-search div where the search box will be rendered
+            const searchDiv = document.createElement('div');
+            searchDiv.className = 'gcse-search';
+            document.getElementById('searchBox').appendChild(searchDiv);
         }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            if (searchTerm) {
+                // Assuming Google's CSE respects the input field value for search
+                document.querySelector('.gsc-input').value = searchTerm;
+                document.querySelector('.gsc-search-button').click(); // Trigger the search
+            }
+        }
+        
         // Initialize with the first option selected
         updateSearchEngine();
     </script>
