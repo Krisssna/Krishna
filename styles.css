@@ -144,79 +144,7 @@ main {
     }
 }
 
-/* Portfolio Section Styles */
-.portfolio {
-    width: 100%;
-    padding: 50px 0;
-    background-color: #f9f9f9;
-}
-
-.portfolio-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.portfolio-item {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.portfolio-image, .portfolio-description {
-    flex: 1;
-    padding: 20px;
-}
-
-.portfolio-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-}
-
-.portfolio-description {
-    text-align: left;
-}
-
-.portfolio-description ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.portfolio-description ul li {
-    margin: 5px 0;
-}
-
-.portfolio-description ul li a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-@media (min-width: 768px) {
-    .portfolio-item {
-        flex-direction: row;
-        justify-content: space-between;
-    }
-}
-
-@media (max-width: 767px) {
-    .portfolio-item {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .portfolio-description {
-        text-align: center;
-    }
-}
-
+/* Search Box Styles */
 
 /* Footer General Styles */
 footer {
@@ -295,7 +223,7 @@ footer {
     margin: 10px 0; /* Remove side margins */
     position: relative;
     width: 100%; /* Full width for the progress bar container */
-    }
+}
 
 .skills .progress-bar {
     background-color: #4caf50;
@@ -322,6 +250,41 @@ footer {
     padding: 0;
     margin: 0;
 }
+/* Ensure the news page takes full width and length */
+#content {
+    width: 100%;
+    min-height: calc(100vh - 100px); /* Assuming header and footer are less than 100px combined */
+    box-sizing: border-box;
+    background: none;
+    padding: 0;
+    margin: 0;
+}
 
+/* TikTok Embed Box Styles */
+/* Container for the link */
+#embed-box {
+    width: 100vw; /* Full width of the window */
+    height: 200px; /* Adjust the height as necessary */
+    overflow-y: auto; /* Enables scrolling if content exceeds height */
+    border: 2px solid #000; /* Optional: border around the box */
+    padding: 10px; /* Optional: padding inside the box */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+    background-color: #f9f9f9; /* Optional: background color */
+    text-align: center; /* Centers the link text */
+}
 
+/* Link Styling */
+#embed-box a {
+    display: block;
+    font-size: 18px; /* Font size of the link */
+    color: #007BFF; /* Link color */
+    text-decoration: none; /* Removes underline */
+    padding: 10px 0; /* Adds padding around the link */
+    font-weight: bold; /* Makes the link text bold */
+}
 
+/* Link hover effect */
+#embed-box a:hover {
+    color: #0056b3; /* Darker color on hover */
+    text-decoration: underline; /* Adds underline on hover */
+}
