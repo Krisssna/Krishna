@@ -200,10 +200,7 @@ main {
 }
 
 
-/* Specific styles for portfolio columns */
-.portfolio-col {
-    /* Custom styles for portfolio layout if needed */
-}
+
 
 
 
@@ -308,8 +305,7 @@ footer {
 
 .skills-col {
     width: 100%;
-    flex: 0 0 100%;
-    max-width: 100%;
+        max-width: 100%;
 }
 
 
