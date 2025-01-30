@@ -205,10 +205,7 @@ main {
     /* Custom styles for portfolio layout if needed */
 }
 
-/* Specific styles for skills columns */
-.skills-col {
-      width: 100%;
-}
+
 
 
 /* Footer General Styles */
@@ -307,6 +304,20 @@ footer {
 .skills .progressText {
     margin: 0;
     text-align: left; /* Changed to left to align with full width design */
+}
+
+.skills-col {
+    width: 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+@media (min-width: 768px) {  /* Adjust based on your breakpoint */
+    .skills-col {
+        width: 50%;
+        flex: 0 0 50%;  /* Flex grow, shrink and basis */
+        max-width: 50%;
+    }
 }
 
 .ad-container {
