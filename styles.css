@@ -256,6 +256,11 @@ main {
         text-align: center;
         padding: 15px;
     }
+
+     .portfolio-links {
+        text-align: left; /* Aligns the whole list to the left */
+        padding-left: 20px; /* Adjust spacing from the left */
+    }
 }
 
 
