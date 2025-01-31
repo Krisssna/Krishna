@@ -443,3 +443,14 @@ footer {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+#dateConverterPopup .popup-content {
+    max-width: 400px; 
+}
+
+
+#dateConverterIframe {
+    width: 350px; 
+    height: 150px;
+}
