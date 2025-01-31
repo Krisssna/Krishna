@@ -159,11 +159,7 @@ main {
     text-align: center;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+
 
 .portfolio-item {
     display: flex;
