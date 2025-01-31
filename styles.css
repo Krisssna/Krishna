@@ -454,3 +454,14 @@ footer {
     width: 350px; 
     height: 150px;
 }
+
+
+#nepaliCalendarPopup .popup-content {
+    max-width: 800px; 
+}
+
+
+#nepaliCalendarIframe {
+    width: 100%; 
+    height: 840px; 
+}
