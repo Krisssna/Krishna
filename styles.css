@@ -146,6 +146,10 @@ main {
 
 
 
+
+
+
+
 /* Portfolio Section */
 .portfolio {
     width: 100%;
@@ -160,10 +164,10 @@ main {
     margin-bottom: 20px;
 }
 
-/* Portfolio Grid */
+/* Portfolio Container */
 .portfolio-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    display: flex;
+    flex-direction: column; /* Stack items on top of each other */
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -172,35 +176,43 @@ main {
 
 /* Portfolio Item */
 .portfolio-item {
-    position: relative;
-    overflow: hidden;
+    display: flex;
+    flex-direction: row; /* Default: Image left, text right */
+    align-items: center;
+    background: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background: white;
+    overflow: hidden;
     transition: transform 0.3s ease-in-out;
 }
 
+.portfolio-item:nth-child(even) {
+    flex-direction: row-reverse; /* Alternate layout (Image right, text left) */
+}
+
 .portfolio-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 /* Portfolio Image */
 .portfolio-item img {
-    width: 100%;
+    width: 40%; /* Adjust image width */
     height: auto;
     display: block;
-    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+    border-radius: 10px 0 0 10px;
 }
 
 /* Portfolio Description */
 .portfolio-description {
-    padding: 15px;
-    text-align: center;
+    width: 60%;
+    padding: 20px;
+    text-align: left;
 }
 
 .portfolio-description h3 {
     font-size: 18px;
-    margin: 10px 0;
+    margin-bottom: 10px;
     color: #343a40;
 }
 
@@ -209,7 +221,7 @@ main {
     color: #6c757d;
 }
 
-/* Button Styling */
+/* View Button */
 .portfolio-description .view-btn {
     display: inline-block;
     margin-top: 10px;
@@ -228,16 +240,22 @@ main {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .portfolio-container {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .portfolio-item {
+        flex-direction: column; /* Stack items vertically */
+        text-align: center;
     }
 
-    .portfolio h2 {
-        font-size: 24px;
+    .portfolio-item img {
+        width: 100%;
+        border-radius: 10px 10px 0 0;
+    }
+
+    .portfolio-description {
+        width: 100%;
+        text-align: center;
+        padding: 15px;
     }
 }
-
-
 
 
 
