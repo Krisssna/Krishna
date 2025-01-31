@@ -59,33 +59,51 @@ document.addEventListener("DOMContentLoaded", function () {
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     }
-});
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const popup = document.getElementById('areaCalculatorPopup');
+    // Area Calculator Setup
+    const areaCalculatorPopup = document.getElementById('areaCalculatorPopup');
     const areaCalculatorBtn = document.getElementById('areaCalculatorBtn');
-    const closeBtn = popup.querySelector('.close');
-    const iframe = document.getElementById('areaCalculatorIframe');
-    let lastResult = ''; // Store last result
+    const areaCloseBtn = areaCalculatorPopup.querySelector('.close');
+    const areaIframe = document.getElementById('areaCalculatorIframe');
+    let lastResultForArea = ''; // Store last result for Area Calculator
 
     areaCalculatorBtn.addEventListener('click', function() {
-        popup.style.display = "block";
-        iframe.contentWindow.document.getElementById('results').innerText = lastResult; // Update with last result
+        areaCalculatorPopup.style.display = "block";
+        areaIframe.contentWindow.document.getElementById('results').innerText = lastResultForArea; // Update with last result
     });
 
-    closeBtn.addEventListener('click', function() {
-        popup.style.display = "none";
+    areaCloseBtn.addEventListener('click', function() {
+        areaCalculatorPopup.style.display = "none";
     });
 
-    // When clicking outside of the popup, minimize it
+    // Date Converter Setup
+    const dateConverterPopup = document.getElementById('dateConverterPopup');
+    const dateConverterBtn = document.getElementById('dateConverterBtn');
+    const dateCloseBtn = dateConverterPopup.querySelector('.close');
+    const dateIframe = document.getElementById('dateConverterIframe');
+
+    dateConverterBtn.addEventListener('click', function() {
+        dateIframe.src = "https://www.hamropatro.com/widgets/dateconverter.php";
+        dateConverterPopup.style.display = "block";
+    });
+
+    dateCloseBtn.addEventListener('click', function() {
+        dateConverterPopup.style.display = "none";
+        dateIframe.src = "about:blank"; // Reset iframe source on close
+    });
+
+    // Common functionality for closing popups
     window.addEventListener('click', function(event) {
-        if (event.target == popup) {
-            popup.style.display = "none";
+        if (event.target == areaCalculatorPopup) {
+            areaCalculatorPopup.style.display = "none";
+        } else if (event.target == dateConverterPopup) {
+            dateConverterPopup.style.display = "none";
+            dateIframe.src = "about:blank"; // Reset iframe source on close
         }
     });
 
-    // Function to get last result from iframe (if needed for other interactions)
-    function getLastResult() {
-        return iframe.contentWindow.lastResult;
+    // Function to get last result from area calculator iframe (if needed for other interactions)
+    function getLastResultForArea() {
+        return areaIframe.contentWindow.lastResult;
     }
 });
