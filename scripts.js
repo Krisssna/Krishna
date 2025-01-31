@@ -60,3 +60,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const popup = document.getElementById('areaCalculatorPopup');
+    const areaCalculatorBtn = document.getElementById('areaCalculatorBtn');
+    const closeBtn = popup.querySelector('.close');
+    const iframe = document.getElementById('areaCalculatorIframe');
+    let lastResult = ''; // Store last result
+
+    areaCalculatorBtn.addEventListener('click', function() {
+        popup.style.display = "block";
+        iframe.contentWindow.document.getElementById('results').innerText = lastResult; // Update with last result
+    });
+
+    closeBtn.addEventListener('click', function() {
+        popup.style.display = "none";
+    });
+
+    // When clicking outside of the popup, minimize it
+    window.addEventListener('click', function(event) {
+        if (event.target == popup) {
+            popup.style.display = "none";
+        }
+    });
+
+    // Function to get last result from iframe (if needed for other interactions)
+    function getLastResult() {
+        return iframe.contentWindow.lastResult;
+    }
+});
