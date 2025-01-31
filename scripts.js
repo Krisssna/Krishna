@@ -102,6 +102,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+     const nepaliCalendarPopup = document.getElementById('nepaliCalendarPopup');
+    const nepaliCalendarBtn = document.getElementById('nepaliCalendarBtn');
+    const nepaliCloseBtn = nepaliCalendarPopup.querySelector('.close');
+    const nepaliCalendarIframe = document.getElementById('nepaliCalendarIframe');
+
+    nepaliCalendarBtn.addEventListener('click', function() {
+        nepaliCalendarIframe.src = "https://www.hamropatro.com/widgets/calender-full.php";
+        nepaliCalendarPopup.style.display = "block";
+    });
+
+    nepaliCloseBtn.addEventListener('click', function() {
+        nepaliCalendarPopup.style.display = "none";
+        nepaliCalendarIframe.src = "about:blank"; // Reset iframe source on close
+    });
+
+    // Update the common popup close functionality to include the new Nepali Calendar popup
+    window.addEventListener('click', function(event) {
+        if (event.target == areaCalculatorPopup) {
+            areaCalculatorPopup.style.display = "none";
+        } else if (event.target == dateConverterPopup) {
+            dateConverterPopup.style.display = "none";
+            dateIframe.src = "about:blank";
+        } else if (event.target == nepaliCalendarPopup) {
+            nepaliCalendarPopup.style.display = "none";
+            nepaliCalendarIframe.src = "about:blank";
+        }
+    });
+
+
     // Function to get last result from area calculator iframe (if needed for other interactions)
     function getLastResultForArea() {
         return areaIframe.contentWindow.lastResult;
