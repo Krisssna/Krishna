@@ -19,6 +19,10 @@ nav {
    
 }
 
+.no-dec {
+    text-decoration: none;
+}
+
 .nav-right {
     position: relative;
 }
