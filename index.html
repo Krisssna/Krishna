@@ -20,7 +20,7 @@
         <div class="nav-right">
             <div class="menu-icon" onclick="toggleMenu()">☰</div>
             <ul id="menu">
-                <li><a class="news-link" href="#" onclick="openNewsPage(); return false;">Personalized News</a></li>
+                
                 <li class="dropdown">Apps
                     <ul class="dropdown-content">
                         <li class="dropdown">Caputok
@@ -262,32 +262,7 @@ TikTok is a trademark of ByteDance Ltd. This app is not affiliated with, endorse
     </div>
 </footer>
 
-
-
     <script src="scripts.js"></script>
-    <script>
-        async function openNewsPage() {
-            try {
-                // Clear all content inside <main> except for header and footer
-                document.getElementById('content').innerHTML = '';
-
-                // Fetch the content of news.html
-                const response = await fetch('newsondemand/index.html');
-                let html = await response.text();
-
-                // Parse the fetched HTML to extract the body content
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                
-                // Insert the content from news.html into the main content area
-                document.getElementById('content').innerHTML = doc.body.innerHTML;
-
-            } catch (error) {
-                console.error('Failed to load or process news.html:', error);
-                // Optionally, display an error message to the user
-                document.getElementById('content').innerHTML = '<p>Error loading personalized news. Please try again.</p>';
-            }
-        }
-    </script>
+   
 </body>
 </html>
