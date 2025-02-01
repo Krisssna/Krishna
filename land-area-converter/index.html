@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta name="description" content="Easily convert land area units like Ropani, Aana, Dhur, Kattha, and Bigha to square meters, acres, and hectares with this accurate Nepali Land Area Converter tool.">
+     <title>Land Area Converter - Convert Ropani, Aana, Dhur to Sq. Meters, Bigha, all</title>
+  <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        .input-group { margin-bottom: 10px; }
+        .results { white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Area Conversion Tool</h1>
+
+        <!-- Unit Selection -->
+        <div class="input-group">
+            <label for="unit">Select Unit:</label>
+            <select id="unit">
+                <option value="bi">Bigha</option>
+                <option value="ka">Kattha</option>
+                <option value="dh">Dhur</option>
+                <option value="bi-ka-dh">Bigha-Kattha-Dhur</option>
+                <option value="kh">Khetmuri</option>
+                <option value="ma">Matomuri</option>
+                <option value="kh-ma">Khetmuri-Matomuri</option>
+                <option value="ro">Ropani</option>
+                <option value="aa">Aana</option>
+                <option value="pa">Paisa</option>
+                <option value="da">Dam</option>
+                <option value="ro-aa-pa-da">Ropani-Aana-Paisa-Dam</option>
+                <option value="acre">Acre</option>
+                <option value="hectare">Hectare</option>
+                <option value="sqm">Square Meter</option>
+                <option value="sqkm">Square Kilometer</option>
+                <option value="sqmile">Square Mile</option>
+                <option value="sqyard">Square Yard</option>
+                <option value="sqft">Square Feet</option>
+            </select>
+        </div>
+
+        <!-- Input Value -->
+        <div class="input-group">
+            <label for="value">Enter Area Value:</label>
+            <input type="text" id="value" placeholder="e.g., 1 or 1-2-3 for combined">
+            <button onclick="convert()">Convert</button>
+        </div>
+
+        <!-- Conversion Results -->
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        const CONVERSION_FACTORS = {
+            "Bigha": 1,
+            "Kattha": 20,
+            "Dhur": 400,
+            "Khetmuri": 0.5325,
+            "Matomuri": 53.25,
+            "Ropani": 13.31259,
+            "Aana": 213.0014,
+            "Paisa": 852.0056,
+            "Dam": 3408.0224,
+            "Acre": 1.67,
+            "Hectare": 0.68,
+            "Square Meter": 6772.630,
+            "Square Kilometer": 0.00677263,
+            "Square Mile": 0.002614927062,
+            "Square Yard": 8099.998067,
+            "Square Feet": 72900.589,
+        };
+
+        const unit_mapping = {
+            "bi": "Bigha",
+            "ka": "Kattha",
+            "dh": "Dhur",
+            "bi-ka-dh": "Bigha",
+            "kh": "Khetmuri",
+            "ma": "Matomuri",
+            "kh-ma": "Khetmuri",
+            "ro": "Ropani",
+            "aa": "Aana",
+            "pa": "Paisa",
+            "da": "Dam",
+            "ro-aa-pa-da": "Ropani",
+            "acre": "Acre",
+            "hectare": "Hectare",
+            "sqm": "Square Meter",
+            "sqkm": "Square Kilometer",
+            "sqmile": "Square Mile",
+            "sqyard": "Square Yard",
+            "sqft": "Square Feet"
+        };
+
+        function convert() {
+            let selectedUnit = document.getElementById('unit').value;
+            let value = document.getElementById('value').value;
+            let results = document.getElementById('results');
+            
+            try {
+                let baseValue;
+                if (selectedUnit == "bi-ka-dh") {
+                    let [bigha, kattha, dhur] = value.split('-').map(parseFloat);
+                    baseValue = bigha + kattha / 20 + dhur / 400;
+                } else if (selectedUnit == "ro-aa-pa-da") {
+                    let [ropani, aana, paisa, dam] = value.split('-').map(parseFloat);
+                    baseValue = ropani + aana / 16 + paisa / 64 + dam / 256;
+                    // Use Ropani conversion factor here
+                    baseValue = baseValue / CONVERSION_FACTORS['Ropani'];
+                } else {
+                    baseValue = parseFloat(value) / CONVERSION_FACTORS[unit_mapping[selectedUnit]];
+                }
+
+                let conversionResults = Object.entries(CONVERSION_FACTORS).map(([unit, factor]) => 
+                    `${(baseValue * factor).toFixed(2)} ${unit}`
+                ).join("\n");
+
+                let message = `Your ${value} ${unit_mapping[selectedUnit]} converted to other units:\n\n${conversionResults}`;
+
+                // Special conversions
+                let ropaniConverted = baseValue * CONVERSION_FACTORS['Ropani'];
+                let bighaConverted = baseValue * CONVERSION_FACTORS['Bigha'];
+                message += `\n\nBigha - Kattha - Dhur:\n${calculateBiKaDh(bighaConverted)}`;
+                message += `\n\nRopani - Aana - Paisa - Dam:\n${calculateRoAaPaDa(ropaniConverted)}`;
+
+                results.innerText = message;
+            } catch(err) {
+                results.innerText = "Please enter a valid area value.";
+            }
+        }
+
+ // Add event listener for Enter key
+        document.getElementById('value').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                // Prevent the default form submission if inside a form
+                e.preventDefault();
+                convert();
+            }
+        });
+
+        function calculateBiKaDh(value) {
+            let bigha = Math.floor(value);
+            let fractionalBi = value - bigha;
+            let kattha = Math.floor(fractionalBi * 20);
+            let dhur = ((fractionalBi * 20 - kattha) * 20).toFixed(2);
+            return `${bigha} - ${kattha} - ${dhur}`;
+        }
+
+        function calculateRoAaPaDa(value) {
+            let ropani = Math.floor(value);
+            let fractionalRo = value - ropani;
+            let aana = Math.floor(fractionalRo * 16);
+            let fractionalAa = fractionalRo * 16 - aana;
+            let paisa = Math.floor(fractionalAa * 4);
+            let dam = ((fractionalAa * 4 - paisa) * 4).toFixed(2);
+            return `${ropani} - ${aana} - ${paisa} - ${dam}`;
+        }
+    </script>
+</body>
+</html>
