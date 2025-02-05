@@ -16,32 +16,38 @@
 </head>
 <body>
     <nav>
-        <div class="nav-left">
-    <a href="#" onclick="window.location.reload();" class="no-dec">My Space 😉</a>
+    <div class="nav-left">
+        <a href="#" onclick="window.location.reload();" class="no-dec">My Space 😉</a>
+    </div>
+
+    <div class="nav-right">
+        <div class="menu-icon" onclick="toggleMenu()">☰</div>
+        <ul id="menu">
+            <li><a href="#" onclick="loadPage('land-area-converter/'); return false;" class="no-deco">Area Converter</a></li>
+            <li class="dropdown">Apps
+                <ul class="dropdown-content">
+                    <li class="dropdown">Caputok
+                        <ul class="dropdown-content">
+                            <li><a href="https://youtube.com/shorts/C1l8K9q8dog?feature=share">Play Store</a></li>
+                            <li><a href="#">App Store</a></li>
+                            <li><a href="#" onclick="loadPage('assets/apps/caputok/privacy_policy/'); return false;">Privacy Policy</a></li>
+                            <li><a href="#" onclick="loadPage('assets/apps/caputok/terms_of_use/'); return false;">Terms of Use</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="#contact" class="no-deco">Contact</a></li>
+            <li><a href="#contact" class="no-deco">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="content-container">
+    <iframe id="contentFrame" src="" style="width: 100%; height: 80vh; border: none; display: none;"></iframe>
 </div>
 
-        <div class="nav-right">
-            <div class="menu-icon" onclick="toggleMenu()">☰</div>
-            <ul id="menu">
-                <li><a href="land-area-converter/" class="no-deco" >Area Converter</a></li>
-                <li class="dropdown">Apps
-                    <ul class="dropdown-content">
-                        <li class="dropdown">Caputok
-                            <ul class="dropdown-content">
-                                <li><a href="https://youtube.com/shorts/C1l8K9q8dog?feature=share">Play Store</a></li>
-                                <li><a href="#">App Store</a></li>
-                                <li><a href="assets/apps/caputok/privacy_policy/">Privacy Policy</a></li>
-                                <li><a href="assets/apps/caputok/terms_of_use/">Terms of Use</a></li>
-                            </ul>
-                        </li>
-                      
-                    </ul>
-                </li>
-               <li><a href="#contact" class="no-deco">Contact</a></li>
-                <li><a href="#contact" class="no-deco">About</a></li>
-            </ul>
-        </div>
-    </nav>
+
+
 	  <main 
         		<div class="intro">
        			 <img src="assets/images/welcome-banner.jpeg" alt="Main Photo">
