@@ -144,3 +144,11 @@ if ('serviceWorker' in navigator) {
         console.log('Service Worker registration failed:', error);
     });
 }
+
+
+
+    function loadPage(pageUrl) {
+        const iframe = document.getElementById("contentFrame");
+        iframe.src = pageUrl;
+        iframe.style.display = "block";
+    }
