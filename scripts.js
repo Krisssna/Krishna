@@ -148,6 +148,7 @@ if ('serviceWorker' in navigator) {
 
 
     function loadPage(pageUrl) {
+        document.body.classList.add('hide-content');
         const iframe = document.getElementById("contentFrame");
         iframe.src = pageUrl;
         iframe.style.display = "block";
