@@ -153,3 +153,12 @@ if ('serviceWorker' in navigator) {
         iframe.src = pageUrl;
         iframe.style.display = "block";
     }
+
+function resetPage() {
+    document.body.classList.remove('hide-content');
+    const iframe = document.getElementById('contentFrame');
+    iframe.style.display = 'none';
+    iframe.src = '';
+}
+
+document.getElementById('backToTop').addEventListener('click', resetPage);
