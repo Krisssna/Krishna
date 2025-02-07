@@ -151,8 +151,16 @@ if ('serviceWorker' in navigator) {
 
 function loadPage(pageUrl) {
     const iframe = document.getElementById("contentFrame");
+    const menu = document.getElementById("menu");
+
+    // Load the page inside the iframe
     iframe.src = pageUrl;
-    iframe.style.display = "block"; // Make the iframe visible
+    iframe.style.display = "block"; // Show iframe
+
+    // Hide the menu if it's open
+    if (menu) {
+        menu.style.display = "none";
+    }
 }
 
 
