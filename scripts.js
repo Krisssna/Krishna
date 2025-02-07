@@ -147,18 +147,20 @@ if ('serviceWorker' in navigator) {
 
 
 
-    function loadPage(pageUrl) {
-        document.body.classList.add('hide-content');
-        const iframe = document.getElementById("contentFrame");
-        iframe.src = pageUrl;
-        iframe.style.display = "block";
-    }
+ 
+
+function loadPage(pageUrl) {
+    const iframe = document.getElementById("contentFrame");
+    iframe.src = pageUrl;
+    iframe.style.display = "block"; // Make the iframe visible
+}
+
+
 
 function resetPage() {
-    document.body.classList.remove('hide-content');
-    const iframe = document.getElementById('contentFrame');
-    iframe.style.display = 'none';
-    iframe.src = '';
+    const iframe = document.getElementById("contentFrame");
+    iframe.style.display = "none"; // Hide the iframe
+    iframe.src = ""; // Clear the iframe content
 }
 
 document.getElementById('backToTop').addEventListener('click', resetPage);
