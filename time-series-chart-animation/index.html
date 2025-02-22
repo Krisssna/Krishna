@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualize Time Series Data</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            width: 100%;
+            padding: 15px;
+            background: #007bff;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .back-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 100px);
+            border: none;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header"></div>
+    <button class="back-btn" onclick="history.back()">← Back</button>
+
+    <iframe src="https://chart-visualize.niraula300.workers.dev/" title="Data Visualization"></iframe>
+
+    <footer>
+        <p>© 2025 Krishna Niraula. All rights reserved.</p>
+    </footer>
+</body>
+</html>
