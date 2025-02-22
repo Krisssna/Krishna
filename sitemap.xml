@@ -1,39 +1,39 @@
 
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!--  created with Free Online Sitemap Generator www.xml-sitemaps.com  -->
+
 <url>
 <loc>https://krishnaniraula.com.np/</loc>
-<lastmod>2025-02-01T03:49:40+00:00</lastmod>
+<lastmod>2025-02-22T15:25:54+00:00</lastmod>
 <priority>1.00</priority>
 </url>
 <url>
-<loc>https://krishnaniraula.com.np/assets/apps/caputok/privacy_policy/</loc>
-<lastmod>2025-02-01T03:49:40+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://krishnaniraula.com.np/assets/apps/caputok/terms_of_use/</loc>
-<lastmod>2025-02-01T03:49:40+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://krishnaniraula.com.np/assets/pp.html</loc>
-<lastmod>2025-02-01T03:49:40+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://krishnaniraula.com.np/assets/tfu.html</loc>
-<lastmod>2025-02-01T03:49:40+00:00</lastmod>
-<priority>0.80</priority>
-</url>
-<url>
-<loc>https://krishnaniraula.com.np/land-area-converter/</loc>
-<lastmod>2025-02-01T03:49:40+00:00</lastmod>
+<loc>https://krishnaniraula.com.np/time-series-chart-animation/</loc>
+<lastmod>2025-02-22T15:25:54+00:00</lastmod>
 <priority>0.90</priority>
 </url>
 <url>
-<loc>https://krishnaniraula.com.np/assets/time-series-cahrt.html</loc>
-  <lastmod>2025-02-21T03:49:40+00:00</lastmod>
-  <priority>0.90</priority>
-</url>  
+<loc>https://krishnaniraula.com.np/assets/apps/caputok/privacy_policy/</loc>
+<lastmod>2025-02-22T15:25:54+00:00</lastmod>
+<priority>0.60</priority>
+</url>
+<url>
+<loc>https://krishnaniraula.com.np/assets/apps/caputok/terms_of_use/</loc>
+<lastmod>2025-02-22T15:25:54+00:00</lastmod>
+<priority>0.60</priority>
+</url>
+<url>
+<loc>https://krishnaniraula.com.np/assets/website-privacy-policy.html</loc>
+<lastmod>2025-02-22T15:25:54+00:00</lastmod>
+<priority>0.70</priority>
+</url>
+<url>
+<loc>https://krishnaniraula.com.np/assets/website-terms-of-use.html</loc>
+<lastmod>2025-02-22T15:25:54+00:00</lastmod>
+<priority>0.70</priority>
+</url>
+<url>
+<loc>https://krishnaniraula.com.np/land-area-converter/</loc>
+<lastmod>2025-02-22T15:25:54+00:00</lastmod>
+<priority>0.90</priority>
+</url>
 </urlset>
