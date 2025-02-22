@@ -9,88 +9,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="index.js"></script>
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      margin: 20px; 
-    }
- .row-controls {
-      position: absolute;
-      left: -40px;
-      top: 50%;
-      transform: translateY(-50%);
-      display: none;
-      gap: 2px;
-    }
-    tr:hover .row-controls {
-      display: flex;
-    }
-    .column-controls {
-      position: absolute;
-      top: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-      gap: 2px;
-    }
-    th:hover .column-controls {
-      display: flex;
-    }
-    .row-controls-cell, th {
-      position: relative;
-    }
-
-    #excelTable {
-      border-collapse: collapse;
-      margin: 20px 0; 
-      width: 100%;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    }
-    #excelTable th, #excelTable td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-      background: #f8f8f8;
-      transition: background-color 0.3s;
-    }
-    #excelTable th {
-      background-color: #e6e6e6;
-      font-weight: bold;
-    }
-    button.addButton {
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      color: #4CAF50;
-    }
-    button.delButton {
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      color: #F44336;
-    }
-    input {
-      width: 80px; 
-      text-align: center;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-    }
-    #chartContainer {
-      background: white; 
-      padding: 20px; 
-      border-radius: 5px; 
-      margin-bottom: 20px; 
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-    #excelTable th:hover, #excelTable td:hover {
-      background-color: #e6e6e6;
-    }
-    input:hover, button:hover {
-      background-color: #f0f0f0;
-    }
-  </style>
+    <link rel="stylesheet" href="styles.css">
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7909865065068819"
+     crossorigin="anonymous"></script>
+ 
 </head>
 <body>
   <div id="controls">
