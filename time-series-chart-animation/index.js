@@ -426,12 +426,17 @@ function updateChart() {
     fill: false,
   }));
 
+  // Calculate y-axis range
+  const allYValues = data.flat();
+  const yMin = Math.min(...allYValues, 0);
+  const yMaxInitial = Math.max(...allYValues);
+
   currentChart = new Chart(ctx, {
     type: 'line',
     data: { datasets },
     options: {
       responsive: true,
-      animation: { duration: 0 },
+      animation: { duration: 0 }, // Keep line animation off here
       plugins: {
         legend: {
           position: 'right',
@@ -481,7 +486,11 @@ function updateChart() {
             autoSkip: false
           }
         },
-        y: { beginAtZero: true }
+        y: {
+          beginAtZero: true,
+          min: yMin,
+          max: yMaxInitial // Initial max, will animate if needed
+        }
       },
       showDetails: false,
       plugins: [{
@@ -541,6 +550,16 @@ function updateChart() {
         dataset.data[currentStep + 1] = { x: interpolatedX, y: interpolatedY };
       });
 
+      // Smooth y-axis adjustment
+      const currentYMax = Math.max(...datasets.flatMap(d => d.data.map(p => p.y)));
+      const targetYMax = Math.max(currentYMax, yMaxInitial);
+      if (targetYMax !== currentChart.options.scales.y.max) {
+        const previousYMax = currentChart.options.scales.y.max;
+        const yDiff = targetYMax - previousYMax;
+        const yStep = yDiff * stepProgress * 0.1; // Slower adjustment
+        currentChart.options.scales.y.max = previousYMax + yStep;
+      }
+
       currentChart.update('none');
       requestAnimationFrame(animateLine);
     } else {
@@ -549,6 +568,9 @@ function updateChart() {
           dataset.data.push({ x: timeLabels[dataset.data.length], y: data[dataset.data.length][i] });
         }
       });
+      // Final y-axis adjustment
+      const finalYMax = Math.max(...datasets.flatMap(d => d.data.map(p => p.y)));
+      currentChart.options.scales.y.max = finalYMax;
       currentChart.update('none');
     }
   }
