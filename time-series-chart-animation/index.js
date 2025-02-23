@@ -84,7 +84,7 @@ function updateTableStructure() {
     rowControlsDiv.className = 'row-controls';
     rowControlsDiv.style.display = 'none'; 
     rowControlsDiv.style.position = 'absolute';
-    rowControlsDiv.style.left = '-20px';
+    rowControlsDiv.style.left = '-10px';
     rowControlsDiv.style.top = '50%';
     rowControlsDiv.style.transform = 'translateY(-50%)';
     rowControlsDiv.style.flexDirection = 'column';
