@@ -4,15 +4,56 @@ async function handleRequest(request) {
   });
 }
 
-document.getElementById('fullscreenToggle').addEventListener('click', function() {
+// Full-screen toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const fullscreenToggle = document.getElementById('fullscreenToggle');
   const chartContainer = document.getElementById('chartContainer');
-  if (!document.fullscreenElement) {
-    chartContainer.requestFullscreen().catch(err => {
-      console.error('Error attempting to enable full-screen mode:', err);
-    });
-  } else {
-    document.exitFullscreen();
+
+  if (!fullscreenToggle || !chartContainer) {
+    console.error('Fullscreen toggle or chart container not found in DOM');
+    return;
   }
+
+  fullscreenToggle.addEventListener('click', function() {
+    // Check if fullscreen is already active
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
+      // Request fullscreen with vendor prefix fallbacks
+      if (chartContainer.requestFullscreen) {
+        chartContainer.requestFullscreen().catch(err => {
+          console.error('Error enabling fullscreen:', err);
+          alert('Fullscreen not supported on this device/browser');
+        });
+      } else if (chartContainer.webkitRequestFullscreen) { // iOS Safari, older Android
+        chartContainer.webkitRequestFullscreen().catch(err => {
+          console.error('Webkit fullscreen error:', err);
+          alert('Fullscreen not supported on this device/browser');
+        });
+      } else if (chartContainer.mozRequestFullScreen) { // Firefox
+        chartContainer.mozRequestFullScreen().catch(err => {
+          console.error('Mozilla fullscreen error:', err);
+          alert('Fullscreen not supported on this device/browser');
+        });
+      } else if (chartContainer.msRequestFullscreen) { // IE/Edge
+        chartContainer.msRequestFullscreen().catch(err => {
+          console.error('MS fullscreen error:', err);
+          alert('Fullscreen not supported on this device/browser');
+        });
+      } else {
+        console.error('Fullscreen API not supported');
+        alert('Fullscreen not supported on this device/browser');
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+  });
 });
 
 let currentChart = null;
