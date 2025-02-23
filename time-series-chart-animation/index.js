@@ -326,7 +326,7 @@ function createChart() {
             animation: { duration: 0 },
             plugins: {
                 legend: {
-                    position: 'bottom',
+                    position: 'right',
                     labels: {
                         generateLabels: function(chart) {
                             const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
