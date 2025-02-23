@@ -4,14 +4,12 @@ async function handleRequest(request) {
   });
 }
 
-// Full-screen toggle functionality
 document.getElementById('fullscreenToggle').addEventListener('click', function() {
   const chartContainer = document.getElementById('chartContainer');
   if (!document.fullscreenElement) {
     chartContainer.requestFullscreen().catch(err => {
       console.error('Error attempting to enable full-screen mode:', err);
     });
-    this.textContent = 'Exit Full Screen';
   } else {
     document.exitFullscreen();
   }
@@ -84,12 +82,11 @@ function updateTableStructure() {
   
     let rowControlsDiv = document.createElement('div');
     rowControlsDiv.className = 'row-controls';
-    rowControlsDiv.style.display = 'none';
+    rowControlsDiv.style.display = 'none'; 
     rowControlsDiv.style.position = 'absolute';
     rowControlsDiv.style.left = '-20px';
     rowControlsDiv.style.top = '50%';
     rowControlsDiv.style.transform = 'translateY(-50%)';
-    rowControlsDiv.style.display = 'flex';
     rowControlsDiv.style.flexDirection = 'column';
   
     let addRowButton = document.createElement('button');
@@ -152,7 +149,6 @@ function addRowAfter(button) {
   rowControlsDiv.style.left = '-20px';
   rowControlsDiv.style.top = '50%';
   rowControlsDiv.style.transform = 'translateY(-50%)';
-  rowControlsDiv.style.display = 'flex';
   rowControlsDiv.style.flexDirection = 'column';
   
   let addRowButton = document.createElement('button');
