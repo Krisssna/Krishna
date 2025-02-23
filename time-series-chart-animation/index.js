@@ -8,33 +8,62 @@ async function handleRequest(request) {
 document.addEventListener('DOMContentLoaded', function() {
   const fullscreenToggle = document.getElementById('fullscreenToggle');
   const chartContainer = document.getElementById('chartContainer');
+  const chartCanvas = document.getElementById('myChart');
 
-  if (!fullscreenToggle || !chartContainer) {
-    console.error('Fullscreen toggle or chart container not found in DOM');
+  if (!fullscreenToggle || !chartContainer || !chartCanvas) {
+    console.error('Fullscreen toggle, chart container, or canvas not found in DOM');
     return;
   }
 
+  // Function to detect mobile devices
+  function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+           (window.innerWidth <= 768 && window.innerHeight <= 1024); // Fallback for smaller screens
+  }
+
   fullscreenToggle.addEventListener('click', function() {
-    // Check if fullscreen is already active
+    const isMobileDevice = isMobile();
+
     if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
-      // Request fullscreen with vendor prefix fallbacks
+      // Entering full-screen
       if (chartContainer.requestFullscreen) {
-        chartContainer.requestFullscreen().catch(err => {
+        chartContainer.requestFullscreen().then(() => {
+          // Adjust height only on mobile
+          if (isMobileDevice) {
+            chartCanvas.style.height = '80vh'; // Increase height (adjust value as needed)
+            if (currentChart) currentChart.resize(); 
+          }
+        }).catch(err => {
           console.error('Error enabling fullscreen:', err);
           alert('Fullscreen not supported on this device/browser');
         });
-      } else if (chartContainer.webkitRequestFullscreen) { // iOS Safari, older Android
-        chartContainer.webkitRequestFullscreen().catch(err => {
+      } else if (chartContainer.webkitRequestFullscreen) {
+        chartContainer.webkitRequestFullscreen().then(() => {
+          if (isMobileDevice) {
+            chartCanvas.style.height = '80vh';
+            if (currentChart) currentChart.resize();
+          }
+        }).catch(err => {
           console.error('Webkit fullscreen error:', err);
           alert('Fullscreen not supported on this device/browser');
         });
-      } else if (chartContainer.mozRequestFullScreen) { // Firefox
-        chartContainer.mozRequestFullScreen().catch(err => {
+      } else if (chartContainer.mozRequestFullScreen) {
+        chartContainer.mozRequestFullScreen().then(() => {
+          if (isMobileDevice) {
+            chartCanvas.style.height = '80vh';
+            if (currentChart) currentChart.resize();
+          }
+        }).catch(err => {
           console.error('Mozilla fullscreen error:', err);
           alert('Fullscreen not supported on this device/browser');
         });
-      } else if (chartContainer.msRequestFullscreen) { // IE/Edge
-        chartContainer.msRequestFullscreen().catch(err => {
+      } else if (chartContainer.msRequestFullscreen) {
+        chartContainer.msRequestFullscreen().then(() => {
+          if (isMobileDevice) {
+            chartCanvas.style.height = '80vh';
+            if (currentChart) currentChart.resize();
+          }
+        }).catch(err => {
           console.error('MS fullscreen error:', err);
           alert('Fullscreen not supported on this device/browser');
         });
@@ -43,19 +72,20 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Fullscreen not supported on this device/browser');
       }
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
+     
+      const exitFullscreen = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      if (exitFullscreen) {
+        exitFullscreen.call(document).then(() => {
+          
+          if (isMobileDevice) {
+            chartCanvas.style.height = ''; 
+            if (currentChart) currentChart.resize();
+          }
+        });
       }
     }
   });
 });
-
 let currentChart = null;
 let columns = 3;
 let rows = 3;
