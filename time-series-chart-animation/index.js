@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (chartContainer.webkitRequestFullscreen) {
         chartContainer.webkitRequestFullscreen().then(() => {
           if (isMobileDevice) {
-            chartCanvas.style.height = '80vh';
+            chartCanvas.style.height = '95vh';
             if (currentChart) currentChart.resize();
           }
         }).catch(err => {
