@@ -4,6 +4,20 @@ async function handleRequest(request) {
   });
 }
 
+// Full-screen toggle functionality
+document.getElementById('fullscreenToggle').addEventListener('click', function() {
+  const chartContainer = document.getElementById('chartContainer');
+  if (!document.fullscreenElement) {
+    chartContainer.requestFullscreen().catch(err => {
+      console.error('Error attempting to enable full-screen mode:', err);
+    });
+    this.textContent = 'Exit Full Screen';
+  } else {
+    document.exitFullscreen();
+    this.textContent = 'Toggle Full Screen';
+  }
+});
+
 let currentChart = null;
 let columns = 3;
 let rows = 3;
