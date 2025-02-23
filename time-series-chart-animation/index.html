@@ -39,7 +39,7 @@
   <div id="controls">
     <button onclick="exportCSV()">Export Table Data (CSV)</button>
      
-    <label>Animation Speed (sec): <input type="number" id="animationSpeed" value="1" min="0.1" step="0.1"></label>
+    
     <button onclick="document.getElementById('fileInput').click()">Import CSV/Excel</button>
     <input type="file" id="fileInput" style="display: none;" accept=".csv,.xlsx" onchange="handleFileUpload(event)">
   </div>
@@ -55,7 +55,7 @@
     <canvas id="myChart"></canvas>
 	<button id="fullscreenToggle" style="position: fixed; bottom: 10px; right: 10px; z-index: 10; width: 24px; height: 24px; background-color: rgba(0, 0, 0, 0.5); border: 2px solid #fff; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='rgba(0, 0, 0, 0.8)'" onmouseout="this.style.backgroundColor='rgba(0, 0, 0, 0.5)'"></button>
  	<button onclick="updateChart()" style="display: block; margin: 0 auto;">Update Chart</button>
-
+	<label>Animation Speed (sec): <input type="number" id="animationSpeed" value="1" min="0.1" step="0.1"></label>
   </div>
   
   
