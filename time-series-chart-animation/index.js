@@ -14,7 +14,6 @@ document.getElementById('fullscreenToggle').addEventListener('click', function()
     this.textContent = 'Exit Full Screen';
   } else {
     document.exitFullscreen();
-    this.textContent = 'Toggle Full Screen';
   }
 });
 
