@@ -9,8 +9,8 @@
     <link rel="alternate" hreflang="x-default" href="https://krishnaniraula.com.np/land-area-converter/">
 
     <meta name="google-adsense-account" content="ca-pub-7909865065068819">
-     <meta name="description" content="Easily convert land area units like Ropani, Aana, Dhur, Kattha, and Bigha to square meters, acres, and hectares with this accurate Nepali Land Area Converter tool.">
-     <title>Land Area Converter - Convert Ropani, Aana, Dhur to Sq. Meters, Bigha, all in Nepali Measurements</title>
+     <meta name="description" content="Easily convert land area units like Ropani, Aana, Dhur, Kattha, and Bigaha to square meters, acres, and hectares with this accurate Nepali Land Area Converter tool.">
+     <title>Land Area Converter - Convert Ropani, Aana, Dhur to Sq. Meters, Bigaha, all in Nepali Measurements</title>
   <style>
         body { font-family: Arial, sans-serif; }
         .container { max-width: 800px; margin: auto; padding: 20px; }
@@ -33,7 +33,7 @@
 <ul>
     <li>1 Ropani = 16 Aana</li>
     <li>1 Aana = 342.25 Sq. Feet</li>
-    <li>1 Bigha = 6,772.63 Sq. Meters</li>
+    <li>1 Bigaha = 6,772.63 Sq. Meters</li>
 </ul>
         <button onclick="location.href='/land-area-converter/faq.html'" class="faq-button">FAQ</button>
 
@@ -41,10 +41,10 @@
         <div class="input-group">
             <label for="unit">Select Unit:</label>
             <select id="unit">
-                <option value="bi">Bigha बिघा</option>
+                <option value="bi">Bigaha बिगाहा</option>
                 <option value="ka">Kattha कठ्ठा</option>
                 <option value="dh">Dhur धुर</option>
-                <option value="bi-ka-dh">Bigha-Kattha-Dhur</option>
+                <option value="bi-ka-dh">Bigaha-Kattha-Dhur</option>
                 <option value="kh">Khetmuri खेतमुरी</option>
                 <option value="ma">Matomuri माटाेमुरी</option>
                 <option value="ro">Ropani राेपनी</option>
@@ -75,7 +75,7 @@
 
     <script>
         const CONVERSION_FACTORS = {
-            "Bigha": 1,
+            "Bigaha": 1,
             "Kattha": 20,
             "Dhur": 400,
             "Khetmuri": 0.53250548,
@@ -94,10 +94,10 @@
         };
 
         const unit_mapping = {
-            "bi": "Bigha",
+            "bi": "Bigaha",
             "ka": "Kattha",
             "dh": "Dhur",
-            "bi-ka-dh": "Bigha",
+            "bi-ka-dh": "Bigaha",
             "kh": "Khetmuri",
             "ma": "Matomuri",
             "ro": "Ropani",
@@ -122,8 +122,8 @@
             try {
                 let baseValue;
                 if (selectedUnit == "bi-ka-dh") {
-                    let [bigha, kattha, dhur] = value.split('-').map(parseFloat);
-                    baseValue = bigha + kattha / 20 + dhur / 400;
+                    let [bigaha, kattha, dhur] = value.split('-').map(parseFloat);
+                    baseValue = bigaha + kattha / 20 + dhur / 400;
                 } else if (selectedUnit == "ro-aa-pa-da") {
                     let [ropani, aana, paisa, dam] = value.split('-').map(parseFloat);
                     baseValue = ropani + aana / 16 + paisa / 64 + dam / 256;
@@ -141,8 +141,8 @@
 
                 // Special conversions
                 let ropaniConverted = baseValue * CONVERSION_FACTORS['Ropani'];
-                let bighaConverted = baseValue * CONVERSION_FACTORS['Bigha'];
-                message += `\n\nBigha - Kattha - Dhur:\n${calculateBiKaDh(bighaConverted)}`;
+                let bigahaConverted = baseValue * CONVERSION_FACTORS['Bigaha'];
+                message += `\n\nBigaha - Kattha - Dhur:\n${calculateBiKaDh(bigahaConverted)}`;
                 message += `\n\nRopani - Aana - Paisa - Dam:\n${calculateRoAaPaDa(ropaniConverted)}`;
 
                 results.innerText = message;
@@ -161,11 +161,11 @@
         });
 
         function calculateBiKaDh(value) {
-            let bigha = Math.floor(value);
-            let fractionalBi = value - bigha;
+            let bigaha = Math.floor(value);
+            let fractionalBi = value - bigaha;
             let kattha = Math.floor(fractionalBi * 20);
             let dhur = ((fractionalBi * 20 - kattha) * 20).toFixed(2);
-            return `${bigha} - ${kattha} - ${dhur}`;
+            return `${bigaha} - ${kattha} - ${dhur}`;
         }
 
         function calculateRoAaPaDa(value) {
