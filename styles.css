@@ -1,6 +1,3 @@
-/* Widget Styles (Moved from index.html) */
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;600&display=swap');
-
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
@@ -19,6 +16,7 @@ nav {
 
 .nav-left {
     font-size: 24px;
+   
 }
 
 .no-dec {
@@ -71,6 +69,8 @@ nav {
     color: white;
     text-decoration: none;
 }
+
+
 
 .dropdown-content {
     display: none;
@@ -150,6 +150,12 @@ main {
     }
 }
 
+
+
+
+
+
+
 /* Portfolio Section */
 .portfolio {
     width: 100%;
@@ -162,7 +168,7 @@ main {
     font-size: 28px;
     color: #333;
     margin-bottom: 20px;
-}
+    }
 
 /* Portfolio Container */
 .portfolio-container {
@@ -257,12 +263,16 @@ main {
         padding: 15px;
     }
 
-    .portfolio-links {
+     .portfolio-links {
         text-align: left; /* Aligns the whole list to the left */
         padding-left: 20px; /* Adjust spacing from the left */
-        text-decoration: none;
+         text-decoration: none;
     }
 }
+
+
+
+
 
 /* Footer General Styles */
 footer {
@@ -327,6 +337,7 @@ footer {
     color: #6c757d;
 }
 
+
 /* Progress Bars */
 .skills {
     width: 100%; /* Ensure the skills section takes full width */
@@ -360,6 +371,9 @@ footer {
     margin: 0;
     text-align: left; /* Changed to left to align with full width design */
 }
+
+
+
 
 .ad-container {
     width: 100%;
@@ -430,18 +444,22 @@ footer {
     cursor: pointer;
 }
 
+
 #dateConverterPopup .popup-content {
     max-width: 400px; 
 }
+
 
 #dateConverterIframe {
     width: 350px; 
     height: 150px;
 }
 
+
 #nepaliCalendarPopup .popup-content {
     max-width: 800px; 
 }
+
 
 #nepaliCalendarIframe {
     width: 100%; 
@@ -454,62 +472,4 @@ body.hide-content > * {
 
 body.hide-content #content-container {
     display: block;
-}
-
-
-
-.portfolio-description .item {
-    min-width: 100px;
-    width: 100px;
-    position: relative;
-    vertical-align: top;
-    margin: 10px 10px 10px 0;
-    white-space: normal;
-    line-height: 1.2;
-}
-
-.portfolio-description .item figure {
-    width: auto;
-    height: 100px;
-    margin: 0 0 10px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.portfolio-description .item figure img {
-    width: 100px;
-    height: auto;
-    border-radius: 5px;
-}
-
-.portfolio-description .item div.name {
-    font-family: 'Roboto Slab', serif;
-    color: #333333;
-    font-size: 14px;
-    font-weight: 600;
-    word-break: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-align: center;
-}
-
-.portfolio-description .item div.name a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-}
-
-.portfolio-description .item div.description {
-    font-family: 'Roboto Slab', serif;
-    color: #999;
-    font-size: 12px;
-    font-weight: 300;
-    margin-top: 5px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-align: center;
 }
