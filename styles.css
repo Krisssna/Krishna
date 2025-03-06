@@ -107,52 +107,71 @@ nav {
 }
 
 main {
-    width: 100%; /* Full width */
+    width: 100%;
     padding: 20px;
-    box-sizing: border-box; /* Include padding in the width */
+    box-sizing: border-box;
 }
 
 .intro {
-    display: flex; /* Flexbox for side-by-side layout */
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
-    align-items: center; /* Vertically align image and text */
-    justify-content: space-between; /* Space between image and text */
-    gap: 20px; /* Add space between image and paragraph */
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px; 
+    margin: 0 auto;
 }
 
 .intro img {
-    max-width: 100%; /* Make image responsive */
+    flex: 0 0 40%;
+    max-width: 40%;
     height: auto;
-    flex: 1 1 40%; /* Allow image to take 40% of the space */
-    min-width: 300px; /* Minimum size for smaller screens */
+    object-fit: cover;
 }
 
-.intro p {
-    flex: 1 1 50%; /* Allow paragraph to take 50% of the space */
+.intro-text {
+    flex: 0 0 60%;
+    max-width: 60%;
+}
+
+.intro-text h1 {
+    font-size: 32px;
+    margin: 0 0 10px 0;
+    color: #333; 
+}
+
+.intro-text p {
     margin: 0;
-    text-align: justify; /* Optional: For a clean look */
+    text-align: justify;
+    color: #6c757d; 
 }
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
     .intro {
-        flex-direction: column; /* Stack image and paragraph vertically */
-        text-align: center; /* Optional: Center-align for better appearance */
+        flex-direction: column;
+        text-align: center;
     }
 
     .intro img {
+        flex: 0 0 100%; 
         max-width: 100%;
-        margin-bottom: 20px; /* Add spacing between image and text */
+        margin-bottom: 20px;
     }
 
-    .intro p {
-        text-align: center; /* Optional: Center-align text */
+    .intro-text {
+        flex: 0 0 100%; 
+        max-width: 100%;
+    }
+
+    .intro-text h1 {
+        font-size: 24px;
+    }
+
+    .intro-text p {
+        text-align: center;
     }
 }
-
-
-
-
 
 
 
@@ -160,7 +179,7 @@ main {
 .portfolio {
     width: 100%;
     padding: 50px 20px;
-    background-color: #f8f9fa; /* Light gray background */
+    background-color: #f8f9fa;
     text-align: center;
 }
 
@@ -173,7 +192,7 @@ main {
 /* Portfolio Container */
 .portfolio-container {
     display: flex;
-    flex-direction: column; /* Stack items on top of each other */
+    flex-direction: column; 
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
@@ -183,7 +202,7 @@ main {
 /* Portfolio Item */
 .portfolio-item {
     display: flex;
-    flex-direction: row; /* Default: Image left, text right */
+    flex-direction: row; 
     align-items: center;
     background: white;
     border-radius: 10px;
@@ -193,7 +212,7 @@ main {
 }
 
 .portfolio-item:nth-child(even) {
-    flex-direction: row-reverse; /* Alternate layout (Image right, text left) */
+    flex-direction: row-reverse; 
 }
 
 .portfolio-item:hover {
@@ -202,7 +221,7 @@ main {
 
 /* Portfolio Image */
 .portfolio-item img {
-    width: 40%; /* Adjust image width */
+    width: 40%;
     height: auto;
     display: block;
     object-fit: cover;
@@ -248,7 +267,7 @@ main {
 /* Responsive Design */
 @media (max-width: 768px) {
     .portfolio-item {
-        flex-direction: column; /* Stack items vertically */
+        flex-direction: column; 
         text-align: center;
     }
 
@@ -264,8 +283,8 @@ main {
     }
 
      .portfolio-links {
-        text-align: left; /* Aligns the whole list to the left */
-        padding-left: 20px; /* Adjust spacing from the left */
+        text-align: left; 
+        padding-left: 20px; 
          text-decoration: none;
     }
 }
@@ -284,27 +303,27 @@ footer {
 
 .footer-container {
     display: flex;
-    flex-wrap: wrap; /* Makes it responsive */
-    justify-content: space-around; /* Distribute columns evenly */
+    flex-wrap: wrap; 
+    justify-content: space-around;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .footer-column {
-    flex: 1 1 250px; /* Flexible width, minimum 250px */
+    flex: 1 1 250px; 
     margin: 10px;
 }
 
 .footer-column h3 {
     font-size: 18px;
     margin-bottom: 10px;
-    color: #343a40; /* Darker gray for headings */
+    color: #343a40;
 }
 
 .footer-column ul {
-    list-style: none; /* Removes the bullets */
-    padding: 0; /* Removes any default padding */
-    margin: 0; /* Removes any default margin */
+    list-style: none; 
+    padding: 0;
+    margin: 0; 
 }
 
 .footer-column ul li {
@@ -318,7 +337,7 @@ footer {
 }
 
 .footer-column ul li a:hover {
-    color: #007bff; /* Blue on hover */
+    color: #007bff; 
 }
 
 /* Social Media Icon Styles */
@@ -340,7 +359,7 @@ footer {
 
 /* Progress Bars */
 .skills {
-    width: 100%; /* Ensure the skills section takes full width */
+    width: 100%;
 }
 
 .skills .progress {
@@ -348,15 +367,15 @@ footer {
     border-radius: 0 20px;
     height: 20px;
     overflow: hidden;
-    margin: 10px 0; /* Remove side margins */
+    margin: 10px 0; 
     position: relative;
-    width: 100%; /* Full width for the progress bar container */
+    width: 100%; 
 }
 
 .skills .progress-bar {
     background-color: #4caf50;
     height: 100%;
-    width: 0; /* Default to 0% and animate later */
+    width: 0; 
     transition: width 1s ease-in-out; /* Smooth animation */
 }
 
@@ -369,7 +388,7 @@ footer {
 
 .skills .progressText {
     margin: 0;
-    text-align: left; /* Changed to left to align with full width design */
+    text-align: left; 
 }
 
 
@@ -394,7 +413,7 @@ footer {
     border-radius: 50%;
     font-size: 24px;
     cursor: pointer;
-    display: none; /* Initially hidden */
+    display: none; 
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     transition: opacity 0.3s, transform 0.3s;
 }
