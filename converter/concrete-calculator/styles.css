@@ -131,12 +131,12 @@ nav {
 
     .dropdown-content {
         position: static; /* Dropdown appears below the parent item */
-        background-color: #fff; /* White background */
+        background: linear-gradient(135deg, #4CAF50, #FFEB3B); /* White background */
         box-shadow: none; /* Remove shadow for mobile */
     }
 
     .dropdown-content li a {
-        color: #333; /* Dark text color for visibility */
+        color: #333 !important; /* Dark text color for visibility */
     }
 }
 
