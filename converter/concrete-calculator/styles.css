@@ -87,7 +87,7 @@ nav {
 }
 
 .dropdown-content li a {
-    color: #333; /* Dark text color for visibility */
+    color: #333 !important; /* Dark text color for visibility */
     padding: 8px 12px;
     display: block;
     border-radius: 5px;
@@ -122,7 +122,7 @@ nav {
     }
 
     #menu li a {
-        color: #333; /* Dark text color for visibility */
+        color: #333 !important; /* Dark text color for visibility */
     }
 
     #menu.active {
