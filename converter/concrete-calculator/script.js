@@ -93,8 +93,8 @@ function convertDryToWetVolumeMortar(dryVolume) {
     return dryVolume * 1.33; // 33% increase for cement mortar
 }
 
-// Function to calculate mortar volume from total volume, brick size, and mortar thickness
-function calculateMortarVolume(totalVolume, brickLength, brickWidth, brickThickness, mortarThickness) {
+// Function to calculate mortar volume and number of bricks from total volume, brick size, and mortar thickness
+function calculateMortarAndBricks(totalVolume, brickLength, brickWidth, brickThickness, mortarThickness) {
     // Convert dimensions from mm to meters
     const brickLengthM = brickLength / 1000;
     const brickWidthM = brickWidth / 1000;
@@ -116,7 +116,10 @@ function calculateMortarVolume(totalVolume, brickLength, brickWidth, brickThickn
     // Calculate total mortar volume
     const totalMortarVolume = mortarVolumePerBrick * numberOfBricks;
 
-    return totalMortarVolume;
+    return {
+        numberOfBricks: numberOfBricks,
+        totalMortarVolume: totalMortarVolume
+    };
 }
 
 document.getElementById('calculateMortar').addEventListener('click', function() {
@@ -124,12 +127,13 @@ document.getElementById('calculateMortar').addEventListener('click', function() 
     const calculationType = document.getElementById('calculationType').value;
 
     let mortarVolume;
+    let numberOfBricks = 0; // Initialize number of bricks
 
     if (calculationType === 'mortarVolume') {
         // Use direct mortar volume input
         mortarVolume = parseFloat(document.getElementById('mortarVolume').value);
     } else if (calculationType === 'totalVolume') {
-        // Calculate mortar volume from total volume, brick size, and mortar thickness
+        // Calculate mortar volume and number of bricks from total volume, brick size, and mortar thickness
         const totalVolume = parseFloat(document.getElementById('totalVolume').value);
         const brickLength = parseFloat(document.getElementById('brickLength').value);
         const brickWidth = parseFloat(document.getElementById('brickWidth').value);
@@ -141,7 +145,9 @@ document.getElementById('calculateMortar').addEventListener('click', function() 
             return;
         }
 
-        mortarVolume = calculateMortarVolume(totalVolume, brickLength, brickWidth, brickThickness, mortarThickness);
+        const result = calculateMortarAndBricks(totalVolume, brickLength, brickWidth, brickThickness, mortarThickness);
+        mortarVolume = result.totalMortarVolume;
+        numberOfBricks = result.numberOfBricks;
     }
 
     if (isNaN(mortarVolume) || mortarVolume <= 0) {
@@ -161,11 +167,20 @@ document.getElementById('calculateMortar').addEventListener('click', function() 
     const cementWeight = cementVolume * 1440; // Cement density in kg/m³
     const cementBags = cementWeight / 50;     // 1 cement bag = 50 kg
 
-    const resultHTML = `
+    // Prepare result HTML
+    let resultHTML = `
         <h4>Results for Cement Mortar (${ratio}):</h4>
         <p><strong>Cement Required:</strong> ${cementWeight.toFixed(2)} kg (${cementBags.toFixed(1)} bags)</p>
         <p><strong>Sand Required:</strong> ${sandVolume.toFixed(2)} m³</p>
+    `;
 
+    if (calculationType === 'totalVolume') {
+        resultHTML += `
+            <p><strong>Number of Bricks Required:</strong> ${Math.ceil(numberOfBricks)}</p>
+        `;
+    }
+
+    resultHTML += `
         <h4>Calculation Details:</h4>
         <p><strong>Mortar Volume:</strong> ${mortarVolume.toFixed(2)} m³</p>
         <p><strong>Wet Volume:</strong> ${wetVolume.toFixed(2)} m³ (Mortar Volume × 1.33)</p>
