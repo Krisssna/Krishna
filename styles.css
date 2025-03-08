@@ -168,18 +168,24 @@ main {
     flex: 0 0 60%; 
     max-width: 60%;
     padding-left: 20px; 
+color: rgb(255, 215, 0);
+background-color: rgb(255, 215, 0);
 }
 
 .intro-text h1 {
     font-size: 32px;
     margin: 0 0 10px 0; 
     color: #333;
+color: rgb(255, 215, 0);
+background-color: rgb(255, 215, 0);
 }
 
 .intro-text p {
     margin: 0;
     text-align: justify;
     color: #6c757d;
+color: rgb(255, 215, 0);
+background-color: rgb(255, 215, 0);
 }
 
 /* Mobile adjustments */
@@ -199,15 +205,21 @@ main {
         flex: 0 0 100%; 
         max-width: 100%;
         padding-left: 0;
+color: rgb(255, 215, 0);
+background-color: rgb(255, 215, 0);
     }
 
     .intro-text h1 {
         font-size: 24px; 
         text-align: center; 
+color: rgb(255, 215, 0);
+background-color: rgb(255, 215, 0);
     }
 
     .intro-text p {
         text-align: center; 
+color: rgb(255, 215, 0);
+background-color: rgb(255, 215, 0);
     }
 }
 
