@@ -146,6 +146,21 @@ button#calculateConcrete:hover, button#calculateMortar:hover {
     color: #6a11cb;
 }
 
+/* Additional Styles for Cement Mortar Section */
+#mortarVolumeInput, #totalVolumeInput {
+    margin-bottom: 20px;
+}
+
+#totalVolumeInput label {
+    font-size: 14px;
+    color: #666;
+}
+
+#totalVolumeInput input {
+    font-size: 14px;
+    padding: 10px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .calculator {
