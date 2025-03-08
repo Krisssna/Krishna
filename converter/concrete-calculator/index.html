@@ -38,24 +38,54 @@
                     <div id="concreteResult" class="result-section"></div>
                 </div>
 
-                <!-- Cement Mortar Estimate Section -->
-                <div id="cementMortarSection" class="calculator-section" style="display: none;">
-                    <h3>Cement Mortar Estimate</h3>
-                    <label for="mortarRatio">Select Cement to Sand Ratio:</label>
-                    <select id="mortarRatio">
-                        <option value="1:4">1:4</option>
-                        <option value="1:5">1:5</option>
-                        <option value="1:6">1:6</option>
-                        <option value="1:8">1:8</option>
-                    </select>
+               <!-- Cement Mortar Estimate Section -->
+<div id="cementMortarSection" class="calculator-section" style="display: none;">
+    <h3>Cement Mortar Estimate</h3>
+    
+    <!-- Dropdown to select calculation type -->
+    <label for="calculationType">Select Calculation Type:</label>
+    <select id="calculationType">
+        <option value="mortarVolume">By Mortar Volume</option>
+        <option value="totalVolume">By Total Volume</option>
+    </select>
 
-                    <label for="mortarVolume">Enter Volume (in m³):</label>
-                    <input type="number" id="mortarVolume" placeholder="Enter volume" min="0">
+    <!-- Input for Mortar Volume (visible when "By Mortar Volume" is selected) -->
+    <div id="mortarVolumeInput">
+        <label for="mortarVolume">Enter Mortar Volume (in m³):</label>
+        <input type="number" id="mortarVolume" placeholder="Enter mortar volume" min="0">
+    </div>
 
-                    <button id="calculateMortar">Calculate</button>
+    <!-- Inputs for Total Volume, Brick Size, and Mortar Thickness (visible when "By Total Volume" is selected) -->
+    <div id="totalVolumeInput" style="display: none;">
+        <label for="totalVolume">Enter Total Volume of Wall (in m³):</label>
+        <input type="number" id="totalVolume" placeholder="Enter total volume" min="0">
 
-                    <div id="mortarResult" class="result-section"></div>
-                </div>
+        <label for="brickLength">Brick Length (in mm):</label>
+        <input type="number" id="brickLength" placeholder="Enter brick length" min="0">
+
+        <label for="brickWidth">Brick Width (in mm):</label>
+        <input type="number" id="brickWidth" placeholder="Enter brick width" min="0">
+
+        <label for="brickThickness">Brick Thickness (in mm):</label>
+        <input type="number" id="brickThickness" placeholder="Enter brick thickness" min="0">
+
+        <label for="mortarThickness">Mortar Thickness (in mm):</label>
+        <input type="number" id="mortarThickness" placeholder="Enter mortar thickness" min="0">
+    </div>
+
+    <!-- Common Input for Cement to Sand Ratio -->
+    <label for="mortarRatio">Select Cement to Sand Ratio:</label>
+    <select id="mortarRatio">
+        <option value="1:4">1:4</option>
+        <option value="1:5">1:5</option>
+        <option value="1:6">1:6</option>
+        <option value="1:8">1:8</option>
+    </select>
+
+    <button id="calculateMortar">Calculate</button>
+
+    <div id="mortarResult" class="result-section"></div>
+</div>
             </div>
         </div>
     </section>
