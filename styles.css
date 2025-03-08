@@ -483,3 +483,40 @@ body.hide-content > * {
 body.hide-content #content-container {
     display: block;
 }
+
+.tools {
+    background-color: #eef1f7;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.tools-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.box {
+    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%);
+    color: #fff;
+    padding: 15px 30px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%);
+}
