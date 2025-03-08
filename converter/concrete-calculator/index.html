@@ -1,0 +1,51 @@
+<section id="concrete-calculator" class="calculator">
+    <div class="calculator-content">
+        <div class="section-heading text-center">
+            <h2>Concrete Calculator</h2>
+        </div>
+        <div class="container">
+            <div class="button-container">
+                <button id="btnConcreteMaterial">Concrete Material Estimate</button>
+                <button id="btnCementMortar">Cement Mortar Estimate</button>
+            </div>
+
+            <!-- Concrete Material Estimate Section -->
+            <div id="concreteMaterialSection" class="calculator-section" style="display: none;">
+                <h3>Concrete Material Estimate</h3>
+                <label for="concreteStrength">Select Concrete Strength:</label>
+                <select id="concreteStrength">
+                    <option value="M10">M10</option>
+                    <option value="M15">M15</option>
+                    <option value="M20">M20</option>
+                    <option value="M25">M25</option>
+                </select>
+
+                <label for="concreteVolume">Enter Volume (in m³):</label>
+                <input type="number" id="concreteVolume" placeholder="Enter volume" min="0">
+
+                <button id="calculateConcrete">Calculate</button>
+
+                <div id="concreteResult" class="result-section"></div>
+            </div>
+
+            <!-- Cement Mortar Estimate Section -->
+            <div id="cementMortarSection" class="calculator-section" style="display: none;">
+                <h3>Cement Mortar Estimate</h3>
+                <label for="mortarRatio">Select Cement to Sand Ratio:</label>
+                <select id="mortarRatio">
+                    <option value="1:4">1:4</option>
+                    <option value="1:5">1:5</option>
+                    <option value="1:6">1:6</option>
+                    <option value="1:8">1:8</option>
+                </select>
+
+                <label for="mortarVolume">Enter Volume (in m³):</label>
+                <input type="number" id="mortarVolume" placeholder="Enter volume" min="0">
+
+                <button id="calculateMortar">Calculate</button>
+
+                <div id="mortarResult" class="result-section"></div>
+            </div>
+        </div>
+    </div>
+</section>
