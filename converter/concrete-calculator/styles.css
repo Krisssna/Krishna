@@ -1,110 +1,189 @@
 /* General Styles */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
     margin: 0;
     padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .calculator {
     max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    margin: 20px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 .section-heading h2 {
-    font-size: 24px;
+    font-size: 28px;
     color: #333;
     margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
 }
 
+/* Button Container */
 .button-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
 .button-container button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     font-size: 16px;
     color: #fff;
-    background-color: #007bff;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .button-container button:hover {
-    background-color: #0056b3;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Calculator Sections */
 .calculator-section {
     display: none;
     margin-top: 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .calculator-section h3 {
-    font-size: 20px;
-    color: #333;
+    font-size: 22px;
+    color: #444;
     margin-bottom: 15px;
+    text-align: center;
+    font-weight: 500;
 }
 
 label {
     display: block;
     font-size: 16px;
     color: #555;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 select, input[type="number"] {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
     margin-bottom: 15px;
+    background: #f9f9f9;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus, input[type="number"]:focus {
+    border-color: #6a11cb;
+    box-shadow: 0 0 8px rgba(106, 17, 203, 0.2);
+    outline: none;
 }
 
 button#calculateConcrete, button#calculateMortar {
-    padding: 10px 20px;
+    width: 100%;
+    padding: 12px;
     font-size: 16px;
     color: #fff;
-    background-color: #28a745;
+    background: linear-gradient(135deg, #2575fc, #6a11cb);
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button#calculateConcrete:hover, button#calculateMortar:hover {
-    background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+/* Result Section */
 .result-section {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(245, 247, 250, 0.9);
+    border-radius: 10px;
     border: 1px solid #ddd;
+    animation: fadeIn 0.5s ease;
 }
 
 .result-section h4 {
-    font-size: 18px;
+    font-size: 20px;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .result-section p {
     font-size: 16px;
     color: #555;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    line-height: 1.6;
 }
 
 .result-section strong {
-    color: #333;
+    color: #6a11cb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .calculator {
+        padding: 20px;
+    }
+
+    .button-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button-container button {
+        width: 100%;
+    }
+
+    .calculator-section h3 {
+        font-size: 20px;
+    }
+
+    label {
+        font-size: 14px;
+    }
+
+    select, input[type="number"] {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    button#calculateConcrete, button#calculateMortar {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .result-section h4 {
+        font-size: 18px;
+    }
+
+    .result-section p {
+        font-size: 14px;
+    }
 }
