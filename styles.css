@@ -6,20 +6,20 @@ body {
     width: 100%;
 }
 
-/* Navigation Bar Styles */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
-    padding: 10px 20px;
+    padding: 5px 20px; /* Reduce padding to decrease height */
+    height: 40px; /* Set a specific height */
     color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed; /* Fix the navbar at the top */
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* Ensure it stays above other content */
+    z-index: 1000;
 }
 
 .nav-left a {
