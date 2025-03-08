@@ -57,3 +57,95 @@ input, select, button {
 .hidden {
     display: none;
 }
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+.nav-left {
+    font-size: 24px;
+   
+}
+
+.no-dec {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-right {
+    position: relative;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+#menu {
+    list-style: none;
+    display: none;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    width: 220px;
+}
+
+#menu li {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+#menu li:hover {
+    background-color: #444;
+}
+
+
+#menu .no-deco {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+.dropdown-content {
+    display: none;
+    position: relative;
+    background-color: #2e2d2d;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    position: right;
+}
+
+.dropdown-content ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-content a {
+    color: #faf5f5;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #bdb5b5;
+}
+
