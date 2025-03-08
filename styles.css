@@ -6,95 +6,141 @@ body {
     width: 100%;
 }
 
+/* Navigation Bar Styles */
 nav {
     display: flex;
     justify-content: space-between;
-    background-color: #333;
-    color: white;
-    padding: 10px;
+    align-items: center;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    padding: 10px 20px;
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Fix the navbar at the top */
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it stays above other content */
 }
 
-.nav-left {
-    font-size: 24px;
-   
-}
-
-.no-dec {
-    color: white;
+.nav-left a {
+    color: #fff;
     text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
 }
 
 .nav-right {
-    position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .menu-icon {
     font-size: 24px;
     cursor: pointer;
+    display: none; /* Hidden by default on larger screens */
 }
 
 #menu {
     list-style: none;
-    display: none;
-    flex-direction: column;
+    display: flex;
     margin: 0;
     padding: 0;
-    background-color: #333;
-    position: absolute;
-    right: 0;
-    top: 40px;
-    width: 220px;
 }
 
 #menu li {
-    padding: 10px;
-    border-bottom: 1px solid #444;
+    position: relative;
+    margin-left: 20px;
 }
 
-#menu li:hover {
-    background-color: #444;
-}
-
-
-#menu .no-deco {
-    color: white;
+#menu li a {
+    color: #fff;
     text-decoration: none;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
+#menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
 
-
+/* Dropdown Styles */
 .dropdown-content {
     display: none;
-    position: relative;
-    background-color: #2e2d2d;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    background: linear-gradient(135deg, #4CAF50, #FFEB3B);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
     z-index: 1;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+    min-width: 150px; /* Ensure dropdown has a minimum width */
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
-    position: right;
 }
 
-.dropdown-content ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+.dropdown-content li {
+    margin: 5px 0;
 }
 
-.dropdown-content a {
-    color: #faf5f5;
-    padding: 12px 16px;
-    text-decoration: none;
+.dropdown-content li a {
+    color: #333 !important; /* Dark text color for visibility */
+    padding: 8px 12px;
     display: block;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
-.dropdown-content a:hover {
-    background-color: #bdb5b5;
+.dropdown-content li a:hover {
+    background-color: #f1f1f1; /* Light gray background on hover */
+}
+
+/* Responsive Design for Navigation Bar */
+@media (max-width: 768px) {
+    .menu-icon {
+        display: block; /* Show menu icon on smaller screens */
+    }
+
+    #menu {
+        display: none; /* Hide menu by default on smaller screens */
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: linear-gradient(135deg, #4CAF50, #FFEB3B);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        padding: 10px;
+        z-index: 1;
+    }
+
+    #menu li {
+        margin: 10px 0;
+    }
+
+    #menu li a {
+        color: #333 !important; /* Dark text color for visibility */
+    }
+
+    #menu.active {
+        display: flex; /* Show menu when active */
+    }
+
+.dropdown {
+background: linear-gradient(135deg, #4CAF50, #FFEB3B);
+}
+
+    .dropdown-content {
+        position: static; /* Dropdown appears below the parent item */
+        background: linear-gradient(135deg, #4CAF50, #FFEB3B); /* White background */
+        box-shadow: none; /* Remove shadow for mobile */
+    }
+
+    .dropdown-content li a {
+        color: #333 !important; /* Dark text color for visibility */
+    }
 }
 
 main {
