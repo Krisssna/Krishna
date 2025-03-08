@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <section id="unit-converter">
+        <h1>Unit Converter</h1>
+
+        <div class="converter-buttons">
+            <button onclick="showConverter('length')">Length Converter</button>
+            <button onclick="showConverter('area')">Area Converter</button>
+            <button onclick="showConverter('volume')">Volume Converter</button>
+            <button onclick="showConverter('volumeToWeight')">Volume to Weight Converter</button>
+        </div>
+
+        <!-- Length Converter -->
+        <div id="length-converter" class="converter hidden">
+            <h2>Length Converter</h2>
+            <input type="number" id="lengthValue" placeholder="Enter value">
+            <select id="lengthUnit">
+                <option value="km">Kilometer (km)</option>
+                <option value="m">Meter (m)</option>
+                <option value="cm">Centimeter (cm)</option>
+                <option value="mm">Millimeter (mm)</option>
+                <option value="ft">Feet (ft)</option>
+                <option value="in">Inches (in)</option>
+            </select>
+            <button onclick="convertLength()">Convert</button>
+            <div id="lengthResults" class="results-box"></div>
+        </div>
+
+        <!-- Area Converter -->
+        <div id="area-converter" class="converter hidden">
+            <h2>Area Converter</h2>
+            <input type="number" id="areaValue" placeholder="Enter value">
+            <select id="areaUnit">
+                <option value="sqm">Square Meter (m²)</option>
+                <option value="sqkm">Square Kilometer (km²)</option>
+                <option value="sqft">Square Feet (ft²)</option>
+                <option value="sqin">Square Inches (in²)</option>
+                <option value="acre">Acre</option>
+                <option value="hectare">Hectare</option>
+            </select>
+            <button onclick="convertArea()">Convert</button>
+            <div id="areaResults" class="results-box"></div>
+        </div>
+
+        <!-- Volume Converter -->
+        <div id="volume-converter" class="converter hidden">
+            <h2>Volume Converter</h2>
+            <input type="number" id="volumeValue" placeholder="Enter value">
+            <select id="volumeUnit">
+                <option value="m3">Cubic Meter (m³)</option>
+                <option value="liter">Liter (L)</option>
+                <option value="gallon">Gallon (gal)</option>
+                <option value="cft">Cubic Feet (ft³)</option>
+                <option value="cyd">Cubic Yard (yd³)</option>
+            </select>
+            <button onclick="convertVolume()">Convert</button>
+            <div id="volumeResults" class="results-box"></div>
+        </div>
+
+        <!-- Volume to Weight Converter -->
+        <div id="volumeToWeight-converter" class="converter hidden">
+            <h2>Volume to Weight Converter</h2>
+            <input type="number" id="volumeWeightValue" placeholder="Enter value in m³">
+            <select id="volumeWeightUnit">
+                <option value="m10">M10 Concrete</option>
+                <option value="m15">M15 Concrete</option>
+                <option value="asphalt">Asphalt</option>
+                <option value="aggregate">Stone Aggregate</option>
+                <option value="sand">Sand</option>
+                <option value="stoneDust">Stone Dust</option>
+                <option value="cement">Cement</option>
+            </select>
+            <button onclick="convertVolumeToWeight()">Convert</button>
+            <div id="volumeWeightResults" class="results-box"></div>
+        </div>
+
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
