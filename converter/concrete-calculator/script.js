@@ -191,3 +191,10 @@ document.getElementById('calculateMortar').addEventListener('click', function() 
 
     document.getElementById('mortarResult').innerHTML = resultHTML;
 });
+
+
+// Function to toggle mobile menu
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.classList.toggle('active');
+}
