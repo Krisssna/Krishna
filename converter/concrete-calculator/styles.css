@@ -5,9 +5,6 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 /* Navigation Bar Styles */
@@ -133,10 +130,11 @@ nav {
     }
 }
 
+/* Calculator Section */
 .calculator {
     max-width: 800px;
     width: 90%;
-    margin: 20px;
+    margin: 80px auto 20px; /* Add top margin to avoid overlap with the navbar */
     padding: 25px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
@@ -267,61 +265,4 @@ button#calculateConcrete:hover, button#calculateMortar:hover {
 
 .result-section strong {
     color: #6a11cb;
-}
-
-/* Additional Styles for Cement Mortar Section */
-#mortarVolumeInput, #totalVolumeInput {
-    margin-bottom: 20px;
-}
-
-#totalVolumeInput label {
-    font-size: 14px;
-    color: #666;
-}
-
-#totalVolumeInput input {
-    font-size: 14px;
-    padding: 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .calculator {
-        padding: 20px;
-    }
-
-    .button-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .button-container button {
-        width: 100%;
-    }
-
-    .calculator-section h3 {
-        font-size: 20px;
-    }
-
-    label {
-        font-size: 14px;
-    }
-
-    select, input[type="number"] {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    button#calculateConcrete, button#calculateMortar {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    .result-section h4 {
-        font-size: 18px;
-    }
-
-    .result-section p {
-        font-size: 14px;
-    }
 }
