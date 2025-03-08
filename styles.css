@@ -12,7 +12,7 @@ nav {
     align-items: center;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
     padding: 5px 20px; /* Reduce padding to decrease height */
-    height: 40px; /* Set a specific height */
+    height: 36px; /* Set a specific height */
     color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
