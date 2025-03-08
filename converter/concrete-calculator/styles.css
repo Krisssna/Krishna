@@ -129,6 +129,10 @@ nav {
         display: flex; /* Show menu when active */
     }
 
+.dropdown {
+background: linear-gradient(135deg, #4CAF50, #FFEB3B);
+}
+
     .dropdown-content {
         position: static; /* Dropdown appears below the parent item */
         background: linear-gradient(135deg, #4CAF50, #FFEB3B); /* White background */
