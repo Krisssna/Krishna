@@ -110,7 +110,7 @@ nav {
         position: absolute;
         top: 60px;
         right: 20px;
-        background-color: #fff;
+        background: linear-gradient(135deg, #4CAF50, #FFEB3B);
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
         padding: 10px;
