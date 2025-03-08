@@ -70,7 +70,7 @@ nav {
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #fff;
+    background-color: #fff; /* White background */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     padding: 10px;
@@ -87,7 +87,7 @@ nav {
 }
 
 .dropdown-content li a {
-    color: #333; /* Set text color to dark for visibility */
+    color: #333; /* Dark text color for visibility */
     padding: 8px 12px;
     display: block;
     border-radius: 5px;
@@ -95,7 +95,7 @@ nav {
 }
 
 .dropdown-content li a:hover {
-    background-color: #f1f1f1;
+    background-color: #f1f1f1; /* Light gray background on hover */
 }
 
 /* Responsive Design for Navigation Bar */
@@ -122,11 +122,21 @@ nav {
     }
 
     #menu li a {
-        color: #333; /* Set text color to dark for visibility */
+        color: #333; /* Dark text color for visibility */
     }
 
     #menu.active {
         display: flex; /* Show menu when active */
+    }
+
+    .dropdown-content {
+        position: static; /* Dropdown appears below the parent item */
+        background-color: #fff; /* White background */
+        box-shadow: none; /* Remove shadow for mobile */
+    }
+
+    .dropdown-content li a {
+        color: #333; /* Dark text color for visibility */
     }
 }
 
