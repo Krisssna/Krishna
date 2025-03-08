@@ -147,6 +147,7 @@ main {
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
+    margin: 40px auto 20px;
 }
 .intro {
     display: flex;
