@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steel & GI Sheet Weight Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Weight Calculator</h1>
+        <div class="button-group">
+            <button onclick="showSection('plainRod')">Plain Rod</button>
+            <button onclick="showSection('ringRod')">Ring Rod</button>
+            <button onclick="showSection('giSheet')">GI Sheet</button>
+        </div>
+
+        <!-- Plain Rod Section -->
+        <div id="plainRod" class="calc-section">
+            <h2>Plain Rod Weight Calculation</h2>
+            <label>Diameter (mm): <input type="number" id="plainDiameter"></label>
+            <label>Length (m): <input type="number" id="plainLength"></label>
+            <button onclick="calculatePlainRod()">Calculate</button>
+            <div id="plainResult"></div>
+        </div>
+
+        <!-- Ring Rod Section -->
+        <div id="ringRod" class="calc-section">
+            <h2>Ring Rod Weight Calculation</h2>
+            <label>Diameter (mm): <input type="number" id="ringDiameter"></label>
+            <label>Length (m): <input type="number" id="ringLength"></label>
+            <label>Bend Factor (typically 1.04-1.12): <input type="number" id="bendFactor" value="1.06"></label>
+            <button onclick="calculateRingRod()">Calculate</button>
+            <div id="ringResult"></div>
+        </div>
+
+        <!-- GI Sheet Section -->
+        <div id="giSheet" class="calc-section">
+            <h2>GI Sheet Weight Calculation</h2>
+            <label>Thickness (mm): <input type="number" id="sheetThickness"></label>
+            <label>Width (m): <input type="number" id="sheetWidth"></label>
+            <label>Length (m): <input type="number" id="sheetLength"></label>
+            <button onclick="calculateGISheet()">Calculate</button>
+            <div id="giResult"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
