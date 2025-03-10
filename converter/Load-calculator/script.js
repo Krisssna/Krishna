@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas');
+const grid = document.getElementById('grid');
 const contextMenu = document.getElementById('contextMenu');
 const scale = 100; // 100 pixels per meter
 let elements = { columns: [], beams: [], slabs: [] };
@@ -24,12 +25,12 @@ document.getElementById('calculateLoads').addEventListener('click', calculateLoa
 document.getElementById('units').addEventListener('change', (e) => unit = e.target.value);
 
 // Context menu buttons
-document.getElementById('editBtn').addEventListener('click', () => editDimensions(selectedElement));
-document.getElementById('moveBtn').addEventListener('click', () => mode = 'moving');
-document.getElementById('copyBtn').addEventListener('click', copyElement);
-document.getElementById('deleteBtn').addEventListener('click', deleteElement);
-document.getElementById('resizeLeftBtn').addEventListener('click', () => mode = 'resizingLeft');
-document.getElementById('resizeRightBtn').addEventListener('click', () => mode = 'resizingRight');
+document.getElementById('editBtn').addEventListener('click', () => { editDimensions(selectedElement); hideContextMenu(); });
+document.getElementById('moveBtn').addEventListener('click', () => { mode = 'moving'; hideContextMenu(); });
+document.getElementById('copyBtn').addEventListener('click', () => { copyElement(); hideContextMenu(); });
+document.getElementById('deleteBtn').addEventListener('click', () => { deleteElement(); hideContextMenu(); });
+document.getElementById('resizeLeftBtn').addEventListener('click', () => { mode = 'resizingLeft'; hideContextMenu(); });
+document.getElementById('resizeRightBtn').addEventListener('click', () => { mode = 'resizingRight'; hideContextMenu(); });
 
 // Canvas click handler
 canvas.addEventListener('click', (e) => {
@@ -94,6 +95,38 @@ function getNearestColumn(x, y) {
         }
     }
     return nearest;
+}
+
+function highlightAxes(element) {
+    // Remove existing highlights
+    document.querySelectorAll('.x-axis-highlight, .y-axis-highlight').forEach(el => el.remove());
+
+    if (element.className !== 'column' || mode !== 'moving') return;
+
+    const x = parseFloat(element.style.left) + 6;
+    const y = parseFloat(element.style.top) + 6;
+
+    elements.columns.forEach(other => {
+        if (other === element) return;
+        const otherX = parseFloat(other.style.left) + 6;
+        const otherY = parseFloat(other.style.top) + 6;
+
+        // Highlight X-axis if aligned
+        if (Math.abs(y - otherY) < 2) {
+            const highlight = document.createElement('div');
+            highlight.className = 'x-axis-highlight';
+            highlight.style.top = otherY - 1 + 'px';
+            grid.appendChild(highlight);
+        }
+
+        // Highlight Y-axis if aligned
+        if (Math.abs(x - otherX) < 2) {
+            const highlight = document.createElement('div');
+            highlight.className = 'y-axis-highlight';
+            highlight.style.left = otherX - 1 + 'px';
+            grid.appendChild(highlight);
+        }
+    });
 }
 
 // Add elements
@@ -178,7 +211,6 @@ function editDimensions(el) {
             el.dataset.length = parseFloat(el.style.height) / scale;
         }
     }
-    hideContextMenu();
 }
 
 function copyElement() {
@@ -208,7 +240,6 @@ function copyElement() {
         elements.slabs.push(newSlab);
         makeInteractive(newSlab);
     }
-    hideContextMenu();
 }
 
 function deleteElement() {
@@ -217,47 +248,48 @@ function deleteElement() {
     else if (el.className === 'beam') elements.beams = elements.beams.filter(b => b !== el);
     else if (el.className === 'slab') elements.slabs = elements.slabs.filter(s => s !== el);
     canvas.removeChild(el);
-    hideContextMenu();
 }
 
 // Interaction handler
 function makeInteractive(element) {
     element.addEventListener('mousedown', (e) => {
-        if (e.button === 0) { // Left click
+        if (e.button === 0 && (mode === 'moving' || mode === 'resizingLeft' || mode === 'resizingRight')) {
+            e.preventDefault(); // Prevent text selection
             selectedElement = element;
-            const offsetX = e.clientX - parseInt(element.style.left);
-            const offsetY = e.clientY - parseInt(element.style.top);
+            const offsetX = e.clientX - parseFloat(element.style.left);
+            const offsetY = e.clientY - parseFloat(element.style.top);
             element.classList.add('dragging');
 
             document.onmousemove = (e) => {
-                if (selectedElement) {
-                    if (mode === 'moving') {
-                        let newX = e.clientX - offsetX;
-                        let newY = e.clientY - offsetY;
-                        if (selectedElement.className === 'beam') {
-                            const snapLeft = getNearestColumn(newX, newY);
-                            const snapRight = getNearestColumn(newX + parseFloat(selectedElement.style.width), newY);
-                            if (snapLeft) newX = snapLeft.x - 6;
-                            if (snapRight) newX = snapRight.x - parseFloat(selectedElement.style.width) - 6;
-                        }
-                        selectedElement.style.left = newX + 'px';
-                        selectedElement.style.top = newY + 'px';
+                if (!selectedElement) return;
+
+                if (mode === 'moving') {
+                    let newX = e.clientX - offsetX;
+                    let newY = e.clientY - offsetY;
+                    if (selectedElement.className === 'beam') {
+                        const snapLeft = getNearestColumn(newX, newY);
+                        const snapRight = getNearestColumn(newX + parseFloat(selectedElement.style.width), newY);
+                        if (snapLeft) newX = snapLeft.x - 6;
+                        if (snapRight) newX = snapRight.x - parseFloat(selectedElement.style.width) - 6;
+                    }
+                    selectedElement.style.left = newX + 'px';
+                    selectedElement.style.top = newY + 'px';
+                    if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
+                    highlightAxes(selectedElement);
+                } else if (mode === 'resizingLeft' && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
+                    const newWidth = parseFloat(selectedElement.style.left) + parseFloat(selectedElement.style.width) - (e.clientX - offsetX);
+                    if (newWidth > 10) {
+                        selectedElement.style.left = (e.clientX - offsetX) + 'px';
+                        selectedElement.style.width = newWidth + 'px';
                         if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
-                    } else if (mode === 'resizingLeft' && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
-                        const newWidth = parseFloat(selectedElement.style.left) + parseFloat(selectedElement.style.width) - (e.clientX - offsetX);
-                        if (newWidth > 10) {
-                            selectedElement.style.left = (e.clientX - offsetX) + 'px';
-                            selectedElement.style.width = newWidth + 'px';
-                            if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
-                            else selectedElement.dataset.width = newWidth / scale;
-                        }
-                    } else if (mode === 'resizingRight' && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
-                        const newWidth = e.clientX - offsetX - parseFloat(selectedElement.style.left);
-                        if (newWidth > 10) {
-                            selectedElement.style.width = newWidth + 'px';
-                            if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
-                            else selectedElement.dataset.width = newWidth / scale;
-                        }
+                        else selectedElement.dataset.width = newWidth / scale;
+                    }
+                } else if (mode === 'resizingRight' && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
+                    const newWidth = e.clientX - offsetX - parseFloat(selectedElement.style.left);
+                    if (newWidth > 10) {
+                        selectedElement.style.width = newWidth + 'px';
+                        if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
+                        else selectedElement.dataset.width = newWidth / scale;
                     }
                 }
             };
@@ -267,6 +299,7 @@ function makeInteractive(element) {
                     selectedElement.classList.remove('dragging');
                     mode = 'none';
                     selectedElement = null;
+                    document.querySelectorAll('.x-axis-highlight, .y-axis-highlight').forEach(el => el.remove());
                 }
                 document.onmousemove = null;
                 document.onmouseup = null;
