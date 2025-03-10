@@ -108,3 +108,19 @@ h3 {
     color: #555;
     font-size: 0.9em;
 }
+
+.calculate-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background: #4ecdc4;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+.calculate-btn:hover {
+    background: #2a9d8f;
+}
