@@ -6,30 +6,13 @@ function showSection(sectionId) {
     document.getElementById(sectionId).style.display = 'block';
 }
 
-// Function to enable or disable input fields based on selection
-function toggleInputs(type) {
-    let selected = document.getElementById(`${type}Select`).value;
-    let inputs = ['Diameter', 'Length', 'Weight'];
-
-    // For square rod, the term "Diameter" is replaced with "Side"
-    if (type === 'square') inputs[0] = 'Side';
-
-    // Enable or disable fields based on selected option
-    inputs.forEach((input) => {
-        let inputField = document.getElementById(`${type}${input}`);
-        inputField.disabled = !selected.includes(input.toLowerCase());
-        if (inputField.disabled) inputField.value = ""; // Clear value if disabled
-    });
-}
-
-// Universal function to calculate weight, length, or diameter/side for rods
-function calculateRod(type, isSquare = false, hasBendFactor = false) {
+// Universal function to calculate and auto-fill missing values
+function autoCalculateRod(type, isSquare = false, hasBendFactor = false) {
     let size = parseFloat(document.getElementById(`${type}Diameter`)?.value) / 1000; // Convert mm to meters
     let length = parseFloat(document.getElementById(`${type}Length`)?.value);
     let weight = parseFloat(document.getElementById(`${type}Weight`)?.value);
-    let density = 7850; // Steel density in kg/m³
+    let density = 7850; // Density of steel in kg/m³
 
-    // Area calculation
     let area = isSquare ? (size * size) : (Math.PI * Math.pow(size, 2) / 4);
 
     // Apply bend factor for ring rods
@@ -38,42 +21,56 @@ function calculateRod(type, isSquare = false, hasBendFactor = false) {
         length *= bendFactor;
     }
 
-    // Calculate missing value
-    if (!isNaN(size) && !isNaN(length)) {
+    // Auto-calculate missing value
+    if (!isNaN(size) && !isNaN(length) && isNaN(weight)) {
         weight = density * area * length;
-    } else if (!isNaN(weight) && !isNaN(length)) {
+        document.getElementById(`${type}Weight`).value = weight.toFixed(2);
+    } else if (!isNaN(weight) && !isNaN(length) && isNaN(size)) {
         size = Math.sqrt(weight / (density * length));
-    } else if (!isNaN(weight) && !isNaN(size)) {
+        document.getElementById(`${type}Diameter`).value = (size * 1000).toFixed(2);
+    } else if (!isNaN(weight) && !isNaN(size) && isNaN(length)) {
         length = weight / (density * area);
+        document.getElementById(`${type}Length`).value = length.toFixed(2);
     }
-
-    // Display results
-    document.getElementById(`${type}Result`).innerHTML = 
-        `Weight: ${weight.toFixed(2)} kg<br>
-         Side/Diameter: ${(size * 1000).toFixed(2)} mm<br>
-         Length: ${length.toFixed(2)} m`;
 }
 
-// Individual functions for different rod types
-function calculatePlainRod() { calculateRod('plain'); }
-function calculateRingRod() { calculateRod('ring', false, true); }
-function calculateSquareRod() { calculateRod('square', true); }
+// Function for different rod types
+function calculatePlainRod() { autoCalculateRod('plain'); }
+function calculateRingRod() { autoCalculateRod('ring', false, true); }
+function calculateSquareRod() { autoCalculateRod('square', true); }
 
-// Function to calculate GI Sheet weight
-function calculateGISheet() {
+// Function for GI Sheet calculations
+function autoCalculateGISheet() {
     let thickness = parseFloat(document.getElementById("sheetThickness").value) / 1000; // Convert mm to meters
     let width = parseFloat(document.getElementById("sheetWidth").value);
     let length = parseFloat(document.getElementById("sheetLength").value);
-
-    if (isNaN(thickness) || isNaN(width) || isNaN(length) || thickness <= 0 || width <= 0 || length <= 0) {
-        document.getElementById("giResult").innerHTML = "Please enter valid values.";
-        return;
-    }
-
+    let weight = parseFloat(document.getElementById("sheetWeight").value);
     let density = 7850; // Density of steel in kg/m³
-    let weight = density * thickness * width * length;
 
-    document.getElementById("giResult").innerHTML = 
-        `Weight: ${weight.toFixed(2)} kg<br>
-         Formula: W = (T × W × L) × 7850`;
+    if (!isNaN(thickness) && !isNaN(width) && !isNaN(length) && isNaN(weight)) {
+        weight = density * thickness * width * length;
+        document.getElementById("sheetWeight").value = weight.toFixed(2);
+    } else if (!isNaN(weight) && !isNaN(width) && !isNaN(length) && isNaN(thickness)) {
+        thickness = weight / (density * width * length);
+        document.getElementById("sheetThickness").value = (thickness * 1000).toFixed(2);
+    }
 }
+
+// Attach event listeners to input fields for real-time calculations
+document.addEventListener("DOMContentLoaded", function() {
+    ["plain", "ring", "square"].forEach(type => {
+        ["Diameter", "Length", "Weight"].forEach(input => {
+            let inputField = document.getElementById(`${type}${input}`);
+            if (inputField) {
+                inputField.addEventListener("input", () => autoCalculateRod(type, type === 'square', type === 'ring'));
+            }
+        });
+    });
+
+    ["sheetThickness", "sheetWidth", "sheetLength", "sheetWeight"].forEach(input => {
+        let inputField = document.getElementById(input);
+        if (inputField) {
+            inputField.addEventListener("input", autoCalculateGISheet);
+        }
+    });
+});
