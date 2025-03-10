@@ -1,44 +1,108 @@
 body {
     font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 500px;
     text-align: center;
-    background-color: #f4f4f4;
 }
 
-.button-container {
-    margin: 20px;
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-button {
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
     padding: 10px 20px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #007BFF;
-    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 25px;
+    background: #ff9f1c;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-button:hover {
-    background-color: #0056b3;
+.tab-btn:hover {
+    background: #ffbf69;
+}
+
+.tab-btn.active {
+    background: #ff6b6b;
+    transform: scale(1.1);
+}
+
+.calc-container {
+    margin: 20px 0;
 }
 
 .calc-section {
+    transition: opacity 0.3s ease;
+}
+
+.calc-section.hidden {
     display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+}
+
+h2 {
+    color: #ff6b6b;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 input {
-    display: block;
-    width: 80%;
-    margin: 10px auto;
     padding: 10px;
-    font-size: 16px;
+    border: 2px solid #4ecdc4;
+    border-radius: 10px;
+    font-size: 1em;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #ff6b6b;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+.method {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+}
+
+h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#method-text {
+    color: #555;
+    font-size: 0.9em;
 }
