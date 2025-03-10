@@ -3,52 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Load Calculator</title>
+    <title>Structural Load Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Load Calculator</h1>
-
-        <div class="toolbar">
-            <button id="createColumnBtn">Create Column</button>
-            <button id="createBeamBtn">Create Beam</button>
-            <button id="createSlabBtn">Create Slab</button>
-        </div>
-
-        <div class="drawing-area">
-            <!-- Drawing area for house plan -->
-            <canvas id="drawingCanvas"></canvas>
-        </div>
-
-        <div class="details-panel">
-            <h2>Details Panel</h2>
-            <div class="details-content">
-                <label for="columnSize">Column Size (cm):</label>
-                <input type="text" id="columnSize" placeholder="e.g., 30 x 30">
-
-                <label for="beamSize">Beam Size (cm):</label>
-                <input type="text" id="beamSize" placeholder="e.g., 30 x 45">
-
-                <label for="slabSize">Slab Thickness (cm):</label>
-                <input type="text" id="slabSize" placeholder="e.g., 12">
-
-                <label for="liveLoad">Live Load (kN/m²):</label>
-                <input type="text" id="liveLoad" placeholder="Default: 3">
-
-                <button id="calculateLoadBtn">Calculate Load</button>
-            </div>
-        </div>
-
-        <div class="result-panel">
-            <h2>Calculation Results</h2>
-            <div id="resultContent">
-                <!-- Results will appear here -->
-            </div>
-        </div>
+    <div id="toolbar">
+        <button id="addColumn">Add Column</button>
+        <button id="addBeam">Add Beam</button>
+        <button id="addSlab">Add Slab</button>
+        <button id="deleteElement">Delete</button>
+        <button id="calculateLoads">Calculate Loads</button>
+        <label for="units">Units:</label>
+        <select id="units">
+            <option value="m">Meters</option>
+            <option value="cm">Centimeters</option>
+            <option value="mm">Millimeters</option>
+            <option value="ft">Feet</option>
+            <option value="in">Inches</option>
+        </select>
     </div>
-
-    
+    <div id="canvas"></div>
+    <div id="results"></div>
     <script src="script.js"></script>
 </body>
 </html>
