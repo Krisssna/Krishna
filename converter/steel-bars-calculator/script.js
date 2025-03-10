@@ -70,7 +70,7 @@ function calculate(type) {
         } else if (weight && length) {
             const area = weight / (densitySteel * length);
             const calcSide = Math.sqrt(area) * 1000; // m to mm
-            document.getElementById('square-side`).value = calcSide.toFixed(2);
+            document.getElementById('square-side').value = calcSide.toFixed(2); // Fixed here
         } else if (side && length) {
             const calcWeight = densitySteel * Math.pow(side, 2) * length;
             document.getElementById('square-weight').value = calcWeight.toFixed(3);
@@ -119,5 +119,5 @@ function updateMethod(type) {
     }
 }
 
-// Initialize with Plain Bar
+
 setupInputs('plain');
