@@ -1,0 +1,95 @@
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+
+        .layout-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .drawing-area {
+            width: 60%;
+            height: 400px;
+            background-color: #e6f7ff;
+            border: 2px dashed #4CAF50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .input-section {
+            width: 40%;
+        }
+
+        .input-box {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .input-box h3 {
+            margin-top: 0;
+            color: #4CAF50;
+        }
+
+        .input-box label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .input-box input, .input-box select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn-calculate {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-calculate:hover {
+            background-color: #45a049;
+        }
+
+        .results {
+            margin-top: 20px;
+            background-color: #f3f3f3;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .results h3 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
