@@ -3,52 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rod & GI Sheet Calculator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Steel & GI Sheet Calculator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Steel & GI Sheet Calculator</h1>
+        <div class="button-group">
+            <button class="tab-btn active" data-type="plain">Plain Bar</button>
+            <button class="tab-btn" data-type="tmt">Deformed TMT Bar</button>
+            <button class="tab-btn" data-type="square">Square Bar</button>
+            <button class="tab-btn" data-type="gi">GI Sheet</button>
+        </div>
 
-    <div class="button-container">
-        <button onclick="showSection('plainRod')">Plain Rod</button>
-        <button onclick="showSection('ringRod')">Ring Rod</button>
-        <button onclick="showSection('squareRod')">Square Rod</button>
-        <button onclick="showSection('giSheet')">GI Sheet</button>
+        <div id="calculator" class="calc-container">
+            <!-- Plain Bar UI -->
+            <div class="calc-section" id="plain">
+                <h2>Plain Bar Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="plain-weight" placeholder="Weight (kg)">
+                    <input type="number" id="plain-diameter" placeholder="Diameter (mm)">
+                    <input type="number" id="plain-length" placeholder="Length (m)">
+                </div>
+            </div>
+
+            <!-- Deformed TMT Bar UI -->
+            <div class="calc-section hidden" id="tmt">
+                <h2>Deformed TMT Bar Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="tmt-weight" placeholder="Weight (kg)">
+                    <input type="number" id="tmt-diameter" placeholder="Diameter (mm)">
+                    <input type="number" id="tmt-length" placeholder="Length (m)">
+                </div>
+            </div>
+
+            <!-- Square Bar UI -->
+            <div class="calc-section hidden" id="square">
+                <h2>Square Bar Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="square-weight" placeholder="Weight (kg)">
+                    <input type="number" id="square-side" placeholder="Side (mm)">
+                    <input type="number" id="square-length" placeholder="Length (m)">
+                </div>
+            </div>
+
+            <!-- GI Sheet UI -->
+            <div class="calc-section hidden" id="gi">
+                <h2>GI Sheet Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="gi-weight" placeholder="Weight (kg)">
+                    <input type="number" id="gi-length" placeholder="Length (m)">
+                    <input type="number" id="gi-width" placeholder="Width (m)">
+                </div>
+            </div>
+        </div>
+
+        <div class="method">
+            <h3>Calculation Method</h3>
+            <p id="method-text">Select a type to see the calculation method.</p>
+        </div>
     </div>
-
-    <!-- Plain Rod Section -->
-    <div id="plainRod" class="calc-section">
-        <h2>Plain Rod Calculator</h2>
-        <input type="number" id="plainDiameter" placeholder="Diameter (mm)">
-        <input type="number" id="plainLength" placeholder="Length (m)">
-        <input type="number" id="plainWeight" placeholder="Weight (kg)">
-    </div>
-
-    <!-- Ring Rod Section -->
-    <div id="ringRod" class="calc-section">
-        <h2>Ring Rod Calculator</h2>
-        <input type="number" id="ringDiameter" placeholder="Diameter (mm)">
-        <input type="number" id="ringLength" placeholder="Length (m)">
-        <input type="number" id="ringWeight" placeholder="Weight (kg)">
-        <input type="number" id="bendFactor" placeholder="Bend Factor (default 1.06)">
-    </div>
-
-    <!-- Square Rod Section -->
-    <div id="squareRod" class="calc-section">
-        <h2>Square Rod Calculator</h2>
-        <input type="number" id="squareDiameter" placeholder="Side (mm)">
-        <input type="number" id="squareLength" placeholder="Length (m)">
-        <input type="number" id="squareWeight" placeholder="Weight (kg)">
-    </div>
-
-    <!-- GI Sheet Section -->
-    <div id="giSheet" class="calc-section">
-        <h2>GI Sheet Calculator</h2>
-        <input type="number" id="sheetThickness" placeholder="Thickness (mm)">
-        <input type="number" id="sheetWidth" placeholder="Width (m)">
-        <input type="number" id="sheetLength" placeholder="Length (m)">
-        <input type="number" id="sheetWeight" placeholder="Weight (kg)">
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
