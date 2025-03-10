@@ -75,21 +75,38 @@ h2 {
     gap: 15px;
 }
 
-input {
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper input {
+    width: 100%;
     padding: 10px;
     border: 2px solid #4ecdc4;
     border-radius: 10px;
     font-size: 1em;
     outline: none;
     transition: border-color 0.3s ease;
+    background: transparent;
 }
 
-input:focus {
+.input-wrapper input:focus {
     border-color: #ff6b6b;
 }
 
-input::placeholder {
+.input-wrapper input::placeholder {
     color: #999;
+}
+
+.unit {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 0.9em;
+    pointer-events: none;
+    display: none; /* Hidden by default, shown only when value is present */
 }
 
 .method {
@@ -117,7 +134,6 @@ h3 {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 15px;
-
     color: #fff;
     background: linear-gradient(135deg, #2575fc, #6a11cb);
 }
@@ -125,74 +141,3 @@ h3 {
 .calculate-btn:hover {
     background: #2a9d8f;
 }
-
-
-
-/* Add units as watermarks */
-.input-group {
-    position: relative;
-}
-
-.input-group input {
-    padding-right: 50px; /* Space for the unit */
-    position: relative;
-}
-
-.input-group input::after {
-    content: attr(data-unit);
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    pointer-events: none; 
-    font-size: 0.9em;
-}
-
-/* Specific units for each input */
-#plain-weight::after { content: "kg"; }
-#plain-diameter::after { content: "mm"; }
-#plain-length::after { content: "m"; }
-#plain-density::after { content: "kg/m³"; }
-
-#tmt-weight::after { content: "kg"; }
-#tmt-diameter::after { content: "mm"; }
-#tmt-length::after { content: "m"; }
-#tmt-density::after { content: "kg/m³"; }
-
-#square-weight::after { content: "kg"; }
-#square-side::after { content: "mm"; }
-#square-length::after { content: "m"; }
-#square-density::after { content: "kg/m³"; }
-
-#gi-sheet-weight::after { content: "kg"; }
-#gi-sheet-length::after { content: "m"; }
-#gi-sheet-width::after { content: "m"; }
-#gi-sheet-thickness::after { content: "mm"; }
-#gi-sheet-density::after { content: "kg/m³"; }
-
-#gi-rect-pipe-weight::after { content: "kg"; }
-#gi-rect-pipe-length::after { content: "m"; }
-#gi-rect-pipe-width::after { content: "mm"; }
-#gi-rect-pipe-height::after { content: "mm"; }
-#gi-rect-pipe-thickness::after { content: "mm"; }
-#gi-rect-pipe-density::after { content: "kg/m³"; }
-
-#iron-rect-pipe-weight::after { content: "kg"; }
-#iron-rect-pipe-length::after { content: "m"; }
-#iron-rect-pipe-width::after { content: "mm"; }
-#iron-rect-pipe-height::after { content: "mm"; }
-#iron-rect-pipe-thickness::after { content: "mm"; }
-#iron-rect-pipe-density::after { content: "kg/m³"; }
-
-#gi-round-pipe-weight::after { content: "kg"; }
-#gi-round-pipe-length::after { content: "m"; }
-#gi-round-pipe-outer-diameter::after { content: "mm"; }
-#gi-round-pipe-thickness::after { content: "mm"; }
-#gi-round-pipe-density::after { content: "kg/m³"; }
-
-#iron-round-pipe-weight::after { content: "kg"; }
-#iron-round-pipe-length::after { content: "m"; }
-#iron-round-pipe-outer-diameter::after { content: "mm"; }
-#iron-round-pipe-thickness::after { content: "mm"; }
-#iron-round-pipe-density::after { content: "kg/m³"; }
