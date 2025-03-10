@@ -5,25 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Structural Load Calculator</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="toolbar">
-        <button id="addColumn">Add Column</button>
-        <button id="addBeam">Add Beam</button>
-        <button id="addSlab">Add Slab</button>
-        <button id="deleteElement">Delete</button>
-        <button id="calculateLoads">Calculate Loads</button>
-        <label for="units">Units:</label>
-        <select id="units">
-            <option value="m">Meters</option>
-            <option value="cm">Centimeters</option>
-            <option value="mm">Millimeters</option>
-            <option value="ft">Feet</option>
-            <option value="in">Inches</option>
-        </select>
+    <div id="app">
+        <header>
+            <h1>Structural Load Calculator</h1>
+        </header>
+        <div id="toolbar">
+            <div class="tool-section">
+                <button id="addColumn" class="tool-btn">Add Column</button>
+                <button id="addBeam" class="tool-btn">Add Beam</button>
+                <button id="addSlab" class="tool-btn">Add Slab</button>
+                <button id="deleteElement" class="tool-btn danger">Delete</button>
+            </div>
+            <div class="tool-section">
+                <label for="units">Units:</label>
+                <select id="units" class="tool-input">
+                    <option value="m">Meters</option>
+                    <option value="cm">Centimeters</option>
+                    <option value="mm">Millimeters</option>
+                    <option value="ft">Feet</option>
+                    <option value="in">Inches</option>
+                </select>
+                <label for="density">Density (kN/m³):</label>
+                <input type="number" id="density" class="tool-input" value="24" step="0.1" min="0">
+                <label for="liveLoad">Live Load (kN/m²):</label>
+                <input type="number" id="liveLoad" class="tool-input" value="2" step="0.1" min="0">
+                <button id="calculateLoads" class="tool-btn primary">Calculate Loads</button>
+            </div>
+        </div>
+        <div id="canvas"></div>
+        <div id="results"></div>
     </div>
-    <div id="canvas"></div>
-    <div id="results"></div>
     <script src="script.js"></script>
 </body>
 </html>
