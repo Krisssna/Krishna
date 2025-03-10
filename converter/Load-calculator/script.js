@@ -4,7 +4,6 @@ let elements = { columns: [], beams: [], slabs: [] };
 let selectedElement = null;
 let mode = 'none';
 let unit = 'm';
-const density = 24; // kN/m³ for concrete
 
 // Conversion factors to meters
 const unitConversions = {
@@ -74,8 +73,8 @@ function getColumnAtPosition(x, y) {
     for (let column of elements.columns) {
         const rect = column.getBoundingClientRect();
         const canvasRect = canvas.getBoundingClientRect();
-        const elX = rect.left - canvasRect.left + 5;
-        const elY = rect.top - canvasRect.top + 5;
+        const elX = rect.left - canvasRect.left + 6;
+        const elY = rect.top - canvasRect.top + 6;
         if (Math.hypot(x - elX, y - elY) < 15) return column;
     }
     return null;
@@ -85,8 +84,8 @@ function getColumnAtPosition(x, y) {
 function addColumn(x, y) {
     const column = document.createElement('div');
     column.className = 'column';
-    column.style.left = (x - 5) + 'px';
-    column.style.top = (y - 5) + 'px';
+    column.style.left = (x - 6) + 'px';
+    column.style.top = (y - 6) + 'px';
     canvas.appendChild(column);
     elements.columns.push(column);
     makeDraggable(column);
@@ -113,10 +112,10 @@ function addBeam(column1, column2) {
     if (width && depth) {
         beam.dataset.width = parseFloat(width) * unitConversions[unit];
         beam.dataset.depth = parseFloat(depth) * unitConversions[unit];
-        const c1x = parseFloat(column1.style.left) + 5;
-        const c1y = parseFloat(column1.style.top) + 5;
-        const c2x = parseFloat(column2.style.left) + 5;
-        const c2y = parseFloat(column2.style.top) + 5;
+        const c1x = parseFloat(column1.style.left) + 6;
+        const c1y = parseFloat(column1.style.top) + 6;
+        const c2x = parseFloat(column2.style.left) + 6;
+        const c2y = parseFloat(column2.style.top) + 6;
         beam.dataset.length = Math.hypot((c2x - c1x) / scale, (c2y - c1y) / scale);
     }
 }
@@ -124,16 +123,16 @@ function addBeam(column1, column2) {
 function updateBeamPosition(beam) {
     const c1 = elements.columns[beam.dataset.column1];
     const c2 = elements.columns[beam.dataset.column2];
-    const c1x = parseFloat(c1.style.left) + 5;
-    const c1y = parseFloat(c1.style.top) + 5;
-    const c2x = parseFloat(c2.style.left) + 5;
-    const c2y = parseFloat(c2.style.top) + 5;
+    const c1x = parseFloat(c1.style.left) + 6;
+    const c1y = parseFloat(c1.style.top) + 6;
+    const c2x = parseFloat(c2.style.left) + 6;
+    const c2y = parseFloat(c2.style.top) + 6;
     const lengthPx = Math.hypot(c2x - c1x, c2y - c1y);
     const angle = Math.atan2(c2y - c1y, c2x - c1x) * 180 / Math.PI;
     beam.style.left = c1x + 'px';
     beam.style.top = c1y + 'px';
     beam.style.width = lengthPx + 'px';
-    beam.style.height = '10px';
+    beam.style.height = '12px';
     beam.style.transform = `rotate(${angle}deg)`;
     beam.style.transformOrigin = '0 0';
 }
@@ -205,15 +204,19 @@ function deleteElement(element) {
 
 // Load calculations
 function calculateLoads() {
-    // Self-weights
+    const density = parseFloat(document.getElementById('density').value);
+    const liveLoad = parseFloat(document.getElementById('liveLoad').value);
+
+    // Self-weights (Dead Load, DL)
     elements.columns.forEach(c => {
-        c.selfWeight = c.dataset.width * c.dataset.depth * c.dataset.height * density;
+        c.deadLoad = c.dataset.width * c.dataset.depth * c.dataset.height * density;
     });
     elements.beams.forEach(b => {
-        b.selfWeight = b.dataset.width * b.dataset.depth * b.dataset.length * density;
+        b.deadLoad = b.dataset.width * b.dataset.depth * b.dataset.length * density;
     });
     elements.slabs.forEach(s => {
-        s.selfWeight = s.dataset.width * s.dataset.length * s.dataset.thickness * density;
+        s.deadLoad = s.dataset.width * s.dataset.length * s.dataset.thickness * density;
+        s.liveLoad = s.dataset.width * s.dataset.length * liveLoad;
     });
 
     // Slab loads to beams (assuming horizontal beams)
@@ -227,11 +230,11 @@ function calculateLoads() {
         const supportingBeams = elements.beams.filter(b => {
             const c1 = elements.columns[b.dataset.column1];
             const c2 = elements.columns[b.dataset.column2];
-            const c1x = parseFloat(c1.style.left) + 5;
-            const c1y = parseFloat(c1.style.top) + 5;
-            const c2x = parseFloat(c2.style.left) + 5;
-            const c2y = parseFloat(c2.style.top) + 5;
-            if (c1y === c2y) { // Horizontal beam
+            const c1x = parseFloat(c1.style.left) + 6;
+            const c1y = parseFloat(c1.style.top) + 6;
+            const c2x = parseFloat(c2.style.left) + 6;
+            const c2y = parseFloat(c2.style.top) + 6;
+            if (Math.abs(c1y - c2y) < 1) { // Horizontal beam (within 1px tolerance)
                 const beamY = c1y;
                 if (beamY > slabRect.top && beamY < slabRect.bottom) {
                     const beamLeft = Math.min(c1x, c2x);
@@ -242,7 +245,8 @@ function calculateLoads() {
             return false;
         });
         if (supportingBeams.length > 0) {
-            const loadPerBeam = slab.selfWeight / supportingBeams.length;
+            const totalSlabLoad = slab.deadLoad + slab.liveLoad;
+            const loadPerBeam = totalSlabLoad / supportingBeams.length;
             supportingBeams.forEach(b => {
                 b.slabLoad = (b.slabLoad || 0) + loadPerBeam;
             });
@@ -251,7 +255,7 @@ function calculateLoads() {
 
     // Total beam loads
     elements.beams.forEach(b => {
-        b.totalLoad = b.selfWeight + (b.slabLoad || 0);
+        b.totalLoad = b.deadLoad + (b.slabLoad || 0);
     });
 
     // Beam loads to columns
@@ -266,12 +270,14 @@ function calculateLoads() {
 
     // Total column loads
     elements.columns.forEach(c => {
-        c.totalLoad = c.selfWeight + c.beamLoad;
+        c.totalLoad = c.deadLoad + c.beamLoad;
     });
 
     // Display results
     let html = '<h2>Load Calculations</h2>';
-    elements.beams.forEach((b, i) => html += `<p>Beam b${i}: ${b.totalLoad.toFixed(2)} kN</p>`);
-    elements.columns.forEach((c, i) => html += `<p>Column c${i}: ${c.totalLoad.toFixed(2)} kN</p>`);
+    html += '<h3>Beams</h3>';
+    elements.beams.forEach((b, i) => html += `<p>Beam b${i}: ${b.totalLoad.toFixed(2)} kN (DL: ${b.deadLoad.toFixed(2)}, Slab Load: ${(b.slabLoad || 0).toFixed(2)})</p>`);
+    html += '<h3>Columns</h3>';
+    elements.columns.forEach((c, i) => html += `<p>Column c${i}: ${c.totalLoad.toFixed(2)} kN (DL: ${c.deadLoad.toFixed(2)}, Beam Load: ${c.beamLoad.toFixed(2)})</p>`);
     document.getElementById('results').innerHTML = html;
 }
