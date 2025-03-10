@@ -125,3 +125,71 @@ h3 {
 .calculate-btn:hover {
     background: #2a9d8f;
 }
+
+
+/* Add units as watermarks */
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    padding-right: 50px; /* Space for the unit */
+}
+
+.input-group::after {
+    content: attr(data-unit);
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none; /* Ensure the unit doesn't interfere with input */
+}
+
+/* Specific units for each input */
+#plain-weight::after { content: "kg"; }
+#plain-diameter::after { content: "mm"; }
+#plain-length::after { content: "m"; }
+#plain-density::after { content: "kg/m³"; }
+
+#tmt-weight::after { content: "kg"; }
+#tmt-diameter::after { content: "mm"; }
+#tmt-length::after { content: "m"; }
+#tmt-density::after { content: "kg/m³"; }
+
+#square-weight::after { content: "kg"; }
+#square-side::after { content: "mm"; }
+#square-length::after { content: "m"; }
+#square-density::after { content: "kg/m³"; }
+
+#gi-sheet-weight::after { content: "kg"; }
+#gi-sheet-length::after { content: "m"; }
+#gi-sheet-width::after { content: "m"; }
+#gi-sheet-thickness::after { content: "mm"; }
+#gi-sheet-density::after { content: "kg/m³"; }
+
+#gi-rect-pipe-weight::after { content: "kg"; }
+#gi-rect-pipe-length::after { content: "m"; }
+#gi-rect-pipe-width::after { content: "mm"; }
+#gi-rect-pipe-height::after { content: "mm"; }
+#gi-rect-pipe-thickness::after { content: "mm"; }
+#gi-rect-pipe-density::after { content: "kg/m³"; }
+
+#iron-rect-pipe-weight::after { content: "kg"; }
+#iron-rect-pipe-length::after { content: "m"; }
+#iron-rect-pipe-width::after { content: "mm"; }
+#iron-rect-pipe-height::after { content: "mm"; }
+#iron-rect-pipe-thickness::after { content: "mm"; }
+#iron-rect-pipe-density::after { content: "kg/m³"; }
+
+#gi-round-pipe-weight::after { content: "kg"; }
+#gi-round-pipe-length::after { content: "m"; }
+#gi-round-pipe-outer-diameter::after { content: "mm"; }
+#gi-round-pipe-thickness::after { content: "mm"; }
+#gi-round-pipe-density::after { content: "kg/m³"; }
+
+#iron-round-pipe-weight::after { content: "kg"; }
+#iron-round-pipe-length::after { content: "m"; }
+#iron-round-pipe-outer-diameter::after { content: "mm"; }
+#iron-round-pipe-thickness::after { content: "mm"; }
+#iron-round-pipe-density::after { content: "kg/m³"; }
