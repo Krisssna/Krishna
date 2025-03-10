@@ -21,17 +21,39 @@ document.querySelectorAll('.tab-btn').forEach(button => {
 function setupInputs(type) {
     const inputs = document.querySelectorAll(`#${type} input`);
     inputs.forEach(input => {
+        const unitSpan = input.nextElementSibling;
+        
+        // Update unit position on input
+        input.oninput = () => {
+            updateUnitPosition(input, unitSpan);
+            if (input.value === '' && input.id === `${type}-weight`) {
+                clearCalculatedField(type, input.id);
+            }
+        };
+
         input.onkeypress = (e) => {
             if (e.key === 'Enter') {
                 calculate(type);
             }
         };
-        input.oninput = () => {
-            if (input.value === '' && input.id === `${type}-weight`) {
-                clearCalculatedField(type, input.id);
-            }
-        };
+
+        // Initial position update
+        updateUnitPosition(input, unitSpan);
     });
+}
+
+// Update unit position dynamically
+function updateUnitPosition(input, unitSpan) {
+    if (input.value === '') {
+        unitSpan.style.display = 'none'; // Hide unit when input is empty
+    } else {
+        unitSpan.style.display = 'inline'; // Show unit when value is present
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        context.font = getComputedStyle(input).font; // Match input font
+        const textWidth = context.measureText(input.value).width;
+        unitSpan.style.left = `${textWidth + 15}px`; // Position after value
+    }
 }
 
 // Clear calculated field without affecting inputs
@@ -41,6 +63,7 @@ function clearCalculatedField(type, activeId) {
         if (input.id !== activeId && input.id !== `${type}-density`) {
             if (input.value && !input.dataset.userEntered) {
                 input.value = '';
+                updateUnitPosition(input, input.nextElementSibling);
             }
         }
     });
@@ -55,99 +78,141 @@ function markUserEntered(type) {
         } else if (!input.value) {
             delete input.dataset.userEntered;
         }
+        updateUnitPosition(input, input.nextElementSibling);
     });
 }
 
 // Calculation logic
 function calculate(type) {
-    const density = parseFloat(document.getElementById(`${type}-density`).value) || DEFAULT_DENSITY;
+    const densityInput = document.getElementById(`${type}-density`);
+    const density = parseFloat(densityInput.value) || DEFAULT_DENSITY;
 
     if (type === 'plain' || type === 'tmt') {
-        const weight = parseFloat(document.getElementById(`${type}-weight`).value) || NaN;
-        const diameter = parseFloat(document.getElementById(`${type}-diameter`).value) / 1000 || NaN;
-        const length = parseFloat(document.getElementById(`${type}-length`).value) || NaN;
+        const weightInput = document.getElementById(`${type}-weight`);
+        const diameterInput = document.getElementById(`${type}-diameter`);
+        const lengthInput = document.getElementById(`${type}-length`);
+
+        const weight = parseFloat(weightInput.value) || NaN;
+        const diameter = parseFloat(diameterInput.value) / 1000 || NaN;
+        const length = parseFloat(lengthInput.value) || NaN;
 
         if (!isNaN(diameter) && !isNaN(length)) {
             const calcWeight = density * Math.PI * (diameter / 2) ** 2 * length;
-            document.getElementById(`${type}-weight`).value = calcWeight.toFixed(3);
+            weightInput.value = calcWeight.toFixed(3);
+            updateUnitPosition(weightInput, weightInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(length)) {
             const area = weight / (density * length);
             const calcDiameter = Math.sqrt((4 * area) / Math.PI) * 1000;
-            document.getElementById(`${type}-diameter`).value = calcDiameter.toFixed(2);
+            diameterInput.value = calcDiameter.toFixed(2);
+            updateUnitPosition(diameterInput, diameterInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(diameter)) {
             const calcLength = weight / (density * Math.PI * (diameter / 2) ** 2);
-            document.getElementById(`${type}-length`).value = calcLength.toFixed(3);
+            lengthInput.value = calcLength.toFixed(3);
+            updateUnitPosition(lengthInput, lengthInput.nextElementSibling);
         }
     } else if (type === 'square') {
-        const weight = parseFloat(document.getElementById('square-weight').value) || NaN;
-        const side = parseFloat(document.getElementById('square-side').value) / 1000 || NaN;
-        const length = parseFloat(document.getElementById('square-length').value) || NaN;
+        const weightInput = document.getElementById('square-weight');
+        const sideInput = document.getElementById('square-side');
+        const lengthInput = document.getElementById('square-length');
+
+        const weight = parseFloat(weightInput.value) || NaN;
+        const side = parseFloat(sideInput.value) / 1000 || NaN;
+        const length = parseFloat(lengthInput.value) || NaN;
 
         if (!isNaN(side) && !isNaN(length)) {
             const calcWeight = density * side ** 2 * length;
-            document.getElementById('square-weight').value = calcWeight.toFixed(3);
+            weightInput.value = calcWeight.toFixed(3);
+            updateUnitPosition(weightInput, weightInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(length)) {
             const calcSide = Math.sqrt(weight / (density * length)) * 1000;
-            document.getElementById('square-side').value = calcSide.toFixed(2);
+            sideInput.value = calcSide.toFixed(2);
+            updateUnitPosition(sideInput, sideInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(side)) {
             const calcLength = weight / (density * side ** 2);
-            document.getElementById('square-length').value = calcLength.toFixed(3);
+            lengthInput.value = calcLength.toFixed(3);
+            updateUnitPosition(lengthInput, lengthInput.nextElementSibling);
         }
     } else if (type === 'gi-sheet') {
-        const weight = parseFloat(document.getElementById('gi-sheet-weight').value) || NaN;
-        const length = parseFloat(document.getElementById('gi-sheet-length').value) || NaN;
-        const width = parseFloat(document.getElementById('gi-sheet-width').value) || NaN;
-        const thickness = parseFloat(document.getElementById('gi-sheet-thickness').value) / 1000 || NaN;
+        const weightInput = document.getElementById('gi-sheet-weight');
+        const lengthInput = document.getElementById('gi-sheet-length');
+        const widthInput = document.getElementById('gi-sheet-width');
+        const thicknessInput = document.getElementById('gi-sheet-thickness');
+
+        const weight = parseFloat(weightInput.value) || NaN;
+        const length = parseFloat(lengthInput.value) || NaN;
+        const width = parseFloat(widthInput.value) || NaN;
+        const thickness = parseFloat(thicknessInput.value) / 1000 || NaN;
 
         if (!isNaN(length) && !isNaN(width) && !isNaN(thickness)) {
             const calcWeight = density * length * width * thickness;
-            document.getElementById('gi-sheet-weight').value = calcWeight.toFixed(3);
+            weightInput.value = calcWeight.toFixed(3);
+            updateUnitPosition(weightInput, weightInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(width) && !isNaN(thickness)) {
             const calcLength = weight / (density * width * thickness);
-            document.getElementById('gi-sheet-length').value = calcLength.toFixed(3);
+            lengthInput.value = calcLength.toFixed(3);
+            updateUnitPosition(lengthInput, lengthInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(length) && !isNaN(thickness)) {
             const calcWidth = weight / (density * length * thickness);
-            document.getElementById('gi-sheet-width').value = calcWidth.toFixed(3);
+            widthInput.value = calcWidth.toFixed(3);
+            updateUnitPosition(widthInput, widthInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(length) && !isNaN(width)) {
             const calcThickness = weight / (density * length * width) * 1000;
-            document.getElementById('gi-sheet-thickness').value = calcThickness.toFixed(3);
+            thicknessInput.value = calcThickness.toFixed(3);
+            updateUnitPosition(thicknessInput, thicknessInput.nextElementSibling);
         }
     } else if (type === 'gi-rect-pipe' || type === 'iron-rect-pipe') {
-        const weight = parseFloat(document.getElementById(`${type}-weight`).value) || NaN;
-        const length = parseFloat(document.getElementById(`${type}-length`).value) || NaN;
-        const width = parseFloat(document.getElementById(`${type}-width`).value) / 1000 || NaN;
-        const height = parseFloat(document.getElementById(`${type}-height`).value) / 1000 || NaN;
-        const thickness = parseFloat(document.getElementById(`${type}-thickness`).value) / 1000 || NaN;
+        const weightInput = document.getElementById(`${type}-weight`);
+        const lengthInput = document.getElementById(`${type}-length`);
+        const widthInput = document.getElementById(`${type}-width`);
+        const heightInput = document.getElementById(`${type}-height`);
+        const thicknessInput = document.getElementById(`${type}-thickness`);
+
+        const weight = parseFloat(weightInput.value) || NaN;
+        const length = parseFloat(lengthInput.value) || NaN;
+        const width = parseFloat(widthInput.value) / 1000 || NaN;
+        const height = parseFloat(heightInput.value) / 1000 || NaN;
+        const thickness = parseFloat(thicknessInput.value) / 1000 || NaN;
 
         const area = 2 * (width + height) * thickness - 4 * thickness ** 2;
         if (!isNaN(length) && !isNaN(width) && !isNaN(height) && !isNaN(thickness)) {
             const calcWeight = density * length * area;
-            document.getElementById(`${type}-weight`).value = calcWeight.toFixed(3);
+            weightInput.value = calcWeight.toFixed(3);
+            updateUnitPosition(weightInput, weightInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(length) && !isNaN(height) && !isNaN(thickness)) {
             const calcWidth = (weight / (density * length * thickness) + 4 * thickness - 2 * height) / 2 * 1000;
-            document.getElementById(`${type}-width`).value = calcWidth.toFixed(2);
+            widthInput.value = calcWidth.toFixed(2);
+            updateUnitPosition(widthInput, widthInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(length) && !isNaN(width) && !isNaN(thickness)) {
             const calcHeight = (weight / (density * length * thickness) + 4 * thickness - 2 * width) / 2 * 1000;
-            document.getElementById(`${type}-height`).value = calcHeight.toFixed(2);
+            heightInput.value = calcHeight.toFixed(2);
+            updateUnitPosition(heightInput, heightInput.nextElementSibling);
         }
     } else if (type === 'gi-round-pipe' || type === 'iron-round-pipe') {
-        const weight = parseFloat(document.getElementById(`${type}-weight`).value) || NaN;
-        const length = parseFloat(document.getElementById(`${type}-length`).value) || NaN;
-        const outerDiameter = parseFloat(document.getElementById(`${type}-outer-diameter`).value) / 1000 || NaN;
-        const thickness = parseFloat(document.getElementById(`${type}-thickness`).value) / 1000 || NaN;
+        const weightInput = document.getElementById(`${type}-weight`);
+        const lengthInput = document.getElementById(`${type}-length`);
+        const outerDiameterInput = document.getElementById(`${type}-outer-diameter`);
+        const thicknessInput = document.getElementById(`${type}-thickness`);
+
+        const weight = parseFloat(weightInput.value) || NaN;
+        const length = parseFloat(lengthInput.value) || NaN;
+        const outerDiameter = parseFloat(outerDiameterInput.value) / 1000 || NaN;
+        const thickness = parseFloat(thicknessInput.value) / 1000 || NaN;
 
         const innerDiameter = outerDiameter - 2 * thickness;
         const area = Math.PI * (outerDiameter ** 2 - innerDiameter ** 2) / 4;
 
         if (!isNaN(length) && !isNaN(outerDiameter)) {
             const calcWeight = density * length * area;
-            document.getElementById(`${type}-weight`).value = calcWeight.toFixed(3);
+            weightInput.value = calcWeight.toFixed(3);
+            updateUnitPosition(weightInput, weightInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(length)) {
             const calcOuterDiameter = Math.sqrt((4 * weight) / (density * length * Math.PI) + innerDiameter ** 2) * 1000;
-            document.getElementById(`${type}-outer-diameter`).value = calcOuterDiameter.toFixed(2);
+            outerDiameterInput.value = calcOuterDiameter.toFixed(2);
+            updateUnitPosition(outerDiameterInput, outerDiameterInput.nextElementSibling);
         } else if (!isNaN(weight) && !isNaN(outerDiameter)) {
             const calcLength = weight / (density * area);
-            document.getElementById(`${type}-length`).value = calcLength.toFixed(3);
+            lengthInput.value = calcLength.toFixed(3);
+            updateUnitPosition(lengthInput, lengthInput.nextElementSibling);
         }
     }
     markUserEntered(type);
