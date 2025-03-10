@@ -3,48 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Structural Load Calculator</title>
+    <title>AutoCAD-like 2D Canvas</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <header>
-            <h1>Structural Load Calculator</h1>
+            <h1>Structural Design Canvas</h1>
         </header>
         <div id="toolbar">
-            <div class="tool-section">
-                <button id="addColumn" class="tool-btn">Add Column</button>
-                <button id="addBeam" class="tool-btn">Add Beam</button>
-                <button id="addSlab" class="tool-btn">Add Slab</button>
-            </div>
-            <div class="tool-section">
-                <label for="units">Units:</label>
-                <select id="units" class="tool-input">
-                    <option value="m">Meters</option>
-                    <option value="cm">Centimeters</option>
-                    <option value="mm">Millimeters</option>
-                    <option value="ft">Feet</option>
-                    <option value="in">Inches</option>
-                </select>
-                <label for="density">Density (kN/m³):</label>
-                <input type="number" id="density" class="tool-input" value="24" step="0.1" min="0">
-                <label for="liveLoad">Live Load (kN/m²):</label>
-                <input type="number" id="liveLoad" class="tool-input" value="2" step="0.1" min="0">
-                <button id="calculateLoads" class="tool-btn primary">Calculate Loads</button>
-            </div>
+            <button id="drawColumn" class="tool-btn">Column</button>
+            <button id="drawBeam" class="tool-btn">Beam</button>
+            <button id="drawSlab" class="tool-btn">Slab</button>
         </div>
-        <div id="canvas">
-            <div id="grid"></div>
-        </div>
-        <div id="results"></div>
-        <div id="contextMenu" class="context-menu">
-            <button id="editBtn">Edit Dimensions</button>
-            <button id="moveBtn">Move</button>
-            <button id="copyBtn">Copy</button>
-            <button id="deleteBtn">Delete</button>
-            <button id="resizeLeftBtn" class="resize-btn">Resize Left</button>
-            <button id="resizeRightBtn" class="resize-btn">Resize Right</button>
+        <div id="canvas-container">
+            <div id="ruler-x" class="ruler ruler-x"></div>
+            <div id="ruler-y" class="ruler ruler-y"></div>
+            <div id="canvas">
+                <div id="grid"></div>
+                <div id="crosshair-x" class="crosshair"></div>
+                <div id="crosshair-y" class="crosshair"></div>
+                <div id="dynamic-label" class="dynamic-label"></div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
