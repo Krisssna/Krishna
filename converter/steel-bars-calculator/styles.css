@@ -13,7 +13,7 @@ body {
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 500px;
+    width: 600px;
     text-align: center;
 }
 
@@ -26,17 +26,19 @@ h1 {
 
 .button-group {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     margin-bottom: 20px;
+    gap: 10px;
 }
 
 .tab-btn {
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
     border-radius: 25px;
     background: #ff9f1c;
     color: white;
-    font-size: 1em;
+    font-size: 0.9em;
     cursor: pointer;
     transition: all 0.3s ease;
 }
