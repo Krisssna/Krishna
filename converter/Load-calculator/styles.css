@@ -90,20 +90,18 @@ label {
     background-color: #ff4d4d;
     border: 2px solid #cc0000;
     border-radius: 2px;
-    cursor: move;
-    transition: transform 0.2s;
+    cursor: pointer; /* Changed from move to pointer for clarity */
 }
 
-.column:hover {
-    transform: scale(1.2);
+.column:hover:not(.dragging) {
+    background-color: #ff6666; /* Subtle color change instead of scaling */
 }
 
 .beam {
     position: absolute;
     background-color: #4d79ff;
     border: 2px solid #0033cc;
-    cursor: move;
-    transition: transform 0.2s;
+    cursor: pointer;
 }
 
 .beam.error {
@@ -111,20 +109,23 @@ label {
     background-color: #ff9999;
 }
 
-.beam:hover {
-    transform: scale(1.05);
+.beam:hover:not(.dragging) {
+    background-color: #668cff;
 }
 
 .slab {
     position: absolute;
     background-color: rgba(40, 167, 69, 0.4);
     border: 2px solid #1f7a38;
-    cursor: move;
-    transition: transform 0.2s;
+    cursor: pointer;
 }
 
-.slab:hover {
-    transform: scale(1.02);
+.slab:hover:not(.dragging) {
+    background-color: rgba(40, 167, 69, 0.6);
+}
+
+.dragging {
+    opacity: 0.8; /* Visual feedback during drag */
 }
 
 #results {
