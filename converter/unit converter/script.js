@@ -13,7 +13,10 @@ function convertLength() {
         cm: value * 100000,
         mm: value * 1000000,
         ft: value * 3280.84,
-        in: value * 39370.1
+        in: value * 39370.1,
+        mi: value * 0.621371,
+        ya: value * 1093.6132983377,
+        nm: value * 0.539957
     };
 
     displayResults('lengthResults', conversions);
@@ -55,7 +58,7 @@ function convertVolumeToWeight() {
         aggregate: 1500,
         sand: 1600,
         stoneDust: 1700,
-        cement: 1440
+        cement: 1440,
     };
 
     const result = value * conversionRates[unit];
