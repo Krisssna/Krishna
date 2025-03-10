@@ -112,7 +112,7 @@ function calculate(type) {
             const calcThickness = weight / (density * length * width) * 1000;
             document.getElementById('gi-sheet-thickness').value = calcThickness.toFixed(3);
         }
-    } else if (type === 'gi-rect-pipe-1' || type === 'gi-rect-pipe-2' || type === 'iron-rect-pipe-1' || type === 'iron-rect-pipe-2') {
+    } else if (type === 'gi-rect-pipe' || type === 'iron-rect-pipe') {
         const weight = parseFloat(document.getElementById(`${type}-weight`).value) || NaN;
         const length = parseFloat(document.getElementById(`${type}-length`).value) || NaN;
         const width = parseFloat(document.getElementById(`${type}-width`).value) / 1000 || NaN;
@@ -129,6 +129,25 @@ function calculate(type) {
         } else if (!isNaN(weight) && !isNaN(length) && !isNaN(width) && !isNaN(thickness)) {
             const calcHeight = (weight / (density * length * thickness) + 4 * thickness - 2 * width) / 2 * 1000;
             document.getElementById(`${type}-height`).value = calcHeight.toFixed(2);
+        }
+    } else if (type === 'gi-round-pipe' || type === 'iron-round-pipe') {
+        const weight = parseFloat(document.getElementById(`${type}-weight`).value) || NaN;
+        const length = parseFloat(document.getElementById(`${type}-length`).value) || NaN;
+        const outerDiameter = parseFloat(document.getElementById(`${type}-outer-diameter`).value) / 1000 || NaN;
+        const thickness = parseFloat(document.getElementById(`${type}-thickness`).value) / 1000 || NaN;
+
+        const innerDiameter = outerDiameter - 2 * thickness;
+        const area = Math.PI * (outerDiameter ** 2 - innerDiameter ** 2) / 4;
+
+        if (!isNaN(length) && !isNaN(outerDiameter)) {
+            const calcWeight = density * length * area;
+            document.getElementById(`${type}-weight`).value = calcWeight.toFixed(3);
+        } else if (!isNaN(weight) && !isNaN(length)) {
+            const calcOuterDiameter = Math.sqrt((4 * weight) / (density * length * Math.PI) + innerDiameter ** 2) * 1000;
+            document.getElementById(`${type}-outer-diameter`).value = calcOuterDiameter.toFixed(2);
+        } else if (!isNaN(weight) && !isNaN(outerDiameter)) {
+            const calcLength = weight / (density * area);
+            document.getElementById(`${type}-length`).value = calcLength.toFixed(3);
         }
     }
     markUserEntered(type);
@@ -153,10 +172,16 @@ function updateMethod(type) {
             'Width = Weight / (Density × Length × Thickness)<br>' +
             'Length = Weight / (Density × Width × Thickness)<br>' +
             'Density = User-defined or 7850 kg/m³';
-    } else if (type === 'gi-rect-pipe-1' || type === 'gi-rect-pipe-2' || type === 'iron-rect-pipe-1' || type === 'iron-rect-pipe-2') {
+    } else if (type === 'gi-rect-pipe' || type === 'iron-rect-pipe') {
         methodText.innerHTML = 'Weight = Density × Length × [2 × (Width + Height) × Thickness - 4 × Thickness²]<br>' +
             'Width = [Weight / (Density × Length × Thickness) + 4 × Thickness - 2 × Height] / 2 × 1000<br>' +
             'Height = [Weight / (Density × Length × Thickness) + 4 × Thickness - 2 × Width] / 2 × 1000<br>' +
+            'Density = User-defined or 7850 kg/m³';
+    } else if (type === 'gi-round-pipe' || type === 'iron-round-pipe') {
+        methodText.innerHTML = 'Weight = Density × Length × [π × (Outer Diameter² - Inner Diameter²) / 4]<br>' +
+            'Outer Diameter = √[(4 × Weight) / (Density × Length × π) + Inner Diameter²] × 1000<br>' +
+            'Length = Weight / (Density × [π × (Outer Diameter² - Inner Diameter²) / 4])<br>' +
+            'Inner Diameter = Outer Diameter - 2 × Thickness<br>' +
             'Density = User-defined or 7850 kg/m³';
     }
 }
@@ -164,3 +189,11 @@ function updateMethod(type) {
 // Initialize
 setupInputs('plain');
 updateMethod('plain');
+
+// Add Calculate button listeners
+document.querySelectorAll('.calculate-btn').forEach(button => {
+    button.addEventListener('click', function () {
+        const type = this.closest('.calc-section').id;
+        calculate(type);
+    });
+});
