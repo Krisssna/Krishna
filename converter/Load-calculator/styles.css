@@ -2,45 +2,36 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-    min-height: 100vh;
+    background: #1e1e1e; /* Dark AutoCAD-like background */
+    color: #fff;
+    overflow: hidden;
 }
 
 #app {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 header {
     text-align: center;
-    padding: 20px;
-    background: linear-gradient(90deg, #007bff, #00c4ff);
-    color: white;
-    border-radius: 10px 10px 0 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background: #2a2a2a;
+    border-bottom: 1px solid #444;
 }
 
 #toolbar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background: #ffffff;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.tool-section {
-    display: flex;
-    align-items: center;
     gap: 10px;
+    padding: 10px;
+    background: #333;
+    border-bottom: 1px solid #444;
 }
 
 .tool-btn {
     padding: 8px 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     background-color: #007bff;
     color: white;
     cursor: pointer;
@@ -51,36 +42,25 @@ header {
     background-color: #0056b3;
 }
 
-.tool-btn.primary {
+.tool-btn.active {
     background-color: #28a745;
 }
 
-.tool-btn.primary:hover {
-    background-color: #218838;
-}
-
-.tool-input, select.tool-input {
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-label {
-    font-weight: bold;
-    margin-right: 5px;
+#canvas-container {
+    position: relative;
+    flex: 1;
+    background: #252525;
+    overflow: hidden;
 }
 
 #canvas {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    border: 2px solid #333;
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    background: #fff;
+    position: absolute;
+    top: 30px; /* Space for ruler-x */
+    left: 30px; /* Space for ruler-y */
+    width: calc(100% - 30px);
+    height: calc(100% - 30px);
+    background: #252525;
+    cursor: none; /* Hide default cursor */
 }
 
 #grid {
@@ -91,122 +71,92 @@ label {
     height: 100%;
     background: repeating-linear-gradient(
         0deg,
-        #e0e0e0 0px,
-        #e0e0e0 1px,
+        #333 0px,
+        #333 1px,
         transparent 1px,
-        transparent 20px
+        transparent 50px
     ),
     repeating-linear-gradient(
         90deg,
-        #e0e0e0 0px,
-        #e0e0e0 1px,
+        #333 0px,
+        #333 1px,
         transparent 1px,
-        transparent 20px
+        transparent 50px
     );
 }
 
-.x-axis-highlight, .y-axis-highlight {
+.ruler {
     position: absolute;
-    background: rgba(255, 215, 0, 0.5);
-    z-index: 1;
+    background: #2a2a2a;
+    color: #fff;
+    font-size: 10px;
+    text-align: center;
 }
 
-.x-axis-highlight {
+.ruler-x {
+    top: 0;
+    left: 30px;
+    width: calc(100% - 30px);
+    height: 30px;
+    border-bottom: 1px solid #444;
+    background: linear-gradient(90deg, #2a2a2a 0%, #2a2a2a 100%), repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 50px);
+}
+
+.ruler-y {
+    top: 30px;
+    left: 0;
+    width: 30px;
+    height: calc(100% - 30px);
+    border-right: 1px solid #444;
+    background: linear-gradient(0deg, #2a2a2a 0%, #2a2a2a 100%), repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 50px);
+}
+
+.crosshair {
+    position: absolute;
+    background: #00ff00; /* Green crosshair */
+    z-index: 10;
+}
+
+#crosshair-x {
+    height: 1px;
     width: 100%;
-    height: 2px;
 }
 
-.y-axis-highlight {
-    width: 2px;
+#crosshair-y {
+    width: 1px;
     height: 100%;
 }
 
 .column {
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     background-color: #ff4d4d;
-    border: 2px solid #cc0000;
-    border-radius: 2px;
-    cursor: pointer;
-    z-index: 2;
-}
-
-.column:hover:not(.dragging) {
-    background-color: #ff6666;
+    border: 1px solid #cc0000;
+    z-index: 5;
 }
 
 .beam {
     position: absolute;
     background-color: #4d79ff;
-    border: 2px solid #0033cc;
-    cursor: pointer;
-    z-index: 2;
-}
-
-.beam.error {
-    border-color: #ff0000;
-    background-color: #ff9999;
-}
-
-.beam:hover:not(.dragging) {
-    background-color: #668cff;
+    border: 1px solid #0033cc;
+    z-index: 5;
 }
 
 .slab {
     position: absolute;
     background-color: rgba(40, 167, 69, 0.4);
-    border: 2px solid #1f7a38;
-    cursor: pointer;
-    z-index: 2;
+    border: 1px solid #1f7a38;
+    z-index: 5;
 }
 
-.slab:hover:not(.dragging) {
-    background-color: rgba(40, 167, 69, 0.6);
-}
-
-.dragging {
-    opacity: 0.8;
-}
-
-#results {
-    margin-top: 20px;
-    padding: 20px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-#results h2 {
-    margin-top: 0;
-    color: #007bff;
-}
-
-.context-menu {
-    display: none;
+.dynamic-label {
     position: absolute;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 5px;
-    z-index: 1000;
-}
-
-.context-menu button {
-    display: block;
-    width: 100%;
-    padding: 5px 10px;
-    border: none;
-    background: none;
-    text-align: left;
-    cursor: pointer;
-}
-
-.context-menu button:hover {
-    background: #f0f0f0;
-}
-
-.context-menu .resize-btn {
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 2px 5px;
+    font-size: 12px;
+    border-radius: 2px;
+    z-index: 20;
     display: none;
 }
