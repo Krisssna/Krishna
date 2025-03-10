@@ -150,6 +150,68 @@ header {
     z-index: 5;
 }
 
+.column:hover, .beam:hover, .slab:hover {
+    opacity: 0.8;
+}
+
+.resize-handle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border: 1px solid #000;
+    z-index: 10;
+    cursor: nwse-resize; /* Default for corners */
+}
+
+.resize-handle.left {
+    left: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: ew-resize;
+}
+
+.resize-handle.right {
+    right: -3px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: ew-resize;
+}
+
+.resize-handle.top {
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: ns-resize;
+}
+
+.resize-handle.bottom {
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: ns-resize;
+}
+
+.resize-handle.top-left {
+    top: -3px;
+    left: -3px;
+}
+
+.resize-handle.top-right {
+    top: -3px;
+    right: -3px;
+}
+
+.resize-handle.bottom-left {
+    bottom: -3px;
+    left: -3px;
+}
+
+.resize-handle.bottom-right {
+    bottom: -3px;
+    right: -3px;
+}
+
 .dynamic-label {
     position: absolute;
     background: rgba(0, 0, 0, 0.8);
