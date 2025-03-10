@@ -3,57 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steel & GI Sheet Calculator</title>
+    <title>Steel & GI Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Steel & GI Sheet Calculator</h1>
+        <h1>Steel & GI Calculator</h1>
         <div class="button-group">
             <button class="tab-btn active" data-type="plain">Plain Bar</button>
             <button class="tab-btn" data-type="tmt">Deformed TMT Bar</button>
             <button class="tab-btn" data-type="square">Square Bar</button>
-            <button class="tab-btn" data-type="gi">GI Sheet</button>
+            <button class="tab-btn" data-type="gi-sheet">GI Sheet</button>
+            <button class="tab-btn" data-type="gi-rect-pipe-1">GI Rect Pipe 1</button>
+            <button class="tab-btn" data-type="gi-rect-pipe-2">GI Rect Pipe 2</button>
+            <button class="tab-btn" data-type="iron-rect-pipe-1">Iron Rect Pipe 1</button>
+            <button class="tab-btn" data-type="iron-rect-pipe-2">Iron Rect Pipe 2</button>
         </div>
 
         <div id="calculator" class="calc-container">
-            <!-- Plain Bar UI -->
+            <!-- Plain Bar -->
             <div class="calc-section" id="plain">
                 <h2>Plain Bar Calculator</h2>
                 <div class="input-group">
                     <input type="number" id="plain-weight" placeholder="Weight (kg)">
                     <input type="number" id="plain-diameter" placeholder="Diameter (mm)">
                     <input type="number" id="plain-length" placeholder="Length (m)">
+                    <input type="number" id="plain-density" placeholder="Density (kg/m³, default 7850)">
                 </div>
             </div>
 
-            <!-- Deformed TMT Bar UI -->
+            <!-- Deformed TMT Bar -->
             <div class="calc-section hidden" id="tmt">
                 <h2>Deformed TMT Bar Calculator</h2>
                 <div class="input-group">
                     <input type="number" id="tmt-weight" placeholder="Weight (kg)">
                     <input type="number" id="tmt-diameter" placeholder="Diameter (mm)">
                     <input type="number" id="tmt-length" placeholder="Length (m)">
+                    <input type="number" id="tmt-density" placeholder="Density (kg/m³, default 7850)">
                 </div>
             </div>
 
-            <!-- Square Bar UI -->
+            <!-- Square Bar -->
             <div class="calc-section hidden" id="square">
                 <h2>Square Bar Calculator</h2>
                 <div class="input-group">
                     <input type="number" id="square-weight" placeholder="Weight (kg)">
                     <input type="number" id="square-side" placeholder="Side (mm)">
                     <input type="number" id="square-length" placeholder="Length (m)">
+                    <input type="number" id="square-density" placeholder="Density (kg/m³, default 7850)">
                 </div>
             </div>
 
-            <!-- GI Sheet UI -->
-            <div class="calc-section hidden" id="gi">
+            <!-- GI Sheet -->
+            <div class="calc-section hidden" id="gi-sheet">
                 <h2>GI Sheet Calculator</h2>
                 <div class="input-group">
-                    <input type="number" id="gi-weight" placeholder="Weight (kg)">
-                    <input type="number" id="gi-length" placeholder="Length (m)">
-                    <input type="number" id="gi-width" placeholder="Width (m)">
+                    <input type="number" id="gi-sheet-weight" placeholder="Weight (kg)">
+                    <input type="number" id="gi-sheet-length" placeholder="Length (m)">
+                    <input type="number" id="gi-sheet-width" placeholder="Width (m)">
+                    <input type="number" id="gi-sheet-thickness" placeholder="Thickness (mm)">
+                    <input type="number" id="gi-sheet-density" placeholder="Density (kg/m³, default 7850)">
+                </div>
+            </div>
+
+            <!-- GI Rectangular Pipe 1 -->
+            <div class="calc-section hidden" id="gi-rect-pipe-1">
+                <h2>GI Rectangular Pipe 1 Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="gi-rect-pipe-1-weight" placeholder="Weight (kg)">
+                    <input type="number" id="gi-rect-pipe-1-length" placeholder="Length (m)">
+                    <input type="number" id="gi-rect-pipe-1-width" placeholder="Width (mm)">
+                    <input type="number" id="gi-rect-pipe-1-height" placeholder="Height (mm)">
+                    <input type="number" id="gi-rect-pipe-1-thickness" placeholder="Thickness (mm)">
+                    <input type="number" id="gi-rect-pipe-1-density" placeholder="Density (kg/m³, default 7850)">
+                </div>
+            </div>
+
+            <!-- GI Rectangular Pipe 2 -->
+            <div class="calc-section hidden" id="gi-rect-pipe-2">
+                <h2>GI Rectangular Pipe 2 Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="gi-rect-pipe-2-weight" placeholder="Weight (kg)">
+                    <input type="number" id="gi-rect-pipe-2-length" placeholder="Length (m)">
+                    <input type="number" id="gi-rect-pipe-2-width" placeholder="Width (mm)">
+                    <input type="number" id="gi-rect-pipe-2-height" placeholder="Height (mm)">
+                    <input type="number" id="gi-rect-pipe-2-thickness" placeholder="Thickness (mm)">
+                    <input type="number" id="gi-rect-pipe-2-density" placeholder="Density (kg/m³, default 7850)">
+                </div>
+            </div>
+
+            <!-- Iron Rectangular Pipe 1 -->
+            <div class="calc-section hidden" id="iron-rect-pipe-1">
+                <h2>Iron Rectangular Pipe 1 Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="iron-rect-pipe-1-weight" placeholder="Weight (kg)">
+                    <input type="number" id="iron-rect-pipe-1-length" placeholder="Length (m)">
+                    <input type="number" id="iron-rect-pipe-1-width" placeholder="Width (mm)">
+                    <input type="number" id="iron-rect-pipe-1-height" placeholder="Height (mm)">
+                    <input type="number" id="iron-rect-pipe-1-thickness" placeholder="Thickness (mm)">
+                    <input type="number" id="iron-rect-pipe-1-density" placeholder="Density (kg/m³, default 7850)">
+                </div>
+            </div>
+
+            <!-- Iron Rectangular Pipe 2 -->
+            <div class="calc-section hidden" id="iron-rect-pipe-2">
+                <h2>Iron Rectangular Pipe 2 Calculator</h2>
+                <div class="input-group">
+                    <input type="number" id="iron-rect-pipe-2-weight" placeholder="Weight (kg)">
+                    <input type="number" id="iron-rect-pipe-2-length" placeholder="Length (m)">
+                    <input type="number" id="iron-rect-pipe-2-width" placeholder="Width (mm)">
+                    <input type="number" id="iron-rect-pipe-2-height" placeholder="Height (mm)">
+                    <input type="number" id="iron-rect-pipe-2-thickness" placeholder="Thickness (mm)">
+                    <input type="number" id="iron-rect-pipe-2-density" placeholder="Density (kg/m³, default 7850)">
                 </div>
             </div>
         </div>
