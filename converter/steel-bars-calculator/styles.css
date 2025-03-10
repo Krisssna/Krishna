@@ -127,6 +127,7 @@ h3 {
 }
 
 
+
 /* Add units as watermarks */
 .input-group {
     position: relative;
@@ -134,16 +135,18 @@ h3 {
 
 .input-group input {
     padding-right: 50px; /* Space for the unit */
+    position: relative;
 }
 
-.input-group::after {
+.input-group input::after {
     content: attr(data-unit);
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
     color: #999;
-    pointer-events: none; /* Ensure the unit doesn't interfere with input */
+    pointer-events: none; 
+    font-size: 0.9em;
 }
 
 /* Specific units for each input */
