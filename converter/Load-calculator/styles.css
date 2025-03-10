@@ -1,83 +1,60 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-h1, h2 {
-    text-align: center;
-    color: #4CAF50;
-}
-
-.toolbar {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.toolbar button {
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+#toolbar {
+    margin: 10px;
+    padding: 10px;
+    background-color: #e0e0e0;
     border-radius: 5px;
 }
 
-.drawing-area {
-    width: 100%;
-    height: 400px;
-    background-color: #fff;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
+#toolbar button, #toolbar select {
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+#canvas {
     position: relative;
+    width: 800px;
+    height: 600px;
+    border: 2px solid #333;
+    background-color: #f5f5f5;
+    margin: 0 auto;
+    overflow: hidden;
 }
 
-canvas {
-    width: 100%;
-    height: 100%;
-    cursor: crosshair;
+.column {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border: 1px solid darkred;
+    cursor: move;
 }
 
-.details-panel, .result-panel {
+.beam {
+    position: absolute;
+    background-color: blue;
+    border: 1px solid darkblue;
+    cursor: move;
+}
+
+.slab {
+    position: absolute;
+    background-color: rgba(0, 255, 0, 0.3);
+    border: 1px solid green;
+    cursor: move;
+}
+
+#results {
+    margin: 20px auto;
+    width: 800px;
+    padding: 10px;
     background-color: #fff;
-    padding: 20px;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
-}
-
-.details-content label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
-}
-
-.details-content input {
-    width: 100%;
-    padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 4px;
 }
 
-#calculateLoadBtn {
-    background-color: #2196F3;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin-top: 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 100%;
-}
-
-.result-panel {
-    text-align: center;
+#results h2 {
+    margin-top: 0;
 }
