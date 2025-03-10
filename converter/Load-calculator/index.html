@@ -4,67 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Load Calculator</title>
-<link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Load Calculator</h1>
 
-<div class="container">
-    <h1>Load Calculator</h1>
-
-    <div class="layout-container">
-        <div class="drawing-area">
-            <p>House Plan Drawing Area</p>
+        <div class="toolbar">
+            <button id="createColumnBtn">Create Column</button>
+            <button id="createBeamBtn">Create Beam</button>
+            <button id="createSlabBtn">Create Slab</button>
         </div>
 
-        <div class="input-section">
-            <div class="input-box">
-                <h3>Column Details</h3>
-                <label for="col-width">Width (m)</label>
-                <input type="number" id="col-width" placeholder="Enter column width">
+        <div class="drawing-area">
+            <!-- Drawing area for house plan -->
+            <canvas id="drawingCanvas"></canvas>
+        </div>
 
-                <label for="col-depth">Depth (m)</label>
-                <input type="number" id="col-depth" placeholder="Enter column depth">
+        <div class="details-panel">
+            <h2>Details Panel</h2>
+            <div class="details-content">
+                <label for="columnSize">Column Size (cm):</label>
+                <input type="text" id="columnSize" placeholder="e.g., 30 x 30">
 
-                <label for="col-height">Height (m)</label>
-                <input type="number" id="col-height" placeholder="Enter column height">
+                <label for="beamSize">Beam Size (cm):</label>
+                <input type="text" id="beamSize" placeholder="e.g., 30 x 45">
+
+                <label for="slabSize">Slab Thickness (cm):</label>
+                <input type="text" id="slabSize" placeholder="e.g., 12">
+
+                <label for="liveLoad">Live Load (kN/m²):</label>
+                <input type="text" id="liveLoad" placeholder="Default: 3">
+
+                <button id="calculateLoadBtn">Calculate Load</button>
             </div>
+        </div>
 
-            <div class="input-box">
-                <h3>Beam Details</h3>
-                <label for="beam-length">Length (m)</label>
-                <input type="number" id="beam-length" placeholder="Enter beam length">
-
-                <label for="beam-width">Width (m)</label>
-                <input type="number" id="beam-width" placeholder="Enter beam width">
-
-                <label for="beam-height">Height (m)</label>
-                <input type="number" id="beam-height" placeholder="Enter beam height">
-            </div>
-
-            <div class="input-box">
-                <h3>Slab Details</h3>
-                <label for="slab-length">Length (m)</label>
-                <input type="number" id="slab-length" placeholder="Enter slab length">
-
-                <label for="slab-width">Width (m)</label>
-                <input type="number" id="slab-width" placeholder="Enter slab width">
-
-                <label for="slab-thickness">Thickness (m)</label>
-                <input type="number" id="slab-thickness" placeholder="Enter slab thickness">
-            </div>
-
-            <button class="btn-calculate">Calculate Load</button>
-
-            <div class="results">
-                <h3>Results</h3>
-                <p>Load on Column A: <b>-- kN</b></p>
-                <p>Load on Beam 1: <b>-- kN</b></p>
-                <p>Total Structure Load: <b>-- kN</b></p>
-                <p>Detailed calculations will appear here.</p>
+        <div class="result-panel">
+            <h2>Calculation Results</h2>
+            <div id="resultContent">
+                <!-- Results will appear here -->
             </div>
         </div>
     </div>
-</div>
 
+    <script src="script.js"></script>
 </body>
 </html>
