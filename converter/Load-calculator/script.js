@@ -24,7 +24,7 @@ document.getElementById('calculateLoads').addEventListener('click', calculateLoa
 document.getElementById('units').addEventListener('change', (e) => unit = e.target.value);
 
 // Context menu buttons
-document.getElementById('editBtn').addEventListener('click', editDimensions);
+document.getElementById('editBtn').addEventListener('click', () => editDimensions(selectedElement));
 document.getElementById('moveBtn').addEventListener('click', () => mode = 'moving');
 document.getElementById('copyBtn').addEventListener('click', copyElement);
 document.getElementById('deleteBtn').addEventListener('click', deleteElement);
@@ -50,8 +50,6 @@ canvas.addEventListener('click', (e) => {
             window.slabPoints = [];
             mode = 'none';
         }
-    } else if (mode === 'moving' || mode === 'resizingLeft' || mode === 'resizingRight') {
-        mode = 'none';
     }
 });
 
@@ -92,7 +90,7 @@ function getNearestColumn(x, y) {
         const dist = Math.hypot(x - cx, y - cy);
         if (dist < minDist) {
             minDist = dist;
-            nearest = { x: cx, y: cy };
+            nearest = { x: cx, y: cy, column };
         }
     }
     return nearest;
@@ -106,7 +104,7 @@ function addColumn(x, y) {
     column.style.top = (y - 6) + 'px';
     canvas.appendChild(column);
     elements.columns.push(column);
-    makeDraggable(column);
+    makeInteractive(column);
     editDimensions(column);
 }
 
@@ -119,7 +117,7 @@ function addBeam(x, y) {
     beam.style.height = '12px';
     canvas.appendChild(beam);
     elements.beams.push(beam);
-    makeDraggable(beam);
+    makeInteractive(beam);
     checkBeamConnections(beam);
     editDimensions(beam);
 }
@@ -137,7 +135,7 @@ function addSlab(point1, point2) {
     slab.style.height = heightPx + 'px';
     canvas.appendChild(slab);
     elements.slabs.push(slab);
-    makeDraggable(slab);
+    makeInteractive(slab);
     slab.dataset.width = widthPx / scale;
     slab.dataset.length = heightPx / scale;
     editDimensions(slab);
@@ -154,7 +152,7 @@ function hideContextMenu() {
     contextMenu.style.display = 'none';
 }
 
-function editDimensions(el = selectedElement) {
+function editDimensions(el) {
     if (el.className === 'column') {
         const width = prompt(`Enter column width (${unit})`, el.dataset.width / unitConversions[unit] || '0.3');
         const depth = prompt(`Enter column depth (${unit})`, el.dataset.depth / unitConversions[unit] || '0.3');
@@ -195,7 +193,7 @@ function copyElement() {
         newColumn.dataset.height = el.dataset.height;
         canvas.appendChild(newColumn);
         elements.columns.push(newColumn);
-        makeDraggable(newColumn);
+        makeInteractive(newColumn);
     } else if (el.className === 'slab') {
         const newSlab = document.createElement('div');
         newSlab.className = 'slab';
@@ -208,7 +206,7 @@ function copyElement() {
         newSlab.dataset.thickness = el.dataset.thickness;
         canvas.appendChild(newSlab);
         elements.slabs.push(newSlab);
-        makeDraggable(newSlab);
+        makeInteractive(newSlab);
     }
     hideContextMenu();
 }
@@ -222,51 +220,59 @@ function deleteElement() {
     hideContextMenu();
 }
 
-// Dragging and resizing functionality
-function makeDraggable(element) {
-    element.onmousedown = (e) => {
+// Interaction handler
+function makeInteractive(element) {
+    element.addEventListener('mousedown', (e) => {
         if (e.button === 0) { // Left click
             selectedElement = element;
             const offsetX = e.clientX - parseInt(element.style.left);
             const offsetY = e.clientY - parseInt(element.style.top);
+            element.classList.add('dragging');
+
             document.onmousemove = (e) => {
-                if (mode === 'moving' && selectedElement) {
-                    let newX = e.clientX - offsetX;
-                    let newY = e.clientY - offsetY;
-                    if (selectedElement.className === 'beam') {
-                        const snapLeft = getNearestColumn(newX, newY);
-                        const snapRight = getNearestColumn(newX + parseFloat(selectedElement.style.width), newY);
-                        if (snapLeft) newX = snapLeft.x - 6;
-                        if (snapRight) newX = snapRight.x - parseFloat(selectedElement.style.width) - 6;
-                    }
-                    selectedElement.style.left = newX + 'px';
-                    selectedElement.style.top = newY + 'px';
-                    if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
-                } else if (mode === 'resizingLeft' && selectedElement && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
-                    const newWidth = parseFloat(selectedElement.style.left) + parseFloat(selectedElement.style.width) - e.clientX + offsetX;
-                    if (newWidth > 10) {
-                        selectedElement.style.left = (e.clientX - offsetX) + 'px';
-                        selectedElement.style.width = newWidth + 'px';
+                if (selectedElement) {
+                    if (mode === 'moving') {
+                        let newX = e.clientX - offsetX;
+                        let newY = e.clientY - offsetY;
+                        if (selectedElement.className === 'beam') {
+                            const snapLeft = getNearestColumn(newX, newY);
+                            const snapRight = getNearestColumn(newX + parseFloat(selectedElement.style.width), newY);
+                            if (snapLeft) newX = snapLeft.x - 6;
+                            if (snapRight) newX = snapRight.x - parseFloat(selectedElement.style.width) - 6;
+                        }
+                        selectedElement.style.left = newX + 'px';
+                        selectedElement.style.top = newY + 'px';
                         if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
-                        else selectedElement.dataset.width = newWidth / scale;
-                    }
-                } else if (mode === 'resizingRight' && selectedElement && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
-                    const newWidth = e.clientX - offsetX - parseFloat(selectedElement.style.left);
-                    if (newWidth > 10) {
-                        selectedElement.style.width = newWidth + 'px';
-                        if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
-                        else selectedElement.dataset.width = newWidth / scale;
+                    } else if (mode === 'resizingLeft' && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
+                        const newWidth = parseFloat(selectedElement.style.left) + parseFloat(selectedElement.style.width) - (e.clientX - offsetX);
+                        if (newWidth > 10) {
+                            selectedElement.style.left = (e.clientX - offsetX) + 'px';
+                            selectedElement.style.width = newWidth + 'px';
+                            if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
+                            else selectedElement.dataset.width = newWidth / scale;
+                        }
+                    } else if (mode === 'resizingRight' && (selectedElement.className === 'beam' || selectedElement.className === 'slab')) {
+                        const newWidth = e.clientX - offsetX - parseFloat(selectedElement.style.left);
+                        if (newWidth > 10) {
+                            selectedElement.style.width = newWidth + 'px';
+                            if (selectedElement.className === 'beam') checkBeamConnections(selectedElement);
+                            else selectedElement.dataset.width = newWidth / scale;
+                        }
                     }
                 }
             };
+
             document.onmouseup = () => {
-                selectedElement = null;
+                if (selectedElement) {
+                    selectedElement.classList.remove('dragging');
+                    mode = 'none';
+                    selectedElement = null;
+                }
                 document.onmousemove = null;
                 document.onmouseup = null;
-                mode = 'none';
             };
         }
-    };
+    });
 }
 
 function checkBeamConnections(beam) {
@@ -276,8 +282,8 @@ function checkBeamConnections(beam) {
     const leftSnap = getNearestColumn(leftX, y);
     const rightSnap = getNearestColumn(rightX, y);
     beam.classList.toggle('error', !(leftSnap && rightSnap));
-    beam.dataset.column1 = leftSnap ? elements.columns.findIndex(c => parseFloat(c.style.left) + 6 === leftSnap.x && parseFloat(c.style.top) + 6 === leftSnap.y) : -1;
-    beam.dataset.column2 = rightSnap ? elements.columns.findIndex(c => parseFloat(c.style.left) + 6 === rightSnap.x && parseFloat(c.style.top) + 6 === rightSnap.y) : -1;
+    beam.dataset.column1 = leftSnap ? elements.columns.indexOf(leftSnap.column) : -1;
+    beam.dataset.column2 = rightSnap ? elements.columns.indexOf(rightSnap.column) : -1;
     beam.dataset.length = parseFloat(beam.style.width) / scale;
 }
 
@@ -286,7 +292,6 @@ function calculateLoads() {
     const density = parseFloat(document.getElementById('density').value);
     const liveLoad = parseFloat(document.getElementById('liveLoad').value);
 
-    // Dead Loads (DL)
     elements.columns.forEach(c => {
         c.deadLoad = c.dataset.width * c.dataset.depth * c.dataset.height * density;
     });
@@ -298,7 +303,6 @@ function calculateLoads() {
         s.liveLoad = s.dataset.width * s.dataset.length * liveLoad;
     });
 
-    // Slab loads to beams
     elements.slabs.forEach(slab => {
         const slabRect = {
             left: parseFloat(slab.style.left),
@@ -322,12 +326,10 @@ function calculateLoads() {
         }
     });
 
-    // Total beam loads
     elements.beams.forEach(b => {
         b.totalLoad = b.deadLoad + (b.slabLoad || 0);
     });
 
-    // Beam loads to columns
     elements.columns.forEach(c => c.beamLoad = 0);
     elements.beams.forEach(b => {
         if (b.dataset.column1 >= 0 && b.dataset.column2 >= 0) {
@@ -339,12 +341,10 @@ function calculateLoads() {
         }
     });
 
-    // Total column loads
     elements.columns.forEach(c => {
         c.totalLoad = c.deadLoad + c.beamLoad;
     });
 
-    // Display results
     let html = '<h2>Load Calculations</h2>';
     html += '<h3>Beams</h3>';
     elements.beams.forEach((b, i) => html += `<p>Beam b${i}: ${b.totalLoad.toFixed(2)} kN (DL: ${b.deadLoad.toFixed(2)}, Slab Load: ${(b.slabLoad || 0).toFixed(2)})</p>`);
