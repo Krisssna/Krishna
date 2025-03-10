@@ -69,6 +69,10 @@ h2 {
     margin-bottom: 15px;
 }
 
+p {
+margin: 0 auto;
+}
+
 .input-group {
     display: flex;
     flex-direction: column;
