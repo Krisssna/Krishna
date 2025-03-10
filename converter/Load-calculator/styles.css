@@ -76,11 +76,49 @@ label {
     width: 100%;
     height: 600px;
     border: 2px solid #333;
-    background: #fff;
     margin-top: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    background: #fff;
+}
+
+#grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        #e0e0e0 0px,
+        #e0e0e0 1px,
+        transparent 1px,
+        transparent 20px
+    ),
+    repeating-linear-gradient(
+        90deg,
+        #e0e0e0 0px,
+        #e0e0e0 1px,
+        transparent 1px,
+        transparent 20px
+    );
+}
+
+.x-axis-highlight, .y-axis-highlight {
+    position: absolute;
+    background: rgba(255, 215, 0, 0.5);
+    z-index: 1;
+}
+
+.x-axis-highlight {
+    width: 100%;
+    height: 2px;
+}
+
+.y-axis-highlight {
+    width: 2px;
+    height: 100%;
 }
 
 .column {
@@ -90,11 +128,12 @@ label {
     background-color: #ff4d4d;
     border: 2px solid #cc0000;
     border-radius: 2px;
-    cursor: pointer; /* Changed from move to pointer for clarity */
+    cursor: pointer;
+    z-index: 2;
 }
 
 .column:hover:not(.dragging) {
-    background-color: #ff6666; /* Subtle color change instead of scaling */
+    background-color: #ff6666;
 }
 
 .beam {
@@ -102,6 +141,7 @@ label {
     background-color: #4d79ff;
     border: 2px solid #0033cc;
     cursor: pointer;
+    z-index: 2;
 }
 
 .beam.error {
@@ -118,6 +158,7 @@ label {
     background-color: rgba(40, 167, 69, 0.4);
     border: 2px solid #1f7a38;
     cursor: pointer;
+    z-index: 2;
 }
 
 .slab:hover:not(.dragging) {
@@ -125,7 +166,7 @@ label {
 }
 
 .dragging {
-    opacity: 0.8; /* Visual feedback during drag */
+    opacity: 0.8;
 }
 
 #results {
