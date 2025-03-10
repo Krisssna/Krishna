@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Steel & GI Sheet Weight Calculator</title>
+    <title>Weight Calculator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,31 +12,59 @@
         <div class="button-group">
             <button onclick="showSection('plainRod')">Plain Rod</button>
             <button onclick="showSection('ringRod')">Ring Rod</button>
+            <button onclick="showSection('squareRod')">Square Rod</button>
             <button onclick="showSection('giSheet')">GI Sheet</button>
         </div>
 
         <!-- Plain Rod Section -->
         <div id="plainRod" class="calc-section">
-            <h2>Plain Rod Weight Calculation</h2>
+            <h2>Plain Rod</h2>
+            <select id="plainSelect" onchange="toggleInputs('plain')">
+                <option value="diameterLength">Diameter & Length</option>
+                <option value="weightLength">Weight & Length</option>
+                <option value="diameterWeight">Diameter & Weight</option>
+            </select>
             <label>Diameter (mm): <input type="number" id="plainDiameter"></label>
             <label>Length (m): <input type="number" id="plainLength"></label>
+            <label>Weight (kg): <input type="number" id="plainWeight"></label>
             <button onclick="calculatePlainRod()">Calculate</button>
             <div id="plainResult"></div>
         </div>
 
         <!-- Ring Rod Section -->
         <div id="ringRod" class="calc-section">
-            <h2>Ring Rod Weight Calculation</h2>
+            <h2>Ring Rod</h2>
+            <label>Bend Factor (1.04-1.12): <input type="number" id="bendFactor" value="1.06"></label>
+            <select id="ringSelect" onchange="toggleInputs('ring')">
+                <option value="diameterLength">Diameter & Length</option>
+                <option value="weightLength">Weight & Length</option>
+                <option value="diameterWeight">Diameter & Weight</option>
+            </select>
             <label>Diameter (mm): <input type="number" id="ringDiameter"></label>
             <label>Length (m): <input type="number" id="ringLength"></label>
-            <label>Bend Factor (typically 1.04-1.12): <input type="number" id="bendFactor" value="1.06"></label>
+            <label>Weight (kg): <input type="number" id="ringWeight"></label>
             <button onclick="calculateRingRod()">Calculate</button>
             <div id="ringResult"></div>
         </div>
 
+        <!-- Square Rod Section -->
+        <div id="squareRod" class="calc-section">
+            <h2>Square Rod</h2>
+            <select id="squareSelect" onchange="toggleInputs('square')">
+                <option value="diameterLength">Side & Length</option>
+                <option value="weightLength">Weight & Length</option>
+                <option value="diameterWeight">Side & Weight</option>
+            </select>
+            <label>Side (mm): <input type="number" id="squareSide"></label>
+            <label>Length (m): <input type="number" id="squareLength"></label>
+            <label>Weight (kg): <input type="number" id="squareWeight"></label>
+            <button onclick="calculateSquareRod()">Calculate</button>
+            <div id="squareResult"></div>
+        </div>
+
         <!-- GI Sheet Section -->
         <div id="giSheet" class="calc-section">
-            <h2>GI Sheet Weight Calculation</h2>
+            <h2>GI Sheet</h2>
             <label>Thickness (mm): <input type="number" id="sheetThickness"></label>
             <label>Width (m): <input type="number" id="sheetWidth"></label>
             <label>Length (m): <input type="number" id="sheetLength"></label>
