@@ -77,11 +77,12 @@ h2 {
 
 .input-wrapper {
     position: relative;
-    width: 100%;
+    width: 80%; /* Reduce width for symmetry */
+    margin: 0 auto; /* Center the wrapper */
 }
 
 .input-wrapper input {
-    width: 100%;
+    width: 100%; /* Full width within wrapper */
     padding: 10px;
     border: 2px solid #4ecdc4;
     border-radius: 10px;
