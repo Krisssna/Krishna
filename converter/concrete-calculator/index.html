@@ -3,56 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Concrete Calculator</title>
-    <!-- Link to External CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <meta name="description" content="Easily estimate concrete and cement mortar requirements with our Concrete Calculator. Perfect for construction projects, DIY enthusiasts, and professionals.">
+    <meta name="keywords" content="concrete calculator, cement mortar estimate, construction calculator, DIY concrete estimate, building material calculator">
+    <meta name="author" content="Krishna NIraula">
+    <meta property="og:title" content="Concrete Calculator - Estimate Concrete and Cement Mortar">
+    <meta property="og:description" content="Easily estimate concrete and cement mortar requirements with our Concrete Calculator. Perfect for construction projects, DIY enthusiasts, and professionals.">
+    <meta property="og:image" content="https://krishnaniraula.com.np/assets/images/concrete-calculator.jpg">
+    <meta property="og:url" content="https://krishnaniraula.com.np/converter/concrete-calculator/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Concrete Calculator - Estimate Concrete and Cement Mortar">
+    <meta name="twitter:description" content="Easily estimate concrete and cement mortar requirements with our Concrete Calculator. Perfect for construction projects, DIY enthusiasts, and professionals.">
+    <meta name="twitter:image" content="https://krishnaniraula.com.np/assets/images/concrete-calculator.jpg">
+    <link rel="canonical" href="https://yourwebsite.com/concrete-calculator">
+    <title>Concrete Calculator - Estimate Concrete and Cement Mortar</title>
+ 
+    <link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="styles.css"></noscript>
+    
+    <link rel="preload" href="script.js" as="script">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav>
+   
+    <nav aria-label="Main navigation">
         <div class="nav-left">
             <a href="/index.html" class="no-dec">Home</a>
         </div>
 
         <div class="nav-right">
-            <div class="menu-icon" onclick="toggleMenu()">☰</div>
-            <ul id="menu">
-                <li><a href="/time-series-chart-animation/" class="no-deco">Animate Time-series Data</a></li>
-                <li class="dropdown">Apps
-                    <ul class="dropdown-content">
-                        <li class="dropdown">Caputok
-                            <ul class="dropdown-content">
-                                <li><a href="https://caputok.en.uptodown.com/android">Play Store</a></li>
-                                <li><a href="#">App Store</a></li>
-                                <li><a href="assets/apps/caputok/privacy_policy/">Privacy Policy</a></li>
-                                <li><a href="assets/apps/caputok/terms_of_use/">Terms of Use</a></li>
+            <div class="menu-icon" onclick="toggleMenu()" aria-label="Toggle menu">☰</div>
+            <ul id="menu" role="menu">
+                <li role="none"><a href="/time-series-chart-animation/" class="no-deco" role="menuitem">Animate Time-series Data</a></li>
+                <li class="dropdown" role="none">Apps
+                    <ul class="dropdown-content" role="menu">
+                        <li class="dropdown" role="none">Caputok
+                            <ul class="dropdown-content" role="menu">
+                                <li role="none"><a href="https://caputok.en.uptodown.com/android" role="menuitem">Play Store</a></li>
+                                <li role="none"><a href="#" role="menuitem">App Store</a></li>
+                                <li role="none"><a href="assets/apps/caputok/privacy_policy/" role="menuitem">Privacy Policy</a></li>
+                                <li role="none"><a href="assets/apps/caputok/terms_of_use/" role="menuitem">Terms of Use</a></li>
                             </ul>
                         </li>
                     </ul>
                 </li>
-                <li><a href="#contact" class="no-deco">Contact</a></li>
-                <li><a href="#contact" class="no-deco">About</a></li>
+                <li role="none"><a href="#contact" class="no-deco" role="menuitem">Contact</a></li>
+                <li role="none"><a href="#contact" class="no-deco" role="menuitem">About</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Concrete Calculator Section -->
-    <section id="concrete-calculator" class="calculator">
+   
+    <section id="concrete-calculator" class="calculator" aria-labelledby="concrete-calculator-heading">
         <div class="calculator-content">
             <div class="section-heading text-center">
-                <h2>Concrete Calculator</h2>
+               
+                <h1 id="concrete-calculator-heading">Concrete Calculator</h1>
+             
+                <p>Use our <strong>Concrete Calculator</strong> to quickly estimate the amount of concrete or cement mortar required for your construction projects. Whether you're a DIY enthusiast or a professional builder, this tool helps you calculate the exact materials needed for concrete slabs, walls, and more. Simply input your project details, and get accurate results instantly!</p>
             </div>
             <div class="container">
                 <div class="button-container">
-                    <button id="btnConcreteMaterial">Concrete Material Estimate</button>
-                    <button id="btnCementMortar">Cement Mortar Estimate</button>
+                    <button id="btnConcreteMaterial" aria-expanded="false" aria-controls="concreteMaterialSection">Concrete Material Estimate</button>
+                    <button id="btnCementMortar" aria-expanded="false" aria-controls="cementMortarSection">Cement Mortar Estimate</button>
                 </div>
 
-                <!-- Concrete Material Estimate Section -->
-                <div id="concreteMaterialSection" class="calculator-section" style="display: none;">
-                    <h3>Concrete Material Estimate</h3>
+                
+                <div id="concreteMaterialSection" class="calculator-section" style="display: none;" aria-hidden="true">
+                   
+                    <h2>Concrete Material Estimate</h2>
+                    <p>Estimate the amount of concrete required for your project based on the desired strength and volume. Select the concrete grade and enter the volume to get started.</p>
                     <label for="concreteStrength">Select Concrete Strength:</label>
-                    <select id="concreteStrength">
+                    <select id="concreteStrength" aria-label="Select concrete strength">
                         <option value="M10">M10 (1:3:6)</option>
                         <option value="M15">M15 (1:2:4)</option>
                         <option value="M20">M20 (1:1.5:3)</option>
@@ -60,51 +80,53 @@
                     </select>
 
                     <label for="concreteVolume">Enter Volume (in m³):</label>
-                    <input type="number" id="concreteVolume" placeholder="Enter volume" min="0">
+                    <input type="number" id="concreteVolume" placeholder="Enter volume" min="0" aria-label="Enter concrete volume">
 
                     <button id="calculateConcrete">Calculate</button>
 
-                    <div id="concreteResult" class="result-section"></div>
+                    <div id="concreteResult" class="result-section" aria-live="polite"></div>
                 </div>
 
-                <!-- Cement Mortar Estimate Section -->
-                <div id="cementMortarSection" class="calculator-section" style="display: none;">
-                    <h3>Cement Mortar Estimate</h3>
+             
+                <div id="cementMortarSection" class="calculator-section" style="display: none;" aria-hidden="true">
+                   
+                    <h2>Cement Mortar Estimate</h2>
+                    <p>Choose ‘By Mortar Volume’ to estimate the sand and cement quantity required based on the given ratio, or ‘By Total Volume’ to estimate the number of bricks along with the mortar required for your wall structure.</p>
                     
-                    <!-- Dropdown to select calculation type -->
+                   
                     <label for="calculationType">Select Calculation Type:</label>
-                    <select id="calculationType">
+                    <select id="calculationType" aria-label="Select calculation type">
                         <option value="mortarVolume">By Mortar Volume</option>
                         <option value="totalVolume">By Total Volume</option>
                     </select>
 
-                    <!-- Input for Mortar Volume (visible when "By Mortar Volume" is selected) -->
+                  
                     <div id="mortarVolumeInput">
                         <label for="mortarVolume">Enter Mortar Volume (in m³):</label>
-                        <input type="number" id="mortarVolume" placeholder="Enter mortar volume" min="0">
+                        <input type="number" id="mortarVolume" placeholder="Enter mortar volume" min="0" aria-label="Enter mortar volume">
                     </div>
 
                     <!-- Inputs for Total Volume, Brick Size, and Mortar Thickness (visible when "By Total Volume" is selected) -->
                     <div id="totalVolumeInput" style="display: none;">
                         <label for="totalVolume">Enter Total Volume of Wall (in m³):</label>
-                        <input type="number" id="totalVolume" placeholder="Enter total volume" min="0">
+                        <input type="number" id="totalVolume" placeholder="Enter total volume" min="0" aria-label="Enter total volume">
 
                         <label for="brickLength">Brick Length (in mm):</label>
-                        <input type="number" id="brickLength" placeholder="Enter brick length" min="0">
+                        <input type="number" id="brickLength" placeholder="Enter brick length" min="0" aria-label="Enter brick length">
 
                         <label for="brickWidth">Brick Width (in mm):</label>
-                        <input type="number" id="brickWidth" placeholder="Enter brick width" min="0">
+                        <input type="number" id="brickWidth" placeholder="Enter brick width" min="0" aria-label="Enter brick width">
 
                         <label for="brickThickness">Brick Thickness (in mm):</label>
-                        <input type="number" id="brickThickness" placeholder="Enter brick thickness" min="0">
+                        <input type="number" id="brickThickness" placeholder="Enter brick thickness" min="0" aria-label="Enter brick thickness">
 
                         <label for="mortarThickness">Mortar Thickness (in mm):</label>
-                        <input type="number" id="mortarThickness" placeholder="Enter mortar thickness" min="0">
+                        <input type="number" id="mortarThickness" placeholder="Enter mortar thickness" min="0" aria-label="Enter mortar thickness">
                     </div>
 
-                    <!-- Common Input for Cement to Sand Ratio -->
+                    
                     <label for="mortarRatio">Select Cement to Sand Ratio:</label>
-                    <select id="mortarRatio">
+                    <select id="mortarRatio" aria-label="Select cement to sand ratio">
                         <option value="1:4">1:4</option>
                         <option value="1:5">1:5</option>
                         <option value="1:6">1:6</option>
@@ -113,13 +135,13 @@
 
                     <button id="calculateMortar">Calculate</button>
 
-                    <div id="mortarResult" class="result-section"></div>
+                    <div id="mortarResult" class="result-section" aria-live="polite"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Link to External JavaScript -->
-    <script src="script.js"></script>
+
+    <script src="script.js" defer></script>
 </body>
 </html>
