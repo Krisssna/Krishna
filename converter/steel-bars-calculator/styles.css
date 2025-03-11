@@ -15,21 +15,44 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     width: 600px;
     text-align: center;
+    margin: 20px auto; /* Ensure it’s centered with spacing */
 }
 
-h1 {
-    color: #333;
+/* Header Styles */
+header {
     margin-bottom: 20px;
+}
+
+header h1 {
+    color: #333;
+    margin: 0 0 10px;
     font-size: 2em;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.button-group {
+header p {
+    color: #555;
+    font-size: 1em;
+    margin: 0;
+}
+
+/* Main and Section Styles */
+main {
+    width: 100%;
+}
+
+section.container {
+    padding: 0; /* Remove extra padding, already handled by .container */
+}
+
+/* Navigation (Button Group) */
+nav.button-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
     gap: 10px;
+    max-width: 100%; /* Prevent overflow */
 }
 
 .tab-btn {
@@ -52,6 +75,7 @@ h1 {
     transform: scale(1.1);
 }
 
+/* Calculator Container */
 .calc-container {
     margin: 20px 0;
 }
@@ -67,26 +91,40 @@ h1 {
 h2 {
     color: #ff6b6b;
     margin-bottom: 15px;
+    font-size: 1.5em;
 }
 
-p {
-margin: 0 auto;
+.calc-section p {
+    color: #555;
+    font-size: 0.95em;
+    margin: 0 auto 15px;
+    max-width: 80%;
 }
 
+/* Form and Input Styles */
 .input-group {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    width: 100%;
 }
 
 .input-wrapper {
     position: relative;
-    width: 80%; /* Reduce width for symmetry */
-    margin: 0 auto; /* Center the wrapper */
+    width: 80%; /* Symmetrical width */
+    margin: 0 auto; /* Centered */
+}
+
+.input-wrapper label {
+    display: block;
+    text-align: left;
+    color: #333;
+    font-size: 0.9em;
+    margin-bottom: 5px;
 }
 
 .input-wrapper input {
-    width: 100%; /* Full width within wrapper */
+    width: 100%;
     padding: 10px;
     border: 2px solid #4ecdc4;
     border-radius: 10px;
@@ -94,6 +132,7 @@ margin: 0 auto;
     outline: none;
     transition: border-color 0.3s ease;
     background: transparent;
+    box-sizing: border-box; /* Ensure padding doesn’t affect width */
 }
 
 .input-wrapper input:focus {
@@ -106,15 +145,17 @@ margin: 0 auto;
 
 .unit {
     position: absolute;
-    top: 50%;
+    top: 65%; /* Adjusted for label above input */
     transform: translateY(-50%);
+    right: 10px; /* Moved to right for cleaner look */
     color: #999;
     font-size: 0.9em;
     pointer-events: none;
-    display: none; /* Hidden by default, shown only when value is present */
+    display: none; /* Hidden by default, shown by JS */
 }
 
-.method {
+/* Method Section (Aside) */
+aside.method {
     margin-top: 20px;
     padding: 15px;
     background: rgba(255, 255, 255, 0.8);
@@ -124,13 +165,16 @@ margin: 0 auto;
 h3 {
     color: #333;
     margin-bottom: 10px;
+    font-size: 1.2em;
 }
 
 #method-text {
     color: #555;
     font-size: 0.9em;
+    line-height: 1.4;
 }
 
+/* Calculate Button */
 .calculate-btn {
     padding: 10px 20px;
     border: none;
@@ -145,4 +189,11 @@ h3 {
 
 .calculate-btn:hover {
     background: #2a9d8f;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    color: #555;
+    font-size: 0.85em;
 }
