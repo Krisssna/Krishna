@@ -4,8 +4,8 @@ body {
     min-height: 100vh;
     margin: 0;
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center horizontally */
+    flex-direction: column; 
+    align-items: center;
 }
 
 .container {
@@ -15,17 +15,22 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     width: 600px;
     text-align: center;
-    margin: 20px 0; /* Vertical spacing, no horizontal margin needed */
+    margin: 20px 0; 
 }
 
-/* Header Styles */
+
 header {
     width: 100%;
     padding: 20px 0;
+    text-align: center;
 }
 
 header .container {
-    margin: 0; /* Override default container margin for header */
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
 }
 
 header h1 {
@@ -41,25 +46,25 @@ header p {
     margin: 0;
 }
 
-/* Main Styles */
+
 main {
-    flex: 1; /* Allow main to take available space */
+    flex: 1;
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
 section.container {
-    padding: 0; /* Remove extra padding, handled by .container */
-    margin: 0; /* Override default margin for main container */
+    padding: 0; 
+    margin: 0;
 }
 
-/* Navigation (Button Group) */
+
 nav.button-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    margin: 0 auto 20px;
+    margin: 10px auto 20px;
     gap: 10px;
     max-width: 100%;
 }
@@ -110,7 +115,7 @@ h2 {
     max-width: 80%;
 }
 
-/* Form and Input Styles */
+
 .input-group {
     display: flex;
     flex-direction: column;
@@ -183,18 +188,25 @@ h3 {
     line-height: 1.4;
 }
 
-/* Calculate Button */
+
+
 .calculate-btn {
-    padding: 10px 20px;
+    padding: 8px 12px;
     border: none;
-    border-radius: 25px;
+    border-radius: 15px;
     font-size: 1em;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 15px;
+margin: auto;
     color: #fff;
     background: linear-gradient(135deg, #2575fc, #6a11cb);
+    display: inline-block;
+    width: fit-content; 
+    white-space: nowrap;
 }
+
+
 
 .calculate-btn:hover {
     background: #2a9d8f;
@@ -204,7 +216,8 @@ h3 {
 footer {
     width: 100%;
     padding: 20px 0;
-    background: rgba(255, 255, 255, 0.9); /* Match container for consistency */
+    background: rgba(255, 255, 255, 0.9);
+text-align: center; 
 }
 
 footer p {
