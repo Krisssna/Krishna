@@ -14,6 +14,8 @@
             <button class="tab-btn active" data-type="plain">Plain Bar</button>
             <button class="tab-btn" data-type="tmt">Deformed TMT Bar</button>
             <button class="tab-btn" data-type="square">Square Bar</button>
+            <button class="tab-btn" data-type="rectangular">Rectangular Bar</button>
+            <button class="tab-btn" data-type="angles">Angles</button>
             <button class="tab-btn" data-type="gi-sheet">GI Sheet</button>
             <button class="tab-btn" data-type="gi-rect-pipe">GI Rect Pipe</button>
             <button class="tab-btn" data-type="iron-rect-pipe">Iron Rect Pipe</button>
@@ -96,6 +98,65 @@
                 </div>
                 <button class="calculate-btn">Calculate</button>
             </div>
+
+              <!-- Rectangular Bar -->
+            <div class="calc-section hidden" id="rectangular">
+                <h2>Rectangular Bar Calculator</h2>
+                <p>Enter any three known values and press 'Calculate'.</p>
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="number" id="rectangular-weight" placeholder="Weight (kg)">
+                        <span class="unit">kg</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="rectangular-length" placeholder="Length (m)">
+                        <span class="unit">m</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="rectangular-width" placeholder="Width (mm)">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="rectangular-height" placeholder="Height (mm)">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="rectangular-density" placeholder="Density (kg/m³): Leave it blank if you don't know.">
+                        <span class="unit">kg/m³</span>
+                    </div>
+                </div>
+                <button class="calculate-btn">Calculate</button>
+            </div>
+
+            <!-- Angles -->
+            <div class="calc-section hidden" id="angles">
+                <h2>Angle Bar Calculator</h2>
+                <p>Enter any three known values and press 'Calculate'.</p>
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="number" id="angles-weight" placeholder="Weight (kg)">
+                        <span class="unit">kg</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="angles-length" placeholder="Length (m)">
+                        <span class="unit">m</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="angles-leg-length" placeholder="Leg Length (mm)">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="angles-thickness" placeholder="Thickness (mm)">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="angles-density" placeholder="Density (kg/m³): Leave it blank if you don't know.">
+                        <span class="unit">kg/m³</span>
+                    </div>
+                </div>
+                <button class="calculate-btn">Calculate</button>
+            </div>
+
 
             <!-- GI Sheet -->
             <div class="calc-section hidden" id="gi-sheet">
