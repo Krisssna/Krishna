@@ -15,7 +15,8 @@
             <button class="tab-btn" data-type="tmt">Deformed TMT Bar</button>
             <button class="tab-btn" data-type="square">Square Bar</button>
             <button class="tab-btn" data-type="rectangular">Rectangular Bar</button>
-            <button class="tab-btn" data-type="angles">Angles</button>
+            <button class="tab-btn" data-type="angles">Equal Angles</button>
+            <button class="tab-btn" data-type="irregular-angles">Irregular Angles</button>
             <button class="tab-btn" data-type="gi-sheet">GI Sheet</button>
             <button class="tab-btn" data-type="gi-rect-pipe">GI Rect Pipe</button>
             <button class="tab-btn" data-type="iron-rect-pipe">Iron Rect Pipe</button>
@@ -130,7 +131,7 @@
 
             <!-- Angles -->
             <div class="calc-section hidden" id="angles">
-                <h2>Angle Bar Calculator</h2>
+                <h2>Equal Angle Bar Calculator</h2>
                 <p>Enter any three known values and press 'Calculate'.</p>
                 <div class="input-group">
                     <div class="input-wrapper">
@@ -158,6 +159,40 @@
             </div>
 
 
+             <!-- Irregular Angles -->
+            <div class="calc-section hidden" id="irregular-angles">
+                <h2>Irregular Angle Bar Calculator</h2>
+                <p>Enter any four known values and press 'Calculate'.</p>
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="number" id="irregular-angles-weight" placeholder="Weight (kg)">
+                        <span class="unit">kg</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="irregular-angles-length" placeholder="Length (m)">
+                        <span class="unit">m</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="irregular-angles-leg-length1" placeholder="Leg Length 1 (mm)">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="irregular-angles-leg-length2" placeholder="Leg Length 2 (mm)">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="irregular-angles-thickness" placeholder="Thickness (mm)">
+                        <span class="unit">mm</span>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="number" id="irregular-angles-density" placeholder="Density (kg/m³): Leave it blank if you don't know.">
+                        <span class="unit">kg/m³</span>
+                    </div>
+                </div>
+                <button class="calculate-btn">Calculate</button>
+            </div>
+
+            
             <!-- GI Sheet -->
             <div class="calc-section hidden" id="gi-sheet">
                 <h2>GI Sheet Calculator</h2>
