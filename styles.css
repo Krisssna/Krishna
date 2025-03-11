@@ -1,4 +1,4 @@
-/* General Styles */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -11,8 +11,8 @@ nav {
     justify-content: space-between;
     align-items: center;
     background: linear-gradient(135deg, #6a11cb, #2575fc);
-    padding: 5px 20px; /* Reduce padding to decrease height */
-    height: 36px; /* Set a specific height */
+    padding: 5px 20px; 
+    height: 36px;
     color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     position: fixed;
@@ -37,7 +37,7 @@ nav {
 .menu-icon {
     font-size: 24px;
     cursor: pointer;
-    display: none; /* Hidden by default on larger screens */
+    display: none;
 }
 
 #menu {
@@ -74,7 +74,7 @@ nav {
     border-radius: 5px;
     padding: 10px;
     z-index: 1;
-    min-width: 150px; /* Ensure dropdown has a minimum width */
+    min-width: 150px; 
 }
 
 .dropdown:hover .dropdown-content {
@@ -86,7 +86,7 @@ nav {
 }
 
 .dropdown-content li a {
-    color: #333 !important; /* Dark text color for visibility */
+    color: #333 !important; 
     padding: 8px 12px;
     display: block;
     border-radius: 5px;
@@ -94,17 +94,17 @@ nav {
 }
 
 .dropdown-content li a:hover {
-    background-color: #f1f1f1; /* Light gray background on hover */
+    background-color: #f1f1f1; 
 }
 
 /* Responsive Design for Navigation Bar */
 @media (max-width: 768px) {
     .menu-icon {
-        display: block; /* Show menu icon on smaller screens */
+        display: block;
     }
 
     #menu {
-        display: none; /* Hide menu by default on smaller screens */
+        display: none; 
         flex-direction: column;
         position: absolute;
         top: 60px;
@@ -121,11 +121,11 @@ nav {
     }
 
     #menu li a {
-        color: #333 !important; /* Dark text color for visibility */
+        color: #333 !important; 
     }
 
     #menu.active {
-        display: flex; /* Show menu when active */
+        display: flex;
     }
 
 .dropdown {
@@ -133,13 +133,13 @@ background: linear-gradient(135deg, #4CAF50, #FFEB3B);
 }
 
     .dropdown-content {
-        position: static; /* Dropdown appears below the parent item */
-        background: linear-gradient(135deg, #4CAF50, #FFEB3B); /* White background */
-        box-shadow: none; /* Remove shadow for mobile */
+        position: static;
+        background: linear-gradient(135deg, #4CAF50, #FFEB3B); 
+        box-shadow: none; 
     }
 
     .dropdown-content li a {
-        color: #333 !important; /* Dark text color for visibility */
+        color: #333 !important; 
     }
 }
 
@@ -183,7 +183,7 @@ main {
     color: #6c757d;
 }
 
-/* Mobile adjustments */
+
 @media (max-width: 768px) {
     .intro {
         flex-wrap: wrap; 
@@ -214,7 +214,7 @@ main {
 }
 
 
-/* Portfolio Section */
+
 .portfolio {
     width: 100%;
     padding: 50px 20px;
@@ -228,7 +228,7 @@ main {
     margin-bottom: 20px;
     }
 
-/* Portfolio Container */
+
 .portfolio-container {
     display: flex;
     flex-direction: column; 
@@ -238,7 +238,7 @@ main {
     padding: 0 20px;
 }
 
-/* Portfolio Item */
+
 .portfolio-item {
     display: flex;
     flex-direction: row; 
@@ -258,7 +258,7 @@ main {
     transform: scale(1.02);
 }
 
-/* Portfolio Image */
+
 .portfolio-item img {
     width: 40%;
     height: auto;
@@ -267,7 +267,7 @@ main {
     border-radius: 10px 0 0 10px;
 }
 
-/* Portfolio Description */
+
 .portfolio-description {
     width: 60%;
     padding: 20px;
@@ -286,7 +286,6 @@ main {
     color: #6c757d;
 }
 
-/* View Button */
 .portfolio-description .view-btn {
     display: inline-block;
     margin-top: 10px;
@@ -303,7 +302,7 @@ main {
     background-color: #0056b3;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .portfolio-item {
         flex-direction: column; 
@@ -332,7 +331,7 @@ main {
 
 
 
-/* Footer General Styles */
+
 footer {
     background-color: #f8f9fa;
     padding: 20px 0;
@@ -379,13 +378,13 @@ footer {
     color: #007bff; 
 }
 
-/* Social Media Icon Styles */
+
 .footer-column ul li a i {
     margin-right: 8px;
     font-size: 16px;
 }
 
-/* Copyright Section */
+
 .footer-copyright {
     text-align: center;
     margin-top: 20px;
@@ -396,7 +395,7 @@ footer {
 }
 
 
-/* Progress Bars */
+
 .skills {
     width: 100%;
 }
@@ -415,7 +414,7 @@ footer {
     background-color: #4caf50;
     height: 100%;
     width: 0; 
-    transition: width 1s ease-in-out; /* Smooth animation */
+    transition: width 1s ease-in-out;
 }
 
 .skills h3 {
@@ -562,4 +561,8 @@ body.hide-content #content-container {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
     background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%);
+}
+
+html {
+    scroll-behavior: smooth;
 }
