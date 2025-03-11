@@ -1,11 +1,11 @@
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     margin: 0;
+    display: flex;
+    flex-direction: column; /* Stack children vertically */
+    align-items: center; /* Center horizontally */
 }
 
 .container {
@@ -15,12 +15,17 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     width: 600px;
     text-align: center;
-    margin: 20px auto; /* Ensure it’s centered with spacing */
+    margin: 20px 0; /* Vertical spacing, no horizontal margin needed */
 }
 
 /* Header Styles */
 header {
-    margin-bottom: 20px;
+    width: 100%;
+    padding: 20px 0;
+}
+
+header .container {
+    margin: 0; /* Override default container margin for header */
 }
 
 header h1 {
@@ -36,13 +41,17 @@ header p {
     margin: 0;
 }
 
-/* Main and Section Styles */
+/* Main Styles */
 main {
+    flex: 1; /* Allow main to take available space */
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 section.container {
-    padding: 0; /* Remove extra padding, already handled by .container */
+    padding: 0; /* Remove extra padding, handled by .container */
+    margin: 0; /* Override default margin for main container */
 }
 
 /* Navigation (Button Group) */
@@ -52,7 +61,7 @@ nav.button-group {
     justify-content: space-around;
     margin: 0 auto 20px;
     gap: 10px;
-    max-width: 100%; /* Prevent overflow */
+    max-width: 100%;
 }
 
 .tab-btn {
@@ -111,8 +120,8 @@ h2 {
 
 .input-wrapper {
     position: relative;
-    width: 80%; /* Symmetrical width */
-    margin: 0 auto; /* Centered */
+    width: 80%;
+    margin: 0 auto;
 }
 
 .input-wrapper label {
@@ -132,7 +141,7 @@ h2 {
     outline: none;
     transition: border-color 0.3s ease;
     background: transparent;
-    box-sizing: border-box; /* Ensure padding doesn’t affect width */
+    box-sizing: border-box;
 }
 
 .input-wrapper input:focus {
@@ -145,13 +154,13 @@ h2 {
 
 .unit {
     position: absolute;
-    top: 65%; /* Adjusted for label above input */
+    top: 65%;
     transform: translateY(-50%);
-    right: 10px; /* Moved to right for cleaner look */
+    right: 10px;
     color: #999;
     font-size: 0.9em;
     pointer-events: none;
-    display: none; /* Hidden by default, shown by JS */
+    display: none;
 }
 
 /* Method Section (Aside) */
@@ -193,7 +202,13 @@ h3 {
 
 /* Footer */
 footer {
-    margin-top: 20px;
+    width: 100%;
+    padding: 20px 0;
+    background: rgba(255, 255, 255, 0.9); /* Match container for consistency */
+}
+
+footer p {
     color: #555;
     font-size: 0.85em;
+    margin: 0;
 }
