@@ -280,26 +280,25 @@ TikTok is a trademark of ByteDance Ltd. This app is not affiliated with, endorse
         <div class="footer-column">
             <h3>Tools</h3>
             <ul>
-               <li><button id="dateConverterBtn">Date Converter (Hamro Patro)</button></li>
-		<li><button id="nepaliCalendarBtn">Nepali Calendar (Hamro Patro)</button></li>
-	
-
+                <li>
+                    <div id="np_widget_wiz1" widget="day-sm" style="width: 300px;"></div>
+                    <script async src="https://nepalipatro.com.np/np-widgets/nepalipatro.js" id="wiz1"></script>
+                </li>
+                <li>
+                    <iframe src="https://www.hamropatro.com/widgets/dateconverter.php" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" style="border:none; overflow:hidden; width:350px; height:150px;" allowtransparency="true"></iframe>
+                </li>
             </ul>
         </div>
 
-   
         <div class="footer-column">
             <h3>Social Media</h3>
             <ul>
                 <li><a href="https://youtube.com/@sankhatro?si=fwaJiabYnMIfFk3q" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i>YouTube</a></li>
                 <li><a href="https://x.com/0kisn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x"></i>Krishna's X</a></li>
-
-                <!-- LinkedIn Icon -->
                 <li><a href="https://www.linkedin.com/in/krishna-niraula-7429b2125/" target="_blank" rel="noopener noreferrer" class="linkedin"><i class="fab fa-linkedin-in"></i>Krishna on LinkedIn</a></li>
             </ul>
         </div>
 
-  
         <div class="footer-column">
             <h3>About</h3>
             <ul>
@@ -310,25 +309,12 @@ TikTok is a trademark of ByteDance Ltd. This app is not affiliated with, endorse
         </div>
     </div>
 
-    <!-- Copyright Section -->
+
     <div class="footer-copyright">
         <p>© 2025 Krishna Niraula. All rights reserved.</p>
     </div>
 </footer>
-	
-<div id="nepaliCalendarPopup" class="popup" style="display:none;">
-    <div class="popup-content">
-        <span class="close">×</span>
-        <iframe id="nepaliCalendarIframe" src="about:blank" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" style="border:none; overflow:hidden; width:800px; height:840px;" allowtransparency="true"></iframe>
-    </div>
-</div>
-	
-<div id="dateConverterPopup" class="popup" style="display:none;">
-    <div class="popup-content">
-        <span class="close">×</span>
-        <iframe id="dateConverterIframe" src="about:blank" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" style="border:none; overflow:hidden; width:350px; height:150px;" allowtransparency="true"></iframe>
-    </div>
-</div>
+
 
     <script src="scripts.js"></script>
    <button id="backToTop" class="floating-button">↑</button>
