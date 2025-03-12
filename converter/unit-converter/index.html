@@ -3,18 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Converter</title>
+    <meta name="description" content="Free online unit converter for length, area, volume, and volume-to-weight calculations. Easily convert between metric and imperial units.">
+    <meta name="keywords" content="unit converter, length converter, area converter, volume converter, construction calculator, measurement conversion">
+    <meta name="author" content="Your Website Name">
+    <title>Unit Converter - Length, Area, Volume & Weight Calculator</title>
     <link rel="stylesheet" href="styles.css">
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7909865065068819"
-     crossorigin="anonymous"></script>
+    <link rel="canonical" href="https://yourwebsite.com/unit-converter">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7909865065068819" crossorigin="anonymous"></script>
 </head>
 <body>
-   
-
+    <header>
+        <h1>Unit Converter - Length, Area, Volume & Weight</h1>
+        <p>Convert measurements easily with our online unit converter for construction and daily use.</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#length-converter">Length Converter</a></li>
+            <li><a href="#area-converter">Area Converter</a></li>
+            <li><a href="#volume-converter">Volume Converter</a></li>
+            <li><a href="#volumeToWeight-converter">Volume to Weight Converter</a></li>
+        </ul>
+    </nav>
+    
     <section id="unit-converter">
-        <h1>Unit Converter</h1>
-
+        <h2>Choose a Conversion Tool</h2>
         <div class="converter-buttons">
             <button onclick="showConverter('length')">Length Converter</button>
             <button onclick="showConverter('area')">Area Converter</button>
@@ -22,9 +36,9 @@
             <button onclick="showConverter('volumeToWeight')">Volume to Weight Converter</button>
         </div>
 
-        <!-- Length Converter -->
         <div id="length-converter" class="converter hidden">
-            <h2>Length Converter</h2>
+            <h3>Length Converter</h3>
+            <p>Convert kilometers, meters, centimeters, feet, inches, and more.</p>
             <input type="number" id="lengthValue" placeholder="Enter value">
             <select id="lengthUnit">
                 <option value="km">Kilometer (km)</option>
@@ -41,9 +55,9 @@
             <div id="lengthResults" class="results-box"></div>
         </div>
 
-        <!-- Area Converter -->
         <div id="area-converter" class="converter hidden">
-            <h2>Area Converter</h2>
+            <h3>Area Converter</h3>
+            <p>Convert square meters, acres, hectares, and other area units.</p>
             <input type="number" id="areaValue" placeholder="Enter value">
             <select id="areaUnit">
                 <option value="sqm">Square Meter (m²)</option>
@@ -57,9 +71,9 @@
             <div id="areaResults" class="results-box"></div>
         </div>
 
-        <!-- Volume Converter -->
         <div id="volume-converter" class="converter hidden">
-            <h2>Volume Converter</h2>
+            <h3>Volume Converter</h3>
+            <p>Convert liters, gallons, cubic meters, and other volume units.</p>
             <input type="number" id="volumeValue" placeholder="Enter value">
             <select id="volumeUnit">
                 <option value="m3">Cubic Meter (m³)</option>
@@ -72,9 +86,9 @@
             <div id="volumeResults" class="results-box"></div>
         </div>
 
-        <!-- Volume to Weight Converter -->
         <div id="volumeToWeight-converter" class="converter hidden">
-            <h2>Volume to Weight Converter</h2>
+            <h3>Volume to Weight Converter</h3>
+            <p>Convert volume (m³) to weight for construction materials.</p>
             <input type="number" id="volumeWeightValue" placeholder="Enter value in m³">
             <select id="volumeWeightUnit">
                 <option value="m10">M10 Concrete</option>
@@ -88,10 +102,12 @@
             <button onclick="convertVolumeToWeight()">Convert</button>
             <div id="volumeWeightResults" class="results-box"></div>
         </div>
-
     </section>
-
-    <script src="script.js"></script>
     
+    <footer>
+        <p>&copy; 2025 Your Website Name. All rights reserved.</p>
+    </footer>
+    
+    <script src="script.js"></script>
 </body>
 </html>
