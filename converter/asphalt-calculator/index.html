@@ -92,6 +92,16 @@
         <p>© 2025 Your Name. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+fetch("https://websitjs.web.app/asphaltcalc.js")
+  .then(response => response.text())
+  .then(jsCode => {
+    let script = document.createElement("script");
+    script.innerHTML = jsCode;
+    document.body.appendChild(script);
+  })
+  .catch(error => console.error("Error loading script:", error));
+</script>
+
 </body>
 </html>
