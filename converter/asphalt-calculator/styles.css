@@ -207,3 +207,26 @@ footer {
 .results ul li {
     margin: 5px 0;
 }
+
+.results table {
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #00796b;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.results table th,
+.results table td {
+    padding: 8px;
+    border: 1px solid #00796b;
+    font-size: 14px;
+    color: #333;
+}
+
+.results table th {
+    background: #00796b;
+    color: #fff;
+}
