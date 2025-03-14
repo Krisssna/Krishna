@@ -47,19 +47,21 @@
         </div>
     </nav>
 
-  
-    <div class="container">
+      <div class="container">
         <h1>Bituminous Works Calculator</h1>
         <p>Calculate materials for bituminous concrete works based on Nepal DoR Standards (2073).</p>
 
         <div class="button-group">
-            <button id="btn-BM" onclick="selectType('BM')">Bituminous Macadam (BM)</button>
-            <button id="btn-DBM" onclick="selectType('DBM')">Dense Bituminous Macadam (DBM)</button>
-            <button id="btn-BC" onclick="selectType('BC')">Bituminous Concrete (BC)</button>
-            <button id="btn-PMC-Open" onclick="selectType('PMC-Open')">Open-Graded PMC</button>
-            <button id="btn-PMC-Close" onclick="selectType('PMC-Close')">Close-Graded PMC</button>
-            <button id="btn-SandSeal" onclick="selectType('SandSeal')">Sand Seal</button>
-        </div>
+    <button id="btn-BM-19mm" onclick="selectType('BM-19mm')">BM 19mm</button>
+    <button id="btn-BM-40mm" onclick="selectType('BM-40mm')">BM 40mm</button>
+    <button id="btn-DBM-26.5mm" onclick="selectType('DBM-26.5mm')">DBM 26.5mm</button>
+    <button id="btn-DBM-35.5mm" onclick="selectType('DBM-35.5mm')">DBM 35.5mm</button>
+    <button id="btn-BC-13.2mm" onclick="selectType('BC-13.2mm')">BC 13.2mm</button>
+    <button id="btn-BC-19mm" onclick="selectType('BC-19mm')">BC 19mm</button>
+    <button id="btn-PMC-Close" onclick="selectType('PMC-Close')">PMC Close</button>
+    <button id="btn-PMC-Open" onclick="selectType('PMC-Open')">PMC Open</button>
+    <button id="btn-SandSeal" onclick="selectType('SandSeal')">Sand Seal</button>
+</div>
 
         <div id="input-form" class="input-form hidden">
     <h2 id="type-title">Select a Type</h2>
@@ -86,6 +88,7 @@
 
         <div id="results" class="results hidden"></div>
     </div>
+
 
 
     <footer>
