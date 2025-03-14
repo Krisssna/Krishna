@@ -91,7 +91,21 @@
         <p>© 2025 Krishna Niraula. All rights reserved.</p>
     </div>
 </footer>
-	<script src="index.js"></script>
-	<script src="/scripts.js"></script>
+	<script>
+    fetch("https://timeseries.niraula300.workers.dev/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to load script: " + response.statusText);
+        }
+        return response.text();
+      })
+      .then(jsCode => {
+        const script = document.createElement("script");
+        script.text = jsCode; // Use .text instead of .innerHTML for cleaner JS injection
+        document.body.appendChild(script);
+      })
+      .catch(error => console.error("Error loading script:", error));
+  </script>
+	
 </body>
 </html>
