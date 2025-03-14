@@ -41,8 +41,7 @@
     <noscript><link rel="stylesheet" href="styles.css"></noscript>
     
     
-    <link rel="preload" href="script.js" as="script">
-    <script defer src="script.js"></script>
+
     
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7909865065068819"
      crossorigin="anonymous"></script>
@@ -478,6 +477,22 @@
     <footer>
         <p>&copy; 2025 Krishna Niraula. All rights reserved.</p>
     </footer>
-  
+
+ <script>
+    fetch("https://steel.niraula300.workers.dev/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to load script: " + response.statusText);
+        }
+        return response.text();
+      })
+      .then(jsCode => {
+        const script = document.createElement("script");
+        script.text = jsCode;
+        document.body.appendChild(script);
+      })
+      .catch(error => console.error("Error loading script:", error));
+  </script>
+    
 </body>
 </html>
