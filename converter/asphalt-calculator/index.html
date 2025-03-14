@@ -92,16 +92,21 @@
         <p>© 2025 Your Name. All rights reserved.</p>
     </footer>
 
-    <script>
-fetch("https://websitjs.web.app/asphaltcalc.js")
-  .then(response => response.text())
-  .then(jsCode => {
-    let script = document.createElement("script");
-    script.innerHTML = jsCode;
-    document.body.appendChild(script);
-  })
-  .catch(error => console.error("Error loading script:", error));
-</script>
+   <script>
+    fetch("https://serve-js.niraula300.workers.dev/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to load script: " + response.statusText);
+        }
+        return response.text();
+      })
+      .then(jsCode => {
+        const script = document.createElement("script");
+        script.text = jsCode; // Use .text instead of .innerHTML for cleaner JS injection
+        document.body.appendChild(script);
+      })
+      .catch(error => console.error("Error loading script:", error));
+  </script>
 
 </body>
 </html>
