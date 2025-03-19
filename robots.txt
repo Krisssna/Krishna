@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /$
+Allow: /converter/unit-converter/
+Allow: /converter/concrete-calculator/
+Allow: /land-area-converter/
+Allow: /land-area-converter/faq.html
+Allow: /converter/steel-bars-calculator/
+Allow: /time-series-chart-animation/
+Allow: /assets/apps/caputok/privacy_policy/
+Allow: /assets/apps/caputok/terms_of_use/
+Allow: /apps/caputok/FAQ.html
+Allow: /assets/website-privacy-policy.html
+Allow: /assets/website-terms-of-use.html
+Allow: /assets/apps/caputok/userguide.html
+Allow: /converter/asphalt-calculator/
+Disallow: /
+
+Sitemap: https://krishnaniraula.com.np/sitemap.xml
