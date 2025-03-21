@@ -79,12 +79,44 @@
             <label for="bitumen-value">Bitumen Content (%):</label>
             <input type="number" id="bitumen-value" step="0.1">
         </div>
-        <div id="material-inputs"></div>
-        <button onclick="calculate()">Calculate</button>
+         <div id="material-inputs"></div>
+            <div class="input-group">
+                <label>Prime/Tack Coat:</label>
+                <button id="prime-tack-toggle" onclick="togglePrimeTack()">No</button>
+            </div>
+            <div id="prime-tack-section" class="hidden">
+                <div id="tack-coat" class="coat-section">
+                    <h3>Tack Coat</h3>
+                    <div class="input-group">
+                        <label for="tack-area">Total Area (m²):</label>
+                        <input type="number" id="tack-area" step="0.01" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="tack-bitumen-rate">Bitumen (litres/m²):</label>
+                        <input type="number" id="tack-bitumen-rate" step="0.01" min="0">
+                    </div>
+                </div>
+                <div id="prime-coat" class="coat-section">
+                    <h3>Prime Coat</h3>
+                    <div class="input-group">
+                        <label for="prime-area">Total Area (m²):</label>
+                        <input type="number" id="prime-area" step="0.01" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="prime-bitumen-rate">Litres per m²:</label>
+                        <input type="number" id="prime-bitumen-rate" step="0.01" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="prime-bitumen-content">Bitumen Content (%):</label>
+                        <input type="number" id="prime-bitumen-content" step="0.1" min="0" max="100">
+                    </div>
+                </div>
+            </div>
+            <button onclick="calculate()">Calculate</button>
+        </div>
+
+        <div id="results" class="hidden"></div>
     </div>
-
-    <div id="results" class="hidden"></div>
-
 
     <footer>
         <p>© Krishna Niraula. All rights reserved.</p>
