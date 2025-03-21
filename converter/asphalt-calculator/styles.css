@@ -14,7 +14,7 @@ body {
     align-items: center;
 }
 
-/* Navigation Styles */
+
 nav {
     width: 100%;
     max-width: 900px;
@@ -36,7 +36,7 @@ nav {
     text-decoration: none;
 }
 
-/* Main Content Styles */
+
 .container {
     background: #fff;
     padding: 30px;
@@ -102,7 +102,7 @@ p {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-wrap: wrap; /* Added to handle bulk density inputs on smaller screens */
+    flex-wrap: wrap; 
 }
 
 .input-group label {
@@ -142,60 +142,176 @@ button:hover {
     background: #004d40;
 }
 
-/* Results Section Styles */
-#results {
-    white-space: pre-wrap;
-    color: #333;
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: center;
-}
 
-#results h3 {
-    color: #00796b;
-    margin-bottom: 15px;
-}
 
-#results h4 {
-    color: #004d40;
-    margin: 15px 0 10px;
-}
-
-.result-box {
-    display: inline-block;
-    background: #ffffff;
-    border: 2px solid #00796b;
-    border-radius: 8px;
-    padding: 10px 15px;
-    margin: 5px;
-    font-size: 16px;
-    color: #333;
+#results-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #00796b;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#results p {
+#results-table th,
+#results-table td {
+    padding: 8px;
+    border: 1px solid #00796b;
     font-size: 14px;
-    color: #555;
-    margin: 5px 0;
+    color: #333;
 }
 
-#results ul {
-    list-style: none;
-    font-size: 14px;
+#results-table th {
+    background: #00796b;
+    color: #fff;
+    font-weight: 600;
+}
+
+#results-table td {
+    background: #fafafa;
+}
+
+#results-table tr:nth-child(even) td {
+    background: #f2f2f2;
+}
+
+#results-table tr:hover td {
+    background: #e0f7fa;
+}
+
+#results-table input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 60px;
+    margin: 2px;
+}
+
+#results-table label {
+    font-size: 12px;
     color: #555;
+    margin-left: 4px;
+}
+
+#results-table button {
+    padding: 4px 8px;
+    background: #d81b60;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+#results-table button:hover {
+    background: #b71c1c;
+}
+
+#results-table td[colspan="3"] {
     text-align: left;
-    display: inline-block;
+    font-weight: bold;
+    background: #e0f7fa;
 }
 
-#results ul li {
-    margin: 5px 0;
+
+
+#results-table td:last-child {
+    font-weight: bold;
 }
 
-/* Table Styling for Results */
+#grand-total {
+    background: #d81b60;
+    color: #fff;
+}
+
+/* ... Rest of the styles unchanged ... */
+/* Footer Styles */
+footer {
+    width: 100%;
+    max-width: 900px;
+    text-align: center;
+    padding: 15px;
+    color: #555;
+    background: #fff;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+
+
+#production-subtotal {
+    background: #f06292; 
+    color: #fff;
+    font-weight: bold;
+}
+
+#production-cost-table {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid #d81b60;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#production-cost-table th,
+#production-cost-table td {
+    padding: 8px;
+    border: 1px solid #d81b60;
+    font-size: 14px;
+    color: #333;
+}
+
+#production-cost-table th {
+    background: #d81b60;
+    color: #fff;
+    font-weight: 600;
+}
+
+#production-cost-table td {
+    background: #fafafa;
+}
+
+#production-cost-table tr:nth-child(even) td {
+    background: #f2f2f2;
+}
+
+#production-cost-table tr:hover td {
+    background: #fce4ec;
+}
+
+#production-cost-table input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80px;
+    margin: 2px;
+}
+
+#production-cost-table td[colspan="5"] {
+    text-align: left;
+    font-weight: bold;
+    background: #fce4ec;
+}
+
+#production-cost-table td:last-child {
+    font-weight: bold;
+}
+
+
+
+#production-grand-total {
+    background: #d81b60;
+    color: #fff;
+}
+
 #results table {
     width: 100%;
-    max-width: 800px; /* Increased from 600px for better readability */
-    margin: 10px auto;
+    max-width: 900px;
+    margin: 20px auto;
     border-collapse: collapse;
     background: #fff;
     border: 1px solid #00796b;
@@ -225,16 +341,10 @@ button:hover {
 }
 
 #results table tr:hover td {
-    background: #e0f7fa; /* Light teal hover effect */
+    background: #e0f7fa;
 }
 
-#results table td[colspan] {
-    text-align: center;
-    font-style: italic;
-    background: #f5f5f5;
-}
 
-/* Footer Styles */
 footer {
     width: 100%;
     max-width: 900px;
