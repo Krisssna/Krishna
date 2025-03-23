@@ -1,4 +1,4 @@
-/* General Styles */
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
@@ -7,7 +7,6 @@ body {
     min-height: 100vh;
 }
 
-/* Navigation Bar Styles */
 nav {
     display: flex;
     justify-content: space-between;
@@ -16,11 +15,11 @@ nav {
     padding: 10px 20px;
     color: #fff;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    position: fixed; /* Fix the navbar at the top */
+    position: fixed; 
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* Ensure it stays above other content */
+    z-index: 1000; 
 }
 
 .nav-left a {
@@ -30,125 +29,12 @@ nav {
     font-weight: 500;
 }
 
-.nav-right {
-    display: flex;
-    align-items: center;
-}
 
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    display: none; /* Hidden by default on larger screens */
-}
 
-#menu {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-#menu li {
-    position: relative;
-    margin-left: 20px;
-}
-
-#menu li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-#menu li a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Dropdown Styles */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background: linear-gradient(135deg, #4CAF50, #FFEB3B);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    padding: 10px;
-    z-index: 1;
-    min-width: 150px; /* Ensure dropdown has a minimum width */
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown-content li {
-    margin: 5px 0;
-}
-
-.dropdown-content li a {
-    color: #333 !important; /* Dark text color for visibility */
-    padding: 8px 12px;
-    display: block;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.dropdown-content li a:hover {
-    background-color: #f1f1f1; /* Light gray background on hover */
-}
-
-/* Responsive Design for Navigation Bar */
-@media (max-width: 768px) {
-    .menu-icon {
-        display: block; /* Show menu icon on smaller screens */
-    }
-
-    #menu {
-        display: none; /* Hide menu by default on smaller screens */
-        flex-direction: column;
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        background: linear-gradient(135deg, #4CAF50, #FFEB3B);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        border-radius: 5px;
-        padding: 10px;
-        z-index: 1;
-    }
-
-    #menu li {
-        margin: 10px 0;
-    }
-
-    #menu li a {
-        color: #333 !important; /* Dark text color for visibility */
-    }
-
-    #menu.active {
-        display: flex; /* Show menu when active */
-    }
-
-.dropdown {
-background: linear-gradient(135deg, #4CAF50, #FFEB3B);
-}
-
-    .dropdown-content {
-        position: static; /* Dropdown appears below the parent item */
-        background: linear-gradient(135deg, #4CAF50, #FFEB3B); /* White background */
-        box-shadow: none; /* Remove shadow for mobile */
-    }
-
-    .dropdown-content li a {
-        color: #333 !important; /* Dark text color for visibility */
-    }
-}
-
-/* Calculator Section */
 .calculator {
     max-width: 800px;
     width: 90%;
-    margin: 80px auto 20px; /* Add top margin to avoid overlap with the navbar */
+    margin: 20px auto 20px;
     padding: 25px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 15px;
@@ -190,7 +76,6 @@ background: linear-gradient(135deg, #4CAF50, #FFEB3B);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Calculator Sections */
 .calculator-section {
     display: none;
     margin-top: 20px;
