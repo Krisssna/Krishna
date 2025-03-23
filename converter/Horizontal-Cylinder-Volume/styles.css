@@ -94,6 +94,7 @@ button:hover {
 .result-section p {
     color: #666;
     font-size: 16px;
+    margin-bottom: 10px; /* Reduced margin to space the two results nicely */
 }
 
 .result-section p span {
