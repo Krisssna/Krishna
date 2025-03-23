@@ -29,10 +29,6 @@ header {
     justify-content: center;
 }
 
-header .container {
-align: center;
-    margin:10px auto;
-}
 
 header h1 {
     color: #333;
