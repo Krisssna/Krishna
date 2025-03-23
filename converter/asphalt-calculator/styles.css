@@ -353,52 +353,76 @@ footer {
     border: 1px solid #00796b;
 }
 
-#material-cost-calc-section .input-group {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-#material-cost-calc-section label {
-    color: #333;
-    min-width: 200px; /* Slightly wider for longer labels */
-}
-
-#material-cost-calc-section input {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100px;
-}
-
-#material-cost-results {
-    margin-top: 20px;
-    padding: 10px;
+#material-cost-input-table,
+#material-cost-results-table {
+    width: 100%;
+    border-collapse: collapse;
     background: #fff;
     border: 1px solid #00796b;
-    border-radius: 5px;
+    margin-bottom: 20px;
 }
 
-#material-cost-results p {
-    margin: 5px 0;
+#material-cost-input-table th,
+#material-cost-input-table td,
+#material-cost-results-table th,
+#material-cost-results-table td {
+    padding: 8px;
+    border: 1px solid #00796b;
+    font-size: 14px;
     color: #333;
+    text-align: left;
 }
 
-#material-cost-results span {
-    font-weight: bold;
+#material-cost-input-table th,
+#material-cost-results-table th {
+    background: #00796b;
+    color: #fff;
+    font-weight: 600;
+}
+
+#material-cost-input-table td,
+#material-cost-results-table td {
+    background: #fafafa;
+}
+
+#material-cost-input-table input {
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 80px;
+}
+
+#material-cost-results-table span {
+    font-weight: normal;
     color: #00796b;
 }
 
-#results button:nth-of-type(1) { /* Targets the "Calculate Material Cost Per m³" button */
-    background: #0288d1; /* Different blue shade */
+#material-cost-results-table tr:nth-child(5) td, /* Total Cost row */
+#material-cost-results-table tr:nth-child(6) td { /* Cost Difference row */
+    font-weight: bold;
 }
 
-#results button:nth-of-type(1):hover {
-    background: #01579b;
+#material-cost-results-table tr:nth-child(6) td { /* Cost Difference */
+    color: #d81b60;
+    text-align: center;
 }
 
+#material-cost-calc-section button {
+    padding: 10px 20px;
+    background: #00796b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+}
+
+#material-cost-calc-section button:hover {
+    background: #004d40;
+}
 
 
 footer {
