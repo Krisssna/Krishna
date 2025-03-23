@@ -14,7 +14,6 @@ function calculateVolume() {
         return;
     }
 
-    
     let lengthInMeters = length;
     let diameterInMeters = diameter;
     let depthInMeters = depth;
@@ -25,21 +24,22 @@ function calculateVolume() {
         depthInMeters = depth / 100;
     }
 
-    
     const radius = diameterInMeters / 2;
 
-    // Calculate the cross-sectional area of the water (circular segment)
     const rMinusH = radius - depthInMeters;
     const cosTerm = rMinusH / radius;
     const theta = Math.acos(cosTerm);
     const area = (radius * radius * theta) - (rMinusH * Math.sqrt(2 * radius * depthInMeters - depthInMeters * depthInMeters));
 
-    
-    const volume = area * lengthInMeters;
+    const volumeCubicMeters = area * lengthInMeters;
 
-    
+    const volumeLiters = volumeCubicMeters * 1000;
+
     const resultElement = document.getElementById('result');
     const volumeResultElement = document.getElementById('volume-result').querySelector('span');
-    volumeResultElement.textContent = volume.toFixed(2);
+    const volumeLitersElement = document.getElementById('volume-liters').querySelector('span');
+
+    volumeResultElement.textContent = volumeCubicMeters.toFixed(2);
+    volumeLitersElement.textContent = volumeLiters.toFixed(2);
     resultElement.style.display = 'block';
 }
