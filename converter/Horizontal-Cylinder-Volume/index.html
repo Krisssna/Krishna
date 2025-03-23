@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizontal Tank Volume Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Horizontal Tank Volume Calculator</h1>
+        <p>Calculate the volume of water in a horizontal cylindrical tank.</p>
+
+        <div class="input-section">
+            <label for="length">Length:</label>
+            <input type="number" id="length" placeholder="e.g., 6" step="any" required>
+            
+            <label for="diameter">Diameter:</label>
+            <input type="number" id="diameter" placeholder="e.g., 2" step="any" required>
+            
+            <label for="depth">Water Depth:</label>
+            <input type="number" id="depth" placeholder="e.g., 0.7" step="any" required>
+            
+            <label for="unit">Unit:</label>
+            <select id="unit">
+                <option value="meters">Meters</option>
+                <option value="centimeters">Centimeters</option>
+            </select>
+        </div>
+
+        <button onclick="calculateVolume()">Calculate</button>
+
+        <div class="result-section" id="result">
+            <h2>Result</h2>
+            <p id="volume-result">Volume: <span>0</span> cubic meters</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
