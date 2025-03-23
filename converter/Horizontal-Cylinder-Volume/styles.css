@@ -1,0 +1,102 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.input-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    color: #333;
+    font-weight: 700;
+    align-self: center;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #74ebd5;
+}
+
+button {
+    background: #74ebd5;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #acb6e5;
+}
+
+.result-section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    display: none;
+}
+
+.result-section h2 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.result-section p {
+    color: #666;
+    font-size: 16px;
+}
+
+.result-section p span {
+    color: #74ebd5;
+    font-weight: 700;
+}
