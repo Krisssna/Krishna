@@ -36,7 +36,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
 
-    <link rel Issuer="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <link rel="shortcut icon" type="image/png" href="assets/logo/favicon.png">
@@ -130,7 +130,7 @@
         <!-- Input Value -->
         <div class="input-group">
             <label for="value">Enter Area Value:</label>
-            <input type="text" id="value" placeholder="e.g., 1 or 1-2-3 for combined">
+            <input type="text" id="value" placeholder="e.g., 3.25">
             <button onclick="convert()">Convert</button>
         </div>
 
@@ -160,6 +160,21 @@
             <div id="error-message" class="error-message"></div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('unit').addEventListener('change', function() {
+            const selectedUnit = this.value;
+            const valueInput = document.getElementById('value');
+            
+            if (selectedUnit === 'bi-ka-dh') {
+                valueInput.placeholder = 'e.g., 1-2-3';
+            } else if (selectedUnit === 'ro-aa-pa-da') {
+                valueInput.placeholder = 'e.g., 1-2-3-4';
+            } else {
+                valueInput.placeholder = 'e.g., 3.25';
+            }
+        });
+    </script>
  
   <script>
     fetch("https://landarea.niraula300.workers.dev/")
@@ -176,9 +191,5 @@
       })
       .catch(error => console.error("Error loading script:", error));
   </script>
-</body>
-</html>
-   
-
 </body>
 </html>
