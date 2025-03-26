@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Advanced Bituminous Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #00796b;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .faq-item {
+            margin-bottom: 20px;
+        }
+        .faq-question {
+            font-size: 18px;
+            font-weight: bold;
+            color: #00796b;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        .faq-answer {
+            font-size: 16px;
+            color: #333;
+            margin-left: 20px;
+        }
+        .faq-answer ul, .faq-answer ol {
+            margin-top: 5px;
+            padding-left: 20px;
+        }
+        .faq-answer li {
+            margin-bottom: 5px;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #d81b60;
+        }
+        .code-snippet {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 5px;
+            white-space: pre-wrap;
+        }
+    </style>
+    <!-- FAQPage Schema Markup for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is the Advanced Bituminous Calculator?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The Advanced Bituminous Calculator is a web-based tool designed to estimate costs and quantities for bituminous road construction projects, aligned with Department of Roads (DoR) Road and Bridge standards. It calculates material costs, transportation costs (e.g., tipper, driver, fuel), and production costs (e.g., equipment usage) based on user inputs, providing detailed results for planning and comparison."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is the Advanced Bituminous Calculator necessary?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It’s essential for accurate cost estimation, resource planning, and decision-making in road construction. By adhering to DoR standards, it ensures compliance with engineering norms, optimizes budgets, and allows comparison between material sources (e.g., Crusher 1 vs. Crusher 2) to minimize costs."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How does the calculator work?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Users input project parameters (e.g., volume, density, rates) and transportation details (e.g., tipper rent, trip length). JavaScript processes these inputs using predefined formulas, updating results dynamically in tables. Results include material costs, per m³ transportation costs, and production costs."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What are the key features of the calculator?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Key features include material cost calculation with compaction factors, transportation cost breakdown (tipper, driver, fuel) for two crushers, production cost estimation for equipment, and a toggleable results section with detailed tables."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do I calculate transportation costs per m³?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Enter values for each crusher under 'Calculate Material Cost Per m³'. The calculator computes: Tipper Rent per m³ = Tipper Rent per Day / (Total Tips * Tipper Capacity), Driver Cost per m³ = Driver Cost per Day / (Total Tips * Tipper Capacity), and Fuel Cost per m³ = (Trip Length * Diesel Price) / (Mileage * Tipper Capacity)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How is the calculator implemented?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It uses HTML for structure, CSS for styling, and JavaScript for calculations. The `updateResults()` function generates dynamic HTML, while `calculateMaterialCostPerM3()` handles transportation cost logic."
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <h1>FAQ - Advanced Bituminous Calculator</h1>
+    <div class="faq-container">
+        <div class="faq-item">
+            <div class="faq-question">1. What is the Advanced Bituminous Calculator?</div>
+            <div class="faq-answer">
+                The <span class="highlight">Advanced Bituminous Calculator</span> is a web-based tool designed to assist engineers, contractors, and planners in estimating costs and quantities for bituminous road construction projects. It aligns with the <span class="highlight">Department of Roads (DoR) Road and Bridge standards</span>, ensuring calculations reflect industry norms. The calculator handles:
+                <ul>
+                    <li><strong>Material Costs:</strong> Based on volume, density, and rates.</li>
+                    <li><strong>Transportation Costs:</strong> Per m³ costs for tipper rent, driver, and fuel from two sources (Crusher 1 and Crusher 2).</li>
+                    <li><strong>Production Costs:</strong> Equipment usage costs (e.g., pavers, rollers).</li>
+                </ul>
+                It provides detailed tables and comparisons to optimize project planning.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">2. Why is the Advanced Bituminous Calculator necessary?</div>
+            <div class="faq-answer">
+                This calculator is crucial for:
+                <ul>
+                    <li><strong>Cost Accuracy:</strong> Prevents under- or over-estimation of project budgets.</li>
+                    <li><strong>Compliance:</strong> Adheres to DoR standards for bituminous road construction.</li>
+                    <li><strong>Decision-Making:</strong> Compares costs from two crushers to choose the most economical source.</li>
+                    <li><strong>Resource Planning:</strong> Estimates material quantities and equipment needs.</li>
+                </ul>
+                Without such a tool, manual calculations are time-consuming and prone to errors, risking project delays or cost overruns.
+            </div>
+        </div>
+
+<div class="faq-item">
+            <div class="faq-question">3. What can i do with this calculator?</div>
+            <div class="faq-answer">
+               First, user can estimate the required quantities of materials for given compacted volume. If user needs, then, he can provide costs of materials in disaggregated form (to calculate this there is the <strong>calculate material cost per m3</strong> button) or can put direct total per unit cost in one of the corresponding user filed. This brings the total costs of materials. Click on the <strong>Total Production cost</strong> button and put the cost/rent of the equipments and other costs per day, and it provides the total production costs including materials costs for your project. 
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">4. How does the calculator work?</div>
+            <div class="faq-answer">
+                The calculator operates in three main sections:
+                <ol>
+                    <li><strong>Estimate Materials Quantity:</strong> Users input the required compacted volume (m³) of material such as BM, or DBM and can estimate the required quantity of bitumen (in kg), aggregates and sands (in cubic meters).
+</li>
+                    <li><strong>Materials Costs:</strong> Users enter the per unit cost of materials in sources, transportation costs, driver costs, and fuel parameters (trip length, mileage, diesel price). To make this simple, there is additional material costs calculator.</li>
+                    <li><strong>Production Costs:</strong> Equipment rates and usage hours are input to estimate total production costs.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">5. What are the key features of the calculator?</div>
+            <div class="faq-answer">
+                <ul>
+                    <li><strong>Material Cost Calculation:</strong> Adjusts for compaction and displays grand totals.</li>
+                    <li><strong>Transportation Cost Breakdown:</strong> Compares Crusher 1 and Crusher 2 costs per m³ in a table format.</li>
+                    <li><strong>Production Cost Estimation:</strong> Toggleable section for equipment costs.</li>
+                    <li><strong>User-Friendly Interface:</strong> Expandable sections with clear tables and a "Calculate" button for on-demand updates.</li>
+                    <li><strong>Cost Comparison:</strong> Shows which crusher is more expensive per m³.</li>
+<li><strong>DoR Recommendations:</strong> Works details, gradation tables, and other instructions are added from the <strong>DoR, STANDARD SPECIFICATIONS FOR ROAD AND BRIDGE WORKS 2073 (With amendment 2075)</strong>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">6. How do I calculate transportation costs per m³?</div>
+            <div class="faq-answer">
+                Click <span class="highlight">"Calculate Material Cost Per m³"</span> to expand the section. Enter values in the table:
+                <ul>
+                    <li><strong>Material Cost per m³ in Crusher:</strong> Direct input, copied to results.</li>
+                    <li><strong>Tipper Rent per m³:</strong> Tipper Rent per Day / (Total Tips * Tipper Capacity).</li>
+                    <li><strong>Driver Cost per m³:</strong> Driver Cost per Day / (Total Tips * Tipper Capacity).</li>
+                    <li><strong>Fuel Cost per m³:</strong> (One Round Trip Length * Diesel Price) / (Mileage * Tipper Capacity).</li>
+                </ul>
+                Click <span class="highlight">"Calculate"</span> to see results. Example:
+                <div class="code-snippet">
+                    One Round Trip Length = 20 km, Diesel Price = 150 Rs/L, Mileage = 2 km/L, Capacity = 7.5 m³
+                    Fuel Cost per m³ = (20 * 150) / (2 * 7.5) = 200.00 Rs/m³
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">7. How is the calculator implemented?</div>
+            <div class="faq-answer">
+                It’s built with:
+                <ul>
+                    <li><strong>HTML:</strong> Structures input fields and result tables.</li>
+                    <li><strong>CSS:</strong> Styles tables and buttons (e.g., teal headers, pink highlights).</li>
+                    <li><strong>JavaScript:</strong> Handles calculations and DOM updates.</li>
+                </ul>
+                Key functions:
+                <div class="code-snippet">
+                    function calculateMaterialCostPerM3() {
+                        const crusher1FuelCostM3 = (crusher1TripLengthKm * crusher1DieselPrice) / 
+                            (crusher1TipperMileage * crusher1TipperCapacity);
+                        document.getElementById('crusher1-fuel-cost-m3').textContent = crusher1FuelCostM3.toFixed(2);
+                                           }
+                </div>
+                The `updateResults()` function dynamically generates the results section.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">8. What standards does it follow?</div>
+            <div class="faq-answer">
+                It’s based on <span class="highlight">Government of Nepal, Department of Roads,STANDARD SPECIFICATIONS FOR Road and Bridge</span>, which typically include norms for material qualities, proportions, and instructions for the work. The calculator assumes these standards for bituminous mixtures, ensuring realistic cost estimates.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">9. Can I customize the calculator?</div>
+            <div class="faq-answer">
+                Yes, you can put your own values like particular stone aggregate percentages, bulk density, bitumen content, etc. In Production Cost Chart, you can add extra items such as equipments and tools by clicking 'add new item'.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
