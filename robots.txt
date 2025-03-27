@@ -13,6 +13,7 @@ Allow: /assets/website-privacy-policy.html
 Allow: /assets/website-terms-of-use.html
 Allow: /assets/apps/caputok/userguide.html
 Allow: /converter/asphalt-calculator/
+Allow: /converter/asphalt-calculator/FAQ.html
 Disallow: /
 
 Sitemap: https://krishnaniraula.com.np/sitemap.xml
