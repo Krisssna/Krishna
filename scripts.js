@@ -54,6 +54,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+ document.querySelectorAll('a[href="#portfolio"]').forEach(link => {
+    link.addEventListener("click", function(event) {
+        const menu = document.getElementById("portfolio");
+        if (menu.classList.contains("active")) {
+            menu.classList.remove("active");
+        }
+    });
+});
+
+document.querySelectorAll('a[href="#tools"]').forEach(link => {
+    link.addEventListener("click", function(event) {
+        const menu = document.getElementById("tools");
+        if (menu.classList.contains("active")) {
+            menu.classList.remove("active");
+        }
+    });
+});
+
+
 
 
 document.addEventListener('DOMContentLoaded', () => {
