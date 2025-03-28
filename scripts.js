@@ -55,18 +55,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-window.addEventListener('scroll', () => {
-  const backToTopButton = document.querySelector('.back-to-top');
-  if (window.scrollY > 300) {
-    backToTopButton.classList.add('show');
-  } else {
-    backToTopButton.classList.remove('show');
-  }
-});
 
-document.querySelector('.back-to-top').addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+document.addEventListener('DOMContentLoaded', () => {
+  const backToTopButton = document.querySelector('.back-to-top');
+  
+  if (backToTopButton) {
+  
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopButton.classList.add('show');
+      } else {
+        backToTopButton.classList.remove('show');
+      }
+    });
+
+
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  } else {
+    console.error('Back to Top button not found in the DOM');
+  }
 });
