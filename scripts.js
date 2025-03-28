@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
  document.querySelectorAll('a[href="#portfolio"]').forEach(link => {
     link.addEventListener("click", function(event) {
-        const menu = document.getElementById("portfolio");
+        const menu = document.getElementById("menu");
         if (menu.classList.contains("active")) {
             menu.classList.remove("active");
         }
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.querySelectorAll('a[href="#tools"]').forEach(link => {
     link.addEventListener("click", function(event) {
-        const menu = document.getElementById("tools");
+        const menu = document.getElementById("menu");
         if (menu.classList.contains("active")) {
             menu.classList.remove("active");
         }
