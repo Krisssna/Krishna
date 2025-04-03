@@ -1,4 +1,3 @@
-
 #main-content {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
@@ -7,7 +6,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 66px; 
+    padding-top: 66px; /* Offset for the fixed nav */
 }
 
 .container {
@@ -46,13 +45,13 @@ header p {
     margin: 10px auto;
 }
 
-
 section.container {
     padding: 0;
     margin: 0;
 }
 
-nav.button-group {
+
+.button-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -106,7 +105,7 @@ h2 {
     max-width: 80%;
 }
 
-/* Form and Input Styles */
+
 .input-group {
     display: flex;
     flex-direction: column;
@@ -158,7 +157,6 @@ h2 {
     display: none;
 }
 
-/* Method Section (Aside) */
 aside.method {
     margin-top: 20px;
     padding: 15px;
@@ -197,4 +195,3 @@ h3 {
 .calculate-btn:hover {
     background: #2a9d8f;
 }
-
