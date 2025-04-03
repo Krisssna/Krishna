@@ -21,6 +21,7 @@ body {
 a.no-deco,
 a.no-dec {
     text-decoration: none !important;
+    color: inherit;
 }
 
 nav {
