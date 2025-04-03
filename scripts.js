@@ -72,7 +72,14 @@ document.querySelectorAll('a[href="#tools"]').forEach(link => {
     });
 });
 
-
+document.querySelectorAll('a[href="#about-work"]').forEach(link => {
+    link.addEventListener("click", function(event) {
+        const menu = document.getElementById("menu");
+        if (menu.classList.contains("active")) {
+            menu.classList.remove("active");
+        }
+    });
+});
 
 
 document.addEventListener('DOMContentLoaded', () => {
