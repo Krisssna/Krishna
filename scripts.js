@@ -93,27 +93,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-if (steelGiLink) {
-    steelGiLink.addEventListener("click", function (event) {
-        event.preventDefault();
-        fetch("steel-bars-calculator/")
-            .then(response => {
-                if (!response.ok) throw new Error("Failed to load calculator HTML");
-                return response.text();
-            })
-            .then(html => {
-                mainContent.innerHTML = html;
-                fetch("https://steel.niraula300.workers.dev/")
-                    .then(response => response.text())
-                    .then(jsCode => {
-                        const script = document.createElement("script");
-                        script.text = jsCode;
-                        document.body.appendChild(script);
-                    })
-                    .catch(error => console.error("Error loading calculator script:", error));
-            })
-            .catch(error => console.error("Error loading calculator HTML:", error));
-    });
-}
+const steelGiLink = document.getElementById("steel-gi-calculator");
+    const mainContent = document.getElementById("main-content");
 
+    if (steelGiLink) {
+        steelGiLink.addEventListener("click", function (event) {
+            event.preventDefault();
+            fetch("steel-bars-calculator/index.html")
+                .then(response => {
+                    if (!response.ok) throw new Error("Failed to load calculator HTML");
+                    return response.text();
+                })
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    const calculatorMain = doc.querySelector("main").innerHTML;
+                    mainContent.innerHTML = calculatorMain;
+
+                 
+                    fetch("https://steel.niraula300.workers.dev/")
+                        .then(response => {
+                            if (!response.ok) throw new Error("Failed to load calculator script");
+                            return response.text();
+                        })
+                        .then(jsCode => {
+                            const existingScript = document.getElementById("calculator-script");
+                            if (existingScript) existingScript.remove();
+
+                            const script = document.createElement("script");
+                            script.id = "calculator-script";
+                            script.text = jsCode;
+                            document.body.appendChild(script);
+                        })
+                        .catch(error => console.error("Error loading calculator script:", error));
+                })
+                .catch(error => console.error("Error loading calculator HTML:", error));
+        });
+    }
+});
 
