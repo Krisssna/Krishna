@@ -1,17 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM fully loaded");
+
+    
     const progressBars = document.querySelectorAll(".progress-bar");
     const skillsSection = document.querySelector("#skills");
+    console.log("Skills section found:", skillsSection);
+    console.log("Progress bars found:", progressBars.length);
 
     function animateProgressBars() {
         progressBars.forEach(bar => {
             const value = bar.getAttribute("aria-valuenow");
             bar.style.width = `${value}%`;
+            console.log(`Animating bar to ${value}%`);
         });
     }
 
     if (skillsSection) {
         const observer = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
+                console.log("Skills section in view");
                 animateProgressBars();
                 observer.unobserve(skillsSection);
             }
@@ -64,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
  
     const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
+    console.log("Theme toggle found:", themeToggle);
 
     if (localStorage.getItem("theme") === "night") {
         body.classList.add("night-mode");
@@ -72,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (themeToggle) {
         themeToggle.addEventListener("click", () => {
+            console.log("Theme toggle clicked");
             body.classList.toggle("night-mode");
             if (body.classList.contains("night-mode")) {
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
@@ -82,3 +91,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+});
