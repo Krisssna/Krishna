@@ -20,7 +20,7 @@ body {
 
 a.no-deco,
 a.no-dec {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 
 nav {
