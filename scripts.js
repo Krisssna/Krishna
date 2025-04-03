@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Progress Bar Animation
+
     const progressBars = document.querySelectorAll(".progress-bar");
     const skillsSection = document.querySelector("#skills");
 
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         observer.observe(skillsSection);
     }
 
-    // Menu Toggle
+   
     const menu = document.getElementById("menu");
     const menuIcon = document.querySelector(".menu-icon");
 
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         menuIcon.addEventListener("click", toggleMenu);
     }
 
-    // Smooth Scrolling and Menu Close (Exclude Calculator Link)
+ 
     const sections = ["#contact", "#portfolio", "#tools", "#about-work"];
     sections.forEach(selector => {
         document.querySelectorAll(`a[href="${selector}"]:not(#steel-gi-calculator)`).forEach(link => {
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Back to Top Button
+
     const backToTopButton = document.querySelector(".back-to-top");
 
     if (backToTopButton) {
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Theme Toggle
+
     const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
 
@@ -82,15 +82,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Steel & GI Calculator
+
     const steelGiLink = document.getElementById("steel-gi-calculator");
     const mainContent = document.getElementById("main-content");
+    console.log("mainContent:", mainContent);
 
     if (steelGiLink) {
         steelGiLink.addEventListener("click", function (event) {
-            event.preventDefault(); 
-            event.stopPropagation(); 
-            console.log("Steel & GI Calculator clicked"); // Debug log
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("Steel & GI Calculator clicked");
+
+            if (!mainContent) {
+                console.error("mainContent is null - check HTML for id='main-content'");
+                return;
+            }
 
             fetch("steel-bars-calculator/index.html")
                 .then(response => {
@@ -102,9 +108,27 @@ document.addEventListener("DOMContentLoaded", function () {
                     const doc = parser.parseFromString(html, "text/html");
                     const calculatorMain = doc.querySelector("main").innerHTML;
                     mainContent.innerHTML = calculatorMain;
-                    console.log("Calculator content loaded"); // Debug log
+                    console.log("Calculator content loaded");
 
-                  
+                 
+                    fetch("steel-bars-calculator/styles.css")
+                        .then(response => {
+                            if (!response.ok) throw new Error(`Failed to load calculator CSS: ${response.status}`);
+                            return response.text();
+                        })
+                        .then(css => {
+                            const existingStyle = document.getElementById("calculator-style");
+                            if (existingStyle) existingStyle.remove();
+
+                            const style = document.createElement("style");
+                            style.id = "calculator-style";
+                            style.textContent = css;
+                            document.head.appendChild(style);
+                            console.log("Calculator CSS loaded");
+                        })
+                        .catch(error => console.error("Error loading calculator CSS:", error));
+
+                 
                     fetch("https://steel.niraula300.workers.dev/")
                         .then(response => {
                             if (!response.ok) throw new Error("Failed to load calculator script");
@@ -118,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             script.id = "calculator-script";
                             script.text = jsCode;
                             document.body.appendChild(script);
-                            console.log("Calculator script loaded"); 
+                            console.log("Calculator script loaded");
                         })
                         .catch(error => console.error("Error loading calculator script:", error));
                 })
