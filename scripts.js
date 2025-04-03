@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    const steelGiLink = document.getElementById("steel-gi-calculator");
+   const steelGiLink = document.getElementById("steel-gi-calculator");
     const mainContent = document.getElementById("main-content");
     console.log("mainContent:", mainContent);
 
@@ -104,13 +104,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     return response.text();
                 })
                 .then(html => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, "text/html");
-                    const calculatorMain = doc.querySelector("main").innerHTML;
-                    mainContent.innerHTML = calculatorMain;
+                    mainContent.innerHTML = html;
                     console.log("Calculator content loaded");
 
-                 
+                   
                     fetch("steel-bars-calculator/styles.css")
                         .then(response => {
                             if (!response.ok) throw new Error(`Failed to load calculator CSS: ${response.status}`);
@@ -128,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
                         .catch(error => console.error("Error loading calculator CSS:", error));
 
-                 
+                    // Fetch and apply calculator script
                     fetch("https://steel.niraula300.workers.dev/")
                         .then(response => {
                             if (!response.ok) throw new Error("Failed to load calculator script");
