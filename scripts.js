@@ -1,24 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM fully loaded");
-
-    
+    // Progress Bar Animation
     const progressBars = document.querySelectorAll(".progress-bar");
     const skillsSection = document.querySelector("#skills");
-    console.log("Skills section found:", skillsSection);
-    console.log("Progress bars found:", progressBars.length);
 
     function animateProgressBars() {
         progressBars.forEach(bar => {
             const value = bar.getAttribute("aria-valuenow");
             bar.style.width = `${value}%`;
-            console.log(`Animating bar to ${value}%`);
         });
     }
 
     if (skillsSection) {
         const observer = new IntersectionObserver(entries => {
             if (entries[0].isIntersecting) {
-                console.log("Skills section in view");
                 animateProgressBars();
                 observer.unobserve(skillsSection);
             }
@@ -26,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         observer.observe(skillsSection);
     }
 
-
+    // Menu Toggle
     const menu = document.getElementById("menu");
     const menuIcon = document.querySelector(".menu-icon");
 
@@ -38,10 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
         menuIcon.addEventListener("click", toggleMenu);
     }
 
-
+    // Smooth Scrolling and Menu Close (Exclude Calculator Link)
     const sections = ["#contact", "#portfolio", "#tools", "#about-work"];
     sections.forEach(selector => {
-        document.querySelectorAll(`a[href="${selector}"]`).forEach(link => {
+        document.querySelectorAll(`a[href="${selector}"]:not(#steel-gi-calculator)`).forEach(link => {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
                 const target = selector === "#contact" ? "footer" : selector;
@@ -53,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
+    // Back to Top Button
     const backToTopButton = document.querySelector(".back-to-top");
 
     if (backToTopButton) {
@@ -64,14 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
         backToTopButton.addEventListener("click", () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
-    } else {
-        console.error("Back to Top button not found in the DOM");
     }
 
- 
+    // Theme Toggle
     const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
-    console.log("Theme toggle found:", themeToggle);
 
     if (localStorage.getItem("theme") === "night") {
         body.classList.add("night-mode");
@@ -80,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (themeToggle) {
         themeToggle.addEventListener("click", () => {
-            console.log("Theme toggle clicked");
             body.classList.toggle("night-mode");
             if (body.classList.contains("night-mode")) {
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
@@ -91,17 +81,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-});
 
-const steelGiLink = document.getElementById("steel-gi-calculator");
+    // Steel & GI Calculator
+    const steelGiLink = document.getElementById("steel-gi-calculator");
     const mainContent = document.getElementById("main-content");
 
     if (steelGiLink) {
         steelGiLink.addEventListener("click", function (event) {
-            event.preventDefault();
+            event.preventDefault(); 
+            event.stopPropagation(); 
+            console.log("Steel & GI Calculator clicked"); // Debug log
+
             fetch("steel-bars-calculator/index.html")
                 .then(response => {
-                    if (!response.ok) throw new Error("Failed to load calculator HTML");
+                    if (!response.ok) throw new Error(`Failed to load calculator HTML: ${response.status}`);
                     return response.text();
                 })
                 .then(html => {
@@ -109,8 +102,9 @@ const steelGiLink = document.getElementById("steel-gi-calculator");
                     const doc = parser.parseFromString(html, "text/html");
                     const calculatorMain = doc.querySelector("main").innerHTML;
                     mainContent.innerHTML = calculatorMain;
+                    console.log("Calculator content loaded"); // Debug log
 
-                 
+                  
                     fetch("https://steel.niraula300.workers.dev/")
                         .then(response => {
                             if (!response.ok) throw new Error("Failed to load calculator script");
@@ -124,6 +118,7 @@ const steelGiLink = document.getElementById("steel-gi-calculator");
                             script.id = "calculator-script";
                             script.text = jsCode;
                             document.body.appendChild(script);
+                            console.log("Calculator script loaded"); 
                         })
                         .catch(error => console.error("Error loading calculator script:", error));
                 })
@@ -131,4 +126,3 @@ const steelGiLink = document.getElementById("steel-gi-calculator");
         });
     }
 });
-
