@@ -14,9 +14,11 @@ body {
     width: 100%;
     line-height: 1.6;
     color: #333;
+    background-color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Navigation */
+
 nav {
     position: fixed;
     top: 0;
@@ -75,6 +77,21 @@ nav {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+.theme-toggle {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 10px;
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
     .menu-icon {
         display: block;
@@ -101,11 +118,11 @@ nav {
     }
 }
 
-
+/* Main Content */
 main {
     width: 100%;
     padding: 20px;
-    margin: 66px auto 20px; 
+    margin: 66px auto 20px;
     max-width: 1200px;
 }
 
@@ -224,7 +241,7 @@ main {
     }
 }
 
-/* Tools */
+
 .tools {
     background-color: #eef1f7;
     padding: 50px 20px;
@@ -252,7 +269,7 @@ main {
     font-size: 18px;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
 }
 
 .box:hover {
@@ -261,7 +278,7 @@ main {
     background: linear-gradient(135deg, #43A047, #1B5E20);
 }
 
-/* Skills */
+
 .skills {
     padding: 50px 20px;
     text-align: center;
@@ -302,7 +319,7 @@ main {
     margin: 5px 0;
 }
 
-/* About Work */
+
 .about-work {
     padding: 40px 20px;
     background-color: #f9f9f9;
@@ -389,23 +406,7 @@ main {
     margin-top: 10px;
 }
 
-@media (max-width: 768px) {
-    .about-upper {
-        flex-direction: column;
-        text-align: center;
-    }
-    .about-upper-left,
-    .about-upper-right {
-        flex: none;
-        width: 100%;
-    }
-    .gallery-wrapper {
-        grid-template-columns: 1fr;
-        max-height: 900px;
-    }
-}
 
-/* Footer */
 footer {
     background-color: #f8f9fa;
     padding: 20px;
@@ -485,4 +486,89 @@ footer {
 .back-to-top:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Night Mode Styles */
+body.night-mode {
+    background-color: #1a1a1a;
+    color: #ddd;
+}
+
+.night-mode nav {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+}
+
+.night-mode .intro-text h1,
+.night-mode .portfolio h2,
+.night-mode .tools h2,
+.night-mode .skills h2,
+.night-mode .about-work h1,
+.night-mode .about-work h2,
+.night-mode .footer-column h3 {
+    color: #ddd;
+}
+
+.night-mode .intro-text p,
+.night-mode .portfolio-description p,
+.night-mode .gallery-item p,
+.night-mode .footer-column ul li a,
+.night-mode .footer-copyright {
+    color: #bbb;
+}
+
+.night-mode .portfolio {
+    background-color: #2c2c2c;
+}
+
+.night-mode .portfolio-item {
+    background: #333;
+}
+
+.night-mode .tools {
+    background-color: #252525;
+}
+
+.night-mode .skills {
+    background-color: #1a1a1a;
+}
+
+.night-mode .skills .progress {
+    background-color: #444;
+}
+
+.night-mode .about-work {
+    background-color: #2c2c2c;
+}
+
+.night-mode footer {
+    background-color: #252525;
+}
+
+.night-mode .box {
+    background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+.night-mode .box:hover {
+    background: linear-gradient(135deg, #3e5a74, #34495e);
+}
+
+.night-mode .back-to-top {
+    background: linear-gradient(135deg, #34495e, #5d6d7e);
+}
+
+
+@media (max-width: 768px) {
+    .about-upper {
+        flex-direction: column;
+        text-align: center;
+    }
+    .about-upper-left,
+    .about-upper-right {
+        flex: none;
+        width: 100%;
+    }
+    .gallery-wrapper {
+        grid-template-columns: 1fr;
+        max-height: 900px;
+    }
 }
