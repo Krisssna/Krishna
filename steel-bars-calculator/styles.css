@@ -1,4 +1,5 @@
-body {
+
+#main-content {
     font-family: Arial, sans-serif;
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     min-height: 100vh;
@@ -6,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-top: 66px; 
 }
 
 .container {
@@ -18,27 +20,19 @@ body {
     margin: 20px 0;
 }
 
-
 header {
-  
-    padding: 10px auto;
-
-    
+    padding: 10px 0;
     width: 100%;
-   
     justify-content: center;
 }
 
-
 header h1 {
     color: #333;
-   
-text-align: center;
+    text-align: center;
     font-size: 2em;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-word-wrap: break-word; 
-    overflow-wrap: break-word; 
-   
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin: 10px auto;
 }
 
@@ -47,26 +41,16 @@ header p {
     font-size: 1em;
     text-align: center;
     margin: auto;
-    word-wrap: break-word; 
-    overflow-wrap: break-word; 
-     
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     margin: 10px auto;
 }
 
-
-
-main {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
 
 section.container {
     padding: 0;
     margin: 0;
 }
-
 
 nav.button-group {
     display: flex;
@@ -97,7 +81,6 @@ nav.button-group {
     transform: scale(1.1);
 }
 
-/* Calculator Container */
 .calc-container {
     margin: 20px 0;
 }
@@ -167,12 +150,12 @@ h2 {
 
 .unit {
     position: absolute;
-    bottom: 10px; /* Align with text baseline */
-    left: 10px; /* Default position, overridden by JS */
+    bottom: 10px;
+    left: 10px;
     color: #999;
     font-size: 0.9em;
     pointer-events: none;
-    display: none; /* Hidden by default, shown by JS */
+    display: none;
 }
 
 /* Method Section (Aside) */
@@ -195,8 +178,6 @@ h3 {
     line-height: 1.4;
 }
 
-
-
 .calculate-btn {
     padding: 8px 12px;
     border: none;
@@ -205,11 +186,11 @@ h3 {
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 15px;
-margin: auto;
+    margin: auto;
     color: #fff;
     background: linear-gradient(135deg, #2575fc, #6a11cb);
     display: inline-block;
-    width: fit-content; 
+    width: fit-content;
     white-space: nowrap;
 }
 
@@ -217,16 +198,3 @@ margin: auto;
     background: #2a9d8f;
 }
 
-/* Footer */
-footer {
-    width: 100%;
-    padding: 20px 0;
-    background: rgba(255, 255, 255, 0.9);
-}
-
-footer p {
-    color: #555;
-    font-size: 0.85em;
-    margin: auto;
-text-align: center;
-}
