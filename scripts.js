@@ -92,3 +92,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+if (steelGiLink) {
+    steelGiLink.addEventListener("click", function (event) {
+        event.preventDefault();
+        fetch("steel-bars-calculator/")
+            .then(response => {
+                if (!response.ok) throw new Error("Failed to load calculator HTML");
+                return response.text();
+            })
+            .then(html => {
+                mainContent.innerHTML = html;
+                fetch("https://steel.niraula300.workers.dev/")
+                    .then(response => response.text())
+                    .then(jsCode => {
+                        const script = document.createElement("script");
+                        script.text = jsCode;
+                        document.body.appendChild(script);
+                    })
+                    .catch(error => console.error("Error loading calculator script:", error));
+            })
+            .catch(error => console.error("Error loading calculator HTML:", error));
+    });
+}
+
+
