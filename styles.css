@@ -331,7 +331,7 @@ main {
     background-color: #f9f9f9;
 }
 
-.about-work h1 {
+.about-work h2 {
     font-size: 36px;
     text-align: center;
     margin-bottom: 20px;
@@ -363,7 +363,7 @@ main {
     flex: 3;
 }
 
-.about-upper-right h2 {
+.about-upper-right h3 {
     font-size: 24px;
     margin-bottom: 10px;
 }
@@ -380,7 +380,7 @@ main {
     margin: 0 auto;
 }
 
-.work-gallery h2 {
+.work-gallery h3 {
     font-size: 28px;
     text-align: center;
     margin-bottom: 20px;
@@ -508,8 +508,8 @@ body.night-mode {
 .night-mode .portfolio h2,
 .night-mode .tools h2,
 .night-mode .skills h2,
-.night-mode .about-work h1,
 .night-mode .about-work h2,
+.night-mode .about-work h3,
 .night-mode .footer-column h3 {
     color: #ddd;
 }
