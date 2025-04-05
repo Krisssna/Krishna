@@ -55,15 +55,15 @@
          <p>Find the required materials, calculate their quantities and costs, determine the total production cost, <strong>compare material costs from different crushers</strong>, and perform all necessary calculations for bituminous concrete works based on Nepal DoR Standards (2073).</p>
 
        <div class="button-group">
-        <button id="btn-BM-19mm" onclick="selectType('BM-19mm')">BM 19mm</button>
-        <button id="btn-BM-40mm" onclick="selectType('BM-40mm')">BM 40mm</button>
-        <button id="btn-DBM-26.5mm" onclick="selectType('DBM-26.5mm')">DBM 26.5mm</button>
-        <button id="btn-DBM-35.5mm" onclick="selectType('DBM-35.5mm')">DBM 35.5mm</button>
-        <button id="btn-BC-13.2mm" onclick="selectType('BC-13.2mm')">BC 13.2mm</button>
-        <button id="btn-BC-19mm" onclick="selectType('BC-19mm')">BC 19mm</button>
-        <button id="btn-PMC-Close" onclick="selectType('PMC-Close')">PMC Close</button>
-        <button id="btn-PMC-Open" onclick="selectType('PMC-Open')">PMC Open</button>
-        <button id="btn-SandSeal" onclick="selectType('SandSeal')">Sand Asphalt</button>
+        <button id="btn-BM-19mm" onclick="selectType('BM-19mm'); handleBituminousSelection('BM-19mm')">BM 19mm</button>
+        <button id="btn-BM-40mm" onclick="selectType('BM-40mm'); handleBituminousSelection('BM-40mm')">BM 40mm</button>
+        <button id="btn-DBM-26.5mm" onclick="selectType('DBM-26.5mm'); handleBituminousSelection('DBM-26.5mm')">DBM 26.5mm</button>
+        <button id="btn-DBM-35.5mm" onclick="selectType('DBM-35.5mm'); handleBituminousSelection('DBM-35.5mm')">DBM 35.5mm</button>
+        <button id="btn-BC-13.2mm" onclick="selectType('BC-13.2mm'); handleBituminousSelection('BC-13.2mm')">BC 13.2mm</button>
+        <button id="btn-BC-19mm" onclick="selectType('BC-19mm'); handleBituminousSelection('BC-19mm')">BC 19mm</button>
+        <button id="btn-PMC-Close" onclick="selectType('PMC-Close'); handleBituminousSelection('PMC-Close')">PMC Close</button>
+        <button id="btn-PMC-Open" onclick="selectType('PMC-Open'); handleBituminousSelection('PMC-Open')">PMC Open</button>
+        <button id="btn-SandSeal" onclick="selectType('SandSeal'); handleBituminousSelection('SandSeal')">Sand Asphalt</button>
     </div>
 
     <div id="input-form" class="hidden">
@@ -134,57 +134,7 @@
     
    <script>
 
-        let currentType = ''; 
-        function selectType(type) {
-            console.log("Selected Type:", type);
-            currentType = type;
-            document.getElementById('input-form').classList.remove('hidden');
-            document.getElementById('type-title').textContent = type;
-            document.getElementById('type-description').textContent = `Specifications for ${type}`;
-
-
-            const moreButton = document.getElementById('more-button');
-            moreButton.classList.remove('hidden');
-            moreButton.textContent = `More about ${type}`;
-
-
-        }
-
-
-        function openMorePopup() {
-            if (!currentType) return;
-
-            const popup = document.getElementById('more-popup');
-            const iframe = document.getElementById('popup-iframe');
-
-
-            const typeToFileMap = {
-                'BM-19mm': 'bm.html',
-                'BM-40mm': 'bm.html',
-                'DBM-26.5mm': 'dbm.html',
-                'DBM-35.5mm': 'dbm.html',
-                'BC-13.2mm': 'bc.html',
-                'BC-19mm': 'bc.html',
-                'PMC-Close': 'pmc.html',
-                'PMC-Open': 'pmc.html',
-                'SandSeal': 'sandseal.html'
-            };
-
-            const htmlFile = typeToFileMap[currentType] || 'default.html';
-            iframe.src = htmlFile;
-            popup.classList.remove('hidden');
-        }
-
-
-        function closeMorePopup() {
-            document.getElementById('more-popup').classList.add('hidden');
-            document.getElementById('popup-iframe').src = ''; // Clear iframe
-        }
-
-
-
-
-    fetch("https://serve-js.niraula300.workers.dev/")
+         fetch("https://serve-js.niraula300.workers.dev/")
       .then(response => {
         if (!response.ok) {
           throw new Error("Failed to load script: " + response.statusText);
@@ -198,7 +148,7 @@
       })
       .catch(error => console.error("Error loading script:", error));
   </script>
-  
+  <script src="script.js"></script>
 
 </body>
 </html>
