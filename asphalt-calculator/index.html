@@ -136,6 +136,7 @@
 
         let currentType = ''; 
         function selectType(type) {
+            console.log("Selected Type:", type);
             currentType = type;
             document.getElementById('input-form').classList.remove('hidden');
             document.getElementById('type-title').textContent = type;
