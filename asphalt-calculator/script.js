@@ -26,7 +26,7 @@ function openMorePopup() {
         'BC-19mm': 'bc.html',
         'PMC-Close': 'pmcc.html',
         'PMC-Open': 'pmc.html',
-        'SandSeal': 'sandseal.html'
+        'SandSeal': 'sandasphalt.html'
     };
 
     const htmlFile = typeToFileMap[currentType] || 'default.html';
@@ -36,5 +36,5 @@ function openMorePopup() {
 
 function closeMorePopup() {
     document.getElementById('more-popup').classList.add('hidden');
-    document.getElementById('popup-iframe').src = ''; // Clear iframe
+    document.getElementById('popup-iframe').src = ''; 
 }
