@@ -120,10 +120,18 @@
         <div id="results" class="hidden"></div>
     </div>
 <button onclick="location.href='FAQ.html'" class="faq-button">FAQ</button>
+    <button id="more-button" class="more-button hidden" onclick="openMorePopup()">More</button>
     <footer>
         <p>© Krishna Niraula. All rights reserved.</p>
     </footer>
 
+    <div id="more-popup" class="popup hidden">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closeMorePopup()">&times;</span>
+            <iframe id="popup-iframe" width="100%" height="500px"></iframe>
+        </div>
+    </div>
+    
    <script>
     fetch("https://serve-js.niraula300.workers.dev/")
       .then(response => {
@@ -139,6 +147,7 @@
       })
       .catch(error => console.error("Error loading script:", error));
   </script>
+    <script src="scripts.js"></script>
 
 </body>
 </html>
