@@ -24,7 +24,7 @@ function openMorePopup() {
         'DBM-35.5mm': 'dbm.html',
         'BC-13.2mm': 'bc.html',
         'BC-19mm': 'bc.html',
-        'PMC-Close': 'pmc.html',
+        'PMC-Close': 'pmcc.html',
         'PMC-Open': 'pmc.html',
         'SandSeal': 'sandseal.html'
     };
