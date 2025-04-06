@@ -8,8 +8,6 @@ function handleBituminousSelection(type) {
     if (moreButton) {
         moreButton.classList.remove('hidden');
         moreButton.textContent = `More about ${type}`;
-    } else {
-        console.error('More button element not found');
     }
 }
 
