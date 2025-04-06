@@ -53,6 +53,7 @@ h1 {
     margin-bottom: 10px;
 }
 
+
 p {
     text-align: center;
     color: #555;
@@ -126,6 +127,7 @@ p {
 h2, h3 {
     color: #00796b;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 button {
