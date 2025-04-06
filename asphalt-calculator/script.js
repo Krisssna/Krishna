@@ -1,11 +1,17 @@
-let currentType = ''; 
+let currentType = '';
 
 function handleBituminousSelection(type) {
     currentType = type;
     document.getElementById('input-form').classList.remove('hidden');
+
     const moreButton = document.getElementById('more-button');
-    moreButton.classList.remove('hidden');
-    moreButton.textContent = `More about ${type}`;
+    if (moreButton) {
+        moreButton.classList.remove('hidden');
+        moreButton.textContent = `More about ${type}`;
+    } else {
+        console.error('More button element not found');
+    }
+}
 
 function openMorePopup() {
     if (!currentType) return;
@@ -32,5 +38,5 @@ function openMorePopup() {
 
 function closeMorePopup() {
     document.getElementById('more-popup').classList.add('hidden');
-    document.getElementById('popup-iframe').src = ''; 
+    document.getElementById('popup-iframe').src = '';
 }
