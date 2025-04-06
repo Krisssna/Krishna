@@ -7,7 +7,7 @@ function handleBituminousSelection(type) {
     const moreButton = document.getElementById('more-button');
     if (moreButton) {
         moreButton.classList.remove('hidden');
-        moreButton.textContent = 'Read more';
+        moreButton.textContent = `More about ${type}`;
     }
 }
 
@@ -26,7 +26,7 @@ function openMorePopup() {
         'BC-19mm': 'bc.html',
         'PMC-Close': 'pmcc.html',
         'PMC-Open': 'pmc.html',
-        'SandSeal': 'sandasphalt.html'
+        'SandAsphalt': 'sandasphalt.html'
     };
 
     const htmlFile = typeToFileMap[currentType] || 'default.html';
