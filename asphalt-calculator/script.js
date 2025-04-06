@@ -7,7 +7,7 @@ function handleBituminousSelection(type) {
     const moreButton = document.getElementById('more-button');
     if (moreButton) {
         moreButton.classList.remove('hidden');
-        moreButton.textContent = `More about ${type}`;
+        moreButton.textContent = 'Read more';
     }
 }
 
