@@ -228,8 +228,7 @@ button:hover {
     color: #fff;
 }
 
-/* ... Rest of the styles unchanged ... */
-/* Footer Styles */
+
 footer {
     width: 100%;
     max-width: 900px;
@@ -346,7 +345,7 @@ footer {
     background: #e0f7fa;
 }
 
-/* Material Cost Calculation Section */
+
 #material-cost-calc-section {
     margin-top: 20px;
     padding: 20px;
@@ -399,12 +398,12 @@ footer {
     color: #00796b;
 }
 
-#material-cost-results-table tr:nth-child(5) td, /* Total Cost row */
-#material-cost-results-table tr:nth-child(6) td { /* Cost Difference row */
+#material-cost-results-table tr:nth-child(5) td, 
+#material-cost-results-table tr:nth-child(6) td {
     font-weight: bold;
 }
 
-#material-cost-results-table tr:nth-child(6) td { /* Cost Difference */
+#material-cost-results-table tr:nth-child(6) td { 
     color: #d81b60;
     text-align: center;
 }
@@ -488,3 +487,16 @@ footer {
         .hidden {
             display: none;
         }
+
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
