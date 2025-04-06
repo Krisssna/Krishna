@@ -1,15 +1,11 @@
-let currentType = '';
+let currentType = ''; 
 
 function handleBituminousSelection(type) {
     currentType = type;
     document.getElementById('input-form').classList.remove('hidden');
-    document.getElementById('type-title').textContent = type;
-    document.getElementById('type-description').textContent = `Specifications for ${type}`;
-
     const moreButton = document.getElementById('more-button');
     moreButton.classList.remove('hidden');
     moreButton.textContent = `More about ${type}`;
-}
 
 function openMorePopup() {
     if (!currentType) return;
