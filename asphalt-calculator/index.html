@@ -135,19 +135,24 @@
     
    <script>
 
-         fetch("https://serve-js.niraula300.workers.dev/")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Failed to load script: " + response.statusText);
-        }
-        return response.text();
-      })
-      .then(jsCode => {
-        const script = document.createElement("script");
-        script.text = jsCode; 
-        document.body.appendChild(script);
-      })
-      .catch(error => console.error("Error loading script:", error));
+  fetch("https://serve-js.niraula300.workers.dev/")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to load script: " + response.statusText);
+      }
+      return response.text();
+    })
+    .then(jsCode => {
+      const script = document.createElement("script");
+      script.text = jsCode;
+      document.body.appendChild(script);
+
+      const localScript = document.createElement("script");
+      localScript.src = "script.js";
+      document.body.appendChild(localScript);
+    })
+    .catch(error => console.error("Error loading script:", error));
+
   </script>
   <script src="script.js"></script>
 
