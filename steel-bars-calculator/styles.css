@@ -8,42 +8,54 @@
     align-items: center;
     padding-top: 66px;
 }
+body {
+    margin: 0; 
+    padding: 0;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+}
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 
 .container {
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 600px;
-    align-items: center;
+    width: 100%;
+    max-width: 900px; 
+    margin: 0 auto 20px;
     text-align: center;
-    margin: 20px 0;
 }
 
 header {
-    padding: 10px 0;
     width: 100%;
-    justify-content: center;
+    max-width: 900px; 
+    margin: 20px auto; 
+    padding: 20px 0;
+    text-align: center;
+}
+.head-container {
+    padding: 0 15px;
 }
 
 header h1 {
     color: #333;
-    text-align: center;
     font-size: 2em;
+    margin: 10px 0;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    margin: 10px auto;
 }
 
-header p {
+header p.subtitle {
     color: #555;
     font-size: 1em;
-    text-align: center;
-    margin: auto;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    margin: 10px auto;
+    margin: 0;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 section.container {
@@ -56,11 +68,9 @@ section.container {
 .button-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 10px auto 20px;
+    justify-content: center;
     gap: 10px;
-    align-items: center;
-    max-width: 100%;
+    padding: 10px;
 }
 
 .tab-btn {
@@ -84,6 +94,7 @@ section.container {
 }
 
 .calc-container {
+    width: 100%;
     margin: 20px 0;
 }
 
@@ -117,7 +128,6 @@ h2 {
 }
 
 .input-wrapper {
-    position: relative;
     width: 80%;
     margin: 0 auto;
 }
@@ -197,4 +207,54 @@ h3 {
 
 .calculate-btn:hover {
     background: #2a9d8f;
+}
+.benefits {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 20px;
+    text-align: center;
+}
+
+@media (max-width: 950px) {
+    header, .container, .benefits {
+        max-width: 90%;
+    }
+    
+    header h1 {
+        font-size: 1.8em;
+    }
+    
+    header p.subtitle {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    
+    header p.subtitle {
+        font-size: 0.9em;
+    }
+    
+    .input-wrapper {
+        width: 90%;
+    }
+    
+    .tab-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 400px) {
+    header h1 {
+        font-size: 1.2em;
+    }
+    
+    .tab-btn {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
 }
