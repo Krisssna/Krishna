@@ -20,7 +20,6 @@
             --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
-        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -29,13 +28,11 @@
             background: var(--light-bg);
             color: var(--text-color);
         }
-        
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
         }
-        
         h1 {
             text-align: center;
             color: var(--primary-color);
@@ -43,7 +40,6 @@
             padding-bottom: 15px;
             border-bottom: 2px solid var(--primary-color);
         }
-        
         .faq-container {
             background: var(--card-bg);
             padding: 30px;
@@ -51,17 +47,14 @@
             box-shadow: var(--box-shadow);
             margin-bottom: 30px;
         }
-        
         .faq-item {
             margin-bottom: 25px;
             border-bottom: 1px solid #eee;
             padding-bottom: 20px;
         }
-        
         .faq-item:last-child {
             border-bottom: none;
         }
-        
         .faq-question {
             font-size: 1.2rem;
             font-weight: 600;
@@ -72,11 +65,9 @@
             align-items: center;
             transition: var(--transition);
         }
-        
         .faq-question:hover {
             color: var(--secondary-color);
         }
-        
         .faq-question::before {
             content: "Q";
             display: inline-block;
@@ -90,18 +81,15 @@
             margin-right: 10px;
             font-size: 0.9rem;
         }
-        
         .faq-question::after {
             content: '+';
             margin-left: auto;
             font-size: 1.2rem;
             padding-left: 10px;
         }
-        
         .faq-question[aria-expanded="true"]::after {
             content: '−';
         }
-        
         .faq-answer {
             font-size: 1rem;
             color: var(--text-color);
@@ -111,16 +99,13 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        
         .faq-answer ul, .faq-answer ol {
             margin: 10px 0;
             padding-left: 20px;
         }
-        
         .faq-answer li {
             margin-bottom: 8px;
         }
-        
         .highlight {
             font-weight: bold;
             color: var(--secondary-color);
@@ -128,7 +113,6 @@
             padding: 2px 5px;
             border-radius: 3px;
         }
-        
         .code-snippet {
             background: #f8f9fa;
             padding: 12px;
@@ -138,7 +122,6 @@
             border-left: 4px solid var(--primary-color);
             overflow-x: auto;
         }
-        
         .back-button {
             display: inline-flex;
             align-items: center;
@@ -153,156 +136,48 @@
             text-decoration: none;
             margin-top: 20px;
         }
-        
         .back-button:hover {
             background: #2980b9;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
         .back-button i {
             margin-right: 8px;
         }
-        
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .faq-container {
-                padding: 20px;
-            }
-            
-            .faq-question {
-                font-size: 1.1rem;
-            }
+            .container { padding: 15px; }
+            .faq-container { padding: 20px; }
+            .faq-question { font-size: 1.1rem; }
         }
-        
         @media print {
-            body {
-                background: white;
-                color: black;
-                font-size: 12pt;
-            }
-            
-            .faq-container {
-                box-shadow: none;
-                border: none;
-                padding: 0;
-            }
-            
-            .back-button {
-                display: none;
-            }
+            body { background: white; color: black; font-size: 12pt; }
+            .faq-container { box-shadow: none; border: none; padding: 0; }
+            .back-button { display: none; }
         }
     </style>
-   <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "inLanguage": "en",
-  "mainEntity": [
+    <script type="application/ld+json">
     {
-      "@type": "Question",
-      "name": "What is the Advanced Bituminous Calculator?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A web tool for estimating bituminous road costs and quantities per Nepal DoR Standards, covering materials, transport, and production."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why is the Advanced Bituminous Calculator necessary?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ensures cost accuracy, compliance with DoR standards, and efficient resource planning, reducing delays and overruns."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What can I do with this calculator?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Estimate material quantities, calculate costs, and analyze production expenses for bituminous works."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does the calculator work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Uses three sections: material quantity estimation, cost calculation, and production cost analysis, with real-time updates."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What are the key features of the calculator?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Includes material calculations, transportation analysis, production costs, user-friendly interface, and DoR compliance."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I calculate transportation costs per m³?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Enter material costs, tipper specs, driver wages, and fuel details into the calculator; formulas compute per m³ costs. See detailed steps and examples on the page."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How is the calculator implemented?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Built with HTML5, CSS3, and JavaScript for a responsive, dynamic, and accessible web tool."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What standards does it follow?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Adheres to Nepal DoR Standards (2073, amended 2075) for material specs, mix design, and construction methods."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I customize the calculator?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, adjust material specs, production costs, and transportation parameters to fit project needs."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How can I choose the most cost-effective crusher plant or tipper truck for my project?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Input compacted quantity, crusher/tipper details, and transport data; compare costs per m³ to optimize sourcing."
-      }
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "inLanguage": "en",
+      "mainEntity": [
+        {"@type": "Question","name": "What is the Advanced Bituminous Calculator?","acceptedAnswer": {"@type": "Answer","text": "A web tool for estimating bituminous road costs and quantities per Nepal DoR Standards, covering materials, transport, and production."}},
+        {"@type": "Question","name": "Why is the Advanced Bituminous Calculator necessary?","acceptedAnswer": {"@type": "Answer","text": "Ensures cost accuracy, compliance with DoR standards, and efficient resource planning, reducing delays and overruns."}},
+        {"@type": "Question","name": "What can I do with this calculator?","acceptedAnswer": {"@type": "Answer","text": "Estimate material quantities, calculate costs, and analyze production expenses for bituminous works."}},
+        {"@type": "Question","name": "How does the calculator work?","acceptedAnswer": {"@type": "Answer","text": "Uses three sections: material quantity estimation, cost calculation, and production cost analysis, with real-time updates."}},
+        {"@type": "Question","name": "What are the key features of the calculator?","acceptedAnswer": {"@type": "Answer","text": "Includes material calculations, transportation analysis, production costs, user-friendly interface, and DoR compliance."}},
+        {"@type": "Question","name": "How do I calculate transportation costs per m³?","acceptedAnswer": {"@type": "Answer","text": "Enter material costs, tipper specs, driver wages, and fuel details into the calculator; formulas compute per m³ costs. See detailed steps and examples on the page."}},
+        {"@type": "Question","name": "How is the calculator implemented?","acceptedAnswer": {"@type": "Answer","text": "Built with HTML5, CSS3, and JavaScript for a responsive, dynamic, and accessible web tool."}},
+        {"@type": "Question","name": "What standards does it follow?","acceptedAnswer": {"@type": "Answer","text": "Adheres to Nepal DoR Standards (2073, amended 2075) for material specs, mix design, and construction methods."}},
+        {"@type": "Question","name": "Can I customize the calculator?","acceptedAnswer": {"@type": "Answer","text": "Yes, adjust material specs, production costs, and transportation parameters to fit project needs."}},
+        {"@type": "Question","name": "How can I choose the most cost-effective crusher plant or tipper truck for my project?","acceptedAnswer": {"@type": "Answer","text": "Input compacted quantity, crusher/tipper details, and transport data; compare costs per m³ to optimize sourcing."}}
+      ],
+      "author": {"@type": "Person","name": "Krishna Niraula","url": "https://krishnaniraula.com.np","sameAs": "https://twitter.com/0kisn"},
+      "publisher": {"@type": "Organization","name": "Advanced Bituminous Calculator","logo": {"@type": "ImageObject","url": "https://krishnaniraula.com.np/assets/logo/favicon.png","width": "60","height": "60"}},
+      "datePublished": "2025-04-07",
+      "dateModified": "2025-04-07"
     }
-  ],
-  "author": {
-    "@type": "Person",
-    "name": "Krishna Niraula",
-    "url": "https://krishnaniraula.com.np",
-    "sameAs": "https://twitter.com/0kisn"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Advanced Bituminous Calculator",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://krishnaniraula.com.np/assets/logo/favicon.png",
-      "width": "60",
-      "height": "60"
-    }
-  },
-  "datePublished": "2025-04-07",
-  "dateModified": "2025-04-07"
-}
-</script>
+    </script>
 </head>
 <body>
     <div class="container">
@@ -457,67 +332,61 @@
             </article>
         </section>
 
-       <section class="faq-container">
-    <article itemscope itemtype="https://schema.org/Question">
-        <div class="faq-item">
-            <div class="faq-question" id="q6" tabindex="0" aria-expanded="false" aria-controls="a6" itemprop="name">How do I calculate transportation costs per m³?</div>
-            <div class="faq-answer" id="a6" itemscope itemtype="https://schema.org/Answer" itemprop="acceptedAnswer">
-                <span itemprop="text">Follow these steps to calculate transportation costs:</span>
-                <ol>
-                    <li itemprop="step">
-                        Click <span class="highlight">"Calculate Material Cost Per m³"</span> to expand the section
-                    </li>
-                    <li itemprop="step">
-                        Enter values in the appropriate fields:
-                        <ul>
-                            <li><strong>Material Cost per m³ at Source:</strong> Direct input from supplier quotes</li>
-                            <li><strong>Transportation Parameters:</strong>
+        <section class="faq-container">
+            <article itemscope itemtype="https://schema.org/Question">
+                <div class="faq-item">
+                    <div class="faq-question" id="q6" tabindex="0" aria-expanded="false" aria-controls="a6" itemprop="name">How do I calculate transportation costs per m³?</div>
+                    <div class="faq-answer" id="a6" itemscope itemtype="https://schema.org/Answer" itemprop="acceptedAnswer">
+                        <span itemprop="text">Follow these steps to calculate transportation costs:</span>
+                        <ol>
+                            <li itemprop="step">Click <span class="highlight">"Calculate Material Cost Per m³"</span> to expand the section</li>
+                            <li itemprop="step">
+                                Enter values in the appropriate fields:
                                 <ul>
-                                    <li itemprop="vehicleSpecification">Tipper specifications (capacity, rental rate)</li>
-                                    <li itemprop="costs">Driver costs (daily wage)</li>
-                                    <li itemprop="tripDetails">Trip details (distance, expected trips per day)</li>
-                                    <li itemprop="fuelSpecification">Fuel parameters (price, vehicle mileage)</li>
+                                    <li><strong>Material Cost per m³ at Source:</strong> Direct input from supplier quotes</li>
+                                    <li><strong>Transportation Parameters:</strong>
+                                        <ul>
+                                            <li itemprop="vehicleSpecification">Tipper specifications (capacity, rental rate)</li>
+                                            <li itemprop="costs">Driver costs (daily wage)</li>
+                                            <li itemprop="tripDetails">Trip details (distance, expected trips per day)</li>
+                                            <li itemprop="fuelSpecification">Fuel parameters (price, vehicle mileage)</li>
+                                        </ul>
+                                    </li>
                                 </ul>
                             </li>
-                        </ul>
-                    </li>
-                    <li itemprop="step">
-                        Click <span class="highlight">"Calculate"</span> to view detailed results
-                    </li>
-                </ol>
-                <div itemprop="formula" itemscope itemtype="https://schema.org/MathSolver">
-                    <meta itemprop="name" content="Transportation Cost Calculator">
-                    <meta itemprop="usageInfo" content="Enter material cost, tipper specs, driver wages, trip distance, fuel price, and mileage into the Advanced Bituminous Calculator to compute transportation costs per m³.">
-                    <meta itemprop="url" content="https://krishnaniraula.com.np/calculator"> <!-- Replace with actual URL -->
-                    <p><strong>Calculation Formulas:</strong></p>
-                    <div class="code-snippet">
-                        // Tipper Rent per m³
-                        Tipper Rent per m³ = Tipper Rent per Day / (Total Trips × Tipper Capacity)
-                        
-                        // Driver Cost per m³
-                        Driver Cost per m³ = Driver Cost per Day / (Total Trips × Tipper Capacity)
-                        
-                        // Fuel Cost per m³
-                        Fuel Cost per m³ = (Round Trip Length × Diesel Price) / (Mileage × Tipper Capacity)
+                            <li itemprop="step">Click <span class="highlight">"Calculate"</span> to view detailed results</li>
+                        </ol>
+                        <div>
+                            <p><strong>Calculation Formulas:</strong></p>
+                            <div class="code-snippet">
+                                // Tipper Rent per m³
+                                Tipper Rent per m³ = Tipper Rent per Day / (Total Trips × Tipper Capacity)
+                                
+                                // Driver Cost per m³
+                                Driver Cost per m³ = Driver Cost per Day / (Total Trips × Tipper Capacity)
+                                
+                                // Fuel Cost per m³
+                                Fuel Cost per m³ = (Round Trip Length × Diesel Price) / (Mileage × Tipper Capacity)
+                            </div>
+                        </div>
+                        <div itemprop="example" itemscope itemtype="https://schema.org/Example">
+                            <p><strong>Example Calculation:</strong></p>
+                            <div class="code-snippet">
+                                Input Values:
+                                - One Round Trip Length = 20 km
+                                - Diesel Price = 150 Rs/L
+                                - Mileage = 2 km/L
+                                - Tipper Capacity = 7.5 m³
+                                
+                                Calculation:
+                                Fuel Cost per m³ = (20 × 150) / (2 × 7.5) = 200.00 Rs/m³
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div itemprop="example" itemscope itemtype="https://schema.org/Example">
-                    <p><strong>Example Calculation:</strong></p>
-                    <div class="code-snippet">
-                        Input Values:
-                        - One Round Trip Length = 20 km
-                        - Diesel Price = 150 Rs/L
-                        - Mileage = 2 km/L
-                        - Tipper Capacity = 7.5 m³
-                        
-                        Calculation:
-                        Fuel Cost per m³ = (20 × 150) / (2 × 7.5) = 200.00 Rs/m³
-                    </div>
-                </div>
-            </div>
-        </div>
-    </article>
-</section>
+            </article>
+        </section>
+
         <section class="faq-container">
             <article itemscope itemtype="https://schema.org/Question">
                 <div class="faq-item">
@@ -655,18 +524,13 @@
             const isVisible = answer.style.display === 'block';
             if (isVisible) {
                 answer.style.opacity = '0';
-                setTimeout(() => {
-                    answer.style.display = 'none';
-                }, 300); 
+                setTimeout(() => { answer.style.display = 'none'; }, 300);
             } else {
                 answer.style.display = 'block';
-                setTimeout(() => {
-                    answer.style.opacity = '1';
-                }, 10); 
+                setTimeout(() => { answer.style.opacity = '1'; }, 10);
             }
             this.setAttribute('aria-expanded', !isVisible);
         }
-
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', toggleAnswer);
             question.addEventListener('keydown', (e) => {
@@ -676,11 +540,7 @@
                 }
             });
         });
-
-      
-        document.querySelectorAll('.faq-answer').forEach(answer => {
-            answer.style.opacity = '0';
-        });
+        document.querySelectorAll('.faq-answer').forEach(answer => { answer.style.opacity = '0'; });
     </script>
 </body>
 </html>
