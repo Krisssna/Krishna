@@ -140,7 +140,7 @@ main {
 
 .intro img {
     flex: 0 0 40%;
-    max-width: 40%;
+    max-width: 100%;
     height: auto;
     object-fit: cover;
 }
