@@ -285,46 +285,81 @@ main {
 }
 
 
-.skills {
-    padding: 50px 20px;
-    text-align: center;
+
+.skills-section {
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
 }
 
-.skills h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+.skills-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-.skill-item {
-    margin-bottom: 20px;
+.skill {
+  margin-bottom: 1.5rem;
 }
 
-.skills .progress {
-    background-color: #ddd;
-    border-radius: 0 20px;
-    height: 20px;
-    overflow: hidden;
-    margin: 10px 0;
+.skill label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  display: inline-block;
 }
 
-.skills .progress-bar {
-    background-color: #4caf50;
-    height: 100%;
-    width: 0;
-    transition: width 1s ease-in-out;
+
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 20px;
 }
 
-.skills .progressText {
-    display: block;
-    text-align: left;
+.progress-fill {
+  height: 100%;
+  width: 0; 
+  border-radius: 10px;
+  transition: width 1.5s ease-in-out;
 }
 
-.skills h3 {
-    font-size: 14px;
-    text-align: right;
-    margin: 5px 0;
+
+.fill-20 { background: linear-gradient(to right, #ff4e50, #f9d423); }
+.fill-30 { background: linear-gradient(to right, #ff6347, #f9d423); }
+.fill-60 { background: linear-gradient(to right, #ffb347, #8bc34a); }
+.fill-65 { background: linear-gradient(to right, #fdd835, #4caf50); }
+.fill-70 { background: linear-gradient(to right, #cddc39, #4caf50); }
+.fill-85 { background: linear-gradient(to right, #8bc34a, #388e3c); }
+
+
+body.night-mode .progress-bar {
+  background-color: #444;
 }
 
+body.night-mode .progress-fill {
+  filter: brightness(0.95) saturate(1.3);
+}
+
+
+body.night-mode .fill-20 { background: linear-gradient(to right, #ff6b6b, #ffb347); }
+body.night-mode .fill-30 { background: linear-gradient(to right, #ff7043, #fbc02d); }
+body.night-mode .fill-60 { background: linear-gradient(to right, #ffa726, #aed581); }
+body.night-mode .fill-65 { background: linear-gradient(to right, #ffee58, #81c784); }
+body.night-mode .fill-70 { background: linear-gradient(to right, #d4e157, #66bb6a); }
+body.night-mode .fill-85 { background: linear-gradient(to right, #9ccc65, #43a047); }
+
+
+@media (max-width: 600px) {
+  .skills-title {
+    font-size: 1.5rem;
+  }
+
+  .skill label {
+    font-size: 0.95rem;
+  }
+}
 
 
 
@@ -409,7 +444,7 @@ footer {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* Night Mode Styles */
+
 body.night-mode {
     background-color: #1a1a1a;
     color: #ddd;
@@ -447,14 +482,6 @@ body.night-mode {
 
 .night-mode .tools {
     background-color: #252525;
-}
-
-.night-mode .skills {
-    background-color: #1a1a1a;
-}
-
-.night-mode .skills .progress {
-    background-color: #444;
 }
 
 .night-mode .about-work {

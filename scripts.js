@@ -1,24 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const progressBars = document.querySelectorAll(".progress-bar");
-    const skillsSection = document.querySelector("#skills");
+    const skillsSection = document.querySelector('.skills-section');
+    const progressFills = document.querySelectorAll('.progress-fill');
 
-    function animateProgressBars() {
-        progressBars.forEach(bar => {
-            const value = bar.getAttribute("aria-valuenow");
-            bar.style.width = `${value}%`;
-        });
-    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          progressFills.forEach(bar => {
+            const targetWidth = bar.className.match(/fill-\d+/)[0].split('-')[1] + '%';
+            bar.style.width = targetWidth;
+          });
+        }
+      });
+    }, {
+      threshold: 0.3 
+    });
 
-    if (skillsSection) {
-        const observer = new IntersectionObserver(entries => {
-            if (entries[0].isIntersecting) {
-                animateProgressBars();
-                observer.unobserve(skillsSection);
-            }
-        }, { threshold: 0.5 });
-        observer.observe(skillsSection);
-    }
+    observer.observe(skillsSection);
 
    
     const menu = document.getElementById("menu");
@@ -83,18 +81,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-   const steelGiLink = document.getElementById("steel-gi-calculator");
+    const steelGiLink = document.getElementById("steel-gi-calculator");
     const mainContent = document.getElementById("main-content");
-    console.log("mainContent:", mainContent);
 
     if (steelGiLink) {
         steelGiLink.addEventListener("click", function (event) {
             event.preventDefault();
             event.stopPropagation();
-            console.log("Steel & GI Calculator clicked");
 
             if (!mainContent) {
-                console.error("mainContent is null - check HTML for id='main-content'");
                 return;
             }
 
@@ -105,8 +100,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(html => {
                     mainContent.innerHTML = html;
-                    console.log("Calculator content loaded");
-
                    
                     fetch("steel-bars-calculator/styles.css")
                         .then(response => {
@@ -121,11 +114,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             style.id = "calculator-style";
                             style.textContent = css;
                             document.head.appendChild(style);
-                            console.log("Calculator CSS loaded");
                         })
-                        .catch(error => console.error("Error loading calculator CSS:", error));
+                        .catch(error => {});
 
-                    // Fetch and apply calculator script
+                    
                     fetch("https://steel.niraula300.workers.dev/")
                         .then(response => {
                             if (!response.ok) throw new Error("Failed to load calculator script");
@@ -139,11 +131,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             script.id = "calculator-script";
                             script.text = jsCode;
                             document.body.appendChild(script);
-                            console.log("Calculator script loaded");
                         })
-                        .catch(error => console.error("Error loading calculator script:", error));
+                        .catch(error => {});
                 })
-                .catch(error => console.error("Error loading calculator HTML:", error));
+                .catch(error => {});
         });
     }
 });
