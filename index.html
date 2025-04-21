@@ -50,25 +50,94 @@
 </head>
 
 <body>
-    <nav>
-    <div class="nav-left">
-        <a href="/" onclick="window.location.reload();" class="no-dec">Home</a>
-    </div>
+   <nav>
+        <div class="nav-left">
+            <a href="/" onclick="window.location.reload();" class="no-dec">Home</a>
+        </div>
+        <div class="nav-right">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="sitemap-button" class="sitemap-button">Sitemap</button>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <ul id="menu">
+                <li><a href="#tools" class="no-deco">Tools</a></li>
+                <li><a href="#portfolio" class="no-deco">Apps</a></li>
+                <li><a href="gharjagga/" class="no-deco" target="_blank">घर जग्गा</a></li>
+                <li><a href="#contact" class="no-deco">Contact</a></li>
+                <li><a href="#contact" class="no-deco">About</a></li>
+            </ul>
+        </div>
+    </nav>
+<div id="sitemap-popup" class="sitemap-popup">
+        <div class="sitemap-content">
+            <h2>Sitemap</h2>
+            <div class="sitemap-tree">
+                <ul>
+                    <li>
+                        <a href="https://krishnaniraula.com.np/">Home</a>
+                        <ul>
+                            <li>
+                                <span class="parent-node">Converter</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/converter/unit-converter/">Unit Converter</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="https://krishnaniraula.com.np/concrete-calculator/">Concrete Calculator</a></li>
+                            <li>
+                                <span class="parent-node">Land Area Converter</span>
+                                <ul>
+<li><a href="https://krishnaniraula.com.np/land-area-converter/">Land Area Converter</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/land-area-converter/faq.html">FAQ</a></li>
+                                </ul>
+                            </li>
+<li>
+ <span class="parent-node">Steel Bars Calculator</span>
+                                <ul>
+                            <li><a href="https://krishnaniraula.com.np/steel-bars-calculator/">Steel Bars Calculator</a></li>
+</ul></li>
+<li>
+ <span class="parent-node">Time Series Chart Animation</span>
+                                <ul>
 
-    <div class="nav-right">
-	    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
-            <i class="fas fa-moon"></i>
-        </button>
-        <div class="menu-icon" onclick="toggleMenu()">☰</div>
-        <ul id="menu">
-            <li><a href="#tools" class="no-deco">Tools</a></li>
-		<li><a href="#portfolio" class="no-deco">Apps</a></li>
-		<li><a href="gharjagga/" class="no-deco" target="blank">घर जग्गा</a></li>
-            <li><a href="#contact" class="no-deco">Contact</a></li>
-            <li><a href="#contact" class="no-deco">About</a></li>
-        </ul>
+                            <li><a href="https://krishnaniraula.com.np/time-series-chart-animation/">Time Series Chart Animation</a></li>
+</ul>
+</li>
+                            <li>
+                                <span class="parent-node">Apps</span>
+                                <ul>
+                                    <li>
+                                        <span class="parent-node">Caputok</span>
+                                        <ul>
+                                            <li><a href="https://krishnaniraula.com.np/assets/apps/caputok/privacy_policy/">Privacy Policy</a></li>
+                                            <li><a href="https://krishnaniraula.com.np/assets/apps/caputok/terms_of_use/">Terms of Use</a></li>
+                                            <li><a href="https://krishnaniraula.com.np/apps/caputok/FAQ.html">FAQ</a></li>
+                                            <li><a href="https://krishnaniraula.com.np/assets/apps/caputok/userguide.html">User Guide</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="parent-node">Asphalt Calculator</span>
+                                <ul>
+<li><a href="https://krishnaniraula.com.np/asphalt-calculator/">Asphalt Calculator</a></li>
+
+                                    <li><a href="https://krishnaniraula.com.np/asphalt-calculator/FAQ.html">FAQ</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="parent-node">Assets</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/assets/website-privacy-policy.html">Website Privacy Policy</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/assets/website-terms-of-use.html">Website Terms of Use</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-</nav>
 
 <main id="main-content">
         <div class="intro">

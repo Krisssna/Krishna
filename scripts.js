@@ -1,24 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-
     const skillsSection = document.querySelector('.skills-section');
     const progressFills = document.querySelectorAll('.progress-fill');
 
     const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          progressFills.forEach(bar => {
-            const targetWidth = bar.className.match(/fill-\d+/)[0].split('-')[1] + '%';
-            bar.style.width = targetWidth;
-          });
-        }
-      });
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                progressFills.forEach(bar => {
+                    const targetWidth = bar.className.match(/fill-\d+/)[0].split('-')[1] + '%';
+                    bar.style.width = targetWidth;
+                });
+            }
+        });
     }, {
-      threshold: 0.3 
+        threshold: 0.3 
     });
 
     observer.observe(skillsSection);
 
-   
     const menu = document.getElementById("menu");
     const menuIcon = document.querySelector(".menu-icon");
 
@@ -30,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
         menuIcon.addEventListener("click", toggleMenu);
     }
 
- 
     const sections = ["#contact", "#portfolio", "#tools", "#about-work"];
     sections.forEach(selector => {
         document.querySelectorAll(`a[href="${selector}"]:not(#steel-gi-calculator)`).forEach(link => {
@@ -45,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
     const backToTopButton = document.querySelector(".back-to-top");
 
     if (backToTopButton) {
@@ -57,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     }
-
 
     const themeToggle = document.getElementById("theme-toggle");
     const body = document.body;
@@ -79,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
 
     const steelGiLink = document.getElementById("steel-gi-calculator");
     const mainContent = document.getElementById("main-content");
@@ -117,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         })
                         .catch(error => {});
 
-                    
                     fetch("https://steel.niraula300.workers.dev/")
                         .then(response => {
                             if (!response.ok) throw new Error("Failed to load calculator script");
@@ -135,6 +128,32 @@ document.addEventListener("DOMContentLoaded", function () {
                         .catch(error => {});
                 })
                 .catch(error => {});
+        });
+    }
+
+   
+    const sitemapButton = document.getElementById("sitemap-button");
+    const sitemapPopup = document.getElementById("sitemap-popup");
+
+    if (sitemapButton && sitemapPopup) {
+        sitemapButton.addEventListener("click", () => {
+            const isOpen = sitemapPopup.classList.toggle("active");
+            sitemapPopup.style.display = isOpen ? "flex" : "none";
+        });
+
+        sitemapPopup.addEventListener("click", (e) => {
+            if (e.target === sitemapPopup) {
+                sitemapPopup.classList.remove("active");
+                sitemapPopup.style.display = "none";
+            }
+        });
+
+        const sitemapLinks = sitemapPopup.querySelectorAll("a");
+        sitemapLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                sitemapPopup.classList.remove("active");
+                sitemapPopup.style.display = "none";
+            });
         });
     }
 });
