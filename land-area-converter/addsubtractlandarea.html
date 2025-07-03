@@ -15,11 +15,7 @@
     <meta property="og:image" content="https://krishnaniraula.com.np/images/land-calculator.jpg">
     <link rel="canonical" href="https://krishnaniraula.com.np/land-area-converter/addsubtractlandarea.html">
     <link href="dist/output.css" rel="stylesheet">
-    <style>
-	.main-title {
-            text-align: center;
-        }
-
+ <style>
         body {
             background: linear-gradient(to right, #e0eafc, #cfdef3);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -71,6 +67,12 @@
             font-size: 0.9rem;
             margin-top: 5px;
         }
+        .main-title {
+            text-align: center;
+        }
+	.sub-title {
+            text-align: center;
+        }
     </style>
     <script type="application/ld+json">
     {
@@ -87,11 +89,12 @@
 <body>
     <header>
         <h1 class="text-3xl font-bold mb-8 text-gray-800 main-title">Nepali Land Area Addition or Subtraction Calculator</h1>
+<h2 class="text-gray-100 sub-title">रोपनी-आना सँग रोपनी-आना, बिघा-कठ्ठा सँग बिघा-कठ्ठा वा रोपनी-आना सँग बिघा-कठ्ठा जोड्नु वा घटाउनुहोस्।</h2>
     </header>
     <main class="container">
         <!-- Ropani-Aana-Paisa-Daam -->
         <section class="card" aria-labelledby="ropani-heading">
-            <h2 id="ropani-heading" class="text-xl font-semibold mb-4">Ropani, Aana, Paisa, Daam Calculator</h2>
+            <h2 id="ropani-heading" class="text-xl font-semibold mb-4">रोपनी, आना, पैसा, दाम क्याल्कुलेटर</h2>
             <div id="ropani-inputs">
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Ropani measurement">
@@ -112,7 +115,7 @@
 
         <!-- Bigaha-Kaththa-Dhur -->
         <section class="card" aria-labelledby="bigaha-heading">
-            <h2 id="bigaha-heading" class="text-xl font-semibold mb-4">Bigaha, Kaththa, Dhur Calculator</h2>
+            <h2 id="bigaha-heading" class="text-xl font-semibold mb-4">बिघा, कठ्ठा, धुर क्याल्कुलेटर</h2>
             <div id="bigaha-inputs">
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Bigaha measurement">
@@ -121,7 +124,7 @@
                     </select>
                     <input type="number" step="any" placeholder="Bigaha" min="0" class="bigaha" aria-label="Bigaha input">
                     <input type="number" step="any" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa" aria-label="Kaththa input">
-                    <input type="number" step="any" placeholder="Dhur (0-19)" min="0" max="19" class="dhur" aria-label="Dhur input">
+                    <input type="number" step="any" placeholder="Dhur (0-19)" min="0" max="19" class="dhur" ariaatentive-label="Dhur input">
                 </div>
             </div>
             <button class="btn" onclick="addBigahaInput()" aria-label="Add another Bigaha input set">Add Another</button>
@@ -132,7 +135,7 @@
 
         <!-- Mixed -->
         <section class="card" aria-labelledby="mixed-heading">
-            <h2 id="mixed-heading" class="text-xl font-semibold mb-4">Mixed: Ropani-Aana-Paisa-Daam & Bigaha-Kaththa-Dhur Calculator</h2>
+            <h2 id="mixed-heading" class="text-xl font-semibold mb-4">मिश्रित: रोपनी-आना-पैसा-दाम र बिघा-कठ्ठा-धुर क्याल्कुलेटर</h2>
             <div id="mixed-ropani-inputs">
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Ropani measurement in mixed calculator">
