@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nepali Land Measurement Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        .input-group select, .input-group input {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 8px;
+            width: 100px;
+            text-align: center;
+        }
+        .btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #2563eb;
+        }
+        .result {
+            background-color: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .error {
+            color: #dc2626;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Nepali Land Measurement Calculator</h1>
+
+        <!-- Ropani-Aana-Paisa-Daam -->
+        <div class="card">
+            <h2 class="text-xl font-semibold mb-4">Ropani-Aana-Paisa-Daam</h2>
+            <div id="ropani-inputs">
+                <div class="input-group">
+                    <select class="operation">
+                        <option value="add">Add</option>
+                        <option value="subtract">Subtract</option>
+                    </select>
+                    <input type="number" placeholder="Ropani" min="0" class="ropani">
+                    <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
+                    <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
+                    <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+                </div>
+            </div>
+            <button class="btn" onclick="addRopaniInput()">Add Another</button>
+            <button class="btn mt-2" onclick="calculateRopani()">Calculate Total</button>
+            <div id="ropani-result" class="result hidden"></div>
+            <div id="ropani-error" class="error hidden"></div>
+        </div>
+
+        <!-- Bigaha-Kaththa-Dhur -->
+        <div class="card">
+            <h2 class="text-xl font-semibold mb-4">Bigaha-Kaththa-Dhur</h2>
+            <div id="bigaha-inputs">
+                <div class="input-group">
+                    <select class="operation">
+                        <option value="add">Add</option>
+                        <option value="subtract">Subtract</option>
+                    </select>
+                    <input type="number" placeholder="Bigaha" min="0" class="bigaha">
+                    <input type="number" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
+                    <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+                </div>
+            </div>
+            <button class="btn" onclick="addBigahaInput()">Add Another</button>
+            <button class="btn mt-2" onclick="calculateBigaha()">Calculate Total</button>
+            <div id="bigaha-result" class="result hidden"></div>
+            <div id="bigaha-error" class="error hidden"></div>
+        </div>
+
+        <!-- Mixed -->
+        <div class="card">
+            <h2 class="text-xl font-semibold mb-4">Mixed: Ropani-Aana-Paisa-Daam & Bigaha-Kaththa-Dhur</h2>
+            <div id="mixed-ropani-inputs">
+                <div class="input-group">
+                    <select class="operation">
+                        <option value="add">Add</option>
+                        <option value="subtract">Subtract</option>
+                    </select>
+                    <input type="number" placeholder="Ropani" min="0" class="ropani">
+                    <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
+                    <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
+                    <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+                </div>
+            </div>
+            <button class="btn" onclick="addMixedRopaniInput()">Add Ropani Set</button>
+            <div id="mixed-bigaha-inputs" class="mt-4">
+                <div class="input-group">
+                    <select class="operation">
+                        <option value="add">Add</option>
+                        <option value="subtract">Subtract</option>
+                    </select>
+                    <input type="number" placeholder="Bigaha" min="0" class="bigaha">
+                    <input type="number" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
+                    <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+                </div>
+            </div>
+            <button class="btn mt-2" onclick="addMixedBigahaInput()">Add Bigaha Set</button>
+            <button class="btn mt-2" onclick="calculateMixed()">Calculate Total</button>
+            <div id="mixed-result" class="result hidden"></div>
+            <div id="mixed-error" class="error hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Conversion constants
+        const AANA_PER_ROPANI = 16;
+        const PAISA_PER_AANA = 4;
+        const DAAM_PER_PAISA = 4;
+        const TOTAL_DAAM_PER_ROPANI = AANA_PER_ROPANI * PAISA_PER_AANA * DAAM_PER_PAISA; // 256 Daam per Ropani
+        const KATHTHA_PER_BIGAHA = 20;
+        const DHUR_PER_KATHTHA = 20;
+        const TOTAL_DHUR_PER_BIGAHA = KATHTHA_PER_BIGAHA * DHUR_PER_KATHTHA; // 400 Dhur per Bigaha
+        const BIGAHA_TO_ROPANI = 13312.64 / 1000; // 13.31264 Ropani per Bigaha
+        const DAAM_PER_DHUR = (BIGAHA_TO_ROPANI * TOTAL_DAAM_PER_ROPANI) / TOTAL_DHUR_PER_BIGAHA; // ~8.5280896 Daam per Dhur
+
+        // Convert Ropani-Aana-Paisa-Daam to Daam
+        function ropaniToDaam(ropani, aana, paisa, daam) {
+            return (ropani * TOTAL_DAAM_PER_ROPANI) +
+                   (aana * PAISA_PER_AANA * DAAM_PER_PAISA) +
+                   (paisa * DAAM_PER_PAISA) +
+                   daam;
+        }
+
+        // Convert Bigaha-Kaththa-Dhur to Daam
+        function bigahaToDaam(bigaha, kaththa, dhur) {
+            const totalDhur = (bigaha * TOTAL_DHUR_PER_BIGAHA) +
+                             (kaththa * DHUR_PER_KATHTHA) +
+                             dhur;
+            return totalDhur * DAAM_PER_DHUR;
+        }
+
+        // Normalize Daam to Ropani-Aana-Paisa-Daam
+        function daamToRopani(totalDaam) {
+            if (totalDaam < 0) {
+                return { ropani: 0, aana: 0, paisa: 0, daam: 0, negative: true };
+            }
+            const ropani = Math.floor(totalDaam / TOTAL_DAAM_PER_ROPANI);
+            totalDaam %= TOTAL_DAAM_PER_ROPANI;
+            const aana = Math.floor(totalDaam / (PAISA_PER_AANA * DAAM_PER_PAISA));
+            totalDaam %= (PAISA_PER_AANA * DAAM_PER_PAISA);
+            const paisa = Math.floor(totalDaam / DAAM_PER_PAISA);
+            const daam = parseFloat((totalDaam % DAAM_PER_PAISA).toFixed(2));
+            return { ropani, aana, paisa, daam, negative: false };
+        }
+
+        // Normalize Daam to Bigaha-Kaththa-Dhur
+        function daamToBigaha(totalDaam) {
+            if (totalDaam < 0) {
+                return { bigaha: 0, kaththa: 0, dhur: 0, negative: true };
+            }
+            const totalDhur = totalDaam / DAAM_PER_DHUR;
+            const bigaha = Math.floor(totalDhur / TOTAL_DHUR_PER_BIGAHA);
+            const remainingDhur = totalDhur % TOTAL_DHUR_PER_BIGAHA;
+            const kaththa = Math.floor(remainingDhur / DHUR_PER_KATHTHA);
+            const dhur = parseFloat((remainingDhur % DHUR_PER_KATHTHA).toFixed(2));
+            return { bigaha, kaththa, dhur, negative: false };
+        }
+
+        // Add new input for Ropani
+        function addRopaniInput() {
+            const container = document.getElementById('ropani-inputs');
+            const div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `
+                <select class="operation">
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
+                </select>
+                <input type="number" placeholder="Ropani" min="0" class="ropani">
+                <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
+                <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
+                <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+            `;
+            container.appendChild(div);
+        }
+
+        // Add new input for Bigaha
+        function addBigahaInput() {
+            const container = document.getElementById('bigaha-inputs');
+            const div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `
+                <select class="operation">
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
+                </select>
+                <input type="number" placeholder="Bigaha" min="0" class="bigaha">
+                <input type="number" placeholder="Kaththa (0-19)" min=" besiege
+                max="19" class="kaththa">
+                <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+            `;
+            container.appendChild(div);
+        }
+
+        // Add new input for Mixed Ropani
+        function addMixedRopaniInput() {
+            const container = document.getElementById('mixed-ropani-inputs');
+            const div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `
+                <select class="operation">
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
+                </select>
+                <input type="number" placeholder="Ropani" min="0" class="ropani">
+                <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
+                <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
+                <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+            `;
+            container.appendChild(div);
+        }
+
+        // Add new input for Mixed Bigaha
+        function addMixedBigahaInput() {
+            const container = document.getElementById('mixed-bigaha-inputs');
+            const div = document.createElement('div');
+            div.className = 'input-group';
+            div.innerHTML = `
+                <select class="operation">
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
+                </select>
+                <input type="number" placeholder="Bigaha" min="0" class="bigaha">
+                <input type="number" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
+                <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+            `;
+            container.appendChild(div);
+        }
+
+        // Calculate Ropani-Aana-Paisa-Daam
+        function calculateRopani() {
+            const inputs = document.querySelectorAll('#ropani-inputs .input-group');
+            let totalDaam = 0;
+            let error = false;
+
+            inputs.forEach(input => {
+                const operation = input.querySelector('.operation').value;
+                const ropani = parseFloat(input.querySelector('.ropani').value) || 0;
+                const aana = parseFloat(input.querySelector('.aana').value) || 0;
+                const paisa = parseFloat(input.querySelector('.paisa').value) || 0;
+                const daam = parseFloat(input.querySelector('.daam').value) || 0;
+
+                if (aana > 15 || paisa > 3 || daam > 3) {
+                    error = true;
+                    return;
+                }
+
+                const daamValue = ropaniToDaam(ropani, aana, paisa, daam);
+                totalDa_tv = (operation === 'add') ? daamValue : -daamValue;
+            });
+
+            const resultDiv = document.getElementById('ropani-result');
+            const errorDiv = document.getElementById('ropani-error');
+
+            if (error) {
+                errorDiv.textContent = 'Error: Aana (0-15), Paisa (0-3), Daam (0-3) limits exceeded.';
+                errorDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+
+            if (totalDaam < 0) {
+                errorDiv.textContent = 'Error: Result is negative. Please ensure the total is non-negative.';
+                errorDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+
+            errorDiv.classList.add('hidden');
+            const ropaniResult = daamToRopani(totalDaam);
+            const bigahaResult = daamToBigaha(totalDaam);
+            resultDiv.innerHTML = `
+                Ropani-Aana-Paisa-Daam: ${ropaniResult.ropani} Ropani, ${ropaniResult.aana} Aana, ${ropaniResult.paisa} Paisa, ${ropaniResult.daam} Daam<br>
+                Bigaha-Kaththa-Dhur: ${bigahaResult.bigaha} Bigaha, ${bigahaResult.kaththa} Kaththa, ${bigahaResult.dhur} Dhur
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+
+        // Calculate Bigaha-Kaththa-Dhur
+        function calculateBigaha() {
+            const inputs = document.querySelectorAll('#bigaha-inputs .input-group');
+            let totalDaam = 0;
+            let error = false;
+
+            inputs.forEach(input => {
+                const operation = input.querySelector('.operation').value;
+                const bigaha = parseFloat(input.querySelector('.bigaha').value) || 0;
+                const kaththa = parseFloat(input.querySelector('.kaththa').value) || 0;
+                const dhur = parseFloat(input.querySelector('.dhur').value) || 0;
+
+                if (kaththa > 19 || dhur > 19) {
+                    error = true;
+                    return;
+                }
+
+                const daamValue = bigahaToDaam(bigaha, kaththa, dhur);
+                totalDaam += (operation === 'add') ? daamValue : -daamValue;
+            });
+
+            const resultDiv = document.getElementById('bigaha-result');
+            const errorDiv = document.getElementById('bigaha-error');
+
+            if (error) {
+                errorDiv.textContent = 'Error: Kaththa (0-19), Dhur (0-19) limits exceeded.';
+                errorDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+
+            if (totalDaam < 0) {
+                errorDiv.textContent = 'Error: Result is negative. Please ensure the total is non-negative.';
+                errorDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+
+            errorDiv.classList.add('hidden');
+            const ropaniResult = daamToRopani(totalDaam);
+            const bigahaResult = daamToBigaha(totalDaam);
+            resultDiv.innerHTML = `
+                Ropani-Aana-Paisa-Daam: ${ropaniResult.ropani} Ropani, ${ropaniResult.aana} Aana, ${ropaniResult.paisa} Paisa, ${ropaniResult.daam} Daam<br>
+                Bigaha-Kaththa-Dhur: ${bigahaResult.bigaha} Bigaha, ${bigahaResult.kaththa} Kaththa, ${bigahaResult.dhur} Dhur
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+
+        // Calculate Mixed
+        function calculateMixed() {
+            const ropaniInputs = document.querySelectorAll('#mixed-ropani-inputs .input-group');
+            const bigahaInputs = document.querySelectorAll('#mixed-bigaha-inputs .input-group');
+            let totalDaam = 0;
+            let error = false;
+
+            ropaniInputs.forEach(input => {
+                const operation = input.querySelector('.operation').value;
+                const ropani = parseFloat(input.querySelector('.ropani').value) || 0;
+                const aana = parseFloat(input.querySelector('.aana').value) || 0;
+                const paisa = parseFloat(input.querySelector('.paisa').value) || 0;
+                const daam = parseFloat(input.querySelector('.daam').value) || 0;
+
+                if (aana > 15 || paisa > 3 || daam > 3) {
+                    error = true;
+                    return;
+                }
+
+                const daamValue = ropaniToDaam(ropani, aana, paisa, daam);
+                totalDaam += (operation === 'add') ? daamValue : -daamValue;
+            });
+
+            bigahaInputs.forEach(input => {
+                const operation = input.querySelector('.operation').value;
+                const bigaha = parseFloat(input.querySelector('.bigaha').value) || 0;
+                const kaththa = parseFloat(input.querySelector('.kaththa').value) || 0;
+                const dhur = parseFloat(input.querySelector('.dhur').value) || 0;
+
+                if (kaththa > 19 || dhur > 19) {
+                    error = true;
+                    return;
+                }
+
+                const daamValue = bigahaToDaam(bigaha, kaththa, dhur);
+                totalDaam += (operation === 'add') ? daamValue : -daamValue;
+            });
+
+            const resultDiv = document.getElementById('mixed-result');
+            const errorDiv = document.getElementById('mixed-error');
+
+            if (error) {
+                errorDiv.textContent = 'Error: Aana (0-15), Paisa (0-3), Daam (0-3) or Kaththa (0-19), Dhur (0-19) limits exceeded.';
+                errorDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+
+            if (totalDaam < 0) {
+                errorDiv.textContent = 'Error: Result is negative. Please ensure the total is non-negative.';
+                errorDiv.classList.remove('hidden');
+                resultDiv.classList.add('hidden');
+                return;
+            }
+
+            errorDiv.classList.add('hidden');
+            const ropaniResult = daamToRopani(totalDaam);
+            const bigahaResult = daamToBigaha(totalDaam);
+            resultDiv.innerHTML = `
+                Ropani-Aana-Paisa-Daam: ${ropaniResult.ropani} Ropani, ${ropaniResult.aana} Aana, ${ropaniResult.paisa} Paisa, ${ropaniResult.daam} Daam<br>
+                Bigaha-Kaththa-Dhur: ${bigahaResult.bigaha} Bigaha, ${bigahaResult.kaththa} Kaththa, ${bigahaResult.dhur} Dhur
+            `;
+            resultDiv.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
