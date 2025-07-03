@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nepali Land Measurement Calculator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Nepali Land Area Addition or Subtraction Calculator</title>
+    <meta name="description" content="Calculate land area in Nepal with our easy-to-use tool for Ropani, Aana, Paisa, Daam, Bigaha, Kaththa, and Dhur. Add or subtract measurements accurately.">
+    <meta name="keywords" content="Nepali land area calculator, Ropani to Bigaha, Aana to Kaththa, land measurement Nepal, add subtract land area, Nepali land conversion">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Nepali Land Measurement Calculator">
+    <meta property="og:title" content="Nepali Land Area Addition or Subtraction Calculator">
+    <meta property="og:description" content="Easily add or subtract land measurements in Nepal using Ropani, Aana, Paisa, Daam, Bigaha, Kaththa, and Dhur with our accurate calculator.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://krishnaniraula.com.np/land-area-converter/addsubtractlandarea.html">
+    <meta property="og:image" content="https://krishnaniraula.com.np/images/land-calculator.jpg">
+    <link rel="canonical" href="https://krishnaniraula.com.np/land-area-converter/addsubtractlandarea.html">
+    <link href="dist/output.css" rel="stylesheet">
     <style>
+	.main-title {
+            text-align: center;
+        }
+
         body {
             background: linear-gradient(to right, #e0eafc, #cfdef3);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -58,85 +72,101 @@
             margin-top: 5px;
         }
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Nepali Land Area Addition or Subtraction Calculator",
+        "description": "A tool to add or subtract land measurements in Nepal, supporting Ropani, Aana, Paisa, Daam, Bigaha, Kaththa, and Dhur.",
+        "url": "https://yourwebsite.com/nepali-land-area-calculator",
+        "applicationCategory": "Utility",
+        "operatingSystem": "Web"
+    }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Nepali Land Measurement Calculator</h1>
-
+    <header>
+        <h1 class="text-3xl font-bold mb-8 text-gray-800 main-title">Nepali Land Area Addition or Subtraction Calculator</h1>
+    </header>
+    <main class="container">
         <!-- Ropani-Aana-Paisa-Daam -->
-        <div class="card">
-            <h2 class="text-xl font-semibold mb-4">Ropani-Aana-Paisa-Daam</h2>
+        <section class="card" aria-labelledby="ropani-heading">
+            <h2 id="ropani-heading" class="text-xl font-semibold mb-4">Ropani, Aana, Paisa, Daam Calculator</h2>
             <div id="ropani-inputs">
                 <div class="input-group">
-                    <select class="operation">
+                    <select class="operation" aria-label="Operation for Ropani measurement">
                         <option value="add">Add</option>
                         <option value="subtract">Subtract</option>
                     </select>
-                    <input type="number" placeholder="Ropani" min="0" class="ropani">
-                    <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
-                    <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
-                    <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+                    <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input">
+                    <input type="number" step="any" placeholder="Aana (0-15)" min="0" max="15" class="aana" aria-label="Aana input">
+                    <input type="number" step="any" placeholder="Paisa (0-3)" min="0" max="3" class="paisa" aria-label="Paisa input">
+                    <input type="number" step="any" placeholder="Daam (0-3)" min="0" max="3" class="daam" aria-label="Daam input">
                 </div>
             </div>
-            <button class="btn" onclick="addRopaniInput()">Add Another</button>
-            <button class="btn mt-2" onclick="calculateRopani()">Calculate Total</button>
-            <div id="ropani-result" class="result hidden"></div>
-            <div id="ropani-error" class="error hidden"></div>
-        </div>
+            <button class="btn" onclick="addRopaniInput()" aria-label="Add another Ropani input set">Add Another</button>
+            <button class="btn mt-2" onclick="calculateRopani()" aria-label="Calculate total for Ropani measurements">Calculate Total</button>
+            <div id="ropani-result" class="result hidden" aria-live="polite"></div>
+            <div id="ropani-error" class="error hidden" aria-live="assertive"></div>
+        </section>
 
         <!-- Bigaha-Kaththa-Dhur -->
-        <div class="card">
-            <h2 class="text-xl font-semibold mb-4">Bigaha-Kaththa-Dhur</h2>
+        <section class="card" aria-labelledby="bigaha-heading">
+            <h2 id="bigaha-heading" class="text-xl font-semibold mb-4">Bigaha, Kaththa, Dhur Calculator</h2>
             <div id="bigaha-inputs">
                 <div class="input-group">
-                    <select class="operation">
+                    <select class="operation" aria-label="Operation for Bigaha measurement">
                         <option value="add">Add</option>
                         <option value="subtract">Subtract</option>
                     </select>
-                    <input type="number" placeholder="Bigaha" min="0" class="bigaha">
-                    <input type="number" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
-                    <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+                    <input type="number" step="any" placeholder="Bigaha" min="0" class="bigaha" aria-label="Bigaha input">
+                    <input type="number" step="any" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa" aria-label="Kaththa input">
+                    <input type="number" step="any" placeholder="Dhur (0-19)" min="0" max="19" class="dhur" aria-label="Dhur input">
                 </div>
             </div>
-            <button class="btn" onclick="addBigahaInput()">Add Another</button>
-            <button class="btn mt-2" onclick="calculateBigaha()">Calculate Total</button>
-            <div id="bigaha-result" class="result hidden"></div>
-            <div id="bigaha-error" class="error hidden"></div>
-        </div>
+            <button class="btn" onclick="addBigahaInput()" aria-label="Add another Bigaha input set">Add Another</button>
+            <button class="btn mt-2" onclick="calculateBigaha()" aria-label="Calculate total for Bigaha measurements">Calculate Total</button>
+            <div id="bigaha-result" class="result hidden" aria-live="polite"></div>
+            <div id="bigaha-error" class="error hidden" aria-live="assertive"></div>
+        </section>
 
         <!-- Mixed -->
-        <div class="card">
-            <h2 class="text-xl font-semibold mb-4">Mixed: Ropani-Aana-Paisa-Daam & Bigaha-Kaththa-Dhur</h2>
+        <section class="card" aria-labelledby="mixed-heading">
+            <h2 id="mixed-heading" class="text-xl font-semibold mb-4">Mixed: Ropani-Aana-Paisa-Daam & Bigaha-Kaththa-Dhur Calculator</h2>
             <div id="mixed-ropani-inputs">
                 <div class="input-group">
-                    <select class="operation">
+                    <select class="operation" aria-label="Operation for Ropani measurement in mixed calculator">
                         <option value="add">Add</option>
                         <option value="subtract">Subtract</option>
                     </select>
-                    <input type="number" placeholder="Ropani" min="0" class="ropani">
-                    <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
-                    <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
-                    <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+                    <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input for mixed calculator">
+                    <input type="number" step="any" placeholder="Aana (0-15)" min="0" max="15" class="aana" aria-label="Aana input for mixed calculator">
+                    <input type="number" step="any" placeholder="Paisa (0-3)" min="0" max="3" class="paisa" aria-label="Paisa input for mixed calculator">
+                    <input type="number" step="any" placeholder="Daam (0-3)" min="0" max="3" class="daam" aria-label="Daam input for mixed calculator">
                 </div>
             </div>
-            <button class="btn" onclick="addMixedRopaniInput()">Add Ropani Set</button>
+            <button class="btn" onclick="addMixedRopaniInput()" aria-label="Add another Ropani set for mixed calculator">Add Ropani Set</button>
             <div id="mixed-bigaha-inputs" class="mt-4">
                 <div class="input-group">
-                    <select class="operation">
+                    <select class="operation" aria-label="Operation for Bigaha measurement in mixed calculator">
                         <option value="add">Add</option>
                         <option value="subtract">Subtract</option>
                     </select>
-                    <input type="number" placeholder="Bigaha" min="0" class="bigaha">
-                    <input type="number" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
-                    <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+                    <input type="number" step="any" placeholder="Bigaha" min="0" class="bigaha" aria-label="Bigaha input for mixed calculator">
+                    <input type="number" step="any" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa" aria-label="Kaththa input for mixed calculator">
+                    <input type="number" step="any" placeholder="Dhur (0-19)" min="0" max="19" class="dhur" aria-label="Dhur input for mixed calculator">
                 </div>
             </div>
-            <button class="btn mt-2" onclick="addMixedBigahaInput()">Add Bigaha Set</button>
-            <button class="btn mt-2" onclick="calculateMixed()">Calculate Total</button>
-            <div id="mixed-result" class="result hidden"></div>
-            <div id="mixed-error" class="error hidden"></div>
-        </div>
-    </div>
+            <button class="btn mt-2" onclick="addMixedBigahaInput()" aria-label="Add another Bigaha set for mixed calculator">Add Bigaha Set</button>
+            <button class="btn mt-2" onclick="calculateMixed()" aria-label="Calculate total for mixed measurements">Calculate Total</button>
+            <div id="mixed-result" class="result hidden" aria-live="polite"></div>
+            <div id="mixed-error" class="error hidden" aria-live="assertive"></div>
+        </section>
+<a href="/land-area-converter/" class="back-button" aria-label="Return to Land Area Converter">Back to Converter</a>
+   
+    </main>
+
+
 
     <script>
         // Conversion constants
@@ -161,8 +191,8 @@
         // Convert Bigaha-Kaththa-Dhur to Daam
         function bigahaToDaam(bigaha, kaththa, dhur) {
             const totalDhur = (bigaha * TOTAL_DHUR_PER_BIGAHA) +
-                             (kaththa * DHUR_PER_KATHTHA) +
-                             dhur;
+                              (kaththa * DHUR_PER_KATHTHA) +
+                              dhur;
             return totalDhur * DAAM_PER_DHUR;
         }
 
@@ -173,7 +203,9 @@
             }
             const ropani = Math.floor(totalDaam / TOTAL_DAAM_PER_ROPANI);
             totalDaam %= TOTAL_DAAM_PER_ROPANI;
-            const aana = Math.floor(totalDaam / (PAISA_PER_AANA * DAAM_PER_PAISA));
+            const aana = Math.floor(totalDaam / (
+
+PAISA_PER_AANA * DAAM_PER_PAISA));
             totalDaam %= (PAISA_PER_AANA * DAAM_PER_PAISA);
             const paisa = Math.floor(totalDaam / DAAM_PER_PAISA);
             const daam = parseFloat((totalDaam % DAAM_PER_PAISA).toFixed(2));
@@ -203,10 +235,10 @@
                     <option value="add">Add</option>
                     <option value="subtract">Subtract</option>
                 </select>
-                <input type="number" placeholder="Ropani" min="0" class="ropani">
-                <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
-                <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
-                <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+                <input type="number" step="any" placeholder="Ropani" min="0" class="ropani">
+                <input type="number" step="any" placeholder="Aana (0-15)" min="0" max="15" class="aana">
+                <input type="number" step="any" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
+                <input type="number" step="any" placeholder="Daam (0-3)" min="0" max="3" class="daam">
             `;
             container.appendChild(div);
         }
@@ -221,10 +253,9 @@
                     <option value="add">Add</option>
                     <option value="subtract">Subtract</option>
                 </select>
-                <input type="number" placeholder="Bigaha" min="0" class="bigaha">
-                <input type="number" placeholder="Kaththa (0-19)" min=" besiege
-                max="19" class="kaththa">
-                <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+                <input type="number" step="any" placeholder="Bigaha" min="0" class="bigaha">
+                <input type="number" step="any" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
+                <input type="number" step="any" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
             `;
             container.appendChild(div);
         }
@@ -239,10 +270,10 @@
                     <option value="add">Add</option>
                     <option value="subtract">Subtract</option>
                 </select>
-                <input type="number" placeholder="Ropani" min="0" class="ropani">
-                <input type="number" placeholder="Aana (0-15)" min="0" max="15" class="aana">
-                <input type="number" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
-                <input type="number" placeholder="Daam (0-3)" min="0" max="3" class="daam">
+                <input type="number" step="any" placeholder="Ropani" min="0" class="ropani">
+                <input type="number" step="any" placeholder="Aana (0-15)" min="0" max="15" class="aana">
+                <input type="number" step="any" placeholder="Paisa (0-3)" min="0" max="3" class="paisa">
+                <input type="number" step="any" placeholder="Daam (0-3)" min="0" max="3" class="daam">
             `;
             container.appendChild(div);
         }
@@ -257,9 +288,9 @@
                     <option value="add">Add</option>
                     <option value="subtract">Subtract</option>
                 </select>
-                <input type="number" placeholder="Bigaha" min="0" class="bigaha">
-                <input type="number" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
-                <input type="number" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
+                <input type="number" step="any" placeholder="Bigaha" min="0" class="bigaha">
+                <input type="number" step="any" placeholder="Kaththa (0-19)" min="0" max="19" class="kaththa">
+                <input type="number" step="any" placeholder="Dhur (0-19)" min="0" max="19" class="dhur">
             `;
             container.appendChild(div);
         }
@@ -283,7 +314,7 @@
                 }
 
                 const daamValue = ropaniToDaam(ropani, aana, paisa, daam);
-                totalDa_tv = (operation === 'add') ? daamValue : -daamValue;
+                totalDaam += (operation === 'add') ? daamValue : -daamValue;
             });
 
             const resultDiv = document.getElementById('ropani-result');
