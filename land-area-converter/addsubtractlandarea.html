@@ -45,16 +45,22 @@
 
 
         .container {
-            max-width: 100%;
-            padding: 10px;
-        }
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            padding: 15px;
-            margin: 10px;
-        }
+        max-width: 1200px; 
+        margin: 0 auto;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+    }
+    .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin: 10px 0; 
+        width: 100%;
+        max-width: 600px;
+    }
         .input-group {
             display: flex;
             flex-wrap: wrap;
@@ -140,8 +146,11 @@
 </head>
 <body>
 <nav class="navbar">
-        <a href="/" class="nav-link">Home</a>
-    </nav>
+    <a href="/" class="nav-link">Home</a>
+    <a href="/land-area-converter/" class="nav-link" style="float: right;" aria-label="Return to Land Area Converter">
+        <span style="margin-right: 5px;">&#8592;</span> Back to Converter
+    </a>
+</nav>
     <header>
         <h1 class="text-3xl font-bold mb-8 text-gray-800 main-title">Nepali Land Area Addition or Subtraction Calculator</h1>
         <h2 class="text-gray-600 sub-title">रोपनी-आना सँग रोपनी-आना, बिघा-कठ्ठा सँग बिघा-कठ्ठा वा रोपनी-आना सँग बिघा-कठ्ठा जोड्नु वा घटाउनुहोस्।</h2>
@@ -153,8 +162,8 @@
             <div id="ropani-inputs">
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Ropani measurement">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
                     </select>
                     <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input">
                     <input type="number" step="any" placeholder="Aana" min="0" class="aana" aria-label="Aana input">
@@ -163,8 +172,8 @@
                 </div>
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Ropani measurement">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
                     </select>
                     <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input">
                     <input type="number" step="any" placeholder="Aana" min="0" class="aana" aria-label="Aana input">
@@ -184,8 +193,8 @@
             <div id="bigha-inputs">
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Bigha measurement">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
                     </select>
                     <input type="number" step="any" placeholder="Bigha" min="0" class="bigha" aria-label="Bigha input">
                     <input type="number" step="any" placeholder="Kaththa" min="0" class="kaththa" aria-label="Kaththa input">
@@ -193,8 +202,8 @@
                 </div>
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Bigha measurement">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
                     </select>
                     <input type="number" step="any" placeholder="Bigha" min="0" class="bigha" aria-label="Bigha input">
                     <input type="number" step="any" placeholder="Kaththa" min="0" class="kaththa" aria-label="Kaththa input">
@@ -207,24 +216,14 @@
             <div id="bigha-error" class="error hidden" aria-live="assertive"></div>
         </section>
 
-        <!-- Mixed -->
+ <!-- Mixed -->
         <section class="card" aria-labelledby="mixed-heading">
             <h2 id="mixed-heading" class="text-xl font-semibold mb-4">मिश्रित: रोपनी-आना-पैसा-दाम र बिघा-कठ्ठा-धुरको जोड घटाउ</h2>
             <div id="mixed-ropani-inputs">
                 <div class="input-group">
-                    <select class="operation" aria-label="Operation for Ropani measurement in mixed calculator">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
-                    </select>
-                    <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input for mixed calculator">
-                    <input type="number" step="any" placeholder="Aana" min="0" class="aana" aria-label="Aana input for mixed calculator">
-                    <input type="number" step="any" placeholder="Paisa" min="0" class="paisa" aria-label="Paisa input for mixed calculator">
-                    <input type="number" step="any" placeholder="Daam" min="0" class="daam" aria-label="Daam input for mixed calculator">
-                </div>
-                <div class="input-group">
-                    <select class="operation" aria-label="Operation for Ropani measurement in mixed calculator">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
+                    <select class="operation" aria-label="Operation for Ropani measurement in mixed Calculator">
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
                     </select>
                     <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input for mixed calculator">
                     <input type="number" step="any" placeholder="Aana" min="0" class="aana" aria-label="Aana input for mixed calculator">
@@ -236,17 +235,8 @@
             <div id="mixed-bigha-inputs" class="mt-4">
                 <div class="input-group">
                     <select class="operation" aria-label="Operation for Bigha measurement in mixed calculator">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
-                    </select>
-                    <input type="number" step="any" placeholder="Bigha" min="0" class="bigha" aria-label="Bigha input for mixed bolsasculator">
-                    <input type="number" step="any" placeholder="Kaththa" min="0" class="kaththa" aria-label="Kaththa input for mixed calculator">
-                    <input type="number" step="any" placeholder="Dhur" min="0" class="dhur" aria-label="Dhur input for mixed calculator">
-                </div>
-                <div class="input-group">
-                    <select class="operation" aria-label="Operation for Bigha measurement in mixed calculator">
-                        <option value="add">Add</option>
-                        <option value="subtract">Subtract</option>
+                        <option value="add">+</option>
+                        <option value="subtract">-</option>
                     </select>
                     <input type="number" step="any" placeholder="Bigha" min="0" class="bigha" aria-label="Bigha input for mixed calculator">
                     <input type="number" step="any" placeholder="Kaththa" min="0" class="kaththa" aria-label="Kaththa input for mixed calculator">
@@ -258,7 +248,7 @@
             <div id="mixed-result" class="result hidden" aria-live="polite"></div>
             <div id="mixed-error" class="error hidden" aria-live="assertive"></div>
         </section>
-        <a href="/land-area-converter/" class="back-button" aria-label="Return to Land Area Converter">Back to Converter</a>
+
     </main>
 
 <script>
@@ -323,8 +313,8 @@ function addRopaniInput() {
     div.className = 'input-group';
     div.innerHTML = `
         <select class="operation" aria-label="Operation for Ropani measurement">
-            <option value="add">Add</option>
-            <option value="subtract">Subtract</option>
+            <option value="add">+</option>
+            <option value="subtract">-</option>
         </select>
         <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input">
         <input type="number" step="any" placeholder="Aana" min="0" class="aana" aria-label="Aana input">
@@ -341,8 +331,8 @@ function addBighaInput() {
     div.className = 'input-group';
     div.innerHTML = `
         <select class="operation" aria-label="Operation for Bigha measurement">
-            <option value="add">Add</option>
-            <option value="subtract">Subtract</option>
+            <option value="add">+</option>
+            <option value="subtract">-</option>
         </select>
         <input type="number" step="any" placeholder="Bigha" min="0" class="bigha" aria-label="Bigha input">
         <input type="number" step="any" placeholder="Kaththa" min="0" class="kaththa" aria-label="Kaththa input">
@@ -358,8 +348,8 @@ function addMixedRopaniInput() {
     div.className = 'input-group';
     div.innerHTML = `
         <select class="operation" aria-label="Operation for Ropani measurement in mixed calculator">
-            <option value="add">Add</option>
-            <option value="subtract">Subtract</option>
+            <option value="add">+</option>
+            <option value="subtract">-</option>
         </select>
         <input type="number" step="any" placeholder="Ropani" min="0" class="ropani" aria-label="Ropani input for mixed calculator">
         <input type="number" step="any" placeholder="Aana" min="0" class="aana" aria-label="Aana input for mixed calculator">
@@ -376,8 +366,8 @@ function addMixedBighaInput() {
     div.className = 'input-group';
     div.innerHTML = `
         <select class="operation" aria-label="Operation for Bigha measurement in mixed calculator">
-            <option value="add">Add</option>
-            <option value="subtract">Subtract</option>
+            <option value="add">+</option>
+            <option value="subtract">-</option>
         </select>
         <input type="number" step="any" placeholder="Bigha" min="0" class="bigha" aria-label="Bigha input for mixed calculator">
         <input type="number" step="any" placeholder="Kaththa" min="0" class="kaththa" aria-label="Kaththa input for mixed calculator">
