@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Land Area Plotter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+        }
+        
+        header {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .plotting-area {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            position: relative;
+        }
+        
+        #canvas {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            display: block;
+            margin: 0 auto;
+            cursor: crosshair;
+        }
+        
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .panel {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h2 i {
+            color: #4dabf7;
+        }
+        
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background: linear-gradient(to right, #4dabf7, #3b5bdb);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #3b5bdb, #4dabf7);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button.secondary {
+            background: linear-gradient(to right, #20c997, #12b886);
+        }
+        
+        button.warning {
+            background: linear-gradient(to right, #ff6b6b, #f03e3e);
+        }
+        
+        button.active {
+            background: linear-gradient(to right, #f39c12, #e67e22);
+            box-shadow: 0 0 0 2px #fff;
+        }
+        
+        .instructions {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .instructions li i {
+            color: #4dabf7;
+            margin-top: 3px;
+        }
+        
+        .dimension-input {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .dimension-input label {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .dimension-input input {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            width: 100px;
+            text-align: center;
+        }
+        
+        .results {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #4dabf7;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+        }
+        
+        .status.warning {
+            background: rgba(231, 76, 60, 0.3);
+            color: #ff9f9f;
+        }
+        
+        .status.success {
+            background: rgba(46, 204, 113, 0.3);
+            color: #a9ffcf;
+        }
+        
+        .status.info {
+            background: rgba(52, 152, 219, 0.3);
+            color: #a9d6ff;
+        }
+        
+        footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .close-indicator {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(46, 204, 113, 0.3);
+            border: 2px solid #2ecc71;
+            display: none;
+            pointer-events: none;
+            z-index: 10;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .dimension-display {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            z-index: 100;
+            border: 1px solid #ccc;
+        }
+        
+        .slice-result-panel {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .slice-result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .side-selection {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        
+        .side-btn {
+            flex: 1;
+            margin: 0 5px;
+            text-align: center;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0.7; }
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-ruler-combined"></i> Complete Land Area Plotter</h1>
+            <p class="subtitle">Plot, measure, and calculate land areas with diagonals</p>
+        </header>
+        
+        <main class="plotting-area">
+            <div id="closeIndicator" class="close-indicator"></div>
+            <canvas id="canvas" width="750" height="500"></canvas>
+        </main>
+        
+        <aside class="controls">
+            <div class="panel">
+                <h2><i class="fas fa-tools"></i> Controls</h2>
+                <div class="btn-group">
+                    <button id="optimize"><i class="fas fa-magic"></i> Optimize</button>
+                    <button id="calculateArea" class="secondary"><i class="fas fa-calculator"></i> Calculate Area</button>
+                    <button id="clear" class="warning"><i class="fas fa-trash"></i> Clear All</button>
+                    <button id="addDiagonal"><i class="fas fa-plus-circle"></i> Add Diagonal</button>
+                    <button id="closeShape"><i class="fas fa-draw-polygon"></i> Close Shape</button>
+                    <button id="undo" class="warning"><i class="fas fa-undo"></i> Undo</button>
+                </div>
+                
+                <div class="dimension-input">
+                    <label><i class="fas fa-ruler"></i> Edge Length (m):</label>
+                    <input type="number" id="lengthInput" step="0.01" min="0.1" placeholder="Enter length">
+                </div>
+                
+                <div class="status" id="statusDisplay">
+                    <i class="fas fa-info-circle"></i> Ready to plot. Click to add points.
+                </div>
+            </div>
+            
+            <div class="panel" id="slicePanel">
+                <h2><i class="fas fa-cut"></i> Slice Shape</h2>
+                <div class="dimension-input">
+                    <label><i class="fas fa-ruler-combined"></i> Area to slice (m²):</label>
+                    <input type="number" id="sliceAreaInput" step="0.01" min="0.1" placeholder="Enter area">
+                </div>
+                <div class="btn-group">
+                    <button id="startSlice"><i class="fas fa-cut"></i> Start Slice</button>
+                    <button id="cancelSlice" class="warning"><i class="fas fa-times"></i> Cancel</button>
+                    <button id="confirmSlice" class="secondary" style="display:none;"><i class="fas fa-check"></i> Confirm Slice</button>
+                </div>
+                <div class="side-selection" id="sideSelection" style="display:none;">
+                    <button class="side-btn" id="leftSide"><i class="fas fa-arrow-left"></i> Left Side</button>
+                    <button class="side-btn" id="rightSide"><i class="fas fa-arrow-right"></i> Right Side</button>
+                </div>
+                <div class="status" id="sliceStatus">
+                    <i class="fas fa-info-circle"></i> Enter area and click Start Slice.
+                </div>
+                <div class="slice-result-panel" id="sliceResults" style="display:none;">
+                    <h3><i class="fas fa-ruler-combined"></i> Slice Results</h3>
+                    <div id="sliceResultContent"></div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2><i class="fas fa-book"></i> Instructions</h2>
+                <ol class="instructions">
+                    <li><i class="fas fa-mouse-pointer"></i> Click on canvas to add points and create your shape</li>
+                    <li><i class="fas fa-dot-circle"></i> Close shape by clicking near first point or using button</li>
+                    <li><i class="fas fa-ruler-horizontal"></i> Click edges to add their actual lengths</li>
+                    <li><i class="fas fa-plus-circle"></i> Use "Add Diagonal" to divide complex shapes</li>
+                    <li><i class="fas fa-calculator"></i> Click "Calculate Area" for precise measurements</li>
+                    <li><i class="fas fa-trash"></i> Double-click edges to delete them</li>
+                </ol>
+            </div>
+            
+            <div class="panel results">
+                <h2><i class="fas fa-chart-area"></i> Area Calculation</h2>
+                <div class="result-item">
+                    <span>Area in Square Meters:</span>
+                    <span id="areaMeters" class="result-value">0.00</span>
+                </div>
+                <div class="result-item">
+                    <span>Area in Square Feet:</span>
+                    <span id="areaFeet" class="result-value">0.00</span>
+                </div>
+                <div class="result-item">
+                    <span>Area in Acres:</span>
+                    <span id="areaAcres" class="result-value">0.00</span>
+                </div>
+                <div class="result-item">
+                    <span>Perimeter:</span>
+                    <span id="perimeter" class="result-value">0.00 m</span>
+                </div>
+            </div>
+        </aside>
+        
+        <footer>
+            <p>Complete Land Area Plotter © 2023 | Full diagonal support and accurate measurements</p>
+        </footer>
+    </div>
+
+    <script>
+        // DOM Elements
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const lengthInput = document.getElementById('lengthInput');
+        const statusDisplay = document.getElementById('statusDisplay');
+        const areaMeters = document.getElementById('areaMeters');
+        const areaFeet = document.getElementById('areaFeet');
+        const areaAcres = document.getElementById('areaAcres');
+        const perimeter = document.getElementById('perimeter');
+        const closeIndicator = document.getElementById('closeIndicator');
+        const closeShapeBtn = document.getElementById('closeShape');
+        const addDiagonalBtn = document.getElementById('addDiagonal');
+        const undoBtn = document.getElementById('undo');
+        const sliceAreaInput = document.getElementById('sliceAreaInput');
+        const startSliceBtn = document.getElementById('startSlice');
+        const cancelSliceBtn = document.getElementById('cancelSlice');
+        const confirmSliceBtn = document.getElementById('confirmSlice');
+        const sliceStatus = document.getElementById('sliceStatus');
+        const sliceResults = document.getElementById('sliceResults');
+        const sliceResultContent = document.getElementById('sliceResultContent');
+        const sideSelection = document.getElementById('sideSelection');
+        const leftSideBtn = document.getElementById('leftSide');
+        const rightSideBtn = document.getElementById('rightSide');
+        
+        // Drawing state
+        let points = [];
+        let edges = [];
+        let isShapeClosed = false;
+        let selectedEdge = null;
+        let scaleFactor = 1;
+        let showCloseIndicator = false;
+        
+        // Undo state
+        let undoStack = [];
+        const UNDO_LIMIT = 3;
+        
+        // Diagonal mode state
+        let diagonalMode = false;
+        let firstDiagonalPoint = null;
+        
+        // Slice mode state
+        let sliceMode = false;
+        let sliceStartPoint = null;
+        let sliceLine = null;
+        let sliceLineFinalized = false;
+        let targetSliceArea = 0;
+        let sliceDirection = null;
+        let sliceOriginalEdges = null;
+        let sliceIntersections = [];
+        let leftPoly = [];
+        let rightPoly = [];
+        
+        // Initialize
+        draw();
+        
+        // Set initial status
+        updateStatus("Click on the canvas to add the first point", "info");
+        
+        // Draw the current state
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw grid for reference
+            drawGrid();
+            
+            // Draw edges with their lengths
+            edges.forEach(function(edge) {
+                const start = points[edge.startIndex];
+                const end = points[edge.endIndex];
+                
+                ctx.beginPath();
+                ctx.moveTo(start.x, start.y);
+                ctx.lineTo(end.x, end.y);
+                ctx.lineWidth = edge.isSliceEdge ? 4 : 3;
+                ctx.strokeStyle = edge.isSliceEdge ? '#2ecc71' : 
+                                  edge === selectedEdge ? '#4dabf7' : '#333';
+                ctx.stroke();
+                
+                // Draw length text
+                if (edge.length || edge.isSliceEdge) {
+                    const midX = (start.x + end.x) / 2;
+                    const midY = (start.y + end.y) / 2;
+                    
+                    ctx.fillStyle = edge.isSliceEdge ? '#2ecc71' : '#333';
+                    ctx.font = 'bold ' + (edge.isSliceEdge ? '14px' : '12px') + ' Arial';
+                    ctx.textAlign = 'center';
+                    
+                    const lengthText = edge.length ? 
+                        edge.length.toFixed(2) + ' m' : 
+                        calculateEdgeLength(edge).toFixed(2) + ' m';
+                    
+                    ctx.fillText(lengthText, midX, midY - (edge.isSliceEdge ? 15 : 10));
+                }
+            });
+            
+            // Draw sliced polygons if available
+            if (leftPoly.length > 0 && rightPoly.length > 0) {
+                // Left polygon (blue)
+                ctx.beginPath();
+                ctx.moveTo(leftPoly[0].x, leftPoly[0].y);
+                for (let i = 1; i < leftPoly.length; i++) {
+                    ctx.lineTo(leftPoly[i].x, leftPoly[i].y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(0, 0, 255, 0.3)';
+                ctx.fill();
+                
+                // Right polygon (red)
+                ctx.beginPath();
+                ctx.moveTo(rightPoly[0].x, rightPoly[0].y);
+                for (let i = 1; i < rightPoly.length; i++) {
+                    ctx.lineTo(rightPoly[i].x, rightPoly[i].y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+                ctx.fill();
+            }
+            
+            // Draw points
+            points.forEach(function(point, index) {
+                ctx.beginPath();
+                ctx.arc(point.x, point.y, point.highlight ? 8 : 6, 0, Math.PI * 2);
+                ctx.fillStyle = point.highlight ? '#3498db' : 
+                               (index === 0 && points.length > 2 ? '#2ecc71' : '#e74c3c');
+                ctx.fill();
+                
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Label points
+                ctx.fillStyle = '#2c3e50';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText('P' + (index + 1), point.x, point.y + 20);
+            });
+            
+            // Draw polygon fill if closed
+            if (isShapeClosed && points.length >= 3 && leftPoly.length === 0) {
+                ctx.beginPath();
+                ctx.moveTo(points[0].x, points[0].y);
+                for (let i = 1; i < points.length; i++) {
+                    ctx.lineTo(points[i].x, points[i].y);
+                }
+                ctx.closePath();
+                ctx.fillStyle = 'rgba(46, 204, 113, 0.2)';
+                ctx.fill();
+            }
+            
+            // Draw slice line if in slice mode
+            if (sliceMode && sliceLine) {
+                ctx.beginPath();
+                ctx.moveTo(sliceLine.start.x, sliceLine.start.y);
+                ctx.lineTo(sliceLine.end.x, sliceLine.end.y);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = sliceLineFinalized ? '#2ecc71' : '#e74c3c';
+                ctx.setLineDash(sliceLineFinalized ? [] : [5, 5]);
+                ctx.stroke();
+                ctx.setLineDash([]);
+                
+                // Draw direction indicator
+                if (sliceDirection) {
+                    const midX = (sliceLine.start.x + sliceLine.end.x) / 2;
+                    const midY = (sliceLine.start.y + sliceLine.end.y) / 2;
+                    
+                    ctx.beginPath();
+                    ctx.arc(midX, midY, 5, 0, Math.PI * 2);
+                    ctx.fillStyle = '#e74c3c';
+                    ctx.fill();
+                    
+                    ctx.font = 'bold 12px Arial';
+                    ctx.fillText('Target: ' + targetSliceArea.toFixed(2) + ' m²', midX, midY - 15);
+                }
+            }
+            
+            // Draw intersection points if they exist
+            if (sliceIntersections.length > 0 && sliceLineFinalized) {
+                const intersectionA = sliceIntersections[0];
+                const intersectionB = sliceIntersections[1];
+                
+                // Draw and label intersection points A and B
+                ctx.beginPath();
+                ctx.arc(intersectionA.x, intersectionA.y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#e74c3c';
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillText('A', intersectionA.x, intersectionA.y + 15);
+
+                ctx.beginPath();
+                ctx.arc(intersectionB.x, intersectionB.y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = '#e74c3c';
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.fillText('B', intersectionB.x, intersectionB.y + 15);
+
+                // Determine adjacent original points for a 5-sided shape
+                // Assuming P5 to A, A to P1, P3 to B, B to P2 based on slice intersections
+                const totalPoints = points.length;
+                const aIndex = points.findIndex(p => p.x === intersectionA.x && p.y === intersectionA.y);
+                const bIndex = points.findIndex(p => p.x === intersectionB.x && p.y === intersectionB.y);
+
+                if (aIndex !== -1 && bIndex !== -1 && totalPoints === 5) {
+                    const p5 = points[(aIndex - 1 + totalPoints) % totalPoints]; // Previous point to A
+                    const p1 = points[(aIndex + 1) % totalPoints]; // Next point to A
+                    const p3 = points[(bIndex - 1 + totalPoints) % totalPoints]; // Previous point to B
+                    const p2 = points[(bIndex + 1) % totalPoints]; // Next point to B
+
+                    // Calculate distances
+                    const p5aDist = Math.sqrt(Math.pow(p5.x - intersectionA.x, 2) + Math.pow(p5.y - intersectionA.y, 2)) * scaleFactor;
+                    const ap1Dist = Math.sqrt(Math.pow(p1.x - intersectionA.x, 2) + Math.pow(p1.y - intersectionA.y, 2)) * scaleFactor;
+                    const p3bDist = Math.sqrt(Math.pow(p3.x - intersectionB.x, 2) + Math.pow(p3.y - intersectionB.y, 2)) * scaleFactor;
+                    const b2Dist = Math.sqrt(Math.pow(p2.x - intersectionB.x, 2) + Math.pow(p2.y - intersectionB.y, 2)) * scaleFactor;
+
+                    // Display dimensions below the slice line
+                    const sliceMidX = (intersectionA.x + intersectionB.x) / 2;
+                    const sliceMidY = (intersectionA.y + intersectionB.y) / 2;
+                    const offsetY = 20; // Vertical offset below slice line
+
+                    ctx.fillStyle = '#2ecc71';
+                    ctx.font = 'bold 12px Arial';
+                    ctx.textAlign = 'center';
+
+                    ctx.fillText(`P5-A: ${p5aDist.toFixed(2)} m`, sliceMidX - 60, sliceMidY + offsetY);
+                    ctx.fillText(`A-P1: ${ap1Dist.toFixed(2)} m`, sliceMidX - 20, sliceMidY + offsetY);
+                    ctx.fillText(`P3-B: ${p3bDist.toFixed(2)} m`, sliceMidX + 20, sliceMidY + offsetY);
+                    ctx.fillText(`B-P2: ${b2Dist.toFixed(2)} m`, sliceMidX + 60, sliceMidY + offsetY);
+                }
+            }
+            
+            // Update area display
+            updateAreaDisplay();
+        }
+        
+        // Draw grid for reference
+        function drawGrid() {
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.lineWidth = 1;
+            
+            // Vertical lines
+            for (let x = 0; x <= canvas.width; x += 25) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            
+            // Horizontal lines
+            for (let y = 0; y <= canvas.height; y += 25) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+        
+        // Update status display
+        function updateStatus(message, type) {
+            type = type || "info";
+            statusDisplay.className = "status";
+            if (type === "warning") statusDisplay.classList.add("warning");
+            if (type === "success") statusDisplay.classList.add("success");
+            if (type === "info") statusDisplay.classList.add("info");
+            
+            var iconClass = type === "info" ? "info-circle" : 
+                            type === "warning" ? "exclamation-triangle" : 
+                            "check-circle";
+            
+            statusDisplay.innerHTML = '<i class="fas fa-' + iconClass + '"></i> ' + message;
+        }
+        
+        // Update slice status display
+        function updateSliceStatus(message, type) {
+            type = type || "info";
+            sliceStatus.className = "status";
+            if (type === "warning") sliceStatus.classList.add("warning");
+            if (type === "success") sliceStatus.classList.add("success");
+            if (type === "info") sliceStatus.classList.add("info");
+            
+            var iconClass = type === "info" ? "info-circle" : 
+                            type === "warning" ? "exclamation-triangle" : 
+                            "check-circle";
+            
+            sliceStatus.innerHTML = '<i class="fas fa-' + iconClass + '"></i> ' + message;
+        }
+        
+        // Update area display
+        function updateAreaDisplay() {
+            if (!isShapeClosed || points.length < 3) {
+                areaMeters.textContent = "0.00";
+                areaFeet.textContent = "0.00";
+                areaAcres.textContent = "0.00";
+                perimeter.textContent = "0.00 m";
+                return;
+            }
+            
+            const area = calculateArea();
+            const perimeterValue = calculatePerimeter();
+            
+            areaMeters.textContent = area.toFixed(2);
+            areaFeet.textContent = (area * 10.7639).toFixed(2);
+            areaAcres.textContent = (area / 4046.86).toFixed(4);
+            perimeter.textContent = perimeterValue.toFixed(2) + " m";
+        }
+        
+        // Calculate area based on actual measurements
+        function calculateArea() {
+            if (edges.length === 0) return 0;
+            
+            // Calculate pixel area using shoelace formula
+            let pixelArea = 0;
+            for (let i = 0; i < points.length; i++) {
+                const j = (i + 1) % points.length;
+                pixelArea += points[i].x * points[j].y;
+                pixelArea -= points[i].y * points[j].x;
+            }
+            pixelArea = Math.abs(pixelArea / 2);
+            
+            // Find total provided real lengths and total pixel lengths
+            let totalRealLength = 0;
+            let totalPixelLength = 0;
+            
+            edges.forEach(function(edge) {
+                if (edge.length) {
+                    const p1 = points[edge.startIndex];
+                    const p2 = points[edge.endIndex];
+                    const pixelLength = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+                    
+                    totalRealLength += edge.length;
+                    totalPixelLength += pixelLength;
+                }
+            });
+            
+            // Calculate scale factor (if we have measurements)
+            if (totalRealLength > 0 && totalPixelLength > 0) {
+                scaleFactor = totalRealLength / totalPixelLength;
+            }
+            
+            // Apply scale factor to area (scale squared for area)
+            return pixelArea * scaleFactor * scaleFactor;
+        }
+        
+        // Calculate perimeter based on actual measurements
+        function calculatePerimeter() {
+            let total = 0;
+            
+            edges.forEach(function(edge) {
+                if (edge.length) {
+                    total += edge.length;
+                } else {
+                    const p1 = points[edge.startIndex];
+                    const p2 = points[edge.endIndex];
+                    const pixelLength = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+                    total += pixelLength * scaleFactor;
+                }
+            });
+            
+            return total;
+        }
+        
+        // Calculate edge length in real units
+        function calculateEdgeLength(edge) {
+            const p1 = points[edge.startIndex];
+            const p2 = points[edge.endIndex];
+            const pixelLength = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+            return pixelLength * scaleFactor;
+        }
+        
+        // Find the nearest point
+        function getNearPoint(x, y) {
+            for (let i = 0; i < points.length; i++) {
+                const point = points[i];
+                const distance = Math.sqrt(Math.pow(point.x - x, 2) + Math.pow(point.y - y, 2));
+                if (distance < 25) return i;
+            }
+            return -1;
+        }
+        
+        // Find the nearest edge
+        function getNearEdge(x, y) {
+            for (let i = 0; i < edges.length; i++) {
+                const edge = edges[i];
+                const p1 = points[edge.startIndex];
+                const p2 = points[edge.endIndex];
+                
+                // Calculate distance from point to line segment
+                const A = x - p1.x;
+                const B = y - p1.y;
+                const C = p2.x - p1.x;
+                const D = p2.y - p1.y;
+                
+                const dot = A * C + B * D;
+                const lenSq = C * C + D * D;
+                let param = -1;
+                
+                if (lenSq !== 0) param = dot / lenSq;
+                
+                let xx, yy;
+                if (param < 0) {
+                    xx = p1.x;
+                    yy = p1.y;
+                } else if (param > 1) {
+                    xx = p2.x;
+                    yy = p2.y;
+                } else {
+                    xx = p1.x + param * C;
+                    yy = p1.y + param * D;
+                }
+                
+                const distance = Math.sqrt(Math.pow(x - xx, 2) + Math.pow(y - yy, 2));
+                if (distance < 10) return i;
+            }
+            return -1;
+        }
+        
+        // Close the shape programmatically
+        function closeShape() {
+            if (isShapeClosed) return;
+            
+            if (points.length >= 3) {
+                edges.push({ startIndex: points.length - 1, endIndex: 0, length: null });
+                isShapeClosed = true;
+                undoStack.push({ action: 'closeShape', points: points.slice(), edges: edges.slice() });
+                updateStatus("Shape closed! Add dimensions to edges or calculate area.", "success");
+                showCloseIndicator = false;
+                closeIndicator.style.display = 'none';
+                draw();
+            } else {
+                updateStatus("Need at least 3 points to close a shape", "warning");
+            }
+        }
+        
+        // Handle adding diagonals
+        function handleDiagonalClick(x, y) {
+            const pointIndex = getNearPoint(x, y);
+            
+            if (pointIndex === -1) {
+                updateStatus("Please click on an existing point to add a diagonal", "warning");
+                return;
+            }
+
+            if (firstDiagonalPoint === null) {
+                firstDiagonalPoint = pointIndex;
+                points[pointIndex].highlight = true;
+                updateStatus("Selected point P" + (pointIndex + 1) + ". Click another point to complete diagonal.", "info");
+                draw();
+            } else if (firstDiagonalPoint === pointIndex) {
+                updateStatus("Cannot create diagonal to the same point", "warning");
+            } else {
+                // Check if edge already exists
+                const edgeExists = edges.some(function(edge) {
+                    return (edge.startIndex === firstDiagonalPoint && edge.endIndex === pointIndex) ||
+                           (edge.startIndex === pointIndex && edge.endIndex === firstDiagonalPoint);
+                });
+
+                if (edgeExists) {
+                    updateStatus("Edge already exists between these points", "warning");
+                } else {
+                    const newEdge = { 
+                        startIndex: firstDiagonalPoint, 
+                        endIndex: pointIndex, 
+                        length: null 
+                    };
+                    edges.push(newEdge);
+                    undoStack.push({ action: 'addDiagonal', edge: newEdge, edges: edges.slice() });
+                    updateStatus("Diagonal added between P" + (firstDiagonalPoint + 1) + " and P" + (pointIndex + 1), "success");
+                }
+                
+                // Reset diagonal mode
+                points[firstDiagonalPoint].highlight = false;
+                firstDiagonalPoint = null;
+                exitDiagonalMode();
+                draw();
+            }
+        }
+        
+        // Enter diagonal mode
+        function enterDiagonalMode() {
+            if (!isShapeClosed || points.length < 4) {
+                updateStatus("Need a closed shape with at least 4 points to add diagonals", "warning");
+                return false;
+            }
+            
+            diagonalMode = true;
+            addDiagonalBtn.classList.add('active');
+            updateStatus("Diagonal mode: Click two points to add a diagonal between them", "info");
+            return true;
+        }
+        
+        // Exit diagonal mode
+        function exitDiagonalMode() {
+            diagonalMode = false;
+            addDiagonalBtn.classList.remove('active');
+            if (firstDiagonalPoint !== null) {
+                points[firstDiagonalPoint].highlight = false;
+                firstDiagonalPoint = null;
+            }
+        }
+        
+        // Optimize shape based on measurements
+        function optimizeShape() {
+            if (!isShapeClosed || points.length < 3) {
+                updateStatus("Please close the shape first", "warning");
+                return;
+            }
+            
+            const edgesWithLength = edges.filter(function(e) { return e.length; }).length;
+            if (edgesWithLength < 2) {
+                updateStatus("Add at least 2 edge lengths to optimize", "warning");
+                return;
+            }
+            
+            const oldPoints = points.slice();
+            const oldEdges = edges.slice();
+            
+            // Simple optimization: adjust points to match lengths
+            for (let iter = 0; iter < 50; iter++) {
+                edges.forEach(function(edge) {
+                    if (!edge.length) return;
+                    
+                    const p1 = points[edge.startIndex];
+                    const p2 = points[edge.endIndex];
+                    const dx = p2.x - p1.x;
+                    const dy = p2.y - p1.y;
+                    const currentLength = Math.sqrt(dx * dx + dy * dy);
+                    const targetLength = edge.length / scaleFactor;
+                    
+                    if (currentLength === 0) return;
+                    
+                    const ratio = targetLength / currentLength;
+                    const midX = (p1.x + p2.x) / 2;
+                    const midY = (p1.y + p2.y) / 2;
+                    
+                    // Adjust points
+                    if (edge.startIndex !== 0) {
+                        p1.x = midX + (p1.x - midX) * ratio;
+                        p1.y = midY + (p1.y - midY) * ratio;
+                    }
+                    if (edge.endIndex !== 0) {
+                        p2.x = midX + (p2.x - midX) * ratio;
+                        p2.y = midY + (p2.y - midY) * ratio;
+                    }
+                });
+            }
+            
+            undoStack.push({ action: 'optimize', points: oldPoints, edges: oldEdges });
+            if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+            updateStatus("Shape optimized to match provided measurements", "success");
+            draw();
+        }
+        
+        // Prepare for slicing
+        function prepareForSlicing() {
+            if (!isShapeClosed || points.length < 3) {
+                updateSliceStatus("Need a closed shape to slice", "warning");
+                return false;
+            }
+
+            // Optimize the shape first
+            optimizeShape();
+            
+            // Store original edges and filter out diagonals
+            sliceOriginalEdges = edges.slice();
+            edges = edges.filter(function(edge) {
+                return Math.abs(edge.startIndex - edge.endIndex) === 1 || 
+                       Math.abs(edge.startIndex - edge.endIndex) === points.length - 1;
+            });
+
+            // Validate slice area
+            const totalArea = calculateArea();
+            targetSliceArea = parseFloat(sliceAreaInput.value);
+            
+            if (isNaN(targetSliceArea) || targetSliceArea <= 0) {
+                updateSliceStatus("Please enter a valid positive area", "warning");
+                edges = sliceOriginalEdges;
+                sliceOriginalEdges = null;
+                return false;
+            }
+            
+            if (targetSliceArea >= totalArea) {
+                updateSliceStatus("Slice area must be less than total area (" + totalArea.toFixed(2) + " m²)", "warning");
+                edges = sliceOriginalEdges;
+                sliceOriginalEdges = null;
+                return false;
+            }
+            
+            sliceMode = true;
+            sliceLineFinalized = false;
+            leftPoly = [];
+            rightPoly = [];
+            
+            updateSliceStatus("Click to set the start point of the slice line", "info");
+            updateStatus("Slice mode: Click to set start point", "info");
+            draw();
+            
+            return true;
+        }
+        
+        // Exit slice mode
+        function exitSliceMode() {
+            sliceMode = false;
+            sliceStartPoint = null;
+            sliceLine = null;
+            sliceLineFinalized = false;
+            sliceDirection = null;
+            sliceIntersections = [];
+            leftPoly = [];
+            rightPoly = [];
+            
+            if (sliceOriginalEdges) {
+                edges = sliceOriginalEdges;
+                sliceOriginalEdges = null;
+            }
+            
+            sideSelection.style.display = 'none';
+            sliceResults.style.display = 'none';
+            confirmSliceBtn.style.display = 'none';
+            updateSliceStatus("Enter area and click Start Slice.", "info");
+            updateStatus("Slice mode canceled", "info");
+            draw();
+        }
+        
+        // Find intersection point of two lines
+        function findLineIntersection(p1, p2, p3, p4) {
+            const denominator = (p4.y - p3.y) * (p2.x - p1.x) - (p4.x - p3.x) * (p2.y - p1.y);
+            
+            if (Math.abs(denominator) < 0.0001) return null;
+            
+            const ua = ((p4.x - p3.x) * (p1.y - p3.y) - (p4.y - p3.y) * (p1.x - p3.x)) / denominator;
+            const ub = ((p2.x - p1.x) * (p1.y - p3.y) - (p2.y - p1.y) * (p1.x - p3.x)) / denominator;
+            
+            if (ua >= 0 && ua <= 1 && ub >= 0 && ub <= 1) {
+                return {
+                    x: p1.x + ua * (p2.x - p1.x),
+                    y: p1.y + ua * (p2.y - p1.y)
+                };
+            }
+            return null;
+        }
+        
+        // Check if a point is on a line segment
+        function isPointOnSegment(p, p1, p2) {
+            const crossProduct = (p.y - p1.y) * (p2.x - p1.x) - (p.x - p1.x) * (p2.y - p1.y);
+            if (Math.abs(crossProduct) > 0.1) return false;
+            
+            const dotProduct = (p.x - p1.x) * (p2.x - p1.x) + (p.y - p1.y) * (p2.y - p1.y);
+            if (dotProduct < 0) return false;
+            
+            const squaredLength = (p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y);
+            if (dotProduct > squaredLength) return false;
+            
+            return true;
+        }
+        
+        // Find intersections with polygon edges
+        function findIntersectionsWithPolygon(line) {
+            const intersections = [];
+            
+            for (let i = 0; i < points.length; i++) {
+                const j = (i + 1) % points.length;
+                const edgeStart = points[i];
+                const edgeEnd = points[j];
+                
+                const intersect = findLineIntersection(
+                    line.start, line.end,
+                    edgeStart, edgeEnd
+                );
+                
+                if (intersect && isPointOnSegment(intersect, edgeStart, edgeEnd)) {
+                    intersections.push({
+                        point: intersect,
+                        edgeIndex: i
+                    });
+                }
+            }
+            
+            // Sort intersections by y-coordinate for consistency
+            intersections.sort((a, b) => a.point.y - b.point.y);
+            return intersections.map(i => i.point);
+        }
+        
+        // Calculate area of a polygon using shoelace formula
+        function calculatePolygonArea(verts) {
+            let area = 0;
+            for (let i = 0; i < verts.length; i++) {
+                const j = (i + 1) % verts.length;
+                area += verts[i].x * verts[j].y;
+                area -= verts[j].x * verts[i].y;
+            }
+            return Math.abs(area / 2) * scaleFactor * scaleFactor;
+        }
+        
+        // Get polygons on either side of the line
+        function getSlicedPolygons(line, direction) {
+            let intersections = findIntersectionsWithPolygon(line);
+            if (intersections.length < 2) return { left: [], right: [] };
+            
+            // Ensure exactly two intersections
+            intersections = intersections.slice(0, 2);
+            
+            let leftVerts = [];
+            let rightVerts = [];
+            const lineVec = { x: line.end.x - line.start.x, y: line.end.y - line.start.y };
+            
+            // Determine left and right based on cross product
+            for (let i = 0; i < points.length; i++) {
+                const v = points[i];
+                const cross = (line.end.x - line.start.x) * (v.y - line.start.y) - 
+                              (line.end.y - line.start.y) * (v.x - line.start.x);
+                if (direction === 'left') {
+                    if (cross <= 0) leftVerts.push(v);
+                    if (cross >= 0) rightVerts.push(v);
+                } else {
+                    if (cross >= 0) leftVerts.push(v);
+                    if (cross <= 0) rightVerts.push(v);
+                }
+            }
+            
+            // Add intersection points
+            leftVerts.push(...intersections);
+            rightVerts.push(...intersections);
+            
+            // Sort vertices to form valid polygons
+            const centerX = (intersections[0].x + intersections[1].x) / 2;
+            const centerY = (intersections[0].y + intersections[1].y) / 2;
+            leftVerts.sort((a, b) => {
+                const angleA = Math.atan2(a.y - centerY, a.x - centerX);
+                const angleB = Math.atan2(b.y - centerY, b.x - centerX);
+                return angleA - angleB;
+            });
+            rightVerts.sort((a, b) => {
+                const angleA = Math.atan2(a.y - centerY, a.x - centerX);
+                const angleB = Math.atan2(b.y - centerY, b.x - centerX);
+                return angleA - angleB;
+            });
+            
+            // Ensure at least 3 points per polygon
+            if (leftVerts.length < 3 || rightVerts.length < 3) {
+                return { left: [], right: [] };
+            }
+            
+            return { left: leftVerts, right: rightVerts };
+        }
+        
+        // Adjust slice line to achieve target area
+        function adjustSliceToTargetArea() {
+            if (!sliceLine || !sliceDirection) return;
+
+            const intersections = findIntersectionsWithPolygon(sliceLine);
+            if (intersections.length !== 2) {
+                updateSliceStatus("Invalid slice line - must intersect exactly two edges.", "warning");
+                sliceLine = null;
+                sliceStartPoint = null;
+                sliceLineFinalized = false;
+                sideSelection.style.display = 'none';
+                updateStatus("Slice mode: Click to set start point", "info");
+                draw();
+                return;
+            }
+
+            const lineVec = { x: sliceLine.end.x - sliceLine.start.x, y: sliceLine.end.y - sliceLine.start.y };
+            const length = Math.sqrt(lineVec.x * lineVec.x + lineVec.y * lineVec.y);
+            if (length < 0.1) {
+                updateSliceStatus("Slice line too short.", "warning");
+                sliceLine = null;
+                sliceStartPoint = null;
+                sliceLineFinalized = false;
+                sideSelection.style.display = 'none';
+                updateStatus("Slice mode: Click to set start point", "info");
+                draw();
+                return;
+            }
+
+            const dirVec = { x: lineVec.x / length, y: lineVec.y / length };
+            const normalVec = { x: -dirVec.y, y: dirVec.x };
+
+            // Dynamic range based on total area and polygon bounds
+            const totalArea = calculateArea();
+            const minX = Math.min(...points.map(p => p.x));
+            const maxX = Math.max(...points.map(p => p.x));
+            const minY = Math.min(...points.map(p => p.y));
+            const maxY = Math.max(...points.map(p => p.y));
+            const maxOffset = Math.max(maxX - minX, maxY - minY) * 0.5; // Reduced range
+            let low = -maxOffset;
+            let high = maxOffset;
+            let bestOffset = 0;
+            let bestAreaDiff = Infinity;
+            let bestLine = null;
+            const errorMargin = 0.3; // Target error margin of 0.3 m²
+            const targetArea = parseFloat(sliceAreaInput.value) || 0;
+
+            for (let i = 0; i < 300; i++) { // Increased iterations
+                const offset = (low + high) / 2;
+                const movedLine = {
+                    start: { x: sliceLine.start.x + normalVec.x * offset, y: sliceLine.start.y + normalVec.y * offset },
+                    end: { x: sliceLine.end.x + normalVec.x * offset, y: sliceLine.end.y + normalVec.y * offset }
+                };
+
+                const newIntersections = findIntersectionsWithPolygon(movedLine);
+                if (newIntersections.length !== 2) continue;
+
+                const { left, right } = getSlicedPolygons(movedLine, sliceDirection);
+                if (left.length < 3 || right.length < 3) continue;
+
+                const achievedArea = calculatePolygonArea(sliceDirection === 'left' ? left : right);
+                const diff = Math.abs(achievedArea - targetArea);
+
+                if (diff < bestAreaDiff) {
+                    bestAreaDiff = diff;
+                    bestOffset = offset;
+                    bestLine = movedLine;
+                    leftPoly = left;
+                    rightPoly = right;
+                }
+
+                if (diff <= errorMargin) break;
+
+                // Adjust range based on area difference
+                const currentArea = calculatePolygonArea(sliceDirection === 'left' ? left : right);
+                if (currentArea < targetArea) {
+                    low = offset;
+                } else {
+                    high = offset;
+                }
+
+                if (Math.abs(high - low) < 0.0001) break; // Finer convergence
+            }
+
+            if (bestLine) {
+                sliceLine = bestLine;
+                sliceIntersections = findIntersectionsWithPolygon(sliceLine);
+
+                const achievedArea = calculatePolygonArea(sliceDirection === 'left' ? leftPoly : rightPoly);
+                const otherArea = totalArea - achievedArea;
+
+                const slope = (sliceLine.end.y - sliceLine.start.y) / (sliceLine.end.x - sliceLine.start.x);
+                const intercept = sliceLine.start.y - slope * sliceLine.start.x;
+                const lineEq = `y = ${(slope * scaleFactor).toFixed(2)}x + ${(intercept * scaleFactor).toFixed(2)}`;
+
+                updateSliceStatus(
+                    `Slice complete. Target area: ${achievedArea.toFixed(2)} m², ` +
+                    `Other side: ${otherArea.toFixed(2)} m², ` +
+                    `Error: ${bestAreaDiff.toFixed(2)} m², ` +
+                    `Line: ${lineEq}`,
+                    bestAreaDiff <= errorMargin ? "success" : "warning"
+                );
+
+                confirmSliceBtn.style.display = 'block';
+                draw();
+            } else {
+                updateSliceStatus("Could not find valid slice position within 0.3 m² error.", "warning");
+                sliceLine = null;
+                sliceStartPoint = null;
+                sliceLineFinalized = false;
+                sideSelection.style.display = 'none';
+                updateStatus("Slice mode: Click to set start point", "info");
+                draw();
+            }
+        }
+
+        // Confirm and finalize the slice
+        function confirmSlice() {
+            if (!sliceLine || sliceIntersections.length !== 2) {
+                updateSliceStatus("Could not find valid slice points", "warning");
+                return;
+            }
+            
+            // Add new points at intersections
+            const newPoint1 = {
+                x: sliceIntersections[0].x,
+                y: sliceIntersections[0].y,
+                isSlicePoint: true
+            };
+            
+            const newPoint2 = {
+                x: sliceIntersections[1].x,
+                y: sliceIntersections[1].y,
+                isSlicePoint: true
+            };
+            
+            // Find where to insert these points
+            let insertIndex1 = -1;
+            let insertIndex2 = -1;
+            
+            for (let i = 0; i < points.length; i++) {
+                const j = (i + 1) % points.length;
+                if (isPointOnSegment(sliceIntersections[0], points[i], points[j])) {
+                    insertIndex1 = j;
+                }
+                if (isPointOnSegment(sliceIntersections[1], points[i], points[j])) {
+                    insertIndex2 = j;
+                }
+            }
+            
+            // Insert points (order matters to maintain polygon)
+            if (insertIndex1 < insertIndex2) {
+                points.splice(insertIndex1, 0, newPoint1);
+                points.splice(insertIndex2 + 1, 0, newPoint2);
+            } else {
+                points.splice(insertIndex2, 0, newPoint2);
+                points.splice(insertIndex1 + 1, 0, newPoint1);
+            }
+            
+            // Rebuild edges
+            edges = [];
+            for (let i = 0; i < points.length; i++) {
+                const j = (i + 1) % points.length;
+                
+                let originalEdge = null;
+                for (let k = 0; k < sliceOriginalEdges.length; k++) {
+                    const edge = sliceOriginalEdges[k];
+                    const p1 = points[edge.startIndex];
+                    const p2 = points[edge.endIndex];
+                    
+                    if ((p1 === points[i] && p2 === points[j]) || 
+                        (p1 === points[j] && p2 === points[i])) {
+                        originalEdge = edge;
+                        break;
+                    }
+                }
+                
+                edges.push({
+                    startIndex: i,
+                    endIndex: j,
+                    length: originalEdge ? originalEdge.length : null,
+                    isSliceEdge: false
+                });
+            }
+            
+            // Add the slice edge
+            const sliceEdgeIndex1 = points.indexOf(newPoint1);
+            const sliceEdgeIndex2 = points.indexOf(newPoint2);
+            
+            edges.push({
+                startIndex: sliceEdgeIndex1,
+                endIndex: sliceEdgeIndex2,
+                length: calculateEdgeLength({
+                    startIndex: sliceEdgeIndex1,
+                    endIndex: sliceEdgeIndex2
+                }),
+                isSliceEdge: true
+            });
+            
+            // Restore diagonals
+            sliceOriginalEdges.forEach(edge => {
+                if (!edge.isSliceEdge && 
+                    (Math.abs(edge.startIndex - edge.endIndex) !== 1 && 
+                     Math.abs(edge.startIndex - edge.endIndex) !== points.length - 1)) {
+                    edges.push(edge);
+                }
+            });
+            
+            // Calculate and display results
+            displaySliceResults();
+            
+            // Store undo state
+            undoStack.push({ action: 'slice', points: points.slice(), edges: edges.slice() });
+            if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+            
+            // Reset slice mode
+            sliceMode = false;
+            sliceStartPoint = null;
+            sliceLine = null;
+            sliceLineFinalized = true;
+            sliceDirection = null;
+            sliceIntersections = [];
+            leftPoly = [];
+            rightPoly = [];
+            
+            updateSliceStatus("Slice confirmed and applied", "success");
+            draw();
+        }
+        
+        // Display all dimensions after slicing
+        function displaySliceResults() {
+            sliceResultContent.innerHTML = '';
+            
+            // Group edges by type
+            const originalEdges = edges.filter(function(edge) {
+                return edge.length && !edge.isSliceEdge;
+            });
+            
+            const newEdges = edges.filter(function(edge) {
+                return !edge.length && !edge.isSliceEdge;
+            });
+            
+            const sliceEdges = edges.filter(function(edge) {
+                return edge.isSliceEdge;
+            });
+            
+            // Original dimensions
+            if (originalEdges.length > 0) {
+                const group = document.createElement('div');
+                group.innerHTML = '<h4>Original Dimensions</h4>';
+                
+                originalEdges.forEach(function(edge) {
+                    const item = document.createElement('div');
+                    item.className = 'slice-result-item';
+                    item.innerHTML = `
+                        <span>P${edge.startIndex + 1}-P${edge.endIndex + 1}:</span>
+                        <span>${edge.length.toFixed(2)} m</span>
+                    `;
+                    group.appendChild(item);
+                });
+                
+                sliceResultContent.appendChild(group);
+            }
+            
+            // New dimensions
+            if (newEdges.length > 0) {
+                const group = document.createElement('div');
+                group.innerHTML = '<h4>New Dimensions</h4>';
+                
+                newEdges.forEach(function(edge) {
+                    const length = calculateEdgeLength(edge);
+                    
+                    const item = document.createElement('div');
+                    item.className = 'slice-result-item';
+                    item.innerHTML = `
+                        <span>P${edge.startIndex + 1}-P${edge.endIndex + 1}:</span>
+                        <span>${length.toFixed(2)} m</span>
+                    `;
+                    group.appendChild(item);
+                });
+                
+                sliceResultContent.appendChild(group);
+            }
+            
+            // Slice dimensions
+            if (sliceEdges.length > 0) {
+                const group = document.createElement('div');
+                group.innerHTML = '<h4>Slice Dimensions</h4>';
+                
+                sliceEdges.forEach(function(edge) {
+                    const length = calculateEdgeLength(edge);
+                    
+                    const item = document.createElement('div');
+                    item.className = 'slice-result-item';
+                    item.innerHTML = `
+                        <span>P${edge.startIndex + 1}-P${edge.endIndex + 1}:</span>
+                        <span>${length.toFixed(2)} m</span>
+                    `;
+                    group.appendChild(item);
+                });
+                
+                sliceResultContent.appendChild(group);
+            }
+            
+            // Sliced side dimensions
+            if (leftPoly.length > 0 && rightPoly.length > 0) {
+                const leftSides = [];
+                for (let i = 0; i < leftPoly.length; i++) {
+                    const j = (i + 1) % leftPoly.length;
+                    const length = Math.sqrt(Math.pow(leftPoly[j].x - leftPoly[i].x, 2) + Math.pow(leftPoly[j].y - leftPoly[i].y, 2)) * scaleFactor;
+                    leftSides.push(length.toFixed(2) + ' m');
+                }
+                
+                const rightSides = [];
+                for (let i = 0; i < rightPoly.length; i++) {
+                    const j = (i + 1) % rightPoly.length;
+                    const length = Math.sqrt(Math.pow(rightPoly[j].x - rightPoly[i].x, 2) + Math.pow(rightPoly[j].y - rightPoly[i].y, 2)) * scaleFactor;
+                    rightSides.push(length.toFixed(2) + ' m');
+                }
+                
+                const sidesGroup = document.createElement('div');
+                sidesGroup.innerHTML = '<h4>Sliced Side Dimensions</h4>';
+                const leftItem = document.createElement('div');
+                leftItem.className = 'slice-result-item';
+                leftItem.innerHTML = `<span>Left Sides:</span><span>${leftSides.join(', ')}</span>`;
+                const rightItem = document.createElement('div');
+                rightItem.className = 'slice-result-item';
+                rightItem.innerHTML = `<span>Right Sides:</span><span>${rightSides.join(', ')}</span>`;
+                sidesGroup.appendChild(leftItem);
+                sidesGroup.appendChild(rightItem);
+                sliceResultContent.appendChild(sidesGroup);
+            }
+            
+            // Add area results
+            const leftArea = calculatePolygonArea(leftPoly);
+            const rightArea = calculatePolygonArea(rightPoly);
+            const areaGroup = document.createElement('div');
+            areaGroup.innerHTML = '<h4>Area Results</h4>';
+            const leftItem = document.createElement('div');
+            leftItem.className = 'slice-result-item';
+            leftItem.innerHTML = `
+                <span>Left Plot Area:</span>
+                <span>${leftArea.toFixed(2)} m²</span>
+            `;
+            const rightItem = document.createElement('div');
+            rightItem.className = 'slice-result-item';
+            rightItem.innerHTML = `
+                <span>Right Plot Area:</span>
+                <span>${rightArea.toFixed(2)} m²</span>
+            `;
+            areaGroup.appendChild(leftItem);
+            areaGroup.appendChild(rightItem);
+            sliceResultContent.appendChild(areaGroup);
+            
+            sliceResults.style.display = 'block';
+        }
+        
+        // Canvas event handlers
+        canvas.addEventListener('mousemove', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            if (sliceMode && sliceStartPoint && !sliceLineFinalized) {
+                sliceLine = {
+                    start: sliceStartPoint,
+                    end: { x: x, y: y }
+                };
+                draw();
+                return;
+            }
+            
+            if (isShapeClosed || points.length < 3) return;
+            
+            // Check if near the first point
+            const firstPoint = points[0];
+            const distance = Math.sqrt(Math.pow(firstPoint.x - x, 2) + Math.pow(firstPoint.y - y, 2));
+            
+            if (distance < 40) {
+                showCloseIndicator = true;
+                closeIndicator.style.display = 'block';
+                closeIndicator.style.left = (firstPoint.x - 20 + rect.left) + 'px';
+                closeIndicator.style.top = (firstPoint.y - 20 + rect.top) + 'px';
+            } else {
+                showCloseIndicator = false;
+                closeIndicator.style.display = 'none';
+            }
+        });
+        
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            if (sliceMode) {
+                if (!sliceStartPoint) {
+                    sliceStartPoint = { x: x, y: y };
+                    sliceLine = {
+                        start: sliceStartPoint,
+                        end: sliceStartPoint
+                    };
+                    updateSliceStatus("Click to set the end point of the slice line", "info");
+                    draw();
+                } else if (!sliceLineFinalized) {
+                    sliceLine = {
+                        start: sliceStartPoint,
+                        end: { x: x, y: y }
+                    };
+                    const intersections = findIntersectionsWithPolygon(sliceLine);
+                    if (intersections.length === 2) {
+                        sliceLineFinalized = true;
+                        sideSelection.style.display = 'flex';
+                        updateSliceStatus("Select which side should be the target area", "info");
+                    } else {
+                        updateSliceStatus("Invalid slice line - must intersect exactly two edges.", "warning");
+                        sliceLine = null;
+                        sliceStartPoint = null;
+                        sliceLineFinalized = false;
+                        updateStatus("Slice mode: Click to set start point", "info");
+                    }
+                    draw();
+                }
+                return;
+            }
+
+            if (diagonalMode) {
+                handleDiagonalClick(x, y);
+                return;
+            }
+
+            // Check if clicked near an edge
+            const edgeIndex = getNearEdge(x, y);
+            if (edgeIndex !== -1) {
+                selectedEdge = edges[edgeIndex];
+                lengthInput.value = selectedEdge.length || '';
+                lengthInput.focus();
+                updateStatus("Editing edge between P" + (selectedEdge.startIndex + 1) + " and P" + (selectedEdge.endIndex + 1) + ". Enter length in meters.", "info");
+                draw();
+                return;
+            }
+            
+            // Check if closing the shape
+            if (!isShapeClosed && points.length >= 3) {
+                const nearIndex = getNearPoint(x, y);
+                if (nearIndex === 0) {
+                    closeShape();
+                    return;
+                }
+            } 
+            
+            // Add new point
+            if (!isShapeClosed) {
+                const newPoint = { x: x, y: y, highlight: false };
+                points.push(newPoint);
+                
+                // Add edge if not first point
+                if (points.length > 1) {
+                    const newEdge = { 
+                        startIndex: points.length - 2, 
+                        endIndex: points.length - 1, 
+                        length: null 
+                    };
+                    edges.push(newEdge);
+                    undoStack.push({ action: 'addPoint', point: newPoint, edge: newEdge, points: points.slice(), edges: edges.slice() });
+                } else {
+                    undoStack.push({ action: 'addPoint', point: newPoint, points: points.slice() });
+                }
+                
+                if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+                
+                if (points.length === 1) {
+                    updateStatus("Added first point. Click to add more points.", "info");
+                } else if (points.length === 3) {
+                    updateStatus("Now click near the first point (P1) to close the shape.", "info");
+                } else {
+                    updateStatus("Point P" + points.length + " added. Click near P1 to close.", "info");
+                }
+            } else {
+                selectedEdge = null;
+            }
+            
+            draw();
+        });
+        
+        // Double-click to delete edges
+        canvas.addEventListener('dblclick', function(e) {
+            if (diagonalMode || sliceMode) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const edgeIndex = getNearEdge(x, y);
+            if (edgeIndex !== -1 && confirm('Delete this edge?')) {
+                const oldEdges = edges.slice();
+                edges.splice(edgeIndex, 1);
+                
+                // Check if we've "unclosed" the shape
+                if (isShapeClosed) {
+                    isShapeClosed = !edges.some(function(edge) { 
+                        return (edge.startIndex === 0 && edge.endIndex === points.length - 1) ||
+                               (edge.startIndex === points.length - 1 && edge.endIndex === 0);
+                    });
+                }
+                
+                undoStack.push({ action: 'deleteEdge', edgeIndex: edgeIndex, edges: oldEdges });
+                if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+                
+                updateStatus("Edge deleted", "info");
+                draw();
+            }
+        });
+        
+        // Length input handling
+        lengthInput.addEventListener('change', function() {
+            if (selectedEdge) {
+                const value = parseFloat(lengthInput.value);
+                if (!isNaN(value) && value > 0) {
+                    const oldLength = selectedEdge.length;
+                    selectedEdge.length = value;
+                    undoStack.push({ action: 'setLength', edge: selectedEdge, oldLength: oldLength, edges: edges.slice() });
+                    if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+                    updateStatus("Edge length set to " + value.toFixed(2) + " meters.", "success");
+                    draw();
+                } else {
+                    updateStatus("Please enter a valid positive number", "warning");
+                }
+            }
+        });
+
+        lengthInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === 'Tab') {
+                e.preventDefault();
+                if (selectedEdge) {
+                    const value = parseFloat(lengthInput.value);
+                    if (!isNaN(value) && value > 0) {
+                        const oldLength = selectedEdge.length;
+                        selectedEdge.length = value;
+                        undoStack.push({ action: 'setLength', edge: selectedEdge, oldLength: oldLength, edges: edges.slice() });
+                        if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+                    }
+                    lengthInput.value = '';
+                    const nextEdgeIndex = (edges.indexOf(selectedEdge) + 1) % edges.length;
+                    selectedEdge = edges[nextEdgeIndex];
+                    lengthInput.focus();
+                    updateStatus("Editing edge between P" + (selectedEdge.startIndex + 1) + " and P" + (selectedEdge.endIndex + 1) + ". Enter length in meters.", "info");
+                    draw();
+                    if (edges.every(edge => edge.length)) {
+                        lengthInput.blur();
+                        updateStatus("All edge lengths set. Use controls as needed.", "info");
+                    }
+                }
+            }
+        });
+        
+        // Button event handlers
+        closeShapeBtn.addEventListener('click', closeShape);
+        
+        addDiagonalBtn.addEventListener('click', function() {
+            if (diagonalMode) {
+                exitDiagonalMode();
+                updateStatus("Diagonal mode canceled", "info");
+            } else {
+                if (enterDiagonalMode()) {
+                    updateStatus("Click two points to add a diagonal between them", "info");
+                }
+            }
+            draw();
+        });
+        
+        document.getElementById('optimize').addEventListener('click', optimizeShape);
+        
+        document.getElementById('calculateArea').addEventListener('click', function() {
+            if (!isShapeClosed || points.length < 3) {
+                updateStatus("Please close the shape first", "warning");
+                return;
+            }
+            
+            const area = calculateArea();
+            const areaSqFt = area * 10.7639;
+            const areaAcresValue = area / 4046.86;
+            
+            updateStatus("Area calculated: " + area.toFixed(2) + " m² (" + areaSqFt.toFixed(2) + " ft²)", "success");
+            draw();
+        });
+        
+        document.getElementById('clear').addEventListener('click', function() {
+            points = [];
+            edges = [];
+            isShapeClosed = false;
+            selectedEdge = null;
+            scaleFactor = 1;
+            showCloseIndicator = false;
+            closeIndicator.style.display = 'none';
+            exitDiagonalMode();
+            exitSliceMode();
+            undoStack = [];
+            updateStatus("Canvas cleared. Click to add points.", "info");
+            draw();
+        });
+        
+        undoBtn.addEventListener('click', function() {
+            if (undoStack.length === 0) {
+                updateStatus("No actions to undo", "warning");
+                return;
+            }
+            
+            const lastAction = undoStack.pop();
+            switch (lastAction.action) {
+                case 'addPoint':
+                    points = lastAction.points.slice();
+                    if (lastAction.edge) edges = lastAction.edges.slice();
+                    break;
+                case 'closeShape':
+                    points = lastAction.points.slice();
+                    edges = lastAction.edges.slice();
+                    isShapeClosed = false;
+                    break;
+                case 'addDiagonal':
+                    edges = lastAction.edges.slice();
+                    break;
+                case 'optimize':
+                    points = lastAction.points.slice();
+                    edges = lastAction.edges.slice();
+                    break;
+                case 'deleteEdge':
+                    edges = lastAction.edges.slice();
+                    break;
+                case 'setLength':
+                    lastAction.edge.length = lastAction.oldLength;
+                    break;
+                case 'slice':
+                    points = lastAction.points.slice();
+                    edges = lastAction.edges.slice();
+                    exitSliceMode();
+                    break;
+            }
+            
+            updateStatus("Last action undone", "success");
+            draw();
+        });
+        
+        // Slice button handlers
+        startSliceBtn.addEventListener('click', function() {
+            if (prepareForSlicing()) {
+                updateStatus("Click to set start point", "info");
+            }
+        });
+        
+        cancelSliceBtn.addEventListener('click', exitSliceMode);
+        
+        confirmSliceBtn.addEventListener('click', confirmSlice);
+        
+        // Side selection handlers
+        leftSideBtn.addEventListener('click', function() {
+            sliceDirection = 'left';
+            sideSelection.style.display = 'none';
+            adjustSliceToTargetArea();
+        });
+        
+        rightSideBtn.addEventListener('click', function() {
+            sliceDirection = 'right';
+            sideSelection.style.display = 'none';
+            adjustSliceToTargetArea();
+        });
+    </script>
+    </body>
+</html>
