@@ -1268,117 +1268,111 @@
         }
 
         // Confirm and finalize the slice
-        function confirmSlice() {
-            if (!sliceLine || sliceIntersections.length !== 2) {
-                updateSliceStatus("Could not find valid slice points", "warning");
-                return;
-            }
-            
-            // Add new points at intersections
-            const newPoint1 = {
-                x: sliceIntersections[0].x,
-                y: sliceIntersections[0].y,
-                isSlicePoint: true
-            };
-            
-            const newPoint2 = {
-                x: sliceIntersections[1].x,
-                y: sliceIntersections[1].y,
-                isSlicePoint: true
-            };
-            
-            // Find where to insert these points
-            let insertIndex1 = -1;
-            let insertIndex2 = -1;
-            
-            for (let i = 0; i < points.length; i++) {
-                const j = (i + 1) % points.length;
-                if (isPointOnSegment(sliceIntersections[0], points[i], points[j])) {
-                    insertIndex1 = j;
-                }
-                if (isPointOnSegment(sliceIntersections[1], points[i], points[j])) {
-                    insertIndex2 = j;
-                }
-            }
-            
-            // Insert points (order matters to maintain polygon)
-            if (insertIndex1 < insertIndex2) {
-                points.splice(insertIndex1, 0, newPoint1);
-                points.splice(insertIndex2 + 1, 0, newPoint2);
-            } else {
-                points.splice(insertIndex2, 0, newPoint2);
-                points.splice(insertIndex1 + 1, 0, newPoint1);
-            }
-            
-            // Rebuild edges
-            edges = [];
-            for (let i = 0; i < points.length; i++) {
-                const j = (i + 1) % points.length;
-                
-                let originalEdge = null;
-                for (let k = 0; k < sliceOriginalEdges.length; k++) {
-                    const edge = sliceOriginalEdges[k];
-                    const p1 = points[edge.startIndex];
-                    const p2 = points[edge.endIndex];
-                    
-                    if ((p1 === points[i] && p2 === points[j]) || 
-                        (p1 === points[j] && p2 === points[i])) {
-                        originalEdge = edge;
-                        break;
-                    }
-                }
-                
-                edges.push({
-                    startIndex: i,
-                    endIndex: j,
-                    length: originalEdge ? originalEdge.length : null,
-                    isSliceEdge: false
-                });
-            }
-            
-            // Add the slice edge
-            const sliceEdgeIndex1 = points.indexOf(newPoint1);
-            const sliceEdgeIndex2 = points.indexOf(newPoint2);
-            
-            edges.push({
-                startIndex: sliceEdgeIndex1,
-                endIndex: sliceEdgeIndex2,
-                length: calculateEdgeLength({
-                    startIndex: sliceEdgeIndex1,
-                    endIndex: sliceEdgeIndex2
-                }),
-                isSliceEdge: true
-            });
-            
-            // Restore diagonals
-            sliceOriginalEdges.forEach(edge => {
-                if (!edge.isSliceEdge && 
-                    (Math.abs(edge.startIndex - edge.endIndex) !== 1 && 
-                     Math.abs(edge.startIndex - edge.endIndex) !== points.length - 1)) {
-                    edges.push(edge);
-                }
-            });
-            
-            // Calculate and display results
-            displaySliceResults();
-            
-            // Store undo state
-            undoStack.push({ action: 'slice', points: points.slice(), edges: edges.slice() });
-            if (undoStack.length > UNDO_LIMIT) undoStack.shift();
-            
-            // Reset slice mode
-            sliceMode = false;
-            sliceStartPoint = null;
-            sliceLine = null;
-            sliceLineFinalized = true;
-            sliceDirection = null;
-            sliceIntersections = [];
-            leftPoly = [];
-            rightPoly = [];
-            
-            updateSliceStatus("Slice confirmed and applied", "success");
-            draw();
+function confirmSlice() {
+    if (!sliceLine || sliceIntersections.length !== 2) {
+        updateSliceStatus("Could not find valid slice points", "warning");
+        return;
+    }
+    
+    // Add new points at intersections
+    const newPoint1 = {
+        x: sliceIntersections[0].x,
+        y: sliceIntersections[0].y,
+        isSlicePoint: true
+    };
+    
+    const newPoint2 = {
+        x: sliceIntersections[1].x,
+        y: sliceIntersections[1].y,
+        isSlicePoint: true
+    };
+    
+    // Find where to insert these points
+    let insertIndex1 = -1;
+    let insertIndex2 = -1;
+    
+    for (let i = 0; i < points.length; i++) {
+        const j = (i + 1) % points.length;
+        if (isPointOnSegment(sliceIntersections[0], points[i], points[j])) {
+            insertIndex1 = j;
         }
+        if (isPointOnSegment(sliceIntersections[1], points[i], points[j])) {
+            insertIndex2 = j;
+        }
+    }
+    
+    // Insert points (order matters to maintain polygon)
+    if (insertIndex1 < insertIndex2) {
+        points.splice(insertIndex1, 0, newPoint1);
+        points.splice(insertIndex2 + 1, 0, newPoint2);
+    } else {
+        points.splice(insertIndex2, 0, newPoint2);
+        points.splice(insertIndex1 + 1, 0, newPoint1);
+    }
+    
+    // Rebuild edges, excluding diagonals
+    edges = [];
+    for (let i = 0; i < points.length; i++) {
+        const j = (i + 1) % points.length;
+        
+        let originalEdge = null;
+        for (let k = 0; k < sliceOriginalEdges.length; k++) {
+            const edge = sliceOriginalEdges[k];
+            const p1 = points[edge.startIndex];
+            const p2 = points[edge.endIndex];
+            
+            if ((p1 === points[i] && p2 === points[j]) || 
+                (p1 === points[j] && p2 === points[i])) {
+                originalEdge = edge;
+                break;
+            }
+        }
+        
+        // Only include boundary edges (consecutive indices or wrap-around)
+        if (Math.abs(i - j) === 1 || (i === 0 && j === points.length - 1) || (i === points.length - 1 && j === 0)) {
+            edges.push({
+                startIndex: i,
+                endIndex: j,
+                length: originalEdge ? originalEdge.length : null,
+                isSliceEdge: false
+            });
+        }
+    }
+    
+    // Add the slice edge
+    const sliceEdgeIndex1 = points.indexOf(newPoint1);
+    const sliceEdgeIndex2 = points.indexOf(newPoint2);
+    
+    edges.push({
+        startIndex: sliceEdgeIndex1,
+        endIndex: sliceEdgeIndex2,
+        length: calculateEdgeLength({
+            startIndex: sliceEdgeIndex1,
+            endIndex: sliceEdgeIndex2
+        }),
+        isSliceEdge: true
+    });
+    
+    // Calculate and display results
+    displaySliceResults();
+    
+    // Store undo state
+    undoStack.push({ action: 'slice', points: points.slice(), edges: edges.slice() });
+    if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+    
+    // Reset slice mode
+    sliceMode = false;
+    sliceStartPoint = null;
+    sliceLine = null;
+    sliceLineFinalized = true;
+    sliceDirection = null;
+    sliceIntersections = [];
+    leftPoly = [];
+    rightPoly = [];
+    
+    updateSliceStatus("Slice confirmed and applied", "success");
+    draw();
+}
         
         // Display all dimensions after slicing
         function displaySliceResults() {
