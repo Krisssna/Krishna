@@ -3,1279 +3,476 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Land Area Plotter</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Land Plotter - Definitive Version</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        :root {
+            --primary-color: #005a9c;
+            --secondary-color: #00a9e0;
+            --accent-color: #f5a623;
+            --success-color: #2e7d32;
+            --error-color: #c62828;
+            --light-gray: #f0f2f5;
+            --dark-gray: #333;
+            --text-color: #4f4f4f;
+            --bg-color: #ffffff;
+            --border-radius: 8px;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         body {
-            background: #f5f7fa;
-            color: #333;
-            min-height: 100vh;
-            padding: 16px;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            align-items: center;
+            margin: 0;
+            padding: 1rem;
+            background-color: var(--light-gray);
+            color: var(--text-color);
         }
 
-        header {
-            text-align: center;
-            padding: 24px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .plotting-area {
-            position: relative;
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            flex: 1;
-        }
-
-        #canvas {
-            background: #fff;
-            border-radius: 8px;
-            display: block;
+        .main-container {
+            display: flex;
+            flex-direction: column;
             width: 100%;
-            max-width: 800px;
-            height: 500px;
-            margin: 0 auto;
-            cursor: crosshair;
+            max-width: 1400px;
+            gap: 1rem;
         }
 
-        .controls-container {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            padding: 16px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+        header { text-align: center; }
+        h1 { color: var(--primary-color); font-weight: 700; margin: 0; }
 
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .panel {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .panel-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #1a1a1a;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        button {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        button:hover {
-            background: #1e40af;
-            transform: translateY(-1px);
-        }
-
-        button.secondary {
-            background: #059669;
-        }
-
-        button.secondary:hover {
-            background: #047857;
-        }
-
-        button.warning {
-            background: #dc2626;
-        }
-
-        button.warning:hover {
-            background: #b91c1c;
-        }
-
-        button.active {
-            background: #d97706;
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #d97706;
-        }
+        .content-area { display: flex; gap: 1rem; width: 100%; flex-direction: column; @media (min-width: 992px) { flex-direction: row; } }
+        .canvas-container { position: relative; flex-grow: 1; display: flex; justify-content: center; align-items: flex-start; }
+        #plot-canvas { background-color: var(--bg-color); cursor: crosshair; touch-action: none; border-radius: var(--border-radius); box-shadow: var(--shadow); border: 1px solid #ddd; }
+        .controls-container { width: 100%; max-width: 350px; display: flex; flex-direction: column; gap: 1rem; }
+        .panel { background-color: var(--bg-color); border-radius: var(--border-radius); box-shadow: var(--shadow); padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
+        .panel h3 { margin: 0; padding-bottom: 0.5rem; border-bottom: 1px solid #eee; color: var(--primary-color); font-size: 1.1rem; }
+        .control-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .control-group label { font-weight: 500; color: #555; }
+        button, select, input[type="text"] { padding: 10px 15px; border-radius: 6px; border: 1px solid #ccc; font-size: 0.95rem; width: 100%; box-sizing: border-box; }
+        button { background-color: var(--primary-color); color: white; font-weight: 600; cursor: pointer; border-color: var(--primary-color); transition: background-color 0.2s ease; }
+        button:hover { background-color: #004a8c; }
+        button:disabled { background-color: #e0e0e0; color: #9e9e9e; cursor: not-allowed; border-color: #ccc; }
+        #reset-btn { background-color: #757575; }
+        #reset-btn:hover { background-color: #555; }
+        #slicer-cancel-btn { background-color: var(--error-color); }
+        #slicer-cancel-btn:hover { background-color: #a02020; }
+        .info-bar, .results { padding: 0.75rem 1rem; border-radius: var(--border-radius); font-weight: 500; text-align: center; }
+        .info-bar { background: #e3f2fd; border: 1px solid var(--secondary-color); color: var(--primary-color); }
+        .results { background: #e8f5e9; border: 1px solid var(--success-color); color: var(--success-color); }
+        .hidden { display: none !important; }
         
-        .side-btn.active {
-            background: #1e40af;
-            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1e40af;
-        }
+        /* Input Modal */
+        .input-modal { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); background: white; padding: 1.5rem; border-radius: var(--border-radius); box-shadow: 0 8px 25px rgba(0,0,0,0.2); z-index: 100; border: 1px solid #ccc; display: flex; flex-direction: column; gap: 1rem; align-items: center; width: 300px; }
+        .input-modal h3 { margin: 0; color: var(--primary-color); }
+        .input-modal input { text-align: center; }
+        .modal-buttons { display: flex; gap: 1rem; width: 100%; }
+        .modal-buttons button { flex-grow: 1; }
+        #modal-cancel-btn { background-color: #757575; border-color: #757575; }
 
-        .dimension-input {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f1f5f9;
-            padding: 8px;
-            border-radius: 8px;
-        }
-
-        .dimension-input label {
-            font-weight: 500;
-            color: #1a1a1a;
-        }
-
-        .dimension-input input {
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #d1d5db;
-            background: white;
-            color: #1a1a1a;
-            width: 100px;
-            text-align: center;
-        }
-
-        .dimension-input select {
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #d1d5db;
-            background: white;
-            color: #1a1a1a;
-            width: 80px;
-        }
-
-        .zoom-controls {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            display: flex;
-            gap: 8px;
-            z-index: 10;
-        }
-
-        .zoom-controls button {
-            width: 36px;
-            height: 36px;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .results {
-            padding: 16px;
-            background: #f1f5f9;
-            border-radius: 8px;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-        }
-
-        .result-value {
-            font-weight: 600;
-            color: #2563eb;
-        }
-
-        .status {
-            padding: 12px;
-            border-radius: 8px;
-            background: #e5e7eb;
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .status.warning {
-            background: #fee2e2;
-            color: #dc2626;
-        }
-
-        .status.success {
-            background: #dcfce7;
-            color: #059669;
-        }
-
-        .status.info {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-
-        .close-indicator {
-            position: absolute;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(34, 197, 94, 0.3);
-            border: 2px solid #22c55e;
-            display: none;
-            pointer-events: none;
-            z-index: 10;
-            animation: pulse 1.5s infinite;
-        }
-
-        .instructions {
-            font-size: 0.875rem;
-            line-height: 1.5;
-            color: #4b5563;
-        }
-
-        .instructions li {
-            margin-bottom: 8px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .instructions li i {
-            color: #2563eb;
-            margin-top: 4px;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 0.4; }
-            100% { transform: scale(1); opacity: 0.7; }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            #canvas {
-                height: 400px;
-            }
-
-            .controls-container {
-                order: -1;
-            }
-
-            .zoom-controls {
-                top: 8px;
-                right: 8px;
-            }
-
-            .btn-group {
-                flex-direction: column;
-            }
-
-            button {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .container {
-                flex-direction: row;
-                gap: 24px;
-            }
-
-            .plotting-area {
-                flex: 2;
-            }
-
-            .controls-container {
-                flex: 1;
-                max-width: 400px;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="plotting-area">
-            <div id="closeIndicator" class="close-indicator"></div>
-            <canvas id="canvas" width="800" height="500"></canvas>
-            <div class="zoom-controls">
-                <button id="panButton" title="Pan"><i class="fas fa-hand-paper"></i></button>
-                <button id="zoomIn" title="Zoom In"><i class="fas fa-search-plus"></i></button>
-                <button id="zoomOut" title="Zoom Out"><i class="fas fa-search-minus"></i></button>
-                <button id="undo" class="warning" title="Undo"><i class="fas fa-undo"></i></button>
-                <button id="export" title="Export"><i class="fas fa-download"></i></button>
-            </div>
-        </div>
-
-        <div class="controls-container">
-            <header>
-                <h1><i class="fas fa-ruler-combined"></i> Land Area Plotter</h1>
-                <p class="subtitle">Clean and intuitive tool for plotting and measuring land areas</p>
-            </header>
-
-            <div class="controls">
-                <div class="panel">
-                    <div class="panel-header"><i class="fas fa-tools"></i> Controls</div>
-                    <div class="btn-group">
-                        <button id="optimize"><i class="fas fa-magic"></i> Optimize</button>
-                        <button id="calculateArea" class="secondary"><i class="fas fa-calculator"></i> Calculate Area</button>
-                        <button id="clear" class="warning"><i class="fas fa-trash"></i> Clear All</button>
-                        <button id="addDiagonal"><i class="fas fa-plus-circle"></i> Add Diagonal</button>
-                        <button id="closeShape"><i class="fas fa-draw-polygon"></i> Close Shape</button>
-                    </div>
-
-                    <div class="dimension-input">
-                        <label><i class="fas fa-ruler"></i> Edge Length:</label>
-                        <input type="number" id="lengthInput" step="0.01" min="0.1" placeholder="Enter length">
-                        <select id="lengthUnit">
-                            <option value="meters">Meters</option>
-                            <option value="feet">Feet</option>
-                        </select>
-                    </div>
-
-                    <div class="status" id="statusDisplay">
-                        <i class="fas fa-info-circle"></i> Ready to plot. Click to add points.
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-header"><i class="fas fa-cut"></i> Slice Shape</div>
-                    <div class="dimension-input">
-                        <label><i class="fas fa-ruler-combined"></i> Area to slice:</label>
-                        <input type="number" id="sliceAreaInput" step="0.01" min="0.1" placeholder="Enter area">
-                        <select id="areaUnit">
-                            <option value="squareMeters">m²</option>
-                            <option value="squareFeet">ft²</option>
-                            <option value="acres">Acres</option>
-                        </select>
-                    </div>
-                    <div class="btn-group">
-                        <button id="startSlice"><i class="fas fa-cut"></i> Start Slice</button>
-                        <button id="cancelSlice" class="warning" style="display:none;"><i class="fas fa-times"></i> Cancel</button>
-                        <button id="confirmSlice" class="secondary" style="display:none;"><i class="fas fa-check"></i> Confirm Slice</button>
-                    </div>
-                    <div class="side-selection" id="sideSelection" style="display:none;">
-                        <button class="side-btn" id="leftSide"><i class="fas fa-arrow-left"></i> Left Side</button>
-                        <button class="side-btn" id="rightSide"><i class="fas fa-arrow-right"></i> Right Side</button>
-                    </div>
-                    <div class="status" id="sliceStatus">
-                        <i class="fas fa-info-circle"></i> Enter area and click Start Slice.
-                    </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-header"><i class="fas fa-book"></i> Instructions</div>
-                    <ol class="instructions">
-                        <li><i class="fas fa-mouse-pointer"></i> Click canvas to add points</li>
-                        <li><i class="fas fa-dot-circle"></i> Close shape near first point or with button</li>
-                        <li><i class="fas fa-ruler-horizontal"></i> Click edges to set lengths</li>
-                        <li><i class="fas fa-plus-circle"></i> Add diagonals for complex shapes</li>
-                        <li><i class="fas fa-calculator"></i> Calculate area for measurements</li>
-                        <li><i class="fas fa-trash"></i> Double-click edges to delete</li>
-                        <li><i class="fas fa-download"></i> Export data as JSON</li>
-                    </ol>
-                </div>
-
-                <div class="panel results">
-                    <div class="panel-header"><i class="fas fa-chart-area"></i> Area Calculation</div>
-                    <div class="result-item">
-                        <span>Area in Square Meters:</span>
-                        <span id="areaMeters" class="result-value">0.00</span>
-                    </div>
-                    <div class="result-item">
-                        <span>Area in Square Feet:</span>
-                        <span id="areaFeet" class="result-value">0.00</span>
-                    </div>
-                    <div class="result-item">
-                        <span>Area in Acres:</span>
-                        <span id="areaAcres" class="result-value">0.00</span>
-                    </div>
-                    <div class="result-item">
-                        <span>Perimeter:</span>
-                        <span id="perimeter" class="result-value">0.00 m</span>
+    <div class="main-container">
+        <header><h1>Interactive Land Plotter</h1></header>
+        <div id="info-bar" class="info-bar"></div>
+        <div id="results" class.results hidden"></div>
+        <div class="content-area">
+            <div class="canvas-container">
+                <canvas id="plot-canvas"></canvas>
+                 <div id="input-modal" class="input-modal hidden">
+                    <h3 id="modal-title"></h3>
+                    <p id="modal-subtitle" style="font-size: 0.9rem; margin: 0; text-align: center;"></p>
+                    <input type="text" id="modal-input">
+                    <div class="modal-buttons">
+                        <button id="modal-cancel-btn">Cancel</button>
+                        <button id="modal-submit-btn">Submit</button>
                     </div>
                 </div>
             </div>
-
-            <footer>
-                <p style="text-align: center; color: #666; font-size: 0.875rem; padding: 16px;">
-                    Professional Land Area Plotter © 2025
-                </p>
-            </footer>
+            <div class="controls-container">
+                <div id="main-controls" class="panel">
+                    <h3>Main Controls</h3>
+                    <div class="control-group"><label for="unit-selector">Units</label><select id="unit-selector"><option value="meters">Meters (m)</option><option value="feet-inches">Feet-Inches (ft-in)</option></select></div>
+                    <button id="optimize-btn" disabled>Optimize Plot</button>
+                    <button id="calculate-btn" disabled>Calculate Total Area</button>
+                    <button id="slice-btn" disabled>Slice Plot</button>
+                    <button id="reset-btn">Reset</button>
+                </div>
+                <div id="slicer-panel" class="panel hidden">
+                    <h3>Plot Partition</h3>
+                    <div class="control-group"><label>Instructions</label><p id="slicer-instructions" style="margin:0; padding: 8px; background-color: #f5f5f5; border-radius: 4px; text-align:center;"></p></div>
+                    <div class="control-group"><label for="slicer-area-input">Target Area (m²)</label><input type="text" id="slicer-area-input" placeholder="e.g., 150.5" disabled></div>
+                    <button id="slicer-cancel-btn">Cancel Slicing</button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- Bug Fix Notes ---
-        // 1. Rewrote `getSlicedPolygons` to correctly "walk the perimeter" of the original polygon 
-        //    between intersection points. The previous method of sorting vertices by angle was unreliable.
-        // 2. Stabilized `adjustSliceToTargetArea` by ensuring it uses the robust `getSlicedPolygons`. The binary
-        //    search for the offset is now more accurate because it receives correct area feedback.
-        // 3. Simplified `confirmSlice`. Instead of complex array splicing, it now replaces the old polygon
-        //    with the vertices of the chosen sliced part, which is much safer and less prone to bugs.
-        // 4. Added more detailed status updates and error handling for the slicing process.
-        
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        const lengthInput = document.getElementById('lengthInput');
-        const lengthUnit = document.getElementById('lengthUnit');
-        const areaUnit = document.getElementById('areaUnit');
-        const statusDisplay = document.getElementById('statusDisplay');
-        const areaMeters = document.getElementById('areaMeters');
-        const areaFeet = document.getElementById('areaFeet');
-        const areaAcres = document.getElementById('areaAcres');
-        const perimeter = document.getElementById('perimeter');
-        const closeIndicator = document.getElementById('closeIndicator');
-        const closeShapeBtn = document.getElementById('closeShape');
-        const addDiagonalBtn = document.getElementById('addDiagonal');
-        const undoBtn = document.getElementById('undo');
-        const sliceAreaInput = document.getElementById('sliceAreaInput');
-        const startSliceBtn = document.getElementById('startSlice');
-        const cancelSliceBtn = document.getElementById('cancelSlice');
-        const confirmSliceBtn = document.getElementById('confirmSlice');
-        const sliceStatus = document.getElementById('sliceStatus');
-        const sideSelection = document.getElementById('sideSelection');
-        const leftSideBtn = document.getElementById('leftSide');
-        const rightSideBtn = document.getElementById('rightSide');
-        const zoomInBtn = document.getElementById('zoomIn');
-        const zoomOutBtn = document.getElementById('zoomOut');
-        const panButton = document.getElementById('panButton');
-        const optimizeBtn = document.getElementById('optimize');
-        const calculateAreaBtn = document.getElementById('calculateArea');
-        const clearBtn = document.getElementById('clear');
-        const exportBtn = document.getElementById('export');
-
-        let points = [];
-        let edges = [];
-        let isShapeClosed = false;
-        let selectedEdge = null;
-        let scaleFactor = 1;
-        let showCloseIndicator = false;
-        let undoStack = [];
-        const UNDO_LIMIT = 10;
-
-        let diagonalMode = false;
-        let firstDiagonalPoint = null;
-
-        let sliceMode = false;
-        let sliceStartPoint = null;
-        let sliceLine = null;
-        let sliceLineFinalized = false;
-        let targetSliceArea = 0;
-        let sliceDirection = null;
-        let sliceOriginalState = null;
-        let lastSliceResult = null;
-
-        let scale = 1.0;
-        let offsetX = 0;
-        let offsetY = 0;
-        let isPanning = false;
-        let lastX = 0;
-        let lastY = 0;
-        let isPanMode = false;
-        const MIN_SCALE = 0.1;
-        const MAX_SCALE = 10.0;
-
-        const METERS_TO_FEET = 3.28084;
-        const SQUARE_METERS_TO_SQUARE_FEET = METERS_TO_FEET ** 2;
-        const SQUARE_METERS_TO_ACRES = 1 / 4046.86;
-
-        function saveState(action) {
-            undoStack.push({
-                action: action,
-                points: JSON.parse(JSON.stringify(points)),
-                edges: JSON.parse(JSON.stringify(edges)),
-                isShapeClosed: isShapeClosed
-            });
-            if (undoStack.length > UNDO_LIMIT) undoStack.shift();
-        }
-        
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.translate(offsetX * scale, offsetY * scale);
-            ctx.scale(scale, scale);
-
-            drawGrid();
-
-            // Draw polygon fill
-            if (isShapeClosed && points.length >= 3 && !sliceMode) {
-                ctx.beginPath();
-                ctx.moveTo(points[0].x, points[0].y);
-                for (let i = 1; i < points.length; i++) {
-                    ctx.lineTo(points[i].x, points[i].y);
-                }
-                ctx.closePath();
-                ctx.fillStyle = 'rgba(34, 197, 94, 0.15)';
-                ctx.fill();
-            }
-
-            // Draw sliced polygons if available
-            if (sliceMode && lastSliceResult) {
-                const { poly1, poly2 } = lastSliceResult;
-                // Draw first polygon
-                ctx.beginPath();
-                ctx.moveTo(poly1[0].x, poly1[0].y);
-                for (let i = 1; i < poly1.length; i++) ctx.lineTo(poly1[i].x, poly1[i].y);
-                ctx.closePath();
-                ctx.fillStyle = 'rgba(37, 99, 235, 0.2)'; // Blue
-                ctx.fill();
-                // Draw second polygon
-                ctx.beginPath();
-                ctx.moveTo(poly2[0].x, poly2[0].y);
-                for (let i = 1; i < poly2.length; i++) ctx.lineTo(poly2[i].x, poly2[i].y);
-                ctx.closePath();
-                ctx.fillStyle = 'rgba(220, 38, 38, 0.2)'; // Red
-                ctx.fill();
-            }
-
-            // Draw edges
-            edges.forEach((edge, index) => {
-                const start = points[edge.startIndex];
-                const end = points[edge.endIndex];
-                ctx.beginPath();
-                ctx.moveTo(start.x, start.y);
-                ctx.lineTo(end.x, end.y);
-                ctx.lineWidth = edge.isSliceEdge ? 4 / scale : 3 / scale;
-                ctx.strokeStyle = edge.isSliceEdge ? '#22c55e' : (edge === selectedEdge ? '#2563eb' : '#1a1a1a');
-                ctx.stroke();
-
-                // Draw edge length labels
-                const midX = (start.x + end.x) / 2;
-                const midY = (start.y + end.y) / 2;
-                const length = edge.length || calculateEdgeLength(edge);
-                const unit = edge.unit || 'meters';
-                const displayLength = unit === 'feet' ? (length * METERS_TO_FEET).toFixed(2) : length.toFixed(2);
-                ctx.font = `bold ${12 / scale}px Inter`;
-                ctx.fillStyle = edge === selectedEdge ? '#2563eb' : '#1a1a1a';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-                
-                // Position label away from the line
-                const angle = Math.atan2(end.y - start.y, end.x - start.x);
-                const textX = midX + Math.sin(angle) * 10 / scale;
-                const textY = midY - Math.cos(angle) * 10 / scale;
-
-                ctx.save();
-                ctx.translate(textX, textY);
-                ctx.rotate(angle > Math.PI / 2 || angle < -Math.PI / 2 ? angle - Math.PI : angle);
-                ctx.fillText(`${displayLength} ${unit === 'meters' ? 'm' : 'ft'}`, 0, 0);
-                ctx.restore();
-            });
-
-            // Draw slice line
-            if (sliceMode && sliceLine) {
-                ctx.beginPath();
-                ctx.moveTo(sliceLine.start.x, sliceLine.start.y);
-                ctx.lineTo(sliceLine.end.x, sliceLine.end.y);
-                ctx.lineWidth = 3 / scale;
-                ctx.strokeStyle = sliceLineFinalized ? '#22c55e' : '#dc2626';
-                ctx.setLineDash(sliceLineFinalized ? [] : [5 / scale, 5 / scale]);
-                ctx.stroke();
-                ctx.setLineDash([]);
-            }
-
-            // Draw points
-            points.forEach((point, index) => {
-                ctx.beginPath();
-                ctx.arc(point.x, point.y, point.highlight ? 8 / scale : 6 / scale, 0, Math.PI * 2);
-                ctx.fillStyle = point.highlight ? '#2563eb' : (index === 0 && points.length > 2 ? '#22c55e' : '#dc2626');
-                ctx.fill();
-                ctx.strokeStyle = '#fff';
-                ctx.lineWidth = 2 / scale;
-                ctx.stroke();
-                ctx.fillStyle = '#1a1a1a';
-                ctx.font = `bold ${12 / scale}px Inter`;
-                ctx.textAlign = 'center';
-                ctx.fillText('P' + (index + 1), point.x, point.y - 15 / scale);
-            });
-
-            ctx.restore();
-            updateAreaDisplay();
-        }
-
-        function drawGrid() {
-            ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.lineWidth = 1;
-            const gridSize = 25;
-            for (let x = -offsetX % gridSize; x < canvas.width/scale; x += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(x, -offsetY);
-                ctx.lineTo(x, canvas.height/scale - offsetY);
-                ctx.stroke();
-            }
-            for (let y = -offsetY % gridSize; y < canvas.height/scale; y += gridSize) {
-                ctx.beginPath();
-                ctx.moveTo(-offsetX, y);
-                ctx.lineTo(canvas.width/scale - offsetX, y);
-                ctx.stroke();
-            }
-        }
-        
-        function updateStatus(message, type = "info") {
-            statusDisplay.className = `status ${type}`;
-            const iconClass = type === "info" ? "fa-info-circle" : type === "warning" ? "fa-exclamation-triangle" : "fa-check-circle";
-            statusDisplay.innerHTML = `<i class="fas ${iconClass}"></i> ${message}`;
-        }
-        
-        function updateSliceStatus(message, type = "info") {
-            sliceStatus.className = `status ${type}`;
-            const iconClass = type === "info" ? "fa-info-circle" : type === "warning" ? "fa-exclamation-triangle" : "fa-check-circle";
-            sliceStatus.innerHTML = `<i class="fas ${iconClass}"></i> ${message}`;
-        }
-        
-        function calculatePolygonArea(verts) {
-            if (!verts || verts.length < 3) return 0;
-            let area = 0;
-            for (let i = 0; i < verts.length; i++) {
-                const j = (i + 1) % verts.length;
-                area += verts[i].x * verts[j].y;
-                area -= verts[j].x * verts[i].y;
-            }
-            return Math.abs(area / 2) * (scaleFactor ** 2);
-        }
-
-        function calculateArea() {
-            return calculatePolygonArea(points);
-        }
-        
-        function updateAreaDisplay() {
-            if (!isShapeClosed || points.length < 3) {
-                areaMeters.textContent = "0.00";
-                areaFeet.textContent = "0.00";
-                areaAcres.textContent = "0.00";
-                perimeter.textContent = `0.00 ${lengthUnit.value === 'meters' ? 'm' : 'ft'}`;
-                return;
-            }
-            const area = calculateArea();
-            const perimeterValue = calculatePerimeter();
-            areaMeters.textContent = area.toFixed(2);
-            areaFeet.textContent = (area * SQUARE_METERS_TO_SQUARE_FEET).toFixed(2);
-            areaAcres.textContent = (area * SQUARE_METERS_TO_ACRES).toFixed(4);
-            perimeter.textContent = `${(lengthUnit.value === 'meters' ? perimeterValue : perimeterValue * METERS_TO_FEET).toFixed(2)} ${lengthUnit.value === 'meters' ? 'm' : 'ft'}`;
-        }
-
-        function calculatePerimeter() {
-            let total = 0;
-            edges.forEach(edge => {
-                if (!edge.isBoundary) return;
-                total += edge.length || calculateEdgeLength(edge);
-            });
-            return total;
-        }
-
-        function calculateEdgeLength(edge) {
-            const p1 = points[edge.startIndex];
-            const p2 = points[edge.endIndex];
-            const pixelLength = Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
-            return pixelLength * scaleFactor;
-        }
-
-        function getTransformedCoords(e) {
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            return {
-                x: (x / scale) - offsetX,
-                y: (y / scale) - offsetY
+    // --- UTILITY AND GEOMETRY CLASSES ---
+    class Geometry { /* ... Full Geometry class from previous response ... */ 
+        static distance(p1, p2) { return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2); }
+        static isPointOnLine(p, a, b, tolerance) { const L = this.distance(a, b); return this.distance(p, a) + this.distance(p, b) < L + tolerance; }
+        static calculatePolygonArea(vertices) { let area = 0; for (let i = 0; i < vertices.length; i++) { const p1 = vertices[i]; const p2 = vertices[(i + 1) % vertices.length]; area += p1.x * p2.y - p2.x * p1.y; } return Math.abs(area) / 2; }
+        static getPolygonCentroid(vertices) { if(vertices.length === 0) return {x:0, y:0}; let cx = 0, cy = 0, a = 0; for (let i = 0; i < vertices.length; i++) { const p1 = vertices[i]; const p2 = vertices[(i + 1) % vertices.length]; const cross = p1.x * p2.y - p2.x * p1.y; a += cross; cx += (p1.x + p2.x) * cross; cy += (p1.y + p2.y) * cross; } const signedArea = a / 2; return signedArea === 0 ? vertices[0] : { x: cx / (6 * signedArea), y: cy / (6 * signedArea) }; }
+        static lineSegmentIntersection(p1, q1, p2, q2, isInfiniteLine = false) { const r = { x: q1.x - p1.x, y: q1.y - p1.y }; const s = { x: q2.x - p2.x, y: q2.y - p2.y }; const rxs = r.x * s.y - r.y * s.x; if (Math.abs(rxs) < 1e-9) return null; const t = ((p2.x - p1.x) * s.y - (p2.y - p1.y) * s.x) / rxs; const u = ((p2.x - p1.x) * r.y - (p2.y - p1.y) * r.x) / rxs; if ((isInfiniteLine || (t >= 0 && t <= 1)) && (u >= 0 && u <= 1)) { return { x: p1.x + t * r.x, y: p1.y + t * r.y }; } return null; }
+        static getOffsetLine(line, distance) { const [p1, p2] = line; const dx = p2.x - p1.x; const dy = p2.y - p1.y; const len = Math.sqrt(dx * dx + dy * dy); if (len === 0) return line; const normal = { x: -dy / len, y: dx / len }; return [{ x: p1.x + normal.x * distance, y: p1.y + normal.y * distance }, { x: p2.x + normal.x * distance, y: p2.y + normal.y * distance }]; }
+        static findClosestPointOnSegment(p, a, b) { const ab = { x: b.x - a.x, y: b.y - a.y }; const ap = { x: p.x - a.x, y: p.y - a.y }; const lenSq = ab.x * ab.x + ab.y * ab.y; if (lenSq === 0) return a; const t = Math.max(0, Math.min(1, (ap.x * ab.x + ap.y * ab.y) / lenSq)); return { x: a.x + t * ab.x, y: a.y + t * ab.y }; }
+        static isPointInPolygon(point, polygon) { let isInside = false; for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) { if (((polygon[i].y > point.y) !== (polygon[j].y > point.y)) && (point.x < (polygon[j].x - polygon[i].x) * (point.y - polygon[i].y) / (polygon[j].y - polygon[i].y) + polygon[i].x)) { isInside = !isInside; }} return isInside; }
+        static isValidDiagonal(startIdx, endIdx, n, diagonals) { if (startIdx === endIdx) return false; const s = Math.min(startIdx, endIdx); const e = Math.max(startIdx, endIdx); if (e - s <= 1 || e - s >= n - 1) return false; return !diagonals.some(d => d.startIdx === s && d.endIdx === e); }
+    }
+    class Slicer { /* ... Full Slicer class from previous response ... */ 
+        constructor(plotter) { this.plotter = plotter; this.ui = { panel: document.getElementById('slicer-panel'), instructions: document.getElementById('slicer-instructions'), areaInput: document.getElementById('slicer-area-input'), cancelBtn: document.getElementById('slicer-cancel-btn'),}; this.reset(); }
+        reset() { this.isActive = false; this.state = 'AWAITING_P1'; this.p1 = null; this.p2 = null; this.targetArea = 0; this.polygon = []; this.finalParcels = null; this.ui.panel.classList.add('hidden'); }
+        start(polygon) { this.reset(); this.isActive = true; this.polygon = polygon; this.totalArea = Geometry.calculatePolygonArea(this.polygon); this.updateUI(); this.ui.panel.classList.remove('hidden'); this.ui.cancelBtn.onclick = () => this.plotter.setMode('OPTIMIZED'); this.plotter.render(); }
+        handleMouseDown(pos) { if (!this.isActive) return; if (this.state === 'AWAITING_P1' || this.state === 'AWAITING_P2') { this.handlePointSelection(pos); } else if (this.state === 'AWAITING_CONFIRMATION') { this.handleRegionConfirmation(pos); } }
+        handlePointSelection(pos) { let clickedSideInfo = null; for (let i = 0; i < this.polygon.length; i++) { const sideP1 = this.polygon[i]; const sideP2 = this.polygon[(i + 1) % this.polygon.length]; const closestPoint = Geometry.findClosestPointOnSegment(pos, sideP1, sideP2); if (Geometry.distance(pos, closestPoint) < 5 / this.plotter.getPlotScaling().scale) { clickedSideInfo = { point: closestPoint, sideIndex: i }; break; } } if (!clickedSideInfo) return; if (this.state === 'AWAITING_P1') { this.p1 = clickedSideInfo; this.state = 'AWAITING_P2'; } else if (this.p1 && clickedSideInfo.sideIndex !== this.p1.sideIndex) { this.p2 = clickedSideInfo; this.state = 'AWAITING_CONFIRMATION'; } this.updateUI(); this.plotter.render(); }
+        handleRegionConfirmation(pos) { this.targetArea = parseFloat(this.ui.areaInput.value); if(isNaN(this.targetArea) || this.targetArea <= 0 || this.targetArea >= this.totalArea) { this.ui.areaInput.style.border = '1px solid var(--error-color)'; return; } this.ui.areaInput.style.border = '1px solid #ccc'; const [tempA, tempB] = this.getPartitionsFromLine([this.p1.point, this.p2.point]); const targetIsParcelA = Geometry.isPointInPolygon(pos, tempA); const targetIsParcelB = Geometry.isPointInPolygon(pos, tempB); if (!targetIsParcelA && !targetIsParcelB) return; this.calculateFinalSlice(pos); }
+        calculateFinalSlice(targetRegionPoint) { const initialLine = [this.p1.point, this.p2.point]; let low = -2000, high = 2000, finalOffset = 0; for (let i = 0; i < 50; i++) { const midOffset = (low + high) / 2; const offsetLine = Geometry.getOffsetLine(initialLine, midOffset); const [parcelA, parcelB] = this.getPartitionsFromLine(offsetLine); if (parcelA.length < 3 || parcelB.length < 3) { if(midOffset > 0) high = midOffset; else low = midOffset; continue; } const targetIsParcelA = Geometry.isPointInPolygon(targetRegionPoint, parcelA); const currentArea = targetIsParcelA ? Geometry.calculatePolygonArea(parcelA) : Geometry.calculatePolygonArea(parcelB); const error = currentArea - this.targetArea; if (Math.abs(error) < 0.01) { finalOffset = midOffset; break; } const pA_grows = Geometry.calculatePolygonArea(this.getPartitionsFromLine(Geometry.getOffsetLine(initialLine, midOffset + 0.1))[0]) > Geometry.calculatePolygonArea(parcelA); if (error > 0) { if (targetIsParcelA === pA_grows) high = midOffset; else low = midOffset; } else { if (targetIsParcelA === pA_grows) low = midOffset; else high = midOffset; } finalOffset = midOffset; } const finalLine = Geometry.getOffsetLine(initialLine, finalOffset); const [parcelA, parcelB] = this.getPartitionsFromLine(finalLine); this.finalParcels = { parcelA, parcelB, finalLine }; this.plotter.setMode('SLICED', this.finalParcels); }
+        getPartitionsFromLine(line) { const intersections = []; for (let i = 0; i < this.polygon.length; i++) { const p1 = this.polygon[i]; const p2 = this.polygon[(i + 1) % this.polygon.length]; const intersectPoint = Geometry.lineSegmentIntersection(line[0], line[1], p1, p2, true); if (intersectPoint && !intersections.some(inter => Geometry.distance(inter.point, intersectPoint) < 1e-6)) { intersections.push({ point: intersectPoint, sideIndex: i }); } } if(intersections.length < 2) return [[], []]; intersections.sort((a,b) => a.sideIndex - b.sideIndex); let [i1, i2] = [intersections[0], intersections[intersections.length - 1]]; const parcelA = [i1.point]; for (let i = i1.sideIndex + 1; i <= i2.sideIndex; i++) parcelA.push(this.polygon[i]); parcelA.push(i2.point); const parcelB = [i2.point]; for (let i = i2.sideIndex + 1; i < this.polygon.length; i++) parcelB.push(this.polygon[i]); for (let i = 0; i <= i1.sideIndex; i++) parcelB.push(this.polygon[i]); parcelB.push(i1.point); return [parcelA, parcelB]; }
+        updateUI() { this.ui.areaInput.disabled = this.state !== 'AWAITING_CONFIRMATION'; switch (this.state) { case 'AWAITING_P1': this.ui.instructions.textContent = 'Step 1: Click a start point on any side.'; break; case 'AWAITING_P2': this.ui.instructions.textContent = 'Step 2: Click an end point on a different side.'; break; case 'AWAITING_CONFIRMATION': this.ui.instructions.textContent = 'Step 3: Enter area and click inside the desired region.'; break; } }
+        render(ctx, scale) { if (!this.isActive) return; ctx.fillStyle = 'red'; ctx.strokeStyle = 'rgba(0, 0, 255, 0.7)'; ctx.lineWidth = 2 / scale; if (this.p1) { ctx.beginPath(); ctx.arc(this.p1.point.x, this.p1.point.y, 7 / scale, 0, 2 * Math.PI); ctx.fill(); } if (this.p2) { ctx.beginPath(); ctx.arc(this.p2.point.x, this.p2.point.y, 7 / scale, 0, 2 * Math.PI); ctx.fill(); const [tempA, tempB] = this.getPartitionsFromLine([this.p1.point, this.p2.point]); const drawPoly = (poly, color) => { if (poly.length < 3) return; ctx.fillStyle = color; ctx.beginPath(); ctx.moveTo(poly[0].x, poly[0].y); poly.forEach(v => ctx.lineTo(v.x, v.y)); ctx.closePath(); ctx.fill(); }; drawPoly(tempA, 'rgba(255, 165, 0, 0.4)'); drawPoly(tempB, 'rgba(0, 128, 255, 0.4)'); } }
+    }
+    class InputController { 
+        constructor() {
+            this.modal = document.getElementById('input-modal');
+            this.title = document.getElementById('modal-title');
+            this.subtitle = document.getElementById('modal-subtitle');
+            this.input = document.getElementById('modal-input');
+            this.cancelBtn = document.getElementById('modal-cancel-btn');
+            this.submitBtn = document.getElementById('modal-submit-btn');
+            this.onSubmit = null;
+            this.onCancel = null;
+            this.submitBtn.onclick = () => this.submit();
+            this.cancelBtn.onclick = () => this.cancel();
+            this.input.onkeydown = (e) => {
+                if (e.key === 'Enter') this.submit();
+                if (e.key === 'Escape') this.cancel();
             };
         }
-
-        function getNearPoint(x, y) {
-            for (let i = 0; i < points.length; i++) {
-                const point = points[i];
-                const distance = Math.hypot(point.x - x, point.y - y);
-                if (distance < 15 / scale) return i;
-            }
-            return -1;
+        prompt({ title, subtitle, placeholder, validationFn }) {
+            this.title.textContent = title;
+            this.subtitle.textContent = subtitle;
+            this.input.placeholder = placeholder;
+            this.validationFn = validationFn;
+            return new Promise((resolve, reject) => {
+                this.onSubmit = (value) => { this.hide(); resolve(value); };
+                this.onCancel = () => { this.hide(); reject(); };
+                this.show();
+            });
         }
-        
-        function getNearEdge(x, y) {
-            let nearestEdgeIndex = -1;
-            let minDistance = Infinity;
-            for (let i = 0; i < edges.length; i++) {
-                const edge = edges[i];
-                const p1 = points[edge.startIndex];
-                const p2 = points[edge.endIndex];
-                const dx = p2.x - p1.x;
-                const dy = p2.y - p1.y;
-                if (dx === 0 && dy === 0) continue;
-                const t = ((x - p1.x) * dx + (y - p1.y) * dy) / (dx * dx + dy * dy);
-                const closestT = Math.max(0, Math.min(1, t));
-                const closestX = p1.x + closestT * dx;
-                const closestY = p1.y + closestT * dy;
-                const distance = Math.hypot(x - closestX, y - closestY);
-                if (distance < 10 / scale && distance < minDistance) {
-                    minDistance = distance;
-                    nearestEdgeIndex = i;
-                }
+        submit() {
+            const value = this.input.value;
+            if (this.validationFn && !this.validationFn(value)) {
+                this.input.style.border = '1px solid var(--error-color)';
+                return;
             }
-            return nearestEdgeIndex;
+            if (this.onSubmit) this.onSubmit(value);
         }
+        cancel() { if (this.onCancel) this.onCancel(); }
+        show() { this.modal.classList.remove('hidden'); this.input.style.border = '1px solid #ccc'; this.input.value = ''; this.input.focus(); }
+        hide() { this.modal.classList.add('hidden'); }
+    }
 
-        function closeShape() {
-            if (isShapeClosed || points.length < 3) return;
-            saveState('closeShape');
-            edges.push({ startIndex: points.length - 1, endIndex: 0, length: null, unit: 'meters', isBoundary: true });
-            isShapeClosed = true;
-            updateStatus("Shape closed! Add dimensions or calculate area.", "success");
-            showCloseIndicator = false;
-            closeIndicator.style.display = 'none';
-            draw();
-        }
-        
-        // ... (pan, zoom, clear, optimize, diagonal mode functions remain largely the same)
-        // ... for brevity, focusing on the corrected slice logic.
-
-        function prepareForSlicing() {
-            if (!isShapeClosed || points.length < 3) {
-                updateSliceStatus("Need a closed shape to slice.", "warning");
-                return false;
-            }
-
-            optimizeShape(); // Ensure shape is consistent first
-
-            const totalArea = calculateArea();
-            targetSliceArea = parseFloat(sliceAreaInput.value);
-            if (areaUnit.value === 'squareFeet') {
-                targetSliceArea /= SQUARE_METERS_TO_SQUARE_FEET;
-            } else if (areaUnit.value === 'acres') {
-                targetSliceArea /= SQUARE_METERS_TO_ACRES;
-            }
-
-            if (isNaN(targetSliceArea) || targetSliceArea <= 0) {
-                updateSliceStatus("Please enter a valid positive area.", "warning");
-                return false;
-            }
-            if (targetSliceArea >= totalArea * 0.999) { // Add tolerance
-                updateSliceStatus(`Slice area must be less than total area (${totalArea.toFixed(2)} m²).`, "warning");
-                return false;
-            }
-
-            sliceOriginalState = {
-                points: JSON.parse(JSON.stringify(points)),
-                edges: JSON.parse(JSON.stringify(edges)),
-                isShapeClosed: isShapeClosed
+    // --- MAIN PLOTTER CLASS ---
+    class LandPlotter {
+        constructor() {
+            this.canvas = document.getElementById('plot-canvas');
+            this.ctx = this.canvas.getContext('2d');
+            this.ui = { /* ... UI elements ... */ 
+                unitSelector: document.getElementById('unit-selector'),
+                optimizeBtn: document.getElementById('optimize-btn'),
+                sliceBtn: document.getElementById('slice-btn'),
+                calculateBtn: document.getElementById('calculate-btn'),
+                resetBtn: document.getElementById('reset-btn'),
+                infoBar: document.getElementById('info-bar'),
+                resultsDiv: document.getElementById('results'),
             };
 
-            sliceMode = true;
-            sliceLineFinalized = false;
-            lastSliceResult = null;
-            updateSliceStatus("Click to set the start point of the slice line.", "info");
-            updateStatus("Slice mode: Define slice direction.", "info");
-            startSliceBtn.style.display = 'none';
-            cancelSliceBtn.style.display = 'block';
-            isPanMode = false;
-            canvas.style.cursor = 'crosshair';
-            draw();
-            return true;
-        }
-
-        function exitSliceMode() {
-            if (sliceOriginalState) {
-                points = sliceOriginalState.points;
-                edges = sliceOriginalState.edges;
-                isShapeClosed = sliceOriginalState.isShapeClosed;
-            }
-            sliceMode = false;
-            sliceStartPoint = null;
-            sliceLine = null;
-            sliceLineFinalized = false;
-            sliceDirection = null;
-            lastSliceResult = null;
-
-            sideSelection.style.display = 'none';
-            confirmSliceBtn.style.display = 'none';
-            startSliceBtn.style.display = 'block';
-            cancelSliceBtn.style.display = 'none';
-            updateSliceStatus("Enter area and click Start Slice.", "info");
-            updateStatus("Slice mode canceled.", "info");
-            draw();
-        }
-
-        function findLineSegIntersection(p1, p2, p3, p4) {
-            const den = (p1.x - p2.x) * (p3.y - p4.y) - (p1.y - p2.y) * (p3.x - p4.x);
-            if (den === 0) return null;
-            const t = ((p1.x - p3.x) * (p3.y - p4.y) - (p1.y - p3.y) * (p3.x - p4.x)) / den;
-            const u = -((p1.x - p2.x) * (p1.y - p3.y) - (p1.y - p2.y) * (p1.x - p3.x)) / den;
-            if (t > 0 && t < 1 && u > 0 && u < 1) {
-                return { x: p1.x + t * (p2.x - p1.x), y: p1.y + t * (p2.y - p1.y) };
-            }
-            return null;
+            this.slicer = new Slicer(this);
+            this.inputController = new InputController();
+            this.state = {};
+            this.adjustCanvasSize();
+            this.reset();
+            this.bindEventListeners();
         }
         
-        function getIntersectionsWithPolygon(line) {
-            const intersections = [];
-            for (let i = 0; i < points.length; i++) {
-                const p1 = points[i];
-                const p2 = points[(i + 1) % points.length];
-                const intersectPoint = findLineSegIntersection(line.start, line.end, p1, p2);
-                if (intersectPoint) {
-                    intersections.push({ point: intersectPoint, edgeIndex: i });
-                }
-            }
-            return intersections;
+       
+        adjustCanvasSize() {
+            const container = this.canvas.parentElement;
+            const size = Math.min(container.clientWidth, window.innerHeight * 0.7);
+            this.canvas.style.width = size + 'px';
+            this.canvas.style.height = size + 'px';
+            this.canvas.width = size;
+            this.canvas.height = size;
+            if(this.state && this.state.mode) this.render();
         }
 
-        function getSlicedPolygons(line) {
-            const intersections = getIntersectionsWithPolygon(line);
-            if (intersections.length !== 2) return null;
-
-            // Order intersections based on the line direction if needed, but for slicing it's not critical
-            const intA = intersections[0];
-            const intB = intersections[1];
-
-            const poly1 = [intA.point];
-            const poly2 = [intB.point];
-
-            let currentIndex = (intA.edgeIndex + 1) % points.length;
-            while (currentIndex !== (intB.edgeIndex + 1) % points.length) {
-                poly1.push(points[currentIndex]);
-                currentIndex = (currentIndex + 1) % points.length;
-            }
-            poly1.push(intB.point);
-            
-            currentIndex = (intB.edgeIndex + 1) % points.length;
-            while (currentIndex !== (intA.edgeIndex + 1) % points.length) {
-                poly2.push(points[currentIndex]);
-                currentIndex = (currentIndex + 1) % points.length;
-            }
-            poly2.push(intA.point);
-
-            return { poly1, poly2 };
+        bindEventListeners() {
+            window.addEventListener('resize', () => this.adjustCanvasSize());
+            this.canvas.addEventListener('mousedown', this.handleMouseDown.bind(this));
+            this.ui.resetBtn.addEventListener('click', this.reset.bind(this));
+            this.ui.optimizeBtn.addEventListener('click', this.startOptimization.bind(this));
+            this.ui.calculateBtn.addEventListener('click', this.calculateAndShowArea.bind(this));
+            this.ui.sliceBtn.addEventListener('click', () => this.setMode('SLICING'));
+            this.ui.unitSelector.addEventListener('change', () => { this.state.unit = this.ui.unitSelector.value; this.render(); });
         }
         
-        function adjustSliceToTargetArea() {
-            if (!sliceLine || !sliceDirection) return;
-
-            const lineVec = { x: sliceLine.end.x - sliceLine.start.x, y: sliceLine.end.y - sliceLine.start.y };
-            const length = Math.hypot(lineVec.x, lineVec.y);
-            if (length < 1) {
-                updateSliceStatus("Slice direction line is too short.", "warning");
-                return;
-            }
-
-            // Normal vector points "left" of the direction vector
-            const normalVec = { x: -lineVec.y / length, y: lineVec.x / length };
-
-            const totalArea = calculatePolygonArea(points);
-            let low = -2 * Math.sqrt(totalArea) / scaleFactor;
-            let high = 2 * Math.sqrt(totalArea) / scaleFactor;
-            let bestLine = null;
-            let bestResult = null;
-
-            for (let i = 0; i < 50; i++) { // Binary search for 50 iterations
-                const offset = (low + high) / 2;
-                const movedLine = {
-                    start: { x: sliceLine.start.x + normalVec.x * offset, y: sliceLine.start.y + normalVec.y * offset },
-                    end: { x: sliceLine.end.x + normalVec.x * offset, y: sliceLine.end.y + normalVec.y * offset }
-                };
-
-                const result = getSlicedPolygons(movedLine);
-                if (!result) { // If offset is too far and doesn't intersect, adjust search boundary
-                    if (offset > 0) high = offset; else low = offset;
-                    continue;
-                }
-                
-                // Determine which new polygon is "left" vs "right"
-                const area1 = calculatePolygonArea(result.poly1);
-                const area2 = calculatePolygonArea(result.poly2);
-
-                const centroid1 = {
-                    x: result.poly1.reduce((sum, v) => sum + v.x, 0) / result.poly1.length,
-                    y: result.poly1.reduce((sum, v) => sum + v.y, 0) / result.poly1.length
-                };
-                
-                const crossProduct = lineVec.x * (centroid1.y - movedLine.start.y) - lineVec.y * (centroid1.x - movedLine.start.x);
-                
-                const leftPoly = crossProduct > 0 ? result.poly1 : result.poly2;
-                const rightPoly = crossProduct > 0 ? result.poly2 : result.poly1;
-                const leftArea = calculatePolygonArea(leftPoly);
-                const rightArea = calculatePolygonArea(rightPoly);
-                
-                const achievedArea = (sliceDirection === 'left') ? leftArea : rightArea;
-                
-                bestLine = movedLine;
-                bestResult = {
-                    poly1: leftPoly, // Consistently store left poly as poly1
-                    poly2: rightPoly,  // and right as poly2
-                    area1: leftArea,
-                    area2: rightArea
-                };
-
-                const error = achievedArea - targetSliceArea;
-                if (Math.abs(error) < 0.01) break; // Success condition
-
-                if (error < 0) { // Area is too small, need to move further in the direction of the chosen side
-                    sliceDirection === 'left' ? (low = offset) : (high = offset);
-                } else { // Area is too big
-                    sliceDirection === 'left' ? (high = offset) : (low = offset);
-                }
-            }
-
-            if (bestResult) {
-                lastSliceResult = bestResult;
-                sliceLine = bestLine;
-                sliceLineFinalized = true;
-
-                const areaUnitText = areaUnit.value;
-                const area1Text = formatArea(bestResult.area1, areaUnitText);
-                const area2Text = formatArea(bestResult.area2, areaUnitText);
-                
-                updateSliceStatus(`Slice found. Left: ${area1Text}, Right: ${area2Text}. Confirm?`, "success");
-                confirmSliceBtn.style.display = 'block';
-            } else {
-                updateSliceStatus("Could not find a valid slice position.", "warning");
-                lastSliceResult = null;
-            }
-            draw();
+        reset() {
+            this.state = { mode: 'DRAW_POLY', vertices: [], isClosed: false, dimensions: {}, diagonals: [], diagonalDimensions: {}, optimizedVertices: [], unit: this.ui.unitSelector.value, tempDiagonalStart: null, finalParcels: null };
+            this.slicer.reset();
+            this.updateUI(); this.render();
         }
 
-        function formatArea(area, unit) {
-            if (unit === 'squareFeet') return `${(area * SQUARE_METERS_TO_SQUARE_FEET).toFixed(2)} ft²`;
-            if (unit === 'acres') return `${(area * SQUARE_METERS_TO_ACRES).toFixed(4)} acres`;
-            return `${area.toFixed(2)} m²`;
+        setMode(mode, data = null) {
+            this.state.mode = mode;
+            this.slicer.reset();
+            if (mode === 'SLICING') this.slicer.start(this.state.optimizedVertices);
+            else if (mode === 'SLICED') { this.state.finalParcels = data; this.state.mode = 'OPTIMIZED'; }
+            this.updateUI(); this.render();
         }
 
-        function confirmSlice() {
-            if (!lastSliceResult) {
-                updateSliceStatus("No valid slice to confirm.", "warning");
-                return;
+        handleMouseDown(e) {
+            const pos = this.getMousePos(e, !['DRAW_POLY', 'DIMENSION_SIDES', 'DRAW_DIAGONALS'].includes(this.state.mode));
+            const rawPos = this.getMousePos(e, false); 
+            switch (this.state.mode) {
+                case 'DRAW_POLY': this.handleDrawPoly(rawPos); break;
+                case 'DIMENSION_SIDES': this.handleClickToDimension(rawPos, 'side'); break;
+                case 'DRAW_DIAGONALS': this.handleClickToDimension(rawPos, 'diagonal'); this.handleClickToDrawDiagonal(rawPos); break;
+                case 'SLICING': this.slicer.handleMouseDown(pos); break;
             }
-            saveState('slice');
+        }
+        
+        handleDrawPoly(pos) {
+            if (this.state.vertices.length > 2 && Geometry.distance(pos, this.state.vertices[0]) < 15) {
+                this.state.isClosed = true; this.state.mode = 'DIMENSION_SIDES';
+            } else this.state.vertices.push(pos);
+            this.updateUI(); this.render();
+        }
 
-            // Replace the old polygon with both new polygons, separated by a slice edge
-            const newPoints = lastSliceResult.poly1.concat(lastSliceResult.poly2);
-            const newEdges = [];
-            
-            // This is a simplified confirmation. For full editing, one would
-            // choose which part to keep. Here we just show the result.
-            // For a real split, you'd create two separate objects.
-            // Let's just keep ONE of the polygons for simplicity.
-            
-            const chosenPoly = (sliceDirection === 'left') ? lastSliceResult.poly1 : lastSliceResult.poly2;
-            
-            points = chosenPoly;
-            edges = [];
-            for (let i = 0; i < points.length; i++) {
-                edges.push({
-                    startIndex: i,
-                    endIndex: (i + 1) % points.length,
-                    length: null, unit: 'meters', isBoundary: true
+        handleClickToDimension(pos, type) {
+            const lines = type === 'side' ? this.state.vertices.map((v, i) => ({ p1: v, p2: this.state.vertices[(i + 1) % this.state.vertices.length], key: `v${i}-v${(i + 1) % this.state.vertices.length}` })) : this.state.diagonals.map(d => ({ p1: this.state.vertices[d.startIdx], p2: this.state.vertices[d.endIdx], key: `d${d.startIdx}-d${d.endIdx}` }));
+            for (const line of lines) {
+                if (Geometry.isPointOnLine(pos, line.p1, line.p2, 5)) this.promptForDimension(line.key, type);
+            }
+        }
+
+        handleClickToDrawDiagonal(pos) {
+            const clickedVertexIdx = this.state.vertices.findIndex(v => Geometry.distance(pos, v) < 15);
+            if (clickedVertexIdx === -1) return;
+            if (this.state.tempDiagonalStart === null) this.state.tempDiagonalStart = clickedVertexIdx;
+            else {
+                if (Geometry.isValidDiagonal(this.state.tempDiagonalStart, clickedVertexIdx, this.state.vertices.length, this.state.diagonals)) {
+                    this.state.diagonals.push({ startIdx: Math.min(this.state.tempDiagonalStart, clickedVertexIdx), endIdx: Math.max(this.state.tempDiagonalStart, clickedVertexIdx) });
+                } this.state.tempDiagonalStart = null;
+            }
+            this.updateUI(); this.render();
+        }
+
+        async promptForDimension(key, type) {
+            try {
+                const value = await this.inputController.prompt({
+                    title: `Enter ${type} Length`,
+                    subtitle: `For element ${key}`,
+                    placeholder: this.state.unit === 'meters' ? 'e.g., 50.5' : 'e.g., 120-6.5',
+                    validationFn: (val) => val && !isNaN(this.parseLength(val))
                 });
-            }
-            
-            // Recalculate scale factor based on new shape if needed, but it should be consistent.
-            isShapeClosed = true;
-
-            updateSliceStatus("Slice confirmed. Shape has been updated.", "success");
-            sliceMode = false;
-            startSliceBtn.style.display = 'block';
-            cancelSliceBtn.style.display = 'none';
-            confirmSliceBtn.style.display = 'none';
-            lastSliceResult = null;
-            sliceLine = null;
-            draw();
+                const meters = this.parseLength(value);
+                if (meters > 0) {
+                    if (type === 'side') this.state.dimensions[key] = meters;
+                    else this.state.diagonalDimensions[key] = meters;
+                    this.checkAndAdvanceState();
+                }
+            } catch (err) {  }
+            this.updateUI(); this.render();
         }
         
-        canvas.addEventListener('mousedown', e => {
-            if (isPanMode || e.shiftKey) {
-                isPanning = true;
-                lastX = e.clientX;
-                lastY = e.clientY;
-                canvas.style.cursor = 'grab';
+        parseLength(value) {
+            if (this.state.unit === 'meters') return parseFloat(value);
+            const parts = value.match(/(\d+\.?\d*)/g);
+            if (!parts) return NaN;
+            const feet = parseFloat(parts[0]) || 0;
+            const inches = parseFloat(parts[1]) || 0;
+            return (feet * 12 + inches) * 0.0254;
+        }
+
+        checkAndAdvanceState() {
+            if (this.state.mode === 'DIMENSION_SIDES' && Object.keys(this.state.dimensions).length === this.state.vertices.length) {
+                this.state.mode = 'DRAW_DIAGONALS';
             }
-        });
+        }
         
-        canvas.addEventListener('mousemove', e => {
-            const { x, y } = getTransformedCoords(e);
-            
-            if (isPanning) {
-                const dx = e.clientX - lastX;
-                const dy = e.clientY - lastY;
-                offsetX += dx / scale;
-                offsetY += dy / scale;
-                lastX = e.clientX;
-                lastY = e.clientY;
-                draw();
-                return;
-            }
+        async startOptimization() {
+            try {
+                const baseSideStr = await this.inputController.prompt({ title: 'Set Base Side', subtitle: 'Enter side to place on X-axis (e.g., "0-1")', placeholder: '0-1', validationFn: (val) => /^\d+-\d+$/.test(val) });
+                const [startIdx, endIdx] = baseSideStr.split('-').map(Number);
+                const key = `v${startIdx}-v${endIdx}`, revKey = `v${endIdx}-v${startIdx}`;
+                if (!isNaN(startIdx) && !isNaN(endIdx) && (this.state.dimensions[key] || this.state.dimensions[revKey])) this.optimizePlot({ startIdx, endIdx });
+                else this.inputController.submit(); // Re-show with error
+            } catch (err) { }
+        }
 
-            if (sliceMode && sliceStartPoint && !sliceLineFinalized) {
-                sliceLine = { start: sliceStartPoint, end: { x, y } };
-                draw();
-                return;
-            }
-
-            // Close indicator logic
-            if (!isShapeClosed && points.length > 2) {
-                const firstPoint = points[0];
-                const distance = Math.hypot(firstPoint.x - x, firstPoint.y - y);
-                if (distance < 15 / scale) {
-                    showCloseIndicator = true;
-                    const rect = canvas.getBoundingClientRect();
-                    closeIndicator.style.display = 'block';
-                    closeIndicator.style.left = `${(firstPoint.x + offsetX) * scale + rect.left - 16}px`;
-                    closeIndicator.style.top = `${(firstPoint.y + offsetY) * scale + rect.top - 16}px`;
-                } else {
-                    showCloseIndicator = false;
-                    closeIndicator.style.display = 'none';
-                }
-            }
-        });
-
-        canvas.addEventListener('mouseup', () => {
-            isPanning = false;
-            canvas.style.cursor = isPanMode ? 'grab' : 'crosshair';
-        });
-
-        canvas.addEventListener('mouseleave', () => {
-            isPanning = false;
-            closeIndicator.style.display = 'none';
-        });
-
-        canvas.addEventListener('wheel', e => {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const mouseX = (e.clientX - rect.left) / scale;
-            const mouseY = (e.clientY - rect.top) / scale;
-            
-            const zoom = e.deltaY < 0 ? 1.1 : 1/1.1;
-            const newScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale * zoom));
-
-            offsetX = mouseX - (mouseX - offsetX) * (scale / newScale);
-            offsetY = mouseY - (mouseY - offsetY) * (scale / newScale);
-            
-            scale = newScale;
-            draw();
-        });
-
-        canvas.addEventListener('click', e => {
-            const { x, y } = getTransformedCoords(e);
-
-            if (isPanMode) return;
-            
-            if (sliceMode) {
-                if (!sliceStartPoint) {
-                    sliceStartPoint = { x, y };
-                    updateSliceStatus("Click to set the end point of the slice line.", "info");
-                } else if (!sliceLineFinalized) {
-                    sliceLine = { start: sliceStartPoint, end: { x, y } };
-                    const intersections = getIntersectionsWithPolygon(sliceLine);
-                    if (intersections && intersections.length === 2) {
-                        sideSelection.style.display = 'flex';
-                        updateSliceStatus("Select which side to measure for the slice.", "info");
-                    } else {
-                        updateSliceStatus("Slice line must cross exactly two edges.", "warning");
-                        sliceStartPoint = null;
-                        sliceLine = null;
+        optimizePlot(baseSide) { 
+            const n = this.state.vertices.length;
+            const getLength = (idx1, idx2) => {
+                const sKey = `v${idx1}-v${idx2}`, rKey = `v${idx2}-v${idx1}`;
+                if (this.state.dimensions[sKey] || this.state.dimensions[rKey]) return this.state.dimensions[sKey] || this.state.dimensions[rKey];
+                const dKey = `d${Math.min(idx1, idx2)}-d${Math.max(idx1, idx2)}`;
+                return this.state.diagonalDimensions[dKey];
+            };
+            const newVertices = new Array(n).fill(null);
+            const baseLength = getLength(baseSide.startIdx, baseSide.endIdx);
+            newVertices[baseSide.startIdx] = { x: 0, y: 0 };
+            newVertices[baseSide.endIdx] = { x: baseLength, y: 0 };
+            const placed = new Array(n).fill(false);
+            placed[baseSide.startIdx] = true;
+            placed[baseSide.endIdx] = true;
+            let changedInLoop = true;
+            while (placed.includes(false) && changedInLoop) {
+                changedInLoop = false;
+                for (let i = 0; i < n; i++) {
+                    if (placed[i]) continue;
+                    const anchors = [];
+                    for (let j = 0; j < n; j++) if (placed[j] && getLength(i, j)) anchors.push(j);
+                    if (anchors.length >= 2) {
+                        const p1_idx = anchors[0], p2_idx = anchors[1];
+                        const p1 = newVertices[p1_idx], p2 = newVertices[p2_idx];
+                        const d1 = getLength(i, p1_idx), d2 = getLength(i, p2_idx);
+                        const d3 = Geometry.distance(p1, p2);
+                        if (d1 + d2 < d3 - 1e-6 || d1 + d3 < d2 - 1e-6 || d2 + d3 < d1 - 1e-6) { alert(`Triangle inequality violated for vertex ${i}. Check dimensions.`); return; }
+                        const cosAngle = (d1 * d1 + d3 * d3 - d2 * d2) / (2 * d1 * d3);
+                        const angle = Math.acos(Math.max(-1, Math.min(1, cosAngle)));
+                        const baseAngle = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+                        const vOrig = { x: this.state.vertices[i].x - this.state.vertices[p1_idx].x, y: this.state.vertices[i].y - this.state.vertices[p1_idx].y };
+                        const baseOrig = { x: this.state.vertices[p2_idx].x - this.state.vertices[p1_idx].x, y: this.state.vertices[p2_idx].y - this.state.vertices[p1_idx].y };
+                        const crossProduct = vOrig.x * baseOrig.y - vOrig.y * baseOrig.x;
+                        const finalAngle = baseAngle + (crossProduct >= 0 ? -angle : angle);
+                        newVertices[i] = { x: p1.x + d1 * Math.cos(finalAngle), y: p1.y + d1 * Math.sin(finalAngle) };
+                        placed[i] = true; changedInLoop = true;
                     }
                 }
-                draw();
-                return;
             }
+            if (placed.includes(false)) { alert("Optimization failed. The plot may be over- or under-constrained."); return; }
+            this.state.optimizedVertices = newVertices;
+            this.setMode('OPTIMIZED');
+        }
 
-            if (diagonalMode) { /* ... diagonal logic ... */ return; }
+        calculateAndShowArea() {
+            const totalArea = Geometry.calculatePolygonArea(this.state.optimizedVertices);
+            const areaSqFt = totalArea * 10.7639;
+            this.ui.resultsDiv.innerHTML = `Total Area: <strong>${totalArea.toFixed(2)} m²</strong> / <strong>${areaSqFt.toFixed(2)} ft²</strong>`;
+            this.ui.resultsDiv.classList.remove('hidden');
+        }
+       updateUI() {
+            const isOptimized = this.state.optimizedVertices.length > 0;
+            this.ui.optimizeBtn.disabled = true; // Disabled for this demo; a full implementation would enable it.
+            this.ui.calculateBtn.disabled = !isOptimized;
+            this.ui.sliceBtn.disabled = !isOptimized;
+            this.ui.resultsDiv.classList.add('hidden');
+            if(this.state.finalParcels) this.ui.resultsDiv.classList.remove('hidden');
 
-            // Select edge if shape is closed
-            if (isShapeClosed) {
-                const edgeIndex = getNearEdge(x, y);
-                if (edgeIndex !== -1) {
-                    selectedEdge = edges[edgeIndex];
-                    lengthInput.value = (selectedEdge.length || calculateEdgeLength(selectedEdge)).toFixed(2);
-                    lengthUnit.value = selectedEdge.unit || 'meters';
-                    updateStatus("Edge selected. Change length or double-click to delete diagonal.", "info");
-                    draw();
-                }
-                return;
-            }
+            this.slicer.ui.panel.classList.toggle('hidden', this.state.mode !== 'SLICING');
             
-            // Add point
-            if (showCloseIndicator) {
-                closeShape();
-                return;
+            switch(this.state.mode) {
+                case 'DRAW_POLY': this.ui.infoBar.innerHTML = '<strong>Step 1:</strong> Draw the plot shape on the canvas. Click near the start to close.'; break;
+                case 'OPTIMIZED': this.ui.infoBar.innerHTML = this.state.finalParcels ? `✨ <strong>Partition Complete!</strong>` : `✅ <strong>Plot Ready!</strong> Ready to Slice or Calculate Area.`; break;
+                case 'SLICING': this.ui.infoBar.innerHTML = `🔪 <strong>Slicing Mode:</strong> Follow instructions in the panel.`; break;
+                default: this.ui.infoBar.innerHTML = 'Ready.';
             }
-
-            saveState('addPoint');
-            points.push({ x, y });
-            if (points.length > 1) {
-                edges.push({ startIndex: points.length - 2, endIndex: points.length - 1, length: null, unit: 'meters', isBoundary: true });
-            }
-            updateStatus(`Point P${points.length} added.`, "success");
-            draw();
-        });
-
-        // Event listeners for buttons
-        startSliceBtn.addEventListener('click', prepareForSlicing);
-        cancelSliceBtn.addEventListener('click', exitSliceMode);
-        confirmSliceBtn.addEventListener('click', confirmSlice);
-        
-        leftSideBtn.addEventListener('click', function() {
-            this.classList.add('active');
-            rightSideBtn.classList.remove('active');
-            sliceDirection = 'left';
-            sideSelection.style.display = 'none';
-            adjustSliceToTargetArea();
-        });
-
-        rightSideBtn.addEventListener('click', function() {
-            this.classList.add('active');
-            leftSideBtn.classList.remove('active');
-            sliceDirection = 'right';
-            sideSelection.style.display = 'none';
-            adjustSliceToTargetArea();
-        });
-
-        clearBtn.addEventListener('click', () => {
-            // Full clear logic...
-            points = []; edges = []; isShapeClosed = false; selectedEdge = null; scaleFactor = 1; undoStack = [];
-            exitSliceMode();
-            scale = 1.0; offsetX = 0; offsetY = 0;
-            updateStatus("Canvas cleared. Click to add the first point.", "info");
-            draw();
-        });
-
-        // Placeholder for other button listeners to be attached
-        // optimizeBtn, calculateAreaBtn, exportBtn, closeShapeBtn, etc.
-        function setupButtonListeners() {
-            closeShapeBtn.addEventListener('click', closeShape);
-            panButton.addEventListener('click', () => {
-                isPanMode = !isPanMode;
-                panButton.classList.toggle('active');
-                canvas.style.cursor = isPanMode ? 'grab' : 'crosshair';
-                updateStatus(isPanMode ? "Pan mode active. Drag to move." : "Plot mode active.", "info");
-            });
-            zoomInBtn.addEventListener('click', () => {
-                const newScale = Math.min(MAX_SCALE, scale * 1.2);
-                const rect = canvas.getBoundingClientRect();
-                const centerX = (rect.width / 2) / scale;
-                const centerY = (rect.height / 2) / scale;
-                offsetX = centerX - (centerX - offsetX) * (scale / newScale);
-                offsetY = centerY - (centerY - offsetY) * (scale / newScale);
-                scale = newScale;
-                draw();
-            });
-             zoomOutBtn.addEventListener('click', () => {
-                const newScale = Math.max(MIN_SCALE, scale / 1.2);
-                const rect = canvas.getBoundingClientRect();
-                const centerX = (rect.width / 2) / scale;
-                const centerY = (rect.height / 2) / scale;
-                offsetX = centerX - (centerX - offsetX) * (scale / newScale);
-                offsetY = centerY - (centerY - offsetY) * (scale / newScale);
-                scale = newScale;
-                draw();
-            });
-            undoBtn.addEventListener('click', () => {
-                if (undoStack.length === 0) {
-                    updateStatus("Nothing to undo.", "warning");
-                    return;
-                }
-                const lastState = undoStack.pop();
-                points = lastState.points;
-                edges = lastState.edges;
-                isShapeClosed = lastState.isShapeClosed;
-                updateStatus("Undo successful.", "success");
-                draw();
-            });
-            // Dummy optimize function
-            optimizeBtn.addEventListener('click', optimizeShape);
-            // ... other listeners ...
         }
 
-        function optimizeShape() {
-             if (!isShapeClosed || points.length < 3) {
-                updateStatus("Please close the shape first", "warning");
-                return;
-            }
-
-            const edgesWithLength = edges.filter(e => e.length).length;
-            if (edgesWithLength === 0) {
-                 updateStatus("No edge lengths set. Calculating scale factor from drawing.", "info");
-                 // Use first edge to set scale
-                 const firstEdge = edges.find(e => e.isBoundary);
-                 if (firstEdge) {
-                     firstEdge.length = 50; // default length
-                     firstEdge.unit = 'meters';
-                 } else { return; }
-            }
-
-            // Calculate average scale factor from all defined edges
-            let totalRealLength = 0;
-            let totalPixelLength = 0;
-            edges.forEach(edge => {
-                if (edge.length) {
-                    const p1 = points[edge.startIndex];
-                    const p2 = points[edge.endIndex];
-                    const pixelLength = Math.hypot(p2.x - p1.x, p2.y - p1.y);
-                    const realLength = edge.unit === 'feet' ? edge.length / METERS_TO_FEET : edge.length;
-                    totalRealLength += realLength;
-                    totalPixelLength += pixelLength;
-                }
-            });
-
-            if (totalPixelLength > 0) {
-                scaleFactor = totalRealLength / totalPixelLength;
-                updateStatus("Scale factor optimized based on edge lengths.", "success");
+        
+        render() {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            const isOptimizedState = ['OPTIMIZED', 'SLICING', 'SLICED'].includes(this.state.mode);
+            if (isOptimizedState) {
+                const { scale, offsetX, offsetY } = this.getPlotScaling();
+                this.ctx.save();
+                this.ctx.translate(offsetX, offsetY);
+                this.ctx.scale(scale, scale);
+                this.renderOptimizedPlot(scale);
+                if (this.state.finalParcels) this.renderFinalParcels(scale);
+                if (this.state.mode === 'SLICING') this.slicer.render(this.ctx, scale);
+                this.ctx.restore();
             } else {
-                 scaleFactor = 1;
+                this.renderInitialSketch();
             }
-            draw();
+        }
+               renderInitialSketch() {
+            if (this.state.vertices.length === 0) return;
+            this.ctx.strokeStyle = '#333'; this.ctx.lineWidth = 2;
+            this.ctx.beginPath(); this.ctx.moveTo(this.state.vertices[0].x, this.state.vertices[0].y);
+            this.state.vertices.forEach((v, i) => i > 0 && this.ctx.lineTo(v.x, v.y));
+            if (this.state.isClosed) this.ctx.closePath();
+            this.ctx.stroke();
+        }
+
+        renderOptimizedPlot(scale) {
+            const verts = this.state.optimizedVertices;
+            this.ctx.strokeStyle = this.state.finalParcels ? 'rgba(0,0,0,0.1)' : '#333';
+            this.ctx.lineWidth = this.state.finalParcels ? 1 / scale : 2 / scale;
+            this.ctx.beginPath(); this.ctx.moveTo(verts[0].x, verts[0].y); verts.forEach(v => this.ctx.lineTo(v.x, v.y)); this.ctx.closePath(); this.ctx.stroke();
         }
         
-        window.addEventListener('resize', () => {
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height > 200 ? rect.height : 500;
-            draw();
-        });
+       renderFinalParcels(scale) {
+            const { parcelA, parcelB, finalLine } = this.state.finalParcels;
+            const drawPoly = (poly, color) => {
+                if(poly.length < 3) return;
+                this.ctx.fillStyle = color; this.ctx.beginPath(); this.ctx.moveTo(poly[0].x, poly[0].y);
+                poly.slice(1).forEach(v => this.ctx.lineTo(v.x, v.y)); this.ctx.closePath(); this.ctx.fill();
+            };
+            drawPoly(parcelA, 'rgba(0, 150, 136, 0.5)');
+            drawPoly(parcelB, 'rgba(255, 193, 7, 0.5)');
+            
+            this.ctx.strokeStyle = 'red'; this.ctx.lineWidth = 3 / scale;
+            this.ctx.beginPath(); this.ctx.moveTo(finalLine[0].x, finalLine[0].y); this.ctx.lineTo(finalLine[1].x, finalLine[1].y); this.ctx.stroke();
 
-        // Initial setup
-        setupButtonListeners();
-        const initialRect = canvas.parentElement.getBoundingClientRect();
-        canvas.width = initialRect.width;
-        canvas.height = 500;
-        draw();
+            const areaA = Geometry.calculatePolygonArea(parcelA); const areaB = Geometry.calculatePolygonArea(parcelB);
+            const centerA = Geometry.getPolygonCentroid(parcelA); const centerB = Geometry.getPolygonCentroid(parcelB);
+
+            this.ctx.fillStyle = 'black'; this.ctx.font = `bold ${16/scale}px Arial`; this.ctx.textAlign = 'center';
+            this.ctx.fillText(`A: ${areaA.toFixed(2)} m²`, centerA.x, centerA.y);
+            this.ctx.fillText(`B: ${areaB.toFixed(2)} m²`, centerB.x, centerB.y);
+        }
+
         
+        // --- USER-PROVIDED FUNCTION ---
+        getMousePos(evt, useScaling = true) {
+            const rect = this.canvas.getBoundingClientRect();
+            const x = (evt.clientX - rect.left) * (this.canvas.width / rect.width);
+            const y = (evt.clientY - rect.top) * (this.canvas.height / rect.height);
+            if (!useScaling || this.state.optimizedVertices.length === 0) return { x, y };
+            const { scale, offsetX, offsetY } = this.getPlotScaling();
+            return { x: (x - offsetX) / scale, y: (y - offsetY) / scale };
+        }
+        
+         getPlotScaling() {
+            const verts = this.state.optimizedVertices;
+            if (verts.length === 0) return { scale: 1, offsetX: 0, offsetY: 0 };
+            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+            verts.forEach(v => { minX = Math.min(minX, v.x); minY = Math.min(minY, v.y); maxX = Math.max(maxX, v.x); maxY = Math.max(maxY, v.y); });
+            
+            const padding = 40;
+            const plotWidth = maxX - minX; const plotHeight = maxY - minY;
+            if(plotWidth === 0 || plotHeight === 0) return { scale: 1, offsetX: 0, offsetY: 0 };
+            
+            const scale = Math.min((this.canvas.width - padding) / plotWidth, (this.canvas.height - padding) / plotHeight);
+            const offsetX = (this.canvas.width - plotWidth * scale) / 2 - minX * scale;
+            const offsetY = (this.canvas.height - plotHeight * scale) / 2 - minY * scale;
+            return { scale, offsetX, offsetY };
+        }
+    }
+
+    // Simplified stubs for brevity. The full code would be inserted here.
+    LandPlotter.prototype.calculateAndShowArea = function() { const totalArea = Geometry.calculatePolygonArea(this.state.optimizedVertices); const areaSqFt = totalArea * 10.7639; this.ui.resultsDiv.innerHTML = `Total Area: <strong>${totalArea.toFixed(2)} m²</strong> / <strong>${areaSqFt.toFixed(2)} ft²</strong>`; this.ui.resultsDiv.classList.remove('hidden'); };
+    LandPlotter.prototype.updateUI = function() { const n = this.state.vertices.length; const reqDiags = n > 2 ? n - 3 : 0; const sidesDone = Object.keys(this.state.dimensions).length >= n && n > 0; const diagsDone = this.state.diagonals.length === reqDiags && Object.keys(this.state.diagonalDimensions).length >= reqDiags; this.ui.optimizeBtn.disabled = !(sidesDone && diagsDone) || this.state.optimizedVertices.length > 0; const isOptimized = this.state.optimizedVertices.length > 0; this.ui.calculateBtn.disabled = !isOptimized; this.ui.sliceBtn.disabled = !isOptimized; this.ui.resultsDiv.classList.add('hidden'); if(this.state.finalParcels) this.ui.resultsDiv.classList.remove('hidden'); this.slicer.ui.panel.classList.toggle('hidden', this.state.mode !== 'SLICING'); let infoText = ''; switch(this.state.mode) { case 'DRAW_POLY': infoText = '<strong>Step 1:</strong> Draw the plot shape. Click near start to close.'; break; case 'DIMENSION_SIDES': infoText = '<strong>Step 2:</strong> Click each side to enter its length.'; break; case 'DRAW_DIAGONALS': infoText = `<strong>Step 3:</strong> Draw & dimension <strong>${reqDiags - this.state.diagonals.length}</strong> more diagonal(s).`; break; case 'OPTIMIZED': infoText = this.state.finalParcels ? '✨ <strong>Partition Complete!</strong>' : '✅ <strong>Plot Optimized!</strong> Ready to Slice or Calculate Area.'; break; case 'SLICING': infoText = '🔪 <strong>Slicing Mode:</strong> Follow instructions in the panel.'; break; } this.ui.infoBar.innerHTML = infoText; };
+    LandPlotter.prototype.renderInitialSketch = function() { if (this.state.vertices.length === 0) return; const { vertices, dimensions, diagonals, diagonalDimensions, tempDiagonalStart } = this.state; const ctx = this.ctx; ctx.strokeStyle = '#333'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(vertices[0].x, vertices[0].y); vertices.forEach((v, i) => i > 0 && ctx.lineTo(v.x, v.y)); if (this.state.isClosed) ctx.closePath(); ctx.stroke(); vertices.forEach((v, i) => { ctx.fillStyle = tempDiagonalStart === i ? 'var(--accent-color)' : 'var(--primary-color)'; ctx.beginPath(); ctx.arc(v.x, v.y, 6, 0, 2 * Math.PI); ctx.fill(); ctx.fillStyle = 'var(--error-color)'; ctx.font = 'bold 14px Arial'; ctx.fillText(i, v.x + 10, v.y - 10); }); ctx.strokeStyle = '#aaa'; ctx.lineWidth = 1; ctx.setLineDash([5, 5]); diagonals.forEach(d => { ctx.beginPath(); ctx.moveTo(vertices[d.startIdx].x, vertices[d.startIdx].y); ctx.lineTo(vertices[d.endIdx].x, vertices[d.endIdx].y); ctx.stroke(); }); ctx.setLineDash([]); const drawLabel = (p1, p2, label) => { const mid = {x: (p1.x + p2.x)/2, y: (p1.y + p2.y)/2}; ctx.save(); ctx.translate(mid.x, mid.y); let angle = Math.atan2(p2.y - p1.y, p2.x - p1.x); if (angle < -Math.PI / 2 || angle > Math.PI / 2) angle += Math.PI; ctx.rotate(angle); ctx.textAlign = 'center'; ctx.fillText(label, 0, -8); ctx.restore(); }; ctx.font = '13px Arial'; ctx.fillStyle = 'var(--primary-color)'; for(const key in dimensions) { const [v1, v2] = key.substring(1).split('-v').map(Number); drawLabel(vertices[v1], vertices[v2], `${dimensions[key].toFixed(2)}m`); } ctx.fillStyle = 'var(--success-color)'; for(const key in diagonalDimensions) { const [d1, d2] = key.substring(1).split('-d').map(Number); drawLabel(vertices[d1], vertices[d2], `${diagonalDimensions[key].toFixed(2)}m`); }};
+    LandPlotter.prototype.renderOptimizedPlot = function(scale) { const verts = this.state.optimizedVertices; this.ctx.strokeStyle = this.state.finalParcels ? 'rgba(0,0,0,0.1)' : '#333'; this.ctx.lineWidth = this.state.finalParcels ? 1 / scale : 2 / scale; this.ctx.beginPath(); this.ctx.moveTo(verts[0].x, verts[0].y); verts.forEach(v => this.ctx.lineTo(v.x, v.y)); this.ctx.closePath(); this.ctx.stroke(); };
+    LandPlotter.prototype.renderFinalParcels = function(scale) { const { parcelA, parcelB, finalLine } = this.state.finalParcels; const drawPoly = (poly, color) => { if(poly.length < 3) return; this.ctx.fillStyle = color; this.ctx.beginPath(); this.ctx.moveTo(poly[0].x, poly[0].y); poly.slice(1).forEach(v => this.ctx.lineTo(v.x, v.y)); this.ctx.closePath(); this.ctx.fill(); }; drawPoly(parcelA, 'rgba(0, 150, 136, 0.5)'); drawPoly(parcelB, 'rgba(255, 193, 7, 0.5)'); this.ctx.strokeStyle = 'red'; this.ctx.lineWidth = 3 / scale; this.ctx.beginPath(); this.ctx.moveTo(finalLine[0].x, finalLine[0].y); this.ctx.lineTo(finalLine[1].x, finalLine[1].y); this.ctx.stroke(); const areaA = Geometry.calculatePolygonArea(parcelA); const areaB = Geometry.calculatePolygonArea(parcelB); const centerA = Geometry.getPolygonCentroid(parcelA); const centerB = Geometry.getPolygonCentroid(parcelB); this.ctx.fillStyle = 'black'; this.ctx.font = `bold ${16/scale}px Arial`; this.ctx.textAlign = 'center'; this.ctx.fillText(`A: ${areaA.toFixed(2)} m²`, centerA.x, centerA.y); this.ctx.fillText(`B: ${areaB.toFixed(2)} m²`, centerB.x, centerB.y); };
+    LandPlotter.prototype.getPlotScaling = function() { const verts = this.state.optimizedVertices; if (verts.length === 0) return { scale: 1, offsetX: 0, offsetY: 0 }; let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity; verts.forEach(v => { minX = Math.min(minX, v.x); minY = Math.min(minY, v.y); maxX = Math.max(maxX, v.x); maxY = Math.max(maxY, v.y); }); const padding = 40; const plotWidth = maxX - minX; const plotHeight = maxY - minY; if(plotWidth === 0 || plotHeight === 0) return { scale: 1, offsetX: 0, offsetY: 0 }; const scale = Math.min((this.canvas.width - padding) / plotWidth, (this.canvas.height - padding) / plotHeight); const offsetX = (this.canvas.width - plotWidth * scale) / 2 - minX * scale; const offsetY = (this.canvas.height - plotHeight * scale) / 2 - minY * scale; return { scale, offsetX, offsetY }; };
+    
+    document.addEventListener('DOMContentLoaded', () => new LandPlotter());
     </script>
 </body>
 </html>
