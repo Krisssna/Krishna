@@ -30,8 +30,8 @@
             font-size: 16px;
         }
 
-        .main-container { display: flex; flex-direction: column; width: 100%; max-width: 1400px; gap: 1rem; }
-        header { text-align: center; }
+        .main-container { display: flex; flex-direction: column; width: 100%; max-width: 1400px; gap: 1rem; position: relative; }
+        header { text-align: center; display: flex; justify-content: space-between; align-items: center; width: 100%; }
         h1 { color: var(--primary-color); font-weight: 700; margin: 0; font-size: 1.75rem; }
 
         .content-area { display: flex; gap: 1.5rem; width: 100%; flex-direction: column; }
@@ -57,6 +57,8 @@
         
         #reset-btn { background-color: #757575; }
         #slicer-cancel-btn { background-color: var(--error-color); }
+        #undo-btn { background-color: var(--accent-color); width: auto; flex-shrink: 0; }
+        #undo-btn:hover { background-color: #d98e1a; }
 
         .info-bar { padding: 0.75rem 1rem; border-radius: var(--border-radius); font-weight: 500; text-align: center; background: #e3f2fd; border: 1px solid var(--secondary-color); color: var(--primary-color); }
         .results { padding: 1rem; border-radius: var(--border-radius); font-weight: 500; text-align: left; background: #e8f5e9; border: 1px solid var(--success-color); color: var(--success-color); line-height: 1.6; }
@@ -92,7 +94,10 @@
 </head>
 <body>
     <div class="main-container">
-        <header><h1>Land Plotter Pro</h1></header>
+        <header>
+            <h1>Land Plotter Pro</h1>
+            <button id="undo-btn" disabled>Undo</button>
+        </header>
         
         <div class="content-area">
             <div class="plot-column">
@@ -446,29 +451,25 @@
                     }
                 };
                 
-
-
                  this.onCancel = () => {
                     this.hide();
                     reject(new Error("User canceled input."));
                 };
                 
                 if (coords) {
-                    // Use inline input positioned at click location
                     this.activeInput = this.inlineInput;
                     this.inlineBox.style.left = `${coords.x}px`;
                     this.inlineBox.style.top = `${coords.y}px`;
                     this.inlineInput.placeholder = placeholder || '';
                     this.inlineBox.classList.remove('hidden');
                     
-                    // Prevent immediate blur when clicking the input
                     this.ignoreBlur = true;
                     setTimeout(() => {
                         this.ignoreBlur = false;
                         this.activeInput.focus();
                     }, 100);
                 } else { 
-		this.activeInput = this.modalInput;
+		            this.activeInput = this.modalInput;
                     this.modalTitle.textContent = title;
                     this.modalSubtitle.textContent = subtitle || '';
                     this.modalInput.placeholder = placeholder || '';
@@ -479,7 +480,6 @@
                 this.activeInput.value = '';
                 this.activeInput.style.border = '1px solid #ccc';
                 
-                // New improved event handlers
                 const handleKeyDown = (e) => {
                     if (e.key === 'Enter') this.submit();
                     if (e.key === 'Escape') this.cancel();
@@ -489,7 +489,8 @@
                     if (!this.ignoreBlur) {
                         setTimeout(() => {
                             if (document.activeElement !== this.activeInput) {
-                                this.cancel();
+                                // On blur (click outside), SUBMIT the value instead of canceling
+                                this.submit();
                             }
                         }, 100);
                     }
@@ -533,13 +534,16 @@
                 sliceBtn: document.getElementById('slice-btn'),
                 calculateBtn: document.getElementById('calculate-btn'),
                 resetBtn: document.getElementById('reset-btn'),
+                undoBtn: document.getElementById('undo-btn'),
                 infoBar: document.getElementById('info-bar'),
                 resultsDiv: document.getElementById('results'),
+                mainControls: document.getElementById('main-controls'),
             };
             
             this.slicer = new Slicer(this);
             this.inputController = new InputController();
             this.state = {};
+            this.history = [];
             
             this.adjustCanvasSize();
             this.reset();
@@ -561,6 +565,7 @@
             window.addEventListener('resize', () => this.adjustCanvasSize()); 
             this.canvas.addEventListener('mousedown', this.handleMouseDown.bind(this)); 
             this.ui.resetBtn.addEventListener('click', this.reset.bind(this)); 
+            this.ui.undoBtn.addEventListener('click', this.undo.bind(this));
             this.ui.optimizeBtn.addEventListener('click', this.startOptimization.bind(this)); 
             this.ui.calculateBtn.addEventListener('click', this.calculateAndShowArea.bind(this)); 
             this.ui.sliceBtn.addEventListener('click', () => this.setMode('SLICING')); 
@@ -583,15 +588,40 @@
                 tempDiagonalStart: null, 
                 finalParcels: null 
             }; 
+            this.history = [];
             this.slicer.reset(); 
             this.inputController.hide(); 
             this.updateUI(); 
             this.render(); 
         }
 
+        saveStateForUndo() {
+            this.history.push(JSON.parse(JSON.stringify(this.state)));
+            this.updateUI();
+        }
+
+        undo() {
+            if (this.history.length > 0) {
+                this.state = this.history.pop();
+                // If we undo out of slicing mode, ensure slicer panel is correctly reset
+                if (this.state.mode !== 'SLICING') {
+                    this.slicer.reset(); 
+                }
+                this.updateUI();
+                this.render();
+            }
+        }
+
         setMode(mode, data = null) { 
+            // Save state before entering slicing mode for the first time
+            if (mode === 'SLICING' && this.state.mode !== 'SLICING') {
+                this.saveStateForUndo();
+            }
+
             this.state.mode = mode; 
-            this.slicer.reset(); 
+            if (mode !== 'SLICING') {
+                this.slicer.reset(); 
+            }
             
             if (mode === 'SLICING') { 
                 this.state.finalParcels = null; 
@@ -631,6 +661,7 @@
         }
 
         handleDrawPoly(pos) { 
+            this.saveStateForUndo();
             if (this.state.vertices.length > 2 && Geometry.distance(pos, this.state.vertices[0]) < 15) { 
                 this.state.isClosed = true; 
                 this.state.mode = 'DIMENSION_SIDES'; 
@@ -642,7 +673,6 @@
         }
 
           handleClickToDimension(geoPos, type, uiPos) {
-            // First hide any existing input
             this.inputController.hide();
             
             const vertices = this.state.optimizedVertices.length > 0 ? 
@@ -650,7 +680,6 @@
             
             const lines = [];
             if (type === 'side') {
-                // Create side lines
                 for (let i = 0; i < vertices.length; i++) {
                     const p1 = vertices[i];
                     const p2 = vertices[(i + 1) % vertices.length];
@@ -678,7 +707,6 @@
                                      this.getPlotScaling().scale : 1);
                 
                 if (distance < tolerance) {
-                    // Get the midpoint for better input box positioning
                     const midX = (line.p1.x + line.p2.x) / 2;
                     const midY = (line.p1.y + line.p2.y) / 2;
                     const scaledPos = this.getScaledPosition(midX, midY);
@@ -705,6 +733,7 @@ getScaledPosition(x, y) {
 
 
         handleClickToDrawDiagonal(pos) { 
+            this.saveStateForUndo();
             const clickedVertexIdx = this.state.vertices.findIndex(v => Geometry.distance(pos, v) < 15); 
             if (clickedVertexIdx === -1) return; 
             
@@ -724,6 +753,7 @@ getScaledPosition(x, y) {
         }
 
         async promptForDimension(key, type, coords) { 
+            this.saveStateForUndo();
             try { 
                 const value = await this.inputController.prompt({ 
                     coords, 
@@ -738,7 +768,7 @@ getScaledPosition(x, y) {
                     this.checkAndAdvanceState(); 
                 } 
             } catch (err) { 
-                /* User canceled */ 
+                this.undo(); // Revert the state save if user cancels
             } 
             this.updateUI(); 
             this.render(); 
@@ -761,6 +791,7 @@ getScaledPosition(x, y) {
         }
 
         async startOptimization() { 
+            this.saveStateForUndo();
             try { 
                 const baseSideStr = await this.inputController.prompt({ 
                     title: 'Set Base Side', 
@@ -778,7 +809,7 @@ getScaledPosition(x, y) {
                     this.inputController.submit(); 
                 } 
             } catch (err) { 
-                /* User canceled */ 
+                this.undo(); // Revert the state save if user cancels
             } 
         }
 
@@ -913,6 +944,7 @@ getScaledPosition(x, y) {
             const sidesDone = n > 0 && Object.keys(this.state.dimensions).length >= n; 
             const diagsDone = n > 0 && this.state.diagonals.length === reqDiags && Object.keys(this.state.diagonalDimensions).length >= reqDiags; 
             
+            this.ui.undoBtn.disabled = this.history.length === 0;
             this.ui.optimizeBtn.disabled = !(sidesDone && diagsDone) || this.state.optimizedVertices.length > 0; 
             const isOptimized = this.state.optimizedVertices.length > 0; 
             this.ui.calculateBtn.disabled = !isOptimized; 
