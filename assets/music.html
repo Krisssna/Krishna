@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illusionary Therapeutic Music Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        canvas {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Illusionary Therapeutic Music</h1>
+        <p>This audio experience uses auditory illusions (like a Shepard tone) combined with soothing layers to create a relaxing, medicine-like effect. Listen with headphones for best results. Instruments renamed: Instrument 1 (Percussion - formerly Madal), Instrument 2 (Flute-like Melody), Instrument 3 (String-like Illusion Layer).</p>
+        <button id="playBtn">Play</button>
+        <button id="stopBtn">Stop</button>
+        <canvas id="visualizer" width="300" height="100"></canvas>
+    </div>
+
+    <script>
+        let audioCtx;
+        let oscillators = [];
+        let gains = [];
+        let interval;
+        let analyser;
+        let canvasCtx;
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 2048;
+            canvasCtx = document.getElementById('visualizer').getContext('2d');
+
+            // Instrument 1: Percussion (low-frequency pulse, like Madal drum)
+            createOscillator('sine', 60, 0.3); // Low thump
+
+            // Instrument 2: Flute-like Melody (higher sine wave with modulation)
+            createOscillator('triangle', 220, 0.2); // Melodic tone
+
+            // Instrument 3: String-like Illusion Layer (Shepard tone illusion - endless rise)
+            for (let i = 0; i < 5; i++) { // Multiple octaves for illusion
+                let freq = 110 * Math.pow(2, i);
+                let osc = audioCtx.createOscillator();
+                osc.type = 'sawtooth'; // String-like
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                let gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.1 * (1 - (i / 5)), audioCtx.currentTime); // Fade based on octave
+                osc.connect(gain);
+                gain.connect(analyser);
+                analyser.connect(audioCtx.destination);
+                osc.start();
+                oscillators.push(osc);
+                gains.push(gain);
+            }
+
+            // Connect all to analyser for visualization
+            oscillators.forEach(osc => osc.connect(analyser));
+        }
+
+        function createOscillator(type, freq, volume) {
+            let osc = audioCtx.createOscillator();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            let gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(volume, audioCtx.currentTime);
+            osc.connect(gain);
+            gain.connect(analyser);
+            analyser.connect(audioCtx.destination);
+            osc.start();
+            oscillators.push(osc);
+            gains.push(gain);
+        }
+
+        function playMusic() {
+            if (!audioCtx) initAudio();
+
+            // Shepard tone illusion: Slowly increase frequencies and adjust gains
+            let time = 0;
+            interval = setInterval(() => {
+                time += 0.1;
+                oscillators.slice(2).forEach((osc, i) => { // Start from Instrument 3
+                    let baseFreq = 110 * Math.pow(2, i);
+                    osc.frequency.setValueAtTime(baseFreq * Math.pow(2, time / 60), audioCtx.currentTime); // Slow rise
+                    let gainValue = Math.sin((i + time / 10) * Math.PI); // Fade in/out for illusion
+                    gains[i + 2].gain.setValueAtTime(0.1 * Math.abs(gainValue), audioCtx.currentTime);
+                });
+
+                // Instrument 1 pulse: Gentle rhythm
+                gains[0].gain.setValueAtTime(0.3 * (Math.sin(time) + 1) / 2, audioCtx.currentTime);
+
+                // Instrument 2 modulation: Wavy melody
+                oscillators[1].frequency.setValueAtTime(220 + 10 * Math.sin(time / 2), audioCtx.currentTime);
+
+                drawVisualizer();
+            }, 100);
+        }
+
+        function stopMusic() {
+            clearInterval(interval);
+            oscillators.forEach(osc => osc.stop());
+            oscillators = [];
+            gains = [];
+            audioCtx.close();
+            audioCtx = null;
+        }
+
+        function drawVisualizer() {
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            canvasCtx.clearRect(0, 0, 300, 100);
+            canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+            canvasCtx.fillRect(0, 0, 300, 100);
+
+            const barWidth = (300 / bufferLength) * 2.5;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                const barHeight = dataArray[i] / 2;
+                canvasCtx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+                canvasCtx.fillRect(x, 100 - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+
+        document.getElementById('playBtn').addEventListener('click', playMusic);
+        document.getElementById('stopBtn').addEventListener('click', stopMusic);
+    </script>
+</body>
+</html>
