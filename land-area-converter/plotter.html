@@ -52,19 +52,18 @@
         </div>
     </div>
 
-   <script>
+  <script>
     fetch("https://plotter.niraula300.workers.dev/")
       .then(response => response.text())
       .then(jsCode => {
+       
+        const blob = new Blob([jsCode], { type: 'application/javascript' });
+    
+        const scriptURL = URL.createObjectURL(blob);
+        
         const script = document.createElement("script");
-        script.text = jsCode;
-        if (document.readyState === "complete" || document.readyState === "interactive") {
-            document.body.appendChild(script);
-        } else {
-            document.addEventListener('DOMContentLoaded', () => {
-                document.body.appendChild(script);
-            });
-        }
+        script.src = scriptURL;
+        document.body.appendChild(script);
       })
       .catch(error => console.error("Error loading script:", error));
 </script>
