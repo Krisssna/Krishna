@@ -52,20 +52,23 @@
         </div>
     </div>
 
-  <script>
-    fetch("https://plotter.niraula300.workers.dev/")
-      .then(response => response.text())
-      .then(jsCode => {
-       
-        const blob = new Blob([jsCode], { type: 'application/javascript' });
+ <script>
+  fetch("https://plotter.niraula300.workers.dev/")
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to load script: " + response.statusText);
+      }
+      return response.text();
+    })
+    .then(jsCode => {
     
-        const scriptURL = URL.createObjectURL(blob);
-        
-        const script = document.createElement("script");
-        script.src = scriptURL;
-        document.body.appendChild(script);
-      })
-      .catch(error => console.error("Error loading script:", error));
+      const script = document.createElement("script");
+      script.text = jsCode;
+      
+      document.body.appendChild(script);
+      new LandPlotter();
+    })
+    .catch(error => console.error("Error loading script:", error));
 </script>
 </body>
 </html>
