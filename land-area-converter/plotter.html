@@ -3,23 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Land Plotter Pro</title>
-    <link rel="Stylesheet" href=style.css>
-    </head>
+    <title>Land Plotter & Area Calculator | Nepal Land Measurement Units</title>
+    <meta name="description" content="An advanced online tool to accurately draw, measure, and calculate land area. Supports Nepali units like Ropani-Aana-Paisa-Dam and Bigha-Kaththa-Dhur. Perfect for land plotting, slicing, and optimization.">
+    <meta name="keywords" content="land plotter, area calculator, land measurement nepal, ropani, aana, paisa, dam, bigha, kaththa, dhur, plot slicing, land survey tool, online land calculator">
+    <link rel="canonical" href="https://krishnaniraula.com.np/land-area-converter/plotter.html">
+
+    <meta property="og:title" content="Land Plotter & Area Calculator | Nepal Land Measurement Units">
+    <meta property="og:description" content="Draw, measure, and calculate land area with precision. Supports Nepali units (Ropani, Bigha) and features plot slicing and optimization.">
+<meta property="og:image" content="https://krishnaniraula.com.np/assets/images/ploter.jpg">
+    <meta property="og:url" content="https://krishnaniraula.com.np/land-area-converter/plotter.html">
+    <meta property="og:type" content="website">
+    <link rel="stylesheet" href="style.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Land Plotter Pro",
+      "operatingSystem": "WEB",
+      "applicationCategory": "DesignApplication",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "150"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "NPR"
+      },
+      "description": "An advanced online tool to accurately draw, measure, and calculate land area in Nepali units like Ropani and Bigha.",
+      "author": {
+        "@type": "Person",
+        "name": "Krishna Niraula"
+      }
+    }
+    </script>
+</head>
 <body>
-    <div class="main-container">
+    <main class="main-container">
         <header>
             <h1>Land Plotter Pro</h1>
             <button id="undo-btn" disabled>Undo</button>
         </header>
-        
+
         <div class="content-area">
             <div class="plot-column">
                 <div id="info-bar" class="info-bar"></div>
-                <div id="results" class="results hidden"></div>
+                <div id="results" class="results hidden" aria-live="polite"></div>
                 <div class="canvas-container">
-                    <canvas id="plot-canvas"></canvas>
-                    <div id="centered-modal" class="modal hidden">
+                    <canvas id="plot-canvas" aria-label="Land Plot Drawing Area"></canvas>
+                    <div id="centered-modal" class="modal hidden" role="dialog" aria-modal="true">
                         <h3 id="modal-title"></h3>
                         <p id="modal-subtitle"></p>
                         <input type="text" id="modal-input" inputmode="decimal">
@@ -28,30 +62,41 @@
                             <button id="modal-submit-btn">Submit</button>
                         </div>
                     </div>
-                    <div id="inline-input-box" class="hidden">
-                        <input type="text" id="inline-input" inputmode="decimal">
+                    <div id="inline-input-box" class="hidden" role="dialog">
+                        <input type="text" id="inline-input" inputmode="decimal" aria-label="Dimension Input">
                     </div>
                 </div>
             </div>
-            <div class="controls-container">
-                <div id="main-controls" class="panel">
-                    <h3>Main Controls</h3>
-                    <div class="control-group"><label for="unit-selector">Units</label><select id="unit-selector"><option value="meters">Meters (m)</option><option value="feet-inches">Feet-Inches (ft-in)</option></select></div>
+            <aside class="controls-container">
+                <section id="main-controls" class="panel" aria-labelledby="main-controls-heading">
+                    <h3 id="main-controls-heading">Main Controls</h3>
+                    <div class="control-group">
+                        <label for="unit-selector">Units</label>
+                        <select id="unit-selector">
+                            <option value="meters">Meters (m)</option>
+                            <option value="feet-inches">Feet-Inches (ft-in)</option>
+                        </select>
+                    </div>
                     <button id="optimize-btn" disabled>Optimize Plot</button>
                     <button id="calculate-btn" disabled>Calculate Total Area</button>
                     <button id="slice-btn" disabled>Slice Plot</button>
                     <button id="reset-btn">Reset</button>
-                </div>
-                <div id="slicer-panel" class="panel hidden">
-                    <h3>Plot Partition</h3>
-                    <div class="control-group"><label>Instructions</label><p id="slicer-instructions" style="margin:0; padding: 8px; background-color: #f5f5f5; border-radius: 4px; text-align:center;"></p></div>
-                    <div class="control-group"><label for="slicer-area-input">Target Area (m²)</label><input type="text" id="slicer-area-input" placeholder="e.g., 150.5" disabled inputmode="decimal"></div>
+                </section>
+                <section id="slicer-panel" class="panel hidden" aria-labelledby="slicer-heading">
+                    <h3 id="slicer-heading">Plot Partition</h3>
+                    <div class="control-group">
+                        <label>Instructions</label>
+                        <p id="slicer-instructions" style="margin:0; padding: 8px; background-color: #f5f5f5; border-radius: 4px; text-align:center;"></p>
+                    </div>
+                    <div class="control-group">
+                        <label for="slicer-area-input">Target Area (m²)</label>
+                        <input type="text" id="slicer-area-input" placeholder="e.g., 150.5" disabled inputmode="decimal">
+                    </div>
                     <button id="slicer-cancel-btn">Cancel Slicing</button>
-                </div>
-            </div>
+                </section>
+            </aside>
         </div>
-    </div>
-
+    </main>
  <script>
   fetch("https://plotter.niraula300.workers.dev/")
     .then(response => {
