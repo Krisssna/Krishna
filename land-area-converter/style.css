@@ -23,44 +23,6 @@ body {
     font-size: 16px;
 }
 
-/* Navbar Styles */
-.navbar {
-    width: 100%;
-    max-width: 1400px;
-    background-color: var(--bg-color);
-    padding: 1rem 1.5rem;
-    box-sizing: border-box;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    margin-bottom: 1rem;
-    overflow: hidden; /* Contains the floated elements */
-}
-
-.nav-link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    padding: 0.5rem 0;
-    transition: color 0.2s ease-in-out;
-    display: inline-flex; /* For better alignment of the arrow */
-    align-items: center;
-}
-
-.nav-link:hover {
-    color: var(--secondary-color);
-}
-
-/* Style for the right-aligned link */
-.navbar .nav-link:last-child {
-    float: right;
-}
-
-.navbar .nav-link span {
-    margin-right: 5px;
-}
-
-/* Main App Styles */
 .main-container { 
     display: flex; 
     flex-direction: column; 
@@ -70,12 +32,38 @@ body {
     position: relative; 
 }
 
-header { 
-    text-align: center; 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    width: 100%; 
+/* Header & Integrated Nav Styles */
+header {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1rem; /* Added to give space below the header */
+}
+
+header nav {
+    display: flex;
+    gap: 1.5rem; /* Controls spacing between nav links */
+}
+
+.nav-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.nav-link span {
+    margin-right: 5px;
 }
 
 h1 { 
