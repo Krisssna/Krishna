@@ -23,32 +23,19 @@ body {
     font-size: 16px;
 }
 
-.main-container { 
-    display: flex; 
-    flex-direction: column; 
-    width: 100%; 
-    max-width: 1400px; 
-    gap: 1rem; 
-    position: relative; 
-}
-
-/* Header & Integrated Nav Styles */
-header {
-    text-align: center;
+/* New Navbar Style */
+.navbar {
+    width: 100%;
+    max-width: 1400px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    margin-bottom: 1rem; /* Added to give space below the header */
-}
-
-header nav {
-    display: flex;
-    gap: 1.5rem; /* Controls spacing between nav links */
+    padding: 0.5rem 0 1.5rem 0; /* Vertical padding */
+    box-sizing: border-box;
 }
 
 .nav-link {
-    color: var(--text-color);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
     font-size: 1rem;
@@ -58,12 +45,31 @@ header nav {
 }
 
 .nav-link:hover {
-    color: var(--primary-color);
     text-decoration: underline;
+    color: var(--secondary-color);
 }
 
 .nav-link span {
     margin-right: 5px;
+}
+
+
+/* Main App Styles */
+.main-container { 
+    display: flex; 
+    flex-direction: column; 
+    width: 100%; 
+    max-width: 1400px; 
+    gap: 1rem; 
+    position: relative; 
+}
+
+header {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 h1 { 
