@@ -14,8 +14,6 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://krishnaniraula.com.np/assets/images/plotter.jpg">
 
-    <link rel="stylesheet" href="style.css">
-
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -42,26 +40,25 @@
     </script>
 </head>
 <body>
-     <nav class="navbar">
-    <a href="/" class="nav-link">Home</a>
-    <a href="/land-area-converter/" class="nav-link" aria-label="Return to Land Area Converter">
-        <span>&#8592;</span> Back to Converter
-    </a>
-</nav>
-
-<main class="main-container">
-    <header>
-        <h1>Land Plotter Pro</h1>
-        <button id="undo-btn" disabled>Undo</button>
-    </header>
-
+    <nav class="navbar">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/land-area-converter/" class="nav-link" aria-label="Return to Land Area Converter">
+            <span>&#8592;</span> Back to Converter
+        </a>
+    </nav>
+    <main class="main-container">
+        <header>
+            <h1>Land Plotter Pro</h1>
+            <button id="undo-btn" disabled>Undo</button>
+        </header>
+        
         <div class="content-area">
             <div class="plot-column">
                 <div id="info-bar" class="info-bar"></div>
-                <div id="results" class="results hidden" aria-live="polite"></div>
+                <div id="results" class="results hidden"></div>
                 <div class="canvas-container">
-                    <canvas id="plot-canvas" aria-label="Land Plot Drawing Area"></canvas>
-                    <div id="centered-modal" class="modal hidden" role="dialog" aria-modal="true">
+                    <canvas id="plot-canvas"></canvas>
+                    <div id="centered-modal" class="modal hidden">
                         <h3 id="modal-title"></h3>
                         <p id="modal-subtitle"></p>
                         <input type="text" id="modal-input" inputmode="decimal">
@@ -70,8 +67,8 @@
                             <button id="modal-submit-btn">Submit</button>
                         </div>
                     </div>
-                    <div id="inline-input-box" class="hidden" role="dialog">
-                        <input type="text" id="inline-input" inputmode="decimal" aria-label="Dimension Input">
+                    <div id="inline-input-box" class="hidden">
+                        <input type="text" id="inline-input" inputmode="decimal">
                     </div>
                 </div>
             </div>
@@ -100,12 +97,26 @@
                         <label for="slicer-area-input">Target Area (m²)</label>
                         <input type="text" id="slicer-area-input" placeholder="e.g., 150.5" disabled inputmode="decimal">
                     </div>
+                    <button id="slicer-confirm-btn" class="hidden">Confirm Slice Position</button>
                     <button id="slicer-cancel-btn">Cancel Slicing</button>
+                </section>
+                <section id="export-panel" class="panel hidden" aria-labelledby="export-heading">
+                    <h3 id="export-heading">Export to PDF</h3>
+                    <div class="control-group">
+                        <label for="pdf-scale-selector">Scale</label>
+                        <select id="pdf-scale-selector">
+                            <option value="0">Fit to Page</option>
+                            <option value="300">1:300</option>
+                            <option value="600">1:600</option>
+                            <option value="1200">1:1200</option>
+                        </select>
+                    </div>
+                    <button id="export-pdf-btn">Export PDF</button>
                 </section>
             </aside>
         </div>
     </main>
- <script>
+    <script>
   fetch("https://plotter.niraula300.workers.dev/")
     .then(response => {
       if (!response.ok) {
