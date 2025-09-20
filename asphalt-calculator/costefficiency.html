@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styl.css">
+    <link rel="stylesheet" href="styl.css">
     <title>Source & Tipper Cost Comparator</title>
-    
 </head>
 <body>
     <nav class="navbar">
-    <a href="/" class="nav-link">Home</a>
-    <a href="/asphalt-calculator" class="nav-link" title="Go back to the Advanced Asphalt Calculator">
-         &#8592; Back to Advanced Asphalt Calculator
-    </a>
-</nav>
+        <a href="#" class="nav-link">Home</a>
+        <div class="nav-right">
+            <a href="#" class="nav-link" title="Go back to the Advanced Asphalt Calculator">
+                 &#8592; Back to Advanced Asphalt Calculator
+            </a>
+            <button id="theme-toggle" class="theme-toggle-btn" title="Toggle dark/light mode">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
+        </div>
+    </nav>
 
-    <div class="container">
-      
+    <main class="container">
+        <!-- Initial view to select the mode -->
         <div id="selection-screen">
             <h1>Cost Efficiency Comparator</h1>
             <p>Choose what you would like to compare:</p>
@@ -26,12 +31,15 @@
             </div>
         </div>
 
-      
+        <!-- Main calculator view, hidden by default -->
         <div id="calculator-container" class="hidden">
             <h2 id="calculator-title"></h2>
             
-            <h3>Input Data</h3>
-            <div style="overflow-x: auto;">
+            <div class="table-header">
+                <h3>Input Data</h3>
+                <button id="add-column-btn" class="add-column-button"></button>
+            </div>
+            <div class="table-wrapper">
                 <table id="input-table">
                     <thead></thead>
                     <tbody></tbody>
@@ -39,7 +47,7 @@
             </div>
 
             <h3>Results</h3>
-            <div style="overflow-x: auto;">
+            <div class="table-wrapper">
                  <table id="results-table">
                     <thead></thead>
                     <tbody></tbody>
@@ -48,11 +56,10 @@
             
             <div class="controls">
                 <button id="calculate-btn" class="control-button">Calculate Costs</button>
-                <button id="add-column-btn" class="control-button"></button>
                 <button id="back-btn" class="control-button">Back to Selection</button>
             </div>
         </div>
-    </div>
+    </main>
     
     <footer class="footer">
         <p>&copy; 2025 All Rights Reserved @ Krishna Niraula</p>
@@ -61,4 +68,3 @@
  <script src="scrip.js"></script>
 </body>
 </html>
-
