@@ -3,14 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cost Comparator for Aggregate Sources & Tippers | Construction Calculator</title>
+    <meta name="description" content="Easily compare the cost-efficiency of multiple aggregate sources or tipper trucks. Our dynamic calculator helps you find the cheapest option for your construction project.">
+    <meta name="keywords" content="aggregate cost, construction calculator, tipper efficiency, material sourcing, cost comparison, civil engineering tool, Krishna Niraula">
+
+    <link rel="canonical" href="https://krishnaniraula.com.np/asphalt-calculator/costefficiency.html" />
+
+    <link rel="shortcut icon" type="image/png" href="/assets/logo/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/logo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/logo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/logo/favicon-16x16.png">
+
+    <meta property="og:title" content="Cost Comparator for Aggregate Sources & Tippers" />
+    <meta property="og:description" content="Find the most cost-effective option for your construction project by comparing material and transportation costs from multiple sources or with different tippers." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://krishnaniraula.com.np/asphalt-calculator/costefficiency.html" />
+    <meta property="og:image" content="https://krishnaniraula.com.np/assets/images/bestcost.jpg" />
+    <meta property="og:image:alt" content="A calculator and a tipper truck, representing the cost comparison tool." />
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cost Comparator for Aggregate Sources & Tippers">
+    <meta name="twitter:description" content="Find the most cost-effective option for your construction project by comparing material and transportation costs.">
+    <meta name="twitter:image" content="https://krishnaniraula.com.np/assets/images/bestcost.jpg">
+
     <link rel="stylesheet" href="styl.css">
-    <title>Source & Tipper Cost Comparator</title>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Aggregate Source & Tipper Cost Comparator",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "abstract": "A web-based calculator to compare the total cost per cubic meter (m³) of aggregate from different sources or using different tipper trucks, including material and transportation expenses.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "NPR"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Krishna Niraula"
+      }
+    }
+    </script>
+
 </head>
 <body>
     <nav class="navbar">
-        <a href="#" class="nav-link">Home</a>
+        <a href="/" class="nav-link">Home</a>
         <div class="nav-right">
-            <a href="#" class="nav-link" title="Go back to the Advanced Asphalt Calculator">
+            <a href="/asphalt-calculator" class="nav-link" title="Go back to the Advanced Asphalt Calculator">
                  &#8592; Back to Advanced Asphalt Calculator
             </a>
             <button id="theme-toggle" class="theme-toggle-btn" title="Toggle dark/light mode">
@@ -21,7 +65,6 @@
     </nav>
 
     <main class="container">
-        <!-- Initial view to select the mode -->
         <div id="selection-screen">
             <h1>Cost Efficiency Comparator</h1>
             <p>Choose what you would like to compare:</p>
@@ -31,7 +74,6 @@
             </div>
         </div>
 
-        <!-- Main calculator view, hidden by default -->
         <div id="calculator-container" class="hidden">
             <h2 id="calculator-title"></h2>
             
@@ -68,3 +110,4 @@
  <script src="scrip.js"></script>
 </body>
 </html>
+
