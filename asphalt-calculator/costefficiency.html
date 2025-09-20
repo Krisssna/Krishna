@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styl.css">
+    <title>Source & Tipper Cost Comparator</title>
+    
+</head>
+<body>
+    <nav class="navbar">
+    <a href="/" class="nav-link">Home</a>
+    <a href="/asphalt-calculator" class="nav-link" title="Go back to the Advanced Asphalt Calculator">
+         &#8592; Back to Advanced Asphalt Calculator
+    </a>
+</nav>
+
+    <div class="container">
+      
+        <div id="selection-screen">
+            <h1>Cost Efficiency Comparator</h1>
+            <p>Choose what you would like to compare:</p>
+            <div class="selection-buttons">
+                <button id="compare-sources-btn" class="mode-button">Compare Sources</button>
+                <button id="compare-tippers-btn" class="mode-button">Compare Tippers</button>
+            </div>
+        </div>
+
+      
+        <div id="calculator-container" class="hidden">
+            <h2 id="calculator-title"></h2>
+            
+            <h3>Input Data</h3>
+            <div style="overflow-x: auto;">
+                <table id="input-table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <h3>Results</h3>
+            <div style="overflow-x: auto;">
+                 <table id="results-table">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <div class="controls">
+                <button id="calculate-btn" class="control-button">Calculate Costs</button>
+                <button id="add-column-btn" class="control-button"></button>
+                <button id="back-btn" class="control-button">Back to Selection</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>&copy; 2025 All Rights Reserved @ Krishna Niraula</p>
+    </footer>
+
+ <script src="scrip.js"></script>
+</body>
+</html>
+
