@@ -1,238 +1,225 @@
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #27ae60;
+    --bg-color: #f4f7f9;
+    --card-bg-color: #ffffff;
+    --font-color: #333;
+    --border-color: #dfe6e9;
+    --navbar-bg: #2c3e50;
+    --navbar-link-color: white;
+}
 
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #27ae60;
-            --bg-color: #f4f7f9;
-            --card-bg-color: #ffffff;
-            --font-color: #333;
-            --border-color: #dfe6e9;
-        }
+[data-theme="dark"] {
+    --primary-color: #ecf0f1;
+    --secondary-color: #3498db;
+    --accent-color: #2ecc71;
+    --bg-color: #2c3e50;
+    --card-bg-color: #34495e;
+    --font-color: #ecf0f1;
+    --border-color: #4a6278;
+    --navbar-bg: #1f2a36;
+}
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--font-color);
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-        }
 
-        .navbar {
-            width: 100%;
-            background-color: var(--primary-color);
-            padding: 10px 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-sizing: border-box;
-        }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--font-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, color 0.3s;
+}
 
-        .nav-link {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
+.navbar {
+    width: 100%;
+    background-color: var(--navbar-bg);
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+}
 
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            background-color: var(--card-bg-color);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-            margin: 20px auto;
-            box-sizing: border-box;
-        }
+.nav-link {
+    color: var(--navbar-link-color);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--navbar-link-color);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.theme-toggle-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.theme-toggle-btn .feather-sun { display: block; }
+.theme-toggle-btn .feather-moon { display: none; }
+
+[data-theme="dark"] .theme-toggle-btn .feather-sun { display: none; }
+[data-theme="dark"] .theme-toggle-btn .feather-moon { display: block; }
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    background-color: var(--card-bg-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    margin: 20px auto;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+h1 { margin-bottom: 15px; }
+h2 { margin-top: 20px; margin-bottom: 25px; font-size: 1.8em; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+h3 { text-align: left; }
+
+#selection-screen { text-align: center; }
+#selection-screen p { font-size: 1.1em; margin-bottom: 30px; }
+.selection-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+.mode-button { padding: 15px 30px; font-size: 1.1em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; color: white; min-width: 250px; }
+.mode-button:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15); }
+
+#compare-sources-btn { background-color: var(--secondary-color); }
+#compare-tippers-btn { background-color: #e67e22; }
+
+#calculator-container { animation: fadeIn 0.5s; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.add-column-button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    background-color: #9b59b6;
+    transition: background-color 0.3s;
+}
+
+.add-column-button:hover {
+    background-color: #8e44ad;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 0.95em;
+}
+
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+thead th {
+    background-color: #ecf0f1;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+[data-theme="dark"] thead th { background-color: #4a6278; color: var(--font-color); }
+
+
+tbody td:first-child {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+    text-align: right;
+    background-color: var(--card-bg-color);
+    color: var(--font-color);
+}
+[data-theme="dark"] input[type="number"] { border-color: var(--border-color); }
+
+.controls { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+.control-button { flex-grow: 1; padding: 12px; font-size: 1.1em; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; color: white; min-width: 150px; }
+
+#calculate-btn { background-color: var(--accent-color); }
+#back-btn { background-color: #7f8c8d; }
+
+#results-table span { font-weight: bold; font-size: 1.1em; display: block; text-align: right; }
+#summary-row td { text-align: center; font-size: 1.1em; font-weight: bold; background-color: #e8f6ef; color: var(--accent-color); }
+[data-theme="dark"] #summary-row td { background-color: #2c3e50; }
         
-        h1, h2 {
-            text-align: center;
-            color: var(--primary-color);
-        }
+.hidden { display: none; }
 
-        h1 {
-            margin-bottom: 15px;
-        }
-        
-        h2 {
-           margin-top: 20px;
-           margin-bottom: 25px;
-           font-size: 1.8em;
-           border-bottom: 2px solid var(--border-color);
-           padding-bottom: 15px;
-        }
+.footer { text-align: center; margin-top: 20px; padding: 20px; color: #7f8c8d; font-size: 0.9em; background-color: var(--bg-color); }
+[data-theme="dark"] .footer { color: #bdc3c7; }
 
-        /* Selection Screen Styles */
-        #selection-screen {
-            text-align: center;
-        }
-        
-        #selection-screen p {
-            font-size: 1.1em;
-            margin-bottom: 30px;
-        }
-
-        .selection-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .mode-button {
-            padding: 15px 30px;
-            font-size: 1.1em;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            color: white;
-            min-width: 250px;
-        }
-
-        .mode-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        #compare-sources-btn { background-color: var(--secondary-color); }
-        #compare-tippers-btn { background-color: #e67e22; }
-
-        /* Calculator Styles */
-        #calculator-container {
-            animation: fadeIn 0.5s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 0.95em;
-        }
-
-        th, td {
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        thead th {
-            background-color: #ecf0f1;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        tbody td:first-child {
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 1em;
-            text-align: right;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        .control-button {
-            flex-grow: 1;
-            padding: 12px;
-            font-size: 1.1em;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            color: white;
-            min-width: 150px;
-        }
-
-        #calculate-btn { background-color: var(--accent-color); }
-        #add-column-btn { background-color: #9b59b6; }
-        #back-btn { background-color: #7f8c8d; }
-
-        /* Results Table Specific Styles */
-        #results-table span {
-            font-weight: bold;
-            font-size: 1.1em;
-            display: block;
-            text-align: right;
-        }
-
-        #summary-row td {
-            text-align: center;
-            font-size: 1.1em;
-            font-weight: bold;
-            background-color: #e8f6ef;
-            color: var(--accent-color);
-        }
-        
-        .hidden {
-            display: none;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding: 20px;
-            color: #7f8c8d;
-            font-size: 0.9em;
-        }
-
-        /* Mobile Responsive Styles */
-        @media (max-width: 768px) {
-            body {
-                padding: 0;
-            }
-            .container {
-                padding: 15px;
-                margin: 10px;
-                border-radius: 0;
-            }
-            h1 { font-size: 1.6em; }
-            h2 { font-size: 1.3em; }
-
-            .selection-buttons {
-                flex-direction: column;
-            }
-
-            .mode-button {
-                min-width: unset;
-                width: 100%;
-            }
-
-            th, td {
-                padding: 8px;
-                font-size: 0.9em;
-            }
-
-            .controls {
-                flex-direction: column;
-            }
-        }
+@media (max-width: 768px) {
+    body { padding: 0; }
+    .container { padding: 15px; margin: 0; border-radius: 0; box-shadow: none; }
+    h1 { font-size: 1.6em; }
+    h2 { font-size: 1.3em; }
+    .selection-buttons { flex-direction: column; }
+    .mode-button { min-width: unset; width: 100%; }
+    th, td { padding: 8px; font-size: 0.9em; }
+    .controls { flex-direction: column; }
+    .nav-link { font-size: 0.9em; }
+    
+    #input-table tbody td:first-child,
+    #results-table tbody td:first-child {
+        white-space: normal;
+        min-width: 100px;
+    }
+}
