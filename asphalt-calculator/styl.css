@@ -140,12 +140,12 @@ h3 { text-align: left; }
     color: white;
     background-color: #9b59b6;
     transition: background-color 0.3s;
+    margin-left: auto; 
 }
 
 .add-column-button:hover {
     background-color: #8e44ad;
 }
-
 .table-wrapper {
     overflow-x: auto;
 }
