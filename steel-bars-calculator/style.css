@@ -1,199 +1,218 @@
+/* PRODUCTION READY CSS FOR STEEL & GI CALCULATOR 
+   Author: Krishna Niraula 
+*/
+
+/* 1. Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* Ensures no horizontal overflow on the whole site */
+    overflow-x: hidden;
+}
+
+/* 2. Main Wrapper 
+   Calculates padding to ensure it doesn't hide under your site's Nav Bar 
+*/
 #main-content {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
     min-height: 100vh;
-    margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 66px;
+    /* Adjust 100px if your top navigation bar is taller/shorter */
+    padding: 100px 15px 80px; 
 }
 
+/* 3. Responsive Container */
 .container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    width: 600px;
-    text-align: center;
-    margin: 20px auto; 
-}
-
-section.container {
-    padding: 20px; 
-    margin: 20px auto; 
-}
-
-header {
-    padding: 10px 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     width: 100%;
-    justify-content: center;
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* 4. Headings & Topics (Perfectly Centered) */
+header.head-container {
+    margin-bottom: 30px;
 }
 
 header h1 {
-    color: #333;
-    text-align: center;
-    font-size: 2em;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    margin: 10px auto;
+    color: #222;
+    font-size: clamp(1.8rem, 5vw, 2.5rem); /* Fluid sizing */
+    margin-bottom: 12px;
+    font-weight: 800;
+    line-height: 1.2;
 }
 
 header p {
     color: #555;
-    font-size: 1em;
-    text-align: center;
-    margin: auto;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    margin: 10px auto;
+    font-size: 1.05rem;
+    max-width: 90%;
+    margin: 0 auto;
 }
 
+h2 {
+    color: #ff6b6b;
+    font-size: 1.6rem;
+    margin: 10px auto 20px;
+    font-weight: 700;
+}
 
-
+/* 5. Material Selection Buttons */
 .button-group {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 10px auto 20px;
-    gap: 10px;
-    align-items: center;
-    max-width: 100%;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0 35px;
 }
 
 .tab-btn {
-    padding: 10px 15px;
+    padding: 12px 22px;
     border: none;
-    border-radius: 25px;
+    border-radius: 50px;
     background: #ff9f1c;
     color: white;
-    font-size: 0.9em;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 .tab-btn:hover {
     background: #ffbf69;
+    transform: translateY(-3px);
 }
 
 .tab-btn.active {
     background: #ff6b6b;
-    transform: scale(1.1);
+    transform: scale(1.08);
+    box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
 }
 
-.calc-container {
-    margin: 20px 0;
-}
-
+/* 6. Form Sections & Inputs */
 .calc-section {
-    transition: opacity 0.3s ease;
+    width: 100%;
 }
 
 .calc-section.hidden {
     display: none;
 }
 
-h2 {
-    color: #ff6b6b;
-    margin-bottom: 15px;
-    font-size: 1.5em;
-}
-
-.calc-section p {
-    color: #555;
-    font-size: 0.95em;
-    margin: 0 auto 15px;
-    max-width: 80%;
-}
-
-
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 22px;
     width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
 }
 
 .input-wrapper {
     position: relative;
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
+    text-align: left;
 }
 
 .input-wrapper label {
     display: block;
-    text-align: left;
     color: #333;
-    font-size: 0.9em;
-    margin-bottom: 5px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    padding-left: 4px;
 }
 
 .input-wrapper input {
     width: 100%;
-    padding: 10px;
-    border: 2px solid #4ecdc4;
-    border-radius: 10px;
-    font-size: 1em;
-    outline: none;
-    transition: border-color 0.3s ease;
-    background: transparent;
-    box-sizing: border-box;
+    padding: 14px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    background: #fff;
+    transition: all 0.3s ease;
 }
 
 .input-wrapper input:focus {
-    border-color: #ff6b6b;
+    border-color: #4ecdc4;
+    outline: none;
+    box-shadow: 0 0 10px rgba(78, 205, 196, 0.2);
 }
 
-.input-wrapper input::placeholder {
-    color: #999;
-}
-
-.unit {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    color: #999;
-    font-size: 0.9em;
-    pointer-events: none;
-    display: none;
-}
-
-aside.method {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 10px;
-}
-
-h3 {
-    color: #333;
-    margin-bottom: 10px;
-    font-size: 1.2em;
-}
-
-#method-text {
-    color: #555;
-    font-size: 0.9em;
-    line-height: 1.4;
-}
-
+/* 7. Action Button (Centered) */
 .calculate-btn {
-    padding: 8px 12px;
+    padding: 16px 45px;
     border: none;
-    border-radius: 15px;
-    font-size: 1em;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 800;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 15px;
-    margin: auto;
+    margin: 40px auto 10px;
     color: #fff;
     background: linear-gradient(135deg, #2575fc, #6a11cb);
-    display: inline-block;
+    display: block;
     width: fit-content;
-    white-space: nowrap;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .calculate-btn:hover {
-    background: #2a9d8f;
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 117, 252, 0.4);
+}
+
+/* 8. Result & Methodology Box */
+aside.method {
+    margin-top: 40px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    border-top: 5px solid #ff6b6b;
+    text-align: center;
+}
+
+aside.method h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: #222;
+}
+
+#method-text {
+    color: #444;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* 9. Media Queries for Mobile */
+@media (max-width: 600px) {
+    #main-content {
+        padding-top: 70px; /* Reduced for mobile navbars */
+    }
+
+    .container {
+        width: 92%;
+        padding: 30px 15px;
+    }
+
+    .tab-btn {
+        flex: 1 1 42%; /* Makes buttons 2-per-row on mobile */
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    header h1 {
+        font-size: 1.7rem;
+    }
 }
