@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Create your own Excel Add-in for AD to BS and BS to AD date conversion - Bikram Sambat &amp; Gregorian calendar converter for Nepal">
     <title>Excel Add-in: AD ↔ BS Date Converter | Krishna Niraula</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -14,27 +13,19 @@
             --nav-bg: #212529;
             --nav-text: #ffffff;
         }
-        
         .dark {
             --bg: #121212;
             --text: #e0e0e0;
             --nav-bg: #1e1e1e;
             --nav-text: #ffffff;
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
         }
-        
         nav {
             background: var(--nav-bg);
             color: var(--nav-text);
@@ -47,20 +38,17 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
         .nav-left a {
             font-size: 1.4rem;
             font-weight: 600;
             text-decoration: none;
             color: var(--nav-text);
         }
-        
         .nav-right {
             display: flex;
             align-items: center;
             gap: 15px;
         }
-        
         .theme-toggle,
         .sitemap-button {
             background: none;
@@ -70,21 +58,17 @@
             cursor: pointer;
             padding: 6px 10px;
             border-radius: 50%;
-            transition: all 0.3s ease;
         }
-        
         .theme-toggle:hover,
         .sitemap-button:hover {
             background: rgba(255,255,255,0.2);
         }
-        
         .menu-icon {
             font-size: 1.8rem;
             cursor: pointer;
             display: none;
             color: var(--nav-text);
         }
-        
         #menu {
             display: flex;
             list-style: none;
@@ -92,24 +76,18 @@
             margin: 0;
             padding: 0;
         }
-        
         #menu li a {
             color: var(--nav-text);
             text-decoration: none;
             font-weight: 500;
             padding: 6px 12px;
-            transition: all 0.3s ease;
         }
-        
         #menu li a:hover {
             background: rgba(255,255,255,0.15);
             border-radius: 6px;
         }
-
         @media (max-width: 768px) {
-            .menu-icon {
-                display: block;
-            }
+            .menu-icon { display: block; }
             #menu {
                 display: none;
                 flex-direction: column;
@@ -122,11 +100,8 @@
                 gap: 10px;
                 box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
             }
-            #menu.active {
-                display: flex;
-            }
+            #menu.active { display: flex; }
         }
-        
         .sitemap-popup {
             display: none;
             position: fixed;
@@ -139,7 +114,6 @@
             justify-content: center;
             z-index: 2000;
         }
-        
         .sitemap-content {
             background: #fff;
             color: #212529;
@@ -150,80 +124,39 @@
             overflow: hidden;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-        
-        .dark .sitemap-content {
-            background: #1e1e1e;
-            color: #e0e0e0;
-        }
-        
+        .dark .sitemap-content { background: #1e1e1e; color: #e0e0e0; }
         .sitemap-content h2 {
             padding: 20px 25px;
             margin: 0;
             background: #f1f1f1;
             font-size: 1.6rem;
         }
-        
-        .dark .sitemap-content h2 {
-            background: #2a2a2a;
-        }
-        
+        .dark .sitemap-content h2 { background: #2a2a2a; }
         .sitemap-tree {
             padding: 20px 25px;
             max-height: calc(90vh - 70px);
             overflow-y: auto;
         }
-        
-        .sitemap-tree ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        
-        .sitemap-tree ul ul {
-            padding-left: 25px;
-            border-left: 2px solid #ddd;
-        }
-        
-        .dark .sitemap-tree ul ul {
-            border-left: 2px solid #444;
-        }
-        
-        .sitemap-tree li {
-            margin: 8px 0;
-        }
-        
-        .sitemap-tree a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-        
-        .sitemap-tree a:hover {
-            text-decoration: underline;
-        }
-        
+        .sitemap-tree ul { list-style: none; padding-left: 0; }
+        .sitemap-tree ul ul { padding-left: 25px; border-left: 2px solid #ddd; }
+        .dark .sitemap-tree ul ul { border-left: 2px solid #444; }
+        .sitemap-tree li { margin: 8px 0; }
+        .sitemap-tree a { color: #0066cc; text-decoration: none; }
+        .sitemap-tree a:hover { text-decoration: underline; }
         .parent-node {
             font-weight: 600;
             color: #212529;
             display: block;
             margin-bottom: 4px;
         }
-        
-        .dark .parent-node {
-            color: #e0e0e0;
-        }
-        
-        main {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        
+        .dark .parent-node { color: #e0e0e0; }
+        main { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
         h1 {
             text-align: center;
             font-size: 2.4rem;
             margin-bottom: 20px;
             color: #0066cc;
         }
-        
         .intro {
             text-align: center;
             font-size: 1.2rem;
@@ -231,105 +164,84 @@
             margin: 0 auto 40px;
             color: #555;
         }
-        
-        .dark .intro {
-            color: #bbb;
-        }
-        
+        .dark .intro { color: #bbb; }
         .steps {
             background: #fff;
             border-radius: 12px;
             padding: 30px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            margin-bottom: 40px;
         }
-        
-        .dark .steps {
-            background: #1e1e1e;
+        .dark .steps { background: #1e1e1e; }
+        .code-container {
+            margin: 25px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-        
-        .steps ol {
-            counter-reset: step-counter;
-            padding-left: 0;
-        }
-        
-        .steps li {
-            margin-bottom: 25px;
-            padding-left: 45px;
-            position: relative;
-            font-size: 1.1rem;
-        }
-        
-        .steps li::before {
-            counter-increment: step-counter;
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 32px;
-            height: 32px;
+        .code-header {
             background: #0066cc;
             color: white;
-            border-radius: 50%;
+            padding: 14px 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        
-        pre {
+        .code-title {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+        .code-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .copy-button,
+        .toggle-button {
+            background: rgba(255,255,255,0.25);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .copy-button:hover,
+        .toggle-button:hover {
+            background: rgba(255,255,255,0.4);
+        }
+        .code-block {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
             background: #f4f4f4;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 0 20px;
+        }
+        .dark .code-block { background: #2a2a2a; color: #e0e0e0; }
+        .code-block.expanded { max-height: 1600px; }
+        pre {
+            background: transparent;
+            padding: 20px 0;
+            margin: 0;
             overflow-x: auto;
             font-size: 0.95rem;
-            line-height: 1.4;
-            border: 1px solid #ddd;
-            margin: 20px 0;
+            line-height: 1.45;
         }
-        
-        .dark pre {
-            background: #2a2a2a;
-            color: #e0e0e0;
-            border-color: #444;
-        }
-        
-        .code-title {
-            background: #0066cc;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px 8px 0 0;
-            font-weight: 600;
-            margin-bottom: -1px;
-        }
-        
         footer {
             text-align: center;
             padding: 25px 20px;
             background: var(--nav-bg);
             color: var(--nav-text);
-            font-size: 0.95rem;
             margin-top: 60px;
-        }
-        
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        
-        @media (max-width: 768px) {
-            main {
-                margin: 20px auto;
-                padding: 0 15px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
+            font-size: 0.95rem;
         }
     </style>
 </head>
 <body>
-
     <nav>
         <div class="nav-left">
             <a href="/" onclick="window.location.reload();" class="no-dec">Home</a>
@@ -350,10 +262,9 @@
         </div>
     </nav>
 
- 
     <div id="sitemap-popup" class="sitemap-popup">
         <div class="sitemap-content">
-            <h2>Sitemap 
+            <h2>Sitemap
                 <button onclick="closeSitemap()" style="float:right; background:none; border:none; font-size:1.8rem; cursor:pointer; color:#333;">&times;</button>
             </h2>
             <div class="sitemap-tree">
@@ -425,7 +336,6 @@
         </div>
     </div>
 
-
     <main>
         <div class="container">
             <h1>Excel Add-in: AD ↔ BS Date Converter</h1>
@@ -452,8 +362,19 @@
                     <li>That’s it! The add-in is now installed and ready to use.</li>
                 </ol>
 
-                <h3 class="code-title">Copy &amp; Paste the complete VBA code below:</h3>
-                <pre><code>Public Starting_Range_AD As Date
+                <div class="code-container">
+                    <div class="code-header">
+                        <h3 class="code-title">Complete VBA Code (Copy &amp; Paste)</h3>
+                        <div class="code-actions">
+                            <button id="copy-btn" class="copy-button">
+                                <i class="fas fa-copy"></i> Copy Code
+                            </button>
+                            <button id="toggle-btn" class="toggle-button">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <pre id="code-display" class="code-block"><code>Public Starting_Range_AD As Date
 Public BS(0 To 100) As Variant
 
 Sub BS_Database()
@@ -556,15 +477,15 @@ Function Smart_Parse_BS(ByVal inputStr As String) As Variant
     Dim parts As Variant, y As Integer, m As Integer, d As Integer
     inputStr = Replace(Replace(inputStr, ".", "/"), "-", "/")
     parts = Split(inputStr, "/")
-    If UBound(parts) &lt;&gt; 2 Then Smart_Parse_BS = Empty: Exit Function
-    If Val(parts(0)) &gt; 100 Then
+    If UBound(parts) <> 2 Then Smart_Parse_BS = Empty: Exit Function
+    If Val(parts(0)) > 100 Then
         y = Val(parts(0)): m = Val(parts(1)): d = Val(parts(2))
-    ElseIf Val(parts(2)) &gt; 100 Then
+    ElseIf Val(parts(2)) > 100 Then
         y = Val(parts(2)): m = Val(parts(1)): d = Val(parts(0))
     Else
-        If Val(parts(0)) &gt;= 0 And Val(parts(0)) &lt;= 91 Then
+        If Val(parts(0)) >= 0 And Val(parts(0)) <= 91 Then
             y = 2000 + Val(parts(0)): m = Val(parts(1)): d = Val(parts(2))
-        ElseIf Val(parts(2)) &gt;= 0 And Val(parts(2)) &lt;= 91 Then
+        ElseIf Val(parts(2)) >= 0 And Val(parts(2)) <= 91 Then
             y = 2000 + Val(parts(2)): m = Val(parts(1)): d = Val(parts(0))
         End If
     End If
@@ -576,15 +497,15 @@ Function AD2BS(ByVal AD As Variant) As String
     Call BS_Database
     Dim DD_Gap As Long, DD_total As Long, i As Long, ii As Long
     DD_Gap = DateDiff("d", Starting_Range_AD, CDate(AD))
-    If DD_Gap &lt; 0 Then AD2BS = "Out of Range": Exit Function
+    If DD_Gap < 0 Then AD2BS = "Out of Range": Exit Function
     DD_total = 0
     For i = LBound(BS) To UBound(BS)
         If IsEmpty(BS(i)) Then GoTo NextYear
         For ii = 1 To 12
             DD_total = DD_total + BS(i)(ii)
-            If DD_total &gt; DD_Gap Then
+            If DD_total > DD_Gap Then
                 DD_total = DD_total - BS(i)(ii)
-                AD2BS = Format(BS(i)(0) Mod 100, "00") &amp; "/" &amp; Format(ii, "00") &amp; "/" &amp; Format(DD_Gap - DD_total + 1, "00")
+                AD2BS = Format(BS(i)(0) Mod 100, "00") & "/" & Format(ii, "00") & "/" & Format(DD_Gap - DD_total + 1, "00")
                 Exit Function
             End If
         Next ii
@@ -600,7 +521,7 @@ Function BS2AD(ByVal BSDate As String) As String
     DD_total = 0
     For i = LBound(BS) To UBound(BS)
         If IsEmpty(BS(i)) Then GoTo NextYear
-        If BS(i)(0) &lt; p(0) Then
+        If BS(i)(0) < p(0) Then
             For ii = 1 To 12: DD_total = DD_total + BS(i)(ii): Next ii
         ElseIf BS(i)(0) = p(0) Then
             For ii = 1 To p(1) - 1: DD_total = DD_total + BS(i)(ii): Next ii
@@ -618,21 +539,18 @@ Sub Batch_Convert_Dates()
     Set rng = Application.InputBox("Select range:", "Batch Convert", Type:=8)
     On Error GoTo 0
     If rng Is Nothing Then Exit Sub
-    mode = MsgBox("YES: AD to BS" &amp; vbCrLf &amp; "NO: BS to AD", vbYesNoCancel)
+    mode = MsgBox("YES: AD to BS" & vbCrLf & "NO: BS to AD", vbYesNoCancel)
     If mode = vbCancel Then Exit Sub
     Application.ScreenUpdating = False
     For Each cell In rng
-        If cell.Value &lt;&gt; "" Then
-            If mode = vbYes Then
-                cell.Offset(0, 1).Value = AD2BS(cell.Value)
-            Else
-                cell.Offset(0, 1).Value = BS2AD(CStr(cell.Value))
-            End If
+        If cell.Value <> "" Then
+            If mode = vbYes Then cell.Offset(0, 1).Value = AD2BS(cell.Value) Else cell.Offset(0, 1).Value = BS2AD(CStr(cell.Value))
             cell.Offset(0, 1).NumberFormat = "@"
         End If
     Next cell
     Application.ScreenUpdating = True
 End Sub</code></pre>
+                </div>
 
                 <p style="margin-top: 25px; text-align: center; font-style: italic;">
                     After installation, simply use the functions <strong>=AD2BS(A1)</strong> or <strong>=BS2AD(A1)</strong> in any cell.<br>
@@ -642,77 +560,70 @@ End Sub</code></pre>
         </div>
     </main>
 
-
     <footer>
         © Krishna Niraula. All Rights Reserved.
     </footer>
 
     <script>
- 
+        let rawVbaCode = "";
+
+        function copyCode() {
+            const btn = document.getElementById('copy-btn');
+            navigator.clipboard.writeText(rawVbaCode).then(() => {
+                const original = btn.innerHTML;
+                btn.innerHTML = `<i class="fas fa-check"></i> Copied!`;
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.innerHTML = original;
+                    btn.style.background = '';
+                }, 2000);
+            });
+        }
+
+        function toggleCode() {
+            const block = document.getElementById('code-display');
+            const icon = document.querySelector('#toggle-btn i');
+            block.classList.toggle('expanded');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
+        }
+
         function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.classList.toggle('active');
+            document.getElementById('menu').classList.toggle('active');
         }
 
         function closeSitemap() {
             document.getElementById('sitemap-popup').style.display = 'none';
         }
 
-        function initThemeToggle() {
+        window.onload = function() {
+            rawVbaCode = document.getElementById('code-display').textContent.trim();
+
+            document.getElementById('copy-btn').addEventListener('click', copyCode);
+            document.getElementById('toggle-btn').addEventListener('click', toggleCode);
+
             const toggleBtn = document.getElementById('theme-toggle');
             const icon = toggleBtn.querySelector('i');
-
             if (localStorage.getItem('theme') === 'dark') {
                 document.documentElement.classList.add('dark');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
+                icon.classList.replace('fa-moon', 'fa-sun');
             }
-            
             toggleBtn.addEventListener('click', () => {
                 document.documentElement.classList.toggle('dark');
-                
-                if (document.documentElement.classList.contains('dark')) {
-                    icon.classList.remove('fa-moon');
-                    icon.classList.add('fa-sun');
-                    localStorage.setItem('theme', 'dark');
-                } else {
-                    icon.classList.remove('fa-sun');
-                    icon.classList.add('fa-moon');
-                    localStorage.setItem('theme', 'light');
-                }
-            });
-        }
-
-
-        function initSitemap() {
-            const sitemapBtn = document.getElementById('sitemap-button');
-            const popup = document.getElementById('sitemap-popup');
-            
-            sitemapBtn.addEventListener('click', () => {
-                popup.style.display = 'flex';
+                icon.classList.toggle('fa-moon');
+                icon.classList.toggle('fa-sun');
+                localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
             });
 
-            popup.addEventListener('click', (e) => {
-                if (e.target === popup) {
-                    closeSitemap();
-                }
+            document.getElementById('sitemap-button').addEventListener('click', () => {
+                document.getElementById('sitemap-popup').style.display = 'flex';
             });
-        }
 
-       
-        window.onload = function() {
-            initThemeToggle();
-            initSitemap();
-            
             document.addEventListener('keydown', function(e) {
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
                     const popup = document.getElementById('sitemap-popup');
-                    if (popup.style.display === 'flex') {
-                        closeSitemap();
-                    } else {
-                        popup.style.display = 'flex';
-                    }
+                    popup.style.display = (popup.style.display === 'flex') ? 'none' : 'flex';
                 }
             });
         };
