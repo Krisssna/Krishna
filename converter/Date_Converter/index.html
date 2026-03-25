@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create your own Excel Add-in for AD to BS and BS to AD date conversion - Bikram Sambat &amp; Gregorian calendar converter for Nepal">
+    <title>Excel Add-in: AD ↔ BS Date Converter | Krishna Niraula</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --text: #212529;
+            --nav-bg: #212529;
+            --nav-text: #ffffff;
+        }
+        
+        .dark {
+            --bg: #121212;
+            --text: #e0e0e0;
+            --nav-bg: #1e1e1e;
+            --nav-text: #ffffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        nav {
+            background: var(--nav-bg);
+            color: var(--nav-text);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-left a {
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--nav-text);
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .theme-toggle,
+        .sitemap-button {
+            background: none;
+            border: none;
+            color: var(--nav-text);
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle:hover,
+        .sitemap-button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .menu-icon {
+            font-size: 1.8rem;
+            cursor: pointer;
+            display: none;
+            color: var(--nav-text);
+        }
+        
+        #menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        #menu li a {
+            color: var(--nav-text);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 12px;
+            transition: all 0.3s ease;
+        }
+        
+        #menu li a:hover {
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-icon {
+                display: block;
+            }
+            #menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--nav-bg);
+                padding: 15px 20px;
+                gap: 10px;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+            }
+            #menu.active {
+                display: flex;
+            }
+        }
+        
+        .sitemap-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        
+        .sitemap-content {
+            background: #fff;
+            color: #212529;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dark .sitemap-content {
+            background: #1e1e1e;
+            color: #e0e0e0;
+        }
+        
+        .sitemap-content h2 {
+            padding: 20px 25px;
+            margin: 0;
+            background: #f1f1f1;
+            font-size: 1.6rem;
+        }
+        
+        .dark .sitemap-content h2 {
+            background: #2a2a2a;
+        }
+        
+        .sitemap-tree {
+            padding: 20px 25px;
+            max-height: calc(90vh - 70px);
+            overflow-y: auto;
+        }
+        
+        .sitemap-tree ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .sitemap-tree ul ul {
+            padding-left: 25px;
+            border-left: 2px solid #ddd;
+        }
+        
+        .dark .sitemap-tree ul ul {
+            border-left: 2px solid #444;
+        }
+        
+        .sitemap-tree li {
+            margin: 8px 0;
+        }
+        
+        .sitemap-tree a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        
+        .sitemap-tree a:hover {
+            text-decoration: underline;
+        }
+        
+        .parent-node {
+            font-weight: 600;
+            color: #212529;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .dark .parent-node {
+            color: #e0e0e0;
+        }
+        
+        main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+            color: #0066cc;
+        }
+        
+        .intro {
+            text-align: center;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #555;
+        }
+        
+        .dark .intro {
+            color: #bbb;
+        }
+        
+        .steps {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
+        
+        .dark .steps {
+            background: #1e1e1e;
+        }
+        
+        .steps ol {
+            counter-reset: step-counter;
+            padding-left: 0;
+        }
+        
+        .steps li {
+            margin-bottom: 25px;
+            padding-left: 45px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .steps li::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: #0066cc;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            border: 1px solid #ddd;
+            margin: 20px 0;
+        }
+        
+        .dark pre {
+            background: #2a2a2a;
+            color: #e0e0e0;
+            border-color: #444;
+        }
+        
+        .code-title {
+            background: #0066cc;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            margin-bottom: -1px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px 20px;
+            background: var(--nav-bg);
+            color: var(--nav-text);
+            font-size: 0.95rem;
+            margin-top: 60px;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <a href="/" onclick="window.location.reload();" class="no-dec">Home</a>
+        </div>
+        <div class="nav-right">
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="sitemap-button" class="sitemap-button">Sitemap</button>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <ul id="menu">
+                <li><a href="#tools" class="no-deco">Tools</a></li>
+                <li><a href="#portfolio" class="no-deco">Apps</a></li>
+                <li><a href="gharjagga/" class="no-deco" target="_blank">घर जग्गा</a></li>
+                <li><a href="#contact" class="no-deco">Contact</a></li>
+                <li><a href="#contact" class="no-deco">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+ 
+    <div id="sitemap-popup" class="sitemap-popup">
+        <div class="sitemap-content">
+            <h2>Sitemap 
+                <button onclick="closeSitemap()" style="float:right; background:none; border:none; font-size:1.8rem; cursor:pointer; color:#333;">&times;</button>
+            </h2>
+            <div class="sitemap-tree">
+                <ul>
+                    <li>
+                        <a href="https://krishnaniraula.com.np/">Home</a>
+                        <ul>
+                            <li>
+                                <span class="parent-node">Converter</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/converter/unit-converter/">Unit Converter</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="https://krishnaniraula.com.np/concrete-calculator/">Concrete Calculator</a></li>
+                            <li>
+                                <span class="parent-node">Land Area Converter</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/land-area-converter/">Land Area Converter</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/land-area-converter/addsubtractlandarea.html">Add or Subtract Land Area</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/land-area-converter/plotter.html">Plotter Pro</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/land-area-converter/faq.html">FAQ</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="parent-node">Steel Bars Calculator</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/steel-bars-calculator/">Steel Bars Calculator</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="parent-node">Time Series Chart Animation</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/time-series-chart-animation/">Time Series Chart Animation</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="parent-node">Apps</span>
+                                <ul>
+                                    <li>
+                                        <span class="parent-node">Caputok</span>
+                                        <ul>
+                                            <li><a href="https://krishnaniraula.com.np/assets/apps/caputok/privacy_policy/">Privacy Policy</a></li>
+                                            <li><a href="https://krishnaniraula.com.np/assets/apps/caputok/terms_of_use/">Terms of Use</a></li>
+                                            <li><a href="https://krishnaniraula.com.np/apps/caputok/FAQ.html">FAQ</a></li>
+                                            <li><a href="https://krishnaniraula.com.np/assets/apps/caputok/userguide.html">User Guide</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="parent-node">Asphalt Calculator</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/asphalt-calculator/">Asphalt Calculator</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/asphalt-calculator/costefficiency.html">Cost Efficiency Comparator</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/asphalt-calculator/FAQ.html">FAQ</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="parent-node">Assets</span>
+                                <ul>
+                                    <li><a href="https://krishnaniraula.com.np/assets/website-privacy-policy.html">Website Privacy Policy</a></li>
+                                    <li><a href="https://krishnaniraula.com.np/assets/website-terms-of-use.html">Website Terms of Use</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <main>
+        <div class="container">
+            <h1>Excel Add-in: AD ↔ BS Date Converter</h1>
+            <p class="intro">
+                Create your own powerful Microsoft Excel add-in to instantly convert dates between the Gregorian (AD) calendar and the Bikram Sambat (BS) calendar used in Nepal.<br>
+                No internet required. Works offline forever.
+            </p>
+
+            <div class="steps">
+                <h2 style="margin-bottom: 25px; text-align: center; color: #0066cc;">How to Install the Add-in (Step-by-Step)</h2>
+                <ol>
+                    <li>Open a new blank Excel workbook.</li>
+                    <li>Press <strong>Ctrl + F11</strong> to open the Visual Basic for Applications (VBA) editor.</li>
+                    <li>In the VBA editor, go to <strong>Insert → Module</strong>.</li>
+                    <li>Copy and paste the entire VBA code below into the new module window.</li>
+                    <li>Close the VBA editor, then go to <strong>File → Save As</strong>.<br>
+                        Choose <strong>“Excel Add-in” (*.xlam)</strong> as the file type.<br>
+                        Name it something like <strong>AD_BS_Converter.xlam</strong> and click Save.<br>
+                        Excel will automatically save it to your Add-ins folder.</li>
+                    <li>Open any Excel workbook.</li>
+                    <li>Go to <strong>File → Options → Add-ins</strong>.<br>
+                        At the bottom, next to “Manage”, select <strong>“Excel Add-ins”</strong> → Click <strong>Go</strong>.<br>
+                        Check the box for <strong>AD_BS_Converter</strong> (or whatever name you gave) and click OK.</li>
+                    <li>That’s it! The add-in is now installed and ready to use.</li>
+                </ol>
+
+                <h3 class="code-title">Copy &amp; Paste the complete VBA code below:</h3>
+                <pre><code>Public Starting_Range_AD As Date
+Public BS(0 To 100) As Variant
+
+Sub BS_Database()
+    Starting_Range_AD = DateSerial(1943, 4, 14)
+    BS(0) = Array(2000, 30, 32, 31, 32, 31, 30, 29, 30, 29, 30, 29, 31)
+    BS(1) = Array(2001, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(2) = Array(2002, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(3) = Array(2003, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(4) = Array(2004, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(5) = Array(2005, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(6) = Array(2006, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(7) = Array(2007, 31, 32, 32, 31, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(8) = Array(2008, 31, 31, 32, 32, 31, 31, 29, 30, 30, 29, 29, 31)
+    BS(9) = Array(2009, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(10) = Array(2010, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(11) = Array(2011, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(12) = Array(2012, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30)
+    BS(13) = Array(2013, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(14) = Array(2014, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(15) = Array(2015, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(16) = Array(2016, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30)
+    BS(17) = Array(2017, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(18) = Array(2018, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(19) = Array(2019, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(20) = Array(2020, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(21) = Array(2021, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(22) = Array(2022, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30)
+    BS(23) = Array(2023, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(24) = Array(2024, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(25) = Array(2025, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(26) = Array(2026, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(27) = Array(2027, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(28) = Array(2028, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(29) = Array(2029, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30)
+    BS(30) = Array(2030, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(31) = Array(2031, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(32) = Array(2032, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(33) = Array(2033, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(34) = Array(2034, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(35) = Array(2035, 30, 32, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31)
+    BS(36) = Array(2036, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(37) = Array(2037, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(38) = Array(2038, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(39) = Array(2039, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30)
+    BS(40) = Array(2040, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(41) = Array(2041, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(42) = Array(2042, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(43) = Array(2043, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30)
+    BS(44) = Array(2044, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(45) = Array(2045, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(46) = Array(2046, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(47) = Array(2047, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(48) = Array(2048, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(49) = Array(2049, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30)
+    BS(50) = Array(2050, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(51) = Array(2051, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(52) = Array(2052, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(53) = Array(2053, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30)
+    BS(54) = Array(2054, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(55) = Array(2055, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(56) = Array(2056, 31, 31, 32, 31, 32, 30, 30, 29, 30, 29, 30, 30)
+    BS(57) = Array(2057, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(58) = Array(2058, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(59) = Array(2059, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(60) = Array(2060, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(61) = Array(2061, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(62) = Array(2062, 30, 32, 31, 32, 31, 31, 29, 30, 29, 30, 29, 31)
+    BS(63) = Array(2063, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(64) = Array(2064, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(65) = Array(2065, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(66) = Array(2066, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 29, 31)
+    BS(67) = Array(2067, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(68) = Array(2068, 31, 31, 32, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(69) = Array(2069, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(70) = Array(2070, 31, 31, 31, 32, 31, 31, 29, 30, 30, 29, 30, 30)
+    BS(71) = Array(2071, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(72) = Array(2072, 31, 32, 31, 32, 31, 30, 30, 29, 30, 29, 30, 30)
+    BS(73) = Array(2073, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 31)
+    BS(74) = Array(2074, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(75) = Array(2075, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(76) = Array(2076, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30)
+    BS(77) = Array(2077, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(78) = Array(2078, 31, 31, 31, 32, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(79) = Array(2079, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(80) = Array(2080, 31, 32, 31, 32, 31, 30, 30, 30, 29, 29, 30, 30)
+    BS(81) = Array(2081, 31, 32, 31, 32, 31, 30, 30, 30, 29, 30, 29, 31)
+    BS(82) = Array(2082, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(83) = Array(2083, 31, 31, 32, 31, 31, 31, 30, 29, 30, 29, 30, 30)
+    BS(84) = Array(2084, 31, 31, 32, 31, 31, 30, 30, 30, 29, 30, 30, 30)
+    BS(85) = Array(2085, 31, 32, 31, 32, 30, 31, 30, 30, 29, 30, 30, 30)
+    BS(86) = Array(2086, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30)
+    BS(87) = Array(2087, 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30)
+    BS(88) = Array(2088, 30, 31, 32, 32, 30, 31, 30, 30, 29, 30, 30, 30)
+    BS(89) = Array(2089, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30)
+    BS(90) = Array(2090, 30, 32, 31, 32, 31, 30, 30, 30, 29, 30, 30, 30)
+    BS(91) = Array(2091, 31, 31, 32, 31, 31, 31, 30, 30, 29, 30, 30, 30)
+End Sub
+
+Function Smart_Parse_BS(ByVal inputStr As String) As Variant
+    Dim parts As Variant, y As Integer, m As Integer, d As Integer
+    inputStr = Replace(Replace(inputStr, ".", "/"), "-", "/")
+    parts = Split(inputStr, "/")
+    If UBound(parts) &lt;&gt; 2 Then Smart_Parse_BS = Empty: Exit Function
+    If Val(parts(0)) &gt; 100 Then
+        y = Val(parts(0)): m = Val(parts(1)): d = Val(parts(2))
+    ElseIf Val(parts(2)) &gt; 100 Then
+        y = Val(parts(2)): m = Val(parts(1)): d = Val(parts(0))
+    Else
+        If Val(parts(0)) &gt;= 0 And Val(parts(0)) &lt;= 91 Then
+            y = 2000 + Val(parts(0)): m = Val(parts(1)): d = Val(parts(2))
+        ElseIf Val(parts(2)) &gt;= 0 And Val(parts(2)) &lt;= 91 Then
+            y = 2000 + Val(parts(2)): m = Val(parts(1)): d = Val(parts(0))
+        End If
+    End If
+    Smart_Parse_BS = Array(y, m, d)
+End Function
+
+Function AD2BS(ByVal AD As Variant) As String
+    If Not IsDate(AD) Then AD2BS = "Invalid Date": Exit Function
+    Call BS_Database
+    Dim DD_Gap As Long, DD_total As Long, i As Long, ii As Long
+    DD_Gap = DateDiff("d", Starting_Range_AD, CDate(AD))
+    If DD_Gap &lt; 0 Then AD2BS = "Out of Range": Exit Function
+    DD_total = 0
+    For i = LBound(BS) To UBound(BS)
+        If IsEmpty(BS(i)) Then GoTo NextYear
+        For ii = 1 To 12
+            DD_total = DD_total + BS(i)(ii)
+            If DD_total &gt; DD_Gap Then
+                DD_total = DD_total - BS(i)(ii)
+                AD2BS = Format(BS(i)(0) Mod 100, "00") &amp; "/" &amp; Format(ii, "00") &amp; "/" &amp; Format(DD_Gap - DD_total + 1, "00")
+                Exit Function
+            End If
+        Next ii
+NextYear:
+    Next i
+End Function
+
+Function BS2AD(ByVal BSDate As String) As String
+    Call BS_Database
+    Dim p As Variant, i As Long, ii As Long, DD_total As Long
+    p = Smart_Parse_BS(BSDate)
+    If IsEmpty(p) Then BS2AD = "Format Error": Exit Function
+    DD_total = 0
+    For i = LBound(BS) To UBound(BS)
+        If IsEmpty(BS(i)) Then GoTo NextYear
+        If BS(i)(0) &lt; p(0) Then
+            For ii = 1 To 12: DD_total = DD_total + BS(i)(ii): Next ii
+        ElseIf BS(i)(0) = p(0) Then
+            For ii = 1 To p(1) - 1: DD_total = DD_total + BS(i)(ii): Next ii
+            DD_total = DD_total + (p(2) - 1)
+            BS2AD = Format(Starting_Range_AD + DD_total, "yy/mm/dd")
+            Exit Function
+        End If
+NextYear:
+    Next i
+End Function
+
+Sub Batch_Convert_Dates()
+    Dim rng As Range, cell As Range, mode As VbMsgBoxResult
+    On Error Resume Next
+    Set rng = Application.InputBox("Select range:", "Batch Convert", Type:=8)
+    On Error GoTo 0
+    If rng Is Nothing Then Exit Sub
+    mode = MsgBox("YES: AD to BS" &amp; vbCrLf &amp; "NO: BS to AD", vbYesNoCancel)
+    If mode = vbCancel Then Exit Sub
+    Application.ScreenUpdating = False
+    For Each cell In rng
+        If cell.Value &lt;&gt; "" Then
+            If mode = vbYes Then
+                cell.Offset(0, 1).Value = AD2BS(cell.Value)
+            Else
+                cell.Offset(0, 1).Value = BS2AD(CStr(cell.Value))
+            End If
+            cell.Offset(0, 1).NumberFormat = "@"
+        End If
+    Next cell
+    Application.ScreenUpdating = True
+End Sub</code></pre>
+
+                <p style="margin-top: 25px; text-align: center; font-style: italic;">
+                    After installation, simply use the functions <strong>=AD2BS(A1)</strong> or <strong>=BS2AD(A1)</strong> in any cell.<br>
+                    Or run the macro <strong>Batch_Convert_Dates</strong> for bulk conversion!
+                </p>
+            </div>
+        </div>
+    </main>
+
+
+    <footer>
+        © Krishna Niraula. All Rights Reserved.
+    </footer>
+
+    <script>
+ 
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+
+        function closeSitemap() {
+            document.getElementById('sitemap-popup').style.display = 'none';
+        }
+
+        function initThemeToggle() {
+            const toggleBtn = document.getElementById('theme-toggle');
+            const icon = toggleBtn.querySelector('i');
+
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.classList.add('dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            
+            toggleBtn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+                
+                if (document.documentElement.classList.contains('dark')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        }
+
+
+        function initSitemap() {
+            const sitemapBtn = document.getElementById('sitemap-button');
+            const popup = document.getElementById('sitemap-popup');
+            
+            sitemapBtn.addEventListener('click', () => {
+                popup.style.display = 'flex';
+            });
+
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    closeSitemap();
+                }
+            });
+        }
+
+       
+        window.onload = function() {
+            initThemeToggle();
+            initSitemap();
+            
+            document.addEventListener('keydown', function(e) {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    const popup = document.getElementById('sitemap-popup');
+                    if (popup.style.display === 'flex') {
+                        closeSitemap();
+                    } else {
+                        popup.style.display = 'flex';
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
