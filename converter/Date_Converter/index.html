@@ -374,7 +374,8 @@
                             </button>
                         </div>
                     </div>
-                    <pre id="code-display" class="code-block"><code>Public Starting_Range_AD As Date
+                    <pre id="code-display" class="code-block"><code>
+                        Public Starting_Range_AD As Date
 Public BS(0 To 100) As Variant
 
 Sub BS_Database()
@@ -474,82 +475,157 @@ Sub BS_Database()
 End Sub
 
 Function Smart_Parse_BS(ByVal inputStr As String) As Variant
-    Dim parts As Variant, y As Integer, m As Integer, d As Integer
-    inputStr = Replace(Replace(inputStr, ".", "/"), "-", "/")
+    Dim parts As Variant
+    Dim a As Long, b As Long, c As Long
+    Dim yearVal As Long, monVal As Long, dayVal As Long
+    
+   
+    inputStr = Replace(Replace(Replace(inputStr, ".", "/"), "-", "/"), "\", "/")
     parts = Split(inputStr, "/")
-    If UBound(parts) <> 2 Then Smart_Parse_BS = Empty: Exit Function
-    If Val(parts(0)) > 100 Then
-        y = Val(parts(0)): m = Val(parts(1)): d = Val(parts(2))
-    ElseIf Val(parts(2)) > 100 Then
-        y = Val(parts(2)): m = Val(parts(1)): d = Val(parts(0))
+    
+    If UBound(parts) <> 2 Then
+        Smart_Parse_BS = Empty
+        Exit Function
+    End If
+    
+    a = Val(Trim(parts(0)))
+    b = Val(Trim(parts(1)))
+    c = Val(Trim(parts(2)))
+    
+ 
+    If a > 100 Then
+        yearVal = a: monVal = b: dayVal = c
+    ElseIf c > 100 Then
+        yearVal = c: monVal = b: dayVal = a
+    ElseIf b > 100 Then
+        yearVal = b: monVal = a: dayVal = c
+    
+   
     Else
-        If Val(parts(0)) >= 0 And Val(parts(0)) <= 91 Then
-            y = 2000 + Val(parts(0)): m = Val(parts(1)): d = Val(parts(2))
-        ElseIf Val(parts(2)) >= 0 And Val(parts(2)) <= 91 Then
-            y = 2000 + Val(parts(2)): m = Val(parts(1)): d = Val(parts(0))
+        
+        If a >= 0 And a <= 99 Then
+            yearVal = IIf(a <= 91, 2000 + a, 1900 + a)
+            monVal = b
+            dayVal = c
+        ElseIf c >= 0 And c <= 99 Then
+            yearVal = IIf(c <= 91, 2000 + c, 1900 + c)
+            monVal = b
+            dayVal = a
+        Else
+            
+            yearVal = IIf(a <= 91, 2000 + a, 1900 + a)
+            monVal = b
+            dayVal = c
         End If
     End If
-    Smart_Parse_BS = Array(y, m, d)
+    
+   
+    If monVal < 1 Or monVal > 12 Or dayVal < 1 Or dayVal > 32 Or yearVal < 1900 Then
+        Smart_Parse_BS = Empty
+    Else
+        Smart_Parse_BS = Array(yearVal, monVal, dayVal)
+    End If
 End Function
 
+' ==================== AD to BS ====================
 Function AD2BS(ByVal AD As Variant) As String
-    If Not IsDate(AD) Then AD2BS = "Invalid Date": Exit Function
+    If Not IsDate(AD) Then
+        AD2BS = "Invalid Date": Exit Function
+    End If
+    
     Call BS_Database
+    
     Dim DD_Gap As Long, DD_total As Long, i As Long, ii As Long
+    
     DD_Gap = DateDiff("d", Starting_Range_AD, CDate(AD))
-    If DD_Gap < 0 Then AD2BS = "Out of Range": Exit Function
+    If DD_Gap < 0 Then
+        AD2BS = "Out of Range": Exit Function
+    End If
+    
     DD_total = 0
     For i = LBound(BS) To UBound(BS)
         If IsEmpty(BS(i)) Then GoTo NextYear
+        
         For ii = 1 To 12
             DD_total = DD_total + BS(i)(ii)
+            
             If DD_total > DD_Gap Then
                 DD_total = DD_total - BS(i)(ii)
-                AD2BS = Format(BS(i)(0) Mod 100, "00") & "/" & Format(ii, "00") & "/" & Format(DD_Gap - DD_total + 1, "00")
+                AD2BS = Format(BS(i)(0), "0000") & "/" & _
+                        Format(ii, "00") & "/" & _
+                        Format(DD_Gap - DD_total + 1, "00")
                 Exit Function
             End If
         Next ii
 NextYear:
     Next i
+    
+    AD2BS = "Out of Range"
 End Function
 
+' ==================== BS to AD ====================
 Function BS2AD(ByVal BSDate As String) As String
     Call BS_Database
+    
     Dim p As Variant, i As Long, ii As Long, DD_total As Long
+    
     p = Smart_Parse_BS(BSDate)
-    If IsEmpty(p) Then BS2AD = "Format Error": Exit Function
+    If IsEmpty(p) Then
+        BS2AD = "Format Error": Exit Function
+    End If
+    
     DD_total = 0
     For i = LBound(BS) To UBound(BS)
         If IsEmpty(BS(i)) Then GoTo NextYear
+        
         If BS(i)(0) < p(0) Then
-            For ii = 1 To 12: DD_total = DD_total + BS(i)(ii): Next ii
+            For ii = 1 To 12
+                DD_total = DD_total + BS(i)(ii)
+            Next ii
+            
         ElseIf BS(i)(0) = p(0) Then
-            For ii = 1 To p(1) - 1: DD_total = DD_total + BS(i)(ii): Next ii
+            For ii = 1 To p(1) - 1
+                DD_total = DD_total + BS(i)(ii)
+            Next ii
             DD_total = DD_total + (p(2) - 1)
-            BS2AD = Format(Starting_Range_AD + DD_total, "yy/mm/dd")
+            
+            BS2AD = Format(Starting_Range_AD + DD_total, "yyyy/mm/dd")
             Exit Function
         End If
 NextYear:
     Next i
+    
+    BS2AD = "Out of Range"
 End Function
 
 Sub Batch_Convert_Dates()
     Dim rng As Range, cell As Range, mode As VbMsgBoxResult
+    
     On Error Resume Next
     Set rng = Application.InputBox("Select range:", "Batch Convert", Type:=8)
     On Error GoTo 0
     If rng Is Nothing Then Exit Sub
+    
     mode = MsgBox("YES: AD to BS" & vbCrLf & "NO: BS to AD", vbYesNoCancel)
     If mode = vbCancel Then Exit Sub
+    
     Application.ScreenUpdating = False
+    
     For Each cell In rng
         If cell.Value <> "" Then
-            If mode = vbYes Then cell.Offset(0, 1).Value = AD2BS(cell.Value) Else cell.Offset(0, 1).Value = BS2AD(CStr(cell.Value))
-            cell.Offset(0, 1).NumberFormat = "@"
+            If mode = vbYes Then
+                cell.Offset(0, 1).Value = AD2BS(cell.Value)
+            Else
+                cell.Offset(0, 1).Value = BS2AD(CStr(cell.Value))
+            End If
+            cell.Offset(0, 1).NumberFormat = "@"   ' Treat as text
         End If
     Next cell
+    
     Application.ScreenUpdating = True
-End Sub</code></pre>
+End Sub
+
+</code></pre>
                 </div>
 
                 <p style="margin-top: 25px; text-align: center; font-style: italic;">
